@@ -12,6 +12,10 @@
         "prepare": "husky"
     },
     "dependencies": {
+        "@emotion/react": "^11.11.4",
+        "@emotion/styled": "^11.11.5",
+        "@fontsource/inter": "^5.0.17",
+        "@mui/joy": "^5.0.0-beta.32",
         "husky": "^9.0.11",
         "next": "14.2.0",
         "prettier": "^3.2.5",
