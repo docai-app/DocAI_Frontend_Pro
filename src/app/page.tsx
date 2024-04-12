@@ -1,93 +1,100 @@
-import Image from 'next/image';
-import styles from './page.module.css';
+'use client';
 
-export default function Home() {
+import * as React from 'react';
+import { CssVarsProvider } from '@mui/joy/styles';
+import CssBaseline from '@mui/joy/CssBaseline';
+import Box from '@mui/joy/Box';
+import Button from '@mui/joy/Button';
+import Breadcrumbs from '@mui/joy/Breadcrumbs';
+import Link from '@mui/joy/Link';
+import Typography from '@mui/joy/Typography';
+
+import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
+import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
+import DownloadRoundedIcon from '@mui/icons-material/DownloadRounded';
+
+import Sidebar from '../components/Sidebar';
+import OrderTable from '../components/OrderTable';
+import OrderList from '../components/OrderList';
+import Header from '../components/Header';
+
+export default function JoyOrderDashboardTemplate() {
     return (
-        <main className={styles.main}>
-            <div className={styles.description}>
-                <p>
-                    Get started by editing&nbsp;
-                    <code className={styles.code}>src/app/page.tsx</code>
-                </p>
-                <div>
-                    <a
-                        href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-                        target="_blank"
-                        rel="noopener noreferrer"
+        <CssVarsProvider disableTransitionOnChange>
+            <CssBaseline />
+            <Box sx={{ display: 'flex', minHeight: '100dvh' }}>
+                <Header />
+                <Sidebar />
+                <Box
+                    component="main"
+                    className="MainContent"
+                    sx={{
+                        px: { xs: 2, md: 6 },
+                        pt: {
+                            xs: 'calc(12px + var(--Header-height))',
+                            sm: 'calc(12px + var(--Header-height))',
+                            md: 3
+                        },
+                        pb: { xs: 2, sm: 2, md: 3 },
+                        flex: 1,
+                        display: 'flex',
+                        flexDirection: 'column',
+                        minWidth: 0,
+                        height: '100dvh',
+                        gap: 1
+                    }}
+                >
+                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                        <Breadcrumbs
+                            size="sm"
+                            aria-label="breadcrumbs"
+                            separator={<ChevronRightRoundedIcon />}
+                            sx={{ pl: 0 }}
+                        >
+                            <Link
+                                underline="none"
+                                color="neutral"
+                                href="#some-link"
+                                aria-label="Home"
+                            >
+                                <HomeRoundedIcon />
+                            </Link>
+                            <Link
+                                underline="hover"
+                                color="neutral"
+                                href="#some-link"
+                                fontSize={12}
+                                fontWeight={500}
+                            >
+                                Dashboard
+                            </Link>
+                            <Typography color="primary" fontWeight={500} fontSize={12}>
+                                Orders
+                            </Typography>
+                        </Breadcrumbs>
+                    </Box>
+                    <Box
+                        sx={{
+                            display: 'flex',
+                            mb: 1,
+                            gap: 1,
+                            flexDirection: { xs: 'column', sm: 'row' },
+                            alignItems: { xs: 'start', sm: 'center' },
+                            flexWrap: 'wrap',
+                            justifyContent: 'space-between'
+                        }}
                     >
-                        By{' '}
-                        <Image
-                            src="/vercel.svg"
-                            alt="Vercel Logo"
-                            className={styles.vercelLogo}
-                            width={100}
-                            height={24}
-                            priority
-                        />
-                    </a>
-                </div>
-            </div>
-
-            <div className={styles.center}>
-                <Image
-                    className={styles.logo}
-                    src="/next.svg"
-                    alt="Next.js Logo"
-                    width={180}
-                    height={37}
-                    priority
-                />
-            </div>
-
-            <div className={styles.grid}>
-                <a
-                    href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-                    className={styles.card}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    <h2>
-                        Docs <span>-&gt;</span>
-                    </h2>
-                    <p>Find in-depth information about Next.js features and API.</p>
-                </a>
-
-                <a
-                    href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-                    className={styles.card}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    <h2>
-                        Learn <span>-&gt;</span>
-                    </h2>
-                    <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-                </a>
-
-                <a
-                    href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-                    className={styles.card}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    <h2>
-                        Templates <span>-&gt;</span>
-                    </h2>
-                    <p>Explore starter templates for Next.js.</p>
-                </a>
-
-                <a
-                    href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-                    className={styles.card}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    <h2>
-                        Deploy <span>-&gt;</span>
-                    </h2>
-                    <p>Instantly deploy your Next.js site to a shareable URL with Vercel.</p>
-                </a>
-            </div>
-        </main>
+                        <Typography level="h2" component="h1">
+                            Orders
+                        </Typography>
+                        <Button color="primary" startDecorator={<DownloadRoundedIcon />} size="sm">
+                            Download PDF
+                        </Button>
+                    </Box>
+                    <OrderTable />
+                    <OrderList />
+                </Box>
+            </Box>
+        </CssVarsProvider>
     );
 }
