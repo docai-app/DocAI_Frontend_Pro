@@ -1,0 +1,6 @@
+.next/*
+.next
+out
+.serverless_nextjs/**/*
+.serverless/**/*
+.vercel/**/*
