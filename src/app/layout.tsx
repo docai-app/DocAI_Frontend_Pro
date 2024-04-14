@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-sync-scripts */
 'use client';
 
 import ThemeRegistry from '@/components/ThemeRegistry/ThemeRegistry';
@@ -6,6 +7,7 @@ import { AlertProvider } from '@/context/AlertContext';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import * as React from 'react';
+import { Helmet } from 'react-helmet';
 import './globals.css';
 
 const canUseDOM = typeof window !== 'undefined';
@@ -35,9 +37,9 @@ export default function RootLayout(props: { children: React.ReactNode }) {
             <body>
                 <AlertProvider>
                     <script src="https://accounts.google.com/gsi/client" async defer></script>
-                    {/* <Helmet>
+                    <Helmet>
                         <script src="https://code.highcharts.com/highcharts.js"></script>
-                    </Helmet> */}
+                    </Helmet>
                     <ThemeRegistry>{props.children}</ThemeRegistry>
                     <AlertModel />
                 </AlertProvider>
