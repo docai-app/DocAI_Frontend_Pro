@@ -19,6 +19,7 @@ import Typography from '@mui/joy/Typography';
 import { CssVarsProvider, useColorScheme } from '@mui/joy/styles';
 import * as React from 'react';
 import GoogleIcon from '../../components/GoogleIcon';
+import { FormEventHandler } from 'react';
 
 interface FormElements extends HTMLFormControlsCollection {
     email: HTMLInputElement;
@@ -30,8 +31,8 @@ interface SignInFormElement extends HTMLFormElement {
 }
 interface ViewProps {
     data: any;
+    handleSignIn:FormEventHandler;
 }
-
 
 function ColorSchemeToggle(props: IconButtonProps) {
     const { onClick, ...other } = props;
@@ -58,6 +59,7 @@ function ColorSchemeToggle(props: IconButtonProps) {
 }
 
 export default function LoginView(props: ViewProps) {
+    const {handleSignIn} = props;
     return (
         <CssVarsProvider defaultMode="dark" disableTransitionOnChange>
             <CssBaseline />
@@ -165,16 +167,17 @@ export default function LoginView(props: ViewProps) {
                         </Divider>
                         <Stack gap={4} sx={{ mt: 2 }}>
                             <form
-                                onSubmit={(event: React.FormEvent<SignInFormElement>) => {
-                                    event.preventDefault();
-                                    const formElements = event.currentTarget.elements;
-                                    const data = {
-                                        email: formElements.email.value,
-                                        password: formElements.password.value,
-                                        persistent: formElements.persistent.checked
-                                    };
-                                    alert(JSON.stringify(data, null, 2));
-                                }}
+                                onSubmit={handleSignIn}
+                                // {(event: React.FormEvent<SignInFormElement>) => {
+                                //     event.preventDefault();
+                                //     const formElements = event.currentTarget.elements;
+                                //     const data = {
+                                //         email: formElements.email.value,
+                                //         password: formElements.password.value,
+                                //         persistent: formElements.persistent.checked
+                                //     };
+                                //     alert(JSON.stringify(data, null, 2));
+                                // }}
                             >
                                 <FormControl required>
                                     <FormLabel>Email</FormLabel>
