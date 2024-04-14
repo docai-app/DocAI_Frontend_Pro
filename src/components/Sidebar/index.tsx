@@ -223,21 +223,19 @@ export default function Sidebar() {
                                     </ListItemButton>
                                 </ListItem>
                                 <ListItem>
-                                    <ListItemButton
-                                        component="a"
-                                        href="/sign-in-example"
-                                    >sign-in-example</ListItemButton>
+                                    <ListItemButton component="a" href="/sign-in-example">
+                                        sign-in-example
+                                    </ListItemButton>
                                 </ListItem>
                                 <ListItem>
-                                    <ListItemButton
-                                        component="a"
-                                        href="/order-example">order-example</ListItemButton>
+                                    <ListItemButton component="a" href="/order-example">
+                                        order-example
+                                    </ListItemButton>
                                 </ListItem>
                             </List>
                         </Toggler>
                     </ListItem>
                 </List>
-
             </Box>
             <Divider />
             <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>

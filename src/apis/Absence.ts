@@ -4,7 +4,7 @@ import { AxiosRequestConfig } from 'axios';
 const baseURL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 export default class Absence {
-    getAbsenceFormByApprovalStatus(status: string, days: number = 3, page: number = 1) {
+    getAbsenceFormByApprovalStatus(status: string, days = 3, page = 1) {
         const requestHeader: AxiosRequestConfig = {
             baseURL: baseURL,
             url: `/api/v1/form/absence/approval?status=${status}&days=${days}&page=${page}`,
@@ -13,7 +13,7 @@ export default class Absence {
         return requestHeader;
     }
 
-    getNormalDocumentFormByApprovalStatus(status: string, days: number = 3, page: number = 1) {
+    getNormalDocumentFormByApprovalStatus(status: string, days = 3, page = 1) {
         const requestHeader: AxiosRequestConfig = {
             baseURL: baseURL,
             url: `/api/v1/approval/normal/documents?status=${status}&days=${days}&page=${page}`,
@@ -31,7 +31,7 @@ export default class Absence {
         return requestHeader;
     }
 
-    updateAbsenceFormApprovalStatus(id: string, status: string, remark: string = '') {
+    updateAbsenceFormApprovalStatus(id: string, status: string, remark = '') {
         const requestHeader: AxiosRequestConfig = {
             baseURL: baseURL,
             url: `/api/v1/form/absence/${id}/approval?status=${status}`,

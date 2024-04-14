@@ -11,7 +11,6 @@ import Sidebar from '@/components/Sidebar';
 
 function SimpleLayout(props: { children: React.ReactNode }) {
     return (
-
         <CssVarsProvider disableTransitionOnChange>
             <CssBaseline />
             <Box sx={{ display: 'flex', minHeight: '100dvh' }}>
@@ -40,7 +39,6 @@ function SimpleLayout(props: { children: React.ReactNode }) {
                 </Box>
             </Box>
         </CssVarsProvider>
-
     );
 }
 

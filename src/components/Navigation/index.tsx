@@ -1,15 +1,14 @@
-import * as React from 'react';
 import Box from '@mui/joy/Box';
 import List from '@mui/joy/List';
-import ListSubheader from '@mui/joy/ListSubheader';
 import ListItem from '@mui/joy/ListItem';
 import ListItemButton from '@mui/joy/ListItemButton';
-import ListItemDecorator from '@mui/joy/ListItemDecorator';
 import ListItemContent from '@mui/joy/ListItemContent';
+import ListItemDecorator from '@mui/joy/ListItemDecorator';
+import ListSubheader from '@mui/joy/ListSubheader';
 
+import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
 import FolderRoundedIcon from '@mui/icons-material/FolderRounded';
 import ShareRoundedIcon from '@mui/icons-material/ShareRounded';
-import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
 
 export default function Navigation() {
     return (

@@ -1,6 +1,6 @@
 import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
-import { Box, Breadcrumbs, Link, Typography } from "@mui/joy";
+import { Box, Breadcrumbs, Link, Typography } from '@mui/joy';
 
 interface ViewProps {
     data: any;
@@ -16,12 +16,7 @@ function HomeView(props: ViewProps) {
                     separator={<ChevronRightRoundedIcon />}
                     sx={{ pl: 0 }}
                 >
-                    <Link
-                        underline="none"
-                        color="neutral"
-                        href="/"
-                        aria-label="Home"
-                    >
+                    <Link underline="none" color="neutral" href="/" aria-label="Home">
                         <HomeRoundedIcon />
                     </Link>
                     <Typography color="primary" fontWeight={500} fontSize={12}>
@@ -30,7 +25,7 @@ function HomeView(props: ViewProps) {
                 </Breadcrumbs>
             </Box>
         </>
-    )
+    );
 }
 
 export default HomeView;

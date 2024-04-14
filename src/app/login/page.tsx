@@ -1,3 +1,3 @@
 import Container from './LoginContainer';
 
-export default Container
+export default Container;
