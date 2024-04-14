@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-sync-scripts */
 'use client';
 
 import ThemeRegistry from '@/components/ThemeRegistry/ThemeRegistry';

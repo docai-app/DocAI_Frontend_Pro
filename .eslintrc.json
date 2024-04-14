@@ -5,6 +5,7 @@
         "react/display-name": "off",
         "@next/next/no-img-element": "off",
         "eslint-disable-next-line": "off",
-        "react-hooks/rules-of-hooks": "off"
+        "react-hooks/rules-of-hooks": "off",
+        "@next/next/no-sync-scripts": "off"
     }
 }
