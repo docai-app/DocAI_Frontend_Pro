@@ -14,6 +14,7 @@ function LoginContainer() {
     const [data, setData] = React.useState();
     const { setAlert } = useAlert();
     const router = useRouter();
+    const pathname = usePathname();
 
     const [{ data: signInData, loading: signInLoading, error: signInError }, signIn] = useAxios(
         {}, { manual: true }
@@ -44,7 +45,7 @@ function LoginContainer() {
                 } else {
                     document.cookie = `authorization=${escape(token)}`;
                 }
-                if (usePathname() === '/login') router.push;
+                if (pathname === '/login') router.push('/home');
                 else router.refresh();
             } else {
                 localStorage.removeItem('authorization');

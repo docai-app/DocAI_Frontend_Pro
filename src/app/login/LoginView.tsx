@@ -18,7 +18,6 @@ import Stack from '@mui/joy/Stack';
 import Typography from '@mui/joy/Typography';
 import { CssVarsProvider, useColorScheme } from '@mui/joy/styles';
 import * as React from 'react';
-import GoogleIcon from '../../components/GoogleIcon';
 import { FormEventHandler } from 'react';
 
 interface FormElements extends HTMLFormControlsCollection {
@@ -135,36 +134,13 @@ export default function LoginView(props: ViewProps) {
                             }
                         }}
                     >
-                        <Stack gap={4} sx={{ mb: 2 }}>
+                        <Stack gap={4}>
                             <Stack gap={1}>
                                 <Typography component="h1" level="h3">
                                     Sign in
                                 </Typography>
-                                <Typography level="body-sm">
-                                    New to company?{' '}
-                                    <Link href="#replace-with-a-link" level="title-sm">
-                                        Sign up!
-                                    </Link>
-                                </Typography>
                             </Stack>
-                            <Button
-                                variant="soft"
-                                color="neutral"
-                                fullWidth
-                                startDecorator={<GoogleIcon />}
-                            >
-                                Continue with Google
-                            </Button>
                         </Stack>
-                        <Divider
-                            sx={(theme) => ({
-                                [theme.getColorSchemeSelector('light')]: {
-                                    color: { xs: '#FFF', md: 'text.tertiary' }
-                                }
-                            })}
-                        >
-                            or
-                        </Divider>
                         <Stack gap={4} sx={{ mt: 2 }}>
                             <form
                                 onSubmit={handleSignIn}
@@ -196,9 +172,6 @@ export default function LoginView(props: ViewProps) {
                                         }}
                                     >
                                         <Checkbox size="sm" label="Remember me" name="persistent" />
-                                        <Link level="title-sm" href="#replace-with-a-link">
-                                            Forgot your password?
-                                        </Link>
                                     </Box>
                                     <Button type="submit" fullWidth>
                                         Sign in
