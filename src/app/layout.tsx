@@ -2,7 +2,9 @@
 
 import ThemeRegistry from '@/components/ThemeRegistry/ThemeRegistry';
 import AlertModel from '@/components/common/Widget/AlertModel';
+import LoadModel from '@/components/common/Widget/LoadModel';
 import { AlertProvider } from '@/context/AlertContext';
+import { LoadProvider } from '@/context/LoadContext';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import * as React from 'react';
@@ -34,14 +36,17 @@ export default function RootLayout(props: { children: React.ReactNode }) {
     return (
         <html lang="en">
             <body>
-                <AlertProvider>
-                    <script src="https://accounts.google.com/gsi/client" async defer></script>
-                    <Helmet>
-                        <script src="https://code.highcharts.com/highcharts.js"></script>
-                    </Helmet>
-                    <ThemeRegistry>{props.children}</ThemeRegistry>
-                    <AlertModel />
-                </AlertProvider>
+                <LoadProvider>
+                    <AlertProvider>
+                        <script src="https://accounts.google.com/gsi/client" async defer></script>
+                        <Helmet>
+                            <script src="https://code.highcharts.com/highcharts.js"></script>
+                        </Helmet>
+                        <ThemeRegistry>{props.children}</ThemeRegistry>
+                        <AlertModel />
+                    </AlertProvider>
+                    <LoadModel />
+                </LoadProvider>
             </body>
         </html>
     );

@@ -2,6 +2,7 @@
 
 import Api from '@/apis';
 import useAlert from '@/hooks/useAlert';
+import useLoad from '@/hooks/useLoad';
 import useAxios from 'axios-hooks';
 import { useRouter } from 'next/navigation';
 import React, { useEffect } from 'react';
@@ -12,6 +13,7 @@ const apiSetting = new Api();
 function HomeContainer() {
     const [data, setData] = React.useState();
     const { setAlert } = useAlert();
+    const { setLoad } = useLoad();
     const router = useRouter();
 
     const [{ data: getAllLabelsData, error: getAllLabelsError }, getAllLabels] = useAxios(
@@ -21,9 +23,10 @@ function HomeContainer() {
 
     useEffect(() => {
         console.log('home');
+        setLoad({ show: false })
         // setAlert({ title: 'success', type: 'error' })
         // gatTags()
-        return () => {};
+        return () => { };
     }, [router]);
 
     const gatTags = () => {
