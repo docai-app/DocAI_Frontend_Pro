@@ -156,7 +156,7 @@ export default function Sidebar() {
                         </ListItemButton>
                     </ListItem>
                     <ListItem>
-                        <ListItemButton>
+                        <ListItemButton role="menuitem" component="a" href="/chatbot">
                             <DashboardRoundedIcon />
                             <ListItemContent>
                                 <Typography level="title-sm">助手</Typography>

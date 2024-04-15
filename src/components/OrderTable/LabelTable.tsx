@@ -38,15 +38,15 @@ import SearchIcon from '@mui/icons-material/Search';
 const rows = [
     {
         id: '生產部文件',
-        status: '功能111',
+        status: '功能111'
     },
     {
         id: '11月的請假表',
-        status: '功能1',
+        status: '功能1'
     },
     {
         id: 'CHYB請假表',
-        status: '功能222',
+        status: '功能222'
     }
 ];
 
@@ -185,7 +185,6 @@ export default function OrderTable() {
                     </tbody>
                 </Table>
             </Sheet>
-
         </React.Fragment>
     );
 }

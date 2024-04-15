@@ -23,10 +23,10 @@ function HomeContainer() {
 
     useEffect(() => {
         console.log('home');
-        setLoad({ show: false })
+        setLoad({ show: false });
         // setAlert({ title: 'success', type: 'error' })
         // gatTags()
-        return () => { };
+        return () => {};
     }, [router]);
 
     const gatTags = () => {

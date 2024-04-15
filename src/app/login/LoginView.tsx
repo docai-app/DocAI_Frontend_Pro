@@ -30,7 +30,7 @@ interface SignInFormElement extends HTMLFormElement {
 }
 interface ViewProps {
     data: any;
-    handleSignIn:FormEventHandler;
+    handleSignIn: FormEventHandler;
 }
 
 function ColorSchemeToggle(props: IconButtonProps) {
@@ -58,7 +58,7 @@ function ColorSchemeToggle(props: IconButtonProps) {
 }
 
 export default function LoginView(props: ViewProps) {
-    const {handleSignIn} = props;
+    const { handleSignIn } = props;
     return (
         <CssVarsProvider defaultMode="dark" disableTransitionOnChange>
             <CssBaseline />
