@@ -1,20 +1,82 @@
-import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
-import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 import { Box, Breadcrumbs, Link, Typography } from '@mui/joy';
 import Button from '@mui/joy/Button';
 import LabelTable from '../../../components/OrderTable/LabelTable';
-import { CssVarsProvider } from '@mui/joy/styles';
-import CssBaseline from '@mui/joy/CssBaseline';
-
+import React, { useEffect, useState } from 'react';
+import _ from 'lodash';
 
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
 
 interface ViewProps {
-    data: any;
+    loading: boolean;
+    addNewLabelHandler: any;
+    addNewLabelData: any;
+    getAllLabelsData: {
+        tags: {
+            id: string;
+            name: string;
+            taggings_count: number;
+            updated_at: string;
+            created_at: string;
+        }[];
+    };
+    setNewLabelName: any;
+    newLabelName: string;
+    updateLabelNameByIdHandler: any;
+    tagTypes: any;
+    updateTagFunctionsHandler: any;
+    deleteTagFunctionsHandler: any;
+    updateTagFeatureHandler: any;
 }
 
 function LabelView(props: ViewProps) {
+    const {
+        loading,
+        getAllLabelsData,
+        addNewLabelHandler,
+        newLabelName,
+        setNewLabelName,
+        updateLabelNameByIdHandler,
+        tagTypes,
+        updateTagFunctionsHandler,
+        deleteTagFunctionsHandler,
+        updateTagFeatureHandler
+    } = props;
+    const [sortedLabels, setSortedLabels] = useState<any[]>([]);
+    const [sortedUnCheckLabels, setSortedUnCheckLabels] = useState<any[]>([]);
+    const [open, setOpen] = useState(false);
+    const [tag, setTag] = useState('');
+
+    const [label, setLabel] = useState<any>();
+    const [chainFeatureIsOpen, setChainFeatureIsOpen] = useState(false);
+    const [chain_feature_ids, set_chain_feature_ids] = useState<any>([]);
+    const handleSave = (chain_feature_ids: any) => {
+        updateTagFeatureHandler(label?.id, chain_feature_ids);
+    };
+
+    useEffect(() => {
+        if (label) {
+            set_chain_feature_ids(label?.meta?.chain_features || []);
+        }
+    }, [label]);
+
+    useEffect(() => {
+        if (getAllLabelsData) {
+            setSortedLabels(
+                _.filter(getAllLabelsData.tags, function (o: any) {
+                    return o.is_checked;
+                })
+            );
+
+            setSortedUnCheckLabels(
+                _.filter(getAllLabelsData.tags, function (o: any) {
+                    return !o.is_checked;
+                })
+            );
+        }
+    }, [getAllLabelsData]);
+
+
     return (
         <>
             {/* <CssVarsProvider disableTransitionOnChange>

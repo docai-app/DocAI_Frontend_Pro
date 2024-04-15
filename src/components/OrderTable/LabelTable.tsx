@@ -28,14 +28,7 @@ import { useRouter, usePathname } from 'next/navigation';
 import _ from 'lodash';
 
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import AutorenewRoundedIcon from '@mui/icons-material/AutorenewRounded';
 import AddToPhotosOutlinedIcon from '@mui/icons-material/AddToPhotosOutlined';
-import CheckRoundedIcon from '@mui/icons-material/CheckRounded';
-import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
-import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
-import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
-import MoreHorizRoundedIcon from '@mui/icons-material/MoreHorizRounded';
-import SearchIcon from '@mui/icons-material/Search';
 
 const rows = [
     {
@@ -76,7 +69,7 @@ const rows = [
         },
     },
     {
-        id: "056b73e5-26cb-431e-8a42-fd77a8c1c511",
+        id: "056b73sse5-26cb-431e-8a42-fd77a8c1c511",
         name: 'CHYB請假表2',
         functions: [
             {
@@ -131,25 +124,6 @@ function stableSort<T>(array: readonly T[], comparator: (a: T, b: T) => number) 
     return stabilizedThis.map((el) => el[0]);
 }
 
-function RowMenu() {
-    return (
-        <Dropdown>
-            <MenuButton
-                slots={{ root: IconButton }}
-                slotProps={{ root: { variant: 'plain', color: 'neutral', size: 'sm' } }}
-            >
-                <MoreHorizRoundedIcon />
-            </MenuButton>
-            <Menu size="sm" sx={{ minWidth: 140 }}>
-                <MenuItem>Edit</MenuItem>
-                <MenuItem>Rename</MenuItem>
-                <MenuItem>Move</MenuItem>
-                <Divider />
-                <MenuItem color="danger">Delete</MenuItem>
-            </Menu>
-        </Dropdown>
-    );
-}
 
 export default function OrderTable() {
     const [order, setOrder] = React.useState<Order>('desc');
