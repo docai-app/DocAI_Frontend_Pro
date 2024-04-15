@@ -59,7 +59,7 @@ function Toggler({
 }
 
 export default function Sidebar() {
-    const pathname = usePathname()
+    const pathname = usePathname();
     const [email, setEmail] = React.useState<string>('');
 
     useEffect(() => {
@@ -150,7 +150,8 @@ export default function Sidebar() {
                         <ListItemButton
                             selected={pathname == '/' || pathname == '/home'}
                             component="a"
-                            href='/'>
+                            href="/"
+                        >
                             <HomeRoundedIcon />
                             <ListItemContent>
                                 <Typography level="title-sm">Home</Typography>
@@ -168,8 +169,11 @@ export default function Sidebar() {
                     </ListItem>
                     <ListItem>
                         <ListItemButton
-                            role="menuitem" component="a" href="/chatbot"
-                            selected={pathname.indexOf('/chatbot') != -1}>
+                            role="menuitem"
+                            component="a"
+                            href="/chatbot"
+                            selected={pathname.indexOf('/chatbot') != -1}
+                        >
                             <SmsIcon />
                             <ListItemContent>
                                 <Typography level="title-sm">助手</Typography>
@@ -180,7 +184,9 @@ export default function Sidebar() {
                     <ListItem>
                         <ListItemButton
                             selected={pathname.indexOf('/shop') != -1}
-                            component="a" href="/shop">
+                            component="a"
+                            href="/shop"
+                        >
                             <ShoppingCartRoundedIcon />
                             <ListItemContent>
                                 <Typography level="title-sm">商城</Typography>

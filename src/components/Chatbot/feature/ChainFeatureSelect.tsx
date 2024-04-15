@@ -103,8 +103,9 @@ export default function ChainFeatureSelect(props: ChainFeatureSelectProps) {
                                 return (
                                     <div
                                         key={index}
-                                        className={` border p-2 mt-1 cursor-pointer ${!isSelected(item?.fields?.id) ? ' bg-indigo-100' : ''
-                                            }`}
+                                        className={` border p-2 mt-1 cursor-pointer ${
+                                            !isSelected(item?.fields?.id) ? ' bg-indigo-100' : ''
+                                        }`}
                                         onClick={() => handleChainFeatureClick(item?.fields?.id)}
                                     >
                                         {item.fields.name}

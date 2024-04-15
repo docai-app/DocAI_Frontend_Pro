@@ -19,17 +19,17 @@ type FolderTreeProps = {
     folders?: Folder[];
     expanded: boolean;
 } & (
-        | {
-            multipleDest: Folder[] | null;
-            setMultipleDest: Dispatch<SetStateAction<Folder[]>>;
-            multiple: true;
-        }
-        | {
-            dest: Folder | null;
-            setDest: Dispatch<SetStateAction<Folder | null>>;
-            multiple?: false;
-        }
-    );
+    | {
+          multipleDest: Folder[] | null;
+          setMultipleDest: Dispatch<SetStateAction<Folder[]>>;
+          multiple: true;
+      }
+    | {
+          dest: Folder | null;
+          setDest: Dispatch<SetStateAction<Folder | null>>;
+          multiple?: false;
+      }
+);
 
 const apiSetting = new Api();
 
@@ -86,8 +86,9 @@ function Folder(props: Folder) {
     return (
         <div className="pl-5">
             <div
-                className={`flex items-center pl-5 relative text-gray-400 rounded-lg cursor-pointer${isSelected(folder.id) ? ' bg-indigo-100' : ''
-                    }`}
+                className={`flex items-center pl-5 relative text-gray-400 rounded-lg cursor-pointer${
+                    isSelected(folder.id) ? ' bg-indigo-100' : ''
+                }`}
             >
                 {expanded ? (
                     !(!showAllFolderItemsLoading && folder.folders?.length === 0) && (

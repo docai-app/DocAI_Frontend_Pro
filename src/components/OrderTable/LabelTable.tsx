@@ -40,57 +40,57 @@ import SearchIcon from '@mui/icons-material/Search';
 const rows = [
     {
         id: 'a65ae4d7-2d3e-46fd-a611-dd061e69bf2b',
-        name: "生產部文件",
+        name: '生產部文件',
         is_checked: true,
         smart_extraction_schemas_count: 0,
         functions: [
             {
-                title: "一般審批",
+                title: '一般審批'
             }
         ],
-        meta: { chain_features: [] },
+        meta: { chain_features: [] }
     },
     {
-        id: "0b4ae534-b227-4dbb-8884-2614393c027d",
+        id: '0b4ae534-b227-4dbb-8884-2614393c027d',
         name: '11月的請假表',
         functions: [],
         is_checked: true,
         smart_extraction_schemas_count: 0,
-        meta: { chain_features: [] },
+        meta: { chain_features: [] }
     },
     {
-        id: "056b73e5-26cb-431e-8a42-fd77a8c1c511",
+        id: '056b73e5-26cb-431e-8a42-fd77a8c1c511',
         name: 'CHYB請假表',
         functions: [
             {
-                title: "表格深度理解",
+                title: '表格深度理解'
             },
             {
-                title: "一般審批"
+                title: '一般審批'
             }
         ],
         is_checked: true,
         smart_extraction_schemas_count: 0,
         meta: {
-            chain_features: ["2", "7", "11", 27],
-        },
+            chain_features: ['2', '7', '11', 27]
+        }
     },
     {
-        id: "056b73e5-26cb-431e-8a42-fd77a8c1c511",
+        id: '056b73e5-26cb-431e-8a42-fd77a8c1c511',
         name: 'CHYB請假表2',
         functions: [
             {
-                title: "表格深度理解",
+                title: '表格深度理解'
             },
             {
-                title: "一般審批"
+                title: '一般審批'
             }
         ],
         is_checked: false,
         smart_extraction_schemas_count: 0,
         meta: {
-            chain_features: ["2", "7", "11", 27],
-        },
+            chain_features: ['2', '7', '11', 27]
+        }
     }
 ];
 
@@ -231,12 +231,14 @@ export default function OrderTable() {
                                 </td>
 
                                 <td>
-                                    <Box sx={{ 
-                                        display: 'flex', 
-                                        gap: 2, 
-                                        alignItems: 'center',
-                                        justifyContent: 'center'
-                                    }}>
+                                    <Box
+                                        sx={{
+                                            display: 'flex',
+                                            gap: 2,
+                                            alignItems: 'center',
+                                            justifyContent: 'center'
+                                        }}
+                                    >
                                         <Link
                                             level="body-xs"
                                             href={`/document/extraction/${row?.id}`}
@@ -246,10 +248,10 @@ export default function OrderTable() {
 
                                         {row && !row?.is_checked && (
                                             <Button
-                                                size={"sm"}
+                                                size={'sm'}
                                                 endDecorator={<AddToPhotosOutlinedIcon />}
                                                 onClick={() => {
-                                                    console.log('加到名单！')
+                                                    console.log('加到名单！');
                                                 }}
                                             >
                                                 加到名單

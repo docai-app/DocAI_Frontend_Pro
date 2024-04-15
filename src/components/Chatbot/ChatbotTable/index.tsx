@@ -178,9 +178,11 @@ export default function ChatbotTable(props: ViewProps) {
                                                             color: 'black'
                                                         }}
                                                     >
-                                                        <Typography onClick={() => {
-                                                            handleShare(row.chatbot, true);
-                                                        }}>
+                                                        <Typography
+                                                            onClick={() => {
+                                                                handleShare(row.chatbot, true);
+                                                            }}
+                                                        >
                                                             {row.chatbot.name}
                                                         </Typography>
                                                     </Link>

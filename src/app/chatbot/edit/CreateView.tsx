@@ -152,10 +152,7 @@ function CreateView(props: CreateViewProps) {
                         ></textarea>
                     </div>
                 </div>
-                <SetFolderView
-                    multipleDest={multipleDest}
-                    setMultipleDest={setMultipleDest}
-                />
+                <SetFolderView multipleDest={multipleDest} setMultipleDest={setMultipleDest} />
                 {/* <SetCategoryView chatbot={chatbot} setChatbot={setChatbot} /> */}
 
                 <div className="col-span-full w-full">
