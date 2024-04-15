@@ -1,5 +1,6 @@
 import { Box, Breadcrumbs, Link, Typography } from '@mui/joy';
 import Button from '@mui/joy/Button';
+import Divider from '@mui/joy/Divider';
 import LabelTable from '../../../components/OrderTable/LabelTable';
 import React, { useEffect, useState } from 'react';
 import _ from 'lodash';
@@ -79,8 +80,6 @@ function LabelView(props: ViewProps) {
 
     return (
         <>
-            {/* <CssVarsProvider disableTransitionOnChange>
-                <CssBaseline /> */}
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
                 <Box
                     component="main"
@@ -101,20 +100,6 @@ function LabelView(props: ViewProps) {
                         gap: 1
                     }}
                 >
-                    {/* <Breadcrumbs
-                        size="sm"
-                        aria-label="breadcrumbs"
-                        separator={<ChevronRightRoundedIcon />}
-                        sx={{ pl: 0 }}
-                    >
-                        <Link underline="none" color="neutral" href="/" aria-label="Home">
-                            <HomeRoundedIcon />
-                        </Link>
-                        <Typography color="primary" fontWeight={500} fontSize={12}>
-                            Label
-                        </Typography>
-                    </Breadcrumbs> */}
-
                     <Box
                         sx={{
                             display: 'flex',
@@ -145,11 +130,12 @@ function LabelView(props: ViewProps) {
                     </Box>
 
                     <LabelTable />
-                    <Typography level="h3">待查核標籤</Typography>
+                    <Divider sx={{mt:1}} color="primary">
+                        <Typography level="h3">待查核標籤</Typography>
+                    </Divider>
                     <LabelTable />
                 </Box>
             </Box>
-            {/* </CssVarsProvider> */}
         </>
     );
 }
