@@ -66,8 +66,6 @@ function ChatbotContainer() {
 
     useEffect(() => {
         if (showAllChatbotsData?.success) {
-            console.log(showAllChatbotsData.chatbots);
-
             setChatbots(showAllChatbotsData.chatbots);
             setMeta(showAllChatbotsData.meta);
             setLoad({ show: false });
@@ -96,7 +94,7 @@ function ChatbotContainer() {
         });
     };
 
-    const handleShare = (chatbot: Chatbot) => {
+    const handleShare = (chatbot: Chatbot, open?: boolean) => {
         setLoad({ show: true, content: '正在獲取連結...' });
         getShareSignature({
             ...apiSetting.Chatbot.getShareSignature(chatbot.id)
@@ -108,11 +106,16 @@ function ChatbotContainer() {
                 const link =
                     process.env.NEXT_PUBLIC_CHATBOT_URL +
                     `${chatbot.id}?token_key=${encryptedText}`;
-                setQrcodeContent({
-                    ...chatbot,
-                    link: link
-                });
-                setVisibleQRcode(true);
+
+                if (open) {
+                    window.open(link);
+                } else {
+                    setQrcodeContent({
+                        ...chatbot,
+                        link: link
+                    });
+                    setVisibleQRcode(true);
+                }
             }
         });
     };

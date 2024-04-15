@@ -41,10 +41,6 @@ interface ViewProps {
 export default function ChatbotTable(props: ViewProps) {
     const { chatbots, meta, handleDeleteChatbot, handleShare } = props;
     const router = useRouter();
-    React.useEffect(() => {
-        console.log('chatbots', chatbots);
-    }, []);
-
     const [open, setOpen] = React.useState(false);
     const renderFilters = () => (
         <React.Fragment>
@@ -177,13 +173,16 @@ export default function ChatbotTable(props: ViewProps) {
                                                 <Typography level="body-sm">
                                                     <Link
                                                         level="title-sm"
-                                                        href={`/chatbot/${row.chatbot.id}`}
                                                         sx={{
                                                             fontWeight: 'bold',
                                                             color: 'black'
                                                         }}
                                                     >
-                                                        {row.chatbot.name}
+                                                        <Typography onClick={() => {
+                                                            handleShare(row.chatbot, true);
+                                                        }}>
+                                                            {row.chatbot.name}
+                                                        </Typography>
                                                     </Link>
                                                     {getFeatureNames(
                                                         row.chatbot.meta?.selected_features
@@ -227,11 +226,8 @@ export default function ChatbotTable(props: ViewProps) {
                                                     );
                                                 }}
                                                 remove={() => {
-                                                    // remove(chatbot);
+                                                    handleDeleteChatbot(row.chatbot);
                                                 }}
-                                                // remove={() => {
-                                                //     handleDeleteChatbot(row.chatbot.id)
-                                                // }}
                                             />
                                         </Box>
                                     </ListItemContent>

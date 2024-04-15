@@ -3,6 +3,7 @@ import AIAnswerView from '@/components/Chatbot/feature/AIAnswerView';
 import AIDataView from '@/components/Chatbot/feature/AIDataView';
 import ChainFeatureView from '@/components/Chatbot/feature/ChainFeatureView';
 import ReadingView from '@/components/Chatbot/feature/ReadingView';
+import SetFolderView from '@/components/Chatbot/feature/SetFolderView';
 import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 import { Box, Breadcrumbs, Link, Typography } from '@mui/joy';
@@ -41,7 +42,6 @@ function CreateView(props: CreateViewProps) {
         expert_ids,
         setExpert_ids
     } = props;
-    const [folderTreeIsOpen, setFolderTreeIsOpen] = useState(false);
     const [assistants, setAssistants] = useState<any>([]);
     const [experts, setExperts] = useState<any>([]);
 
@@ -152,10 +152,10 @@ function CreateView(props: CreateViewProps) {
                         ></textarea>
                     </div>
                 </div>
-                {/* <SetFolderView
-                            multipleDest={multipleDest}
-                            setMultipleDest={setMultipleDest}
-                        /> */}
+                <SetFolderView
+                    multipleDest={multipleDest}
+                    setMultipleDest={setMultipleDest}
+                />
                 {/* <SetCategoryView chatbot={chatbot} setChatbot={setChatbot} /> */}
 
                 <div className="col-span-full w-full">
@@ -236,14 +236,6 @@ function CreateView(props: CreateViewProps) {
                     </button>
                 </div>
             </Box>
-            {/* <FolderTreeForMultipleSelect
-                {...{
-                    isOpen: folderTreeIsOpen,
-                    setIsOpen: setFolderTreeIsOpen,
-                    multipleDest,
-                    setMultipleDest
-                }}
-            /> */}
         </>
     );
 }
