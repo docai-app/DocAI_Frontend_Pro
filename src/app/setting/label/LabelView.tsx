@@ -3,11 +3,13 @@ import Button from '@mui/joy/Button';
 import Divider from '@mui/joy/Divider';
 import LabelTable from '../../../components/OrderTable/LabelTable';
 import EditLabel from '../../../components/setting/label/EditLabel';
+import SingleActionModel from '../../../components/common/Widget/SingleActionModel';
 import React, { useEffect, useState } from 'react';
 import _ from 'lodash';
 import { useRouter } from 'next/navigation';
 
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
+import DownloadingIcon from '@mui/icons-material/Downloading';
 // import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
 import Add from '@mui/icons-material/Add';
 
@@ -83,6 +85,27 @@ function LabelView(props: ViewProps) {
 
     return (
         <>
+            <SingleActionModel
+                open={loading}
+                setOpen={() => { }}
+                title={'進行中......'}
+                content={'正在加载数据...'}
+                icon={<DownloadingIcon color="success" />}
+            />
+            <EditLabel
+                {...{
+                    open,
+                    setOpen,
+                    tag,
+                    tagTypes,
+                    newLabelName,
+                    setNewLabelName,
+                    addNewLabelHandler,
+                    updateLabelNameByIdHandler,
+                    updateTagFunctionsHandler,
+                    deleteTagFunctionsHandler
+                }} />
+
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
                 <Box
                     component="main"
@@ -134,19 +157,7 @@ function LabelView(props: ViewProps) {
                         >
                             新增
                         </Button>
-                        <EditLabel
-                            {...{
-                                open,
-                                setOpen,
-                                tag,
-                                tagTypes,
-                                newLabelName,
-                                setNewLabelName,
-                                addNewLabelHandler,
-                                updateLabelNameByIdHandler,
-                                updateTagFunctionsHandler,
-                                deleteTagFunctionsHandler
-                            }} />
+
                     </Box>
 
                     {sortedLabels && <LabelTable

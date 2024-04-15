@@ -30,63 +30,6 @@ import _ from 'lodash';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import AddToPhotosOutlinedIcon from '@mui/icons-material/AddToPhotosOutlined';
 
-const rows = [
-    {
-        id: 'a65ae4d7-2d3e-46fd-a611-dd061e69bf2b',
-        name: "生產部文件",
-        is_checked: true,
-        smart_extraction_schemas_count: 0,
-        functions: [
-            {
-                title: "一般審批",
-            }
-        ],
-        meta: { chain_features: [] },
-    },
-    {
-        id: "0b4ae534-b227-4dbb-8884-2614393c027d",
-        name: '11月的請假表',
-        functions: [],
-        is_checked: true,
-        smart_extraction_schemas_count: 0,
-        meta: { chain_features: [] },
-    },
-    {
-        id: "056b73e5-26cb-431e-8a42-fd77a8c1c511",
-        name: 'CHYB請假表',
-        functions: [
-            {
-                title: "表格深度理解",
-            },
-            {
-                title: "一般審批"
-            }
-        ],
-        is_checked: true,
-        smart_extraction_schemas_count: 0,
-        meta: {
-            chain_features: ["2", "7", "11", 27],
-        },
-    },
-    {
-        id: "056b73sse5-26cb-431e-8a42-fd77a8c1c511",
-        name: 'CHYB請假表2',
-        functions: [
-            {
-                title: "表格深度理解",
-            },
-            {
-                title: "一般審批"
-            }
-        ],
-        is_checked: false,
-        smart_extraction_schemas_count: 0,
-        meta: {
-            chain_features: ["2", "7", "11", 27],
-        },
-    }
-];
-
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
     if (b[orderBy] < a[orderBy]) {
         return -1;
@@ -129,7 +72,6 @@ export default function LabelTable(props: any) {
     const [order, setOrder] = React.useState<Order>('desc');
     const [selected, setSelected] = React.useState<readonly string[]>([]);
     const [open, setOpen] = React.useState(false);
-
 
     return (
         <React.Fragment>
@@ -183,24 +125,25 @@ export default function LabelTable(props: any) {
                         </tr>
                     </thead>
                     <tbody>
-                        {labels && (stableSort(labels, getComparator(order, 'id')).map((row) => (
-                            <tr key={row.id}>
+                        {/* {labels && (stableSort(labels, getComparator(order, 'id')).map((row) => ( */}
+                        {labels && (labels.map((label: any) => (
+                            <tr key={label.id}>
                                 <td>
                                     <Link
                                         color="primary"
                                         underline="hover"
-                                        href={`/search?content=&tag_id=${row?.id}&from=&to=`}
+                                        href={`/search?content=&tag_id=${label?.id}&from=&to=`}
                                     >
-                                        {row.name}
+                                        {label.name}
                                     </Link>
                                 </td>
                                 <td>
-                                    {_.join(_.map(row?.functions, 'title'), ', ')}
-                                    {row?.smart_extraction_schemas_count > 0 && (
-                                        <>、數據提取({row?.smart_extraction_schemas_count || 0})</>
+                                    {_.join(_.map(label?.functions, 'title'), ', ')}
+                                    {label?.smart_extraction_schemas_count > 0 && (
+                                        <>、數據提取({label?.smart_extraction_schemas_count || 0})</>
                                     )}
-                                    {row?.meta?.chain_features?.length > 0 && (
-                                        <>、推薦功能({row?.meta?.chain_features?.length || 0})</>
+                                    {label?.meta?.chain_features?.length > 0 && (
+                                        <>、推薦功能({label?.meta?.chain_features?.length || 0})</>
                                     )}
                                 </td>
 
@@ -213,17 +156,17 @@ export default function LabelTable(props: any) {
                                     }}>
                                         <Link
                                             level="body-xs"
-                                            href={`/document/extraction/${row?.id}`}
+                                            href={`/document/extraction/${label?.id}`}
                                         >
                                             编辑
                                         </Link>
 
-                                        {row && !row?.is_checked && (
+                                        {label && !label?.is_checked && (
                                             <Button
                                                 size={"sm"}
                                                 endDecorator={<AddToPhotosOutlinedIcon />}
                                                 onClick={() => {
-                                                    updateLabelNameByIdHandler(row.id, row?.name, true);
+                                                    updateLabelNameByIdHandler(label.id, label?.name, true);
                                                 }}
                                             >
                                                 加到名單
