@@ -4,7 +4,7 @@ import Api from '@/apis';
 import useAlert from '@/hooks/useAlert';
 import useLoad from '@/hooks/useLoad';
 import useAxios from 'axios-hooks';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import HomeView from './ChatbotView';
 
@@ -33,7 +33,7 @@ function ChatbotContainer() {
     const { setAlert } = useAlert();
     const { setLoad } = useLoad();
     const router = useRouter();
-    // const searchParams = useSearchParams();
+    const searchParams = useSearchParams();
     const [page, setPage] = useState(1);
     const [chatbots, setChatbots] = useState<Chatbots[]>([]);
     const [meta, setMeta] = useState<any>();
@@ -48,15 +48,11 @@ function ChatbotContainer() {
         getAllChatbots(apiSetting.Chatbot.showAllChatbots(page));
     }, [page]);
 
-    // useEffect(() => {
-
-    // }, [searchParams]);
-
-    // useEffect(() => {
-    //     if (searchParams) {
-    //         setPage(parseInt(searchParams.get('page') || '1'));
-    //     }
-    // }, [searchParams]);
+    useEffect(() => {
+        if (searchParams) {
+            setPage(parseInt(searchParams.get('page') || '1'));
+        }
+    }, [searchParams]);
 
     useEffect(() => {
         if (showAllChatbotsData?.success) {
@@ -71,7 +67,6 @@ function ChatbotContainer() {
         }
     }, [showAllChatbotsData]);
 
-    const gatTags = () => {};
     return (
         <HomeView
             {...{

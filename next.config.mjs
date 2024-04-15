@@ -1,6 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     reactStrictMode: false,
+    experimental: {
+        missingSuspenseWithCSRBailout: false,
+    },
     webpack: (config) => {
         // load worker files as a urls with `file-loader`
         config.module.rules.unshift({

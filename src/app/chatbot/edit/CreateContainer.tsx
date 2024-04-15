@@ -68,7 +68,7 @@ function CreateContainer() {
     }, []);
 
     const handleCreate = useCallback(async () => {
-        if ("searchParams.get('id')") {
+        if (searchParams.has('id')) {
             handleUpdate();
         } else {
             if (_.isEmpty(chatbot?.meta?.selected_features)) {
@@ -106,10 +106,10 @@ function CreateContainer() {
             return;
         }
 
-        if ("searchParams.get('id')") {
+        if (searchParams.has('id')) {
             setActionContent('正在保存數據');
             const res = await updateChatbot({
-                ...apiSetting.Chatbot.updateChatbotById("searchParams.get('id')" || ''),
+                ...apiSetting.Chatbot.updateChatbotById(searchParams.get('id') || ''),
                 data: {
                     name: chatbot?.name,
                     description: chatbot?.description,
