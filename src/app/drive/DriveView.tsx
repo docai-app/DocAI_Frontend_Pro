@@ -1,4 +1,15 @@
 import { Box, Breadcrumbs, Link, Typography, Chip } from '@mui/joy';
+import {
+    Dispatch,
+    Fragment,
+    SetStateAction,
+    useCallback,
+    useEffect,
+    useRef,
+    useState
+} from 'react';
+import Router from 'next/navigation';
+import { Folder } from '../../components/common/Widget/FolderTree';
 import DriveTable from '../../components/DriveLayout/DriveTable';
 import LabelManagement from '../../components/DriveLayout/LabelManagement';
 import Button from '@mui/joy/Button';
@@ -9,11 +20,98 @@ import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 import Add from '@mui/icons-material/Add';
 import KeyboardDoubleArrowDownIcon from '@mui/icons-material/KeyboardDoubleArrowDown';
 
-interface ViewProps {
-    data: any;
+interface DriveViewProps {
+    id: string | string[] | null | undefined;
+    name: string | string[] | null | undefined;
+    showAllItemsData: any;
+    showAllItemsLoading: boolean;
+    mode: 'view' | 'move' | 'share' | 'newFolder';
+    setMode: Dispatch<SetStateAction<'view' | 'move' | 'share' | 'newFolder'>>;
+    target: any[];
+    setTarget: Dispatch<SetStateAction<any[]>>;
+    dest: Folder | null;
+    setDest: Dispatch<SetStateAction<Folder | null>>;
+    shareWith: any[];
+    setShareWith: Dispatch<SetStateAction<any[]>>;
+    handleShare: (id: string, user_email: string) => void;
+    handleNewFolder: (name: string) => Promise<void>;
+    countDocumentsByDateData: any;
+    current: any;
+    setCurrent: any;
+    visableRename: boolean;
+    setVisableRename: any;
+    updateFolderOrDocumentHandler: any;
+    deleteFolderOrDocumentHandler: any;
+    visableDelete: boolean;
+    setVisableDelete: any;
+    allItemsData: any;
+    allFoldersItemsData: any;
+    showAllItemsHandler: any;
+    documents_items: any;
+    setDocumentsItems: any;
+    folders_items: any;
+    setFoldersItems: any;
+    handleMoveItems: any;
+    handleDeleteItems: any;
+    handleDownloadItemsAndFolders: any;
+    getAllLabelsData: any;
+    search: any;
+    confirmDocumentFormik?: any;
+    addNewLabelHandler?: any;
+    newLabelName: string;
+    setNewLabelName: any;
+    updateTag: boolean;
+    setUpdateTag: any;
+    schemasStatusReadyData: any;
+    handleDeepUnderstanding: any;
 }
+export default function DriveView(props: DriveViewProps) {
+    const {
+        id = null,
+        name = 'Root',
+        showAllItemsData = null,
+        showAllItemsLoading = null,
+        mode = 'view',
+        setMode = () => {},
+        target = [],
+        setTarget = () => {},
+        dest = null,
+        setDest = () => {},
+        shareWith = [],
+        setShareWith = () => {},
+        handleShare = async () => {},
+        handleNewFolder = async () => {},
+        countDocumentsByDateData = null,
+        current,
+        setCurrent,
+        visableRename,
+        setVisableRename,
+        updateFolderOrDocumentHandler,
+        visableDelete,
+        setVisableDelete,
+        deleteFolderOrDocumentHandler,
+        allItemsData,
+        allFoldersItemsData,
+        showAllItemsHandler,
+        documents_items,
+        setDocumentsItems,
+        folders_items,
+        setFoldersItems,
+        handleMoveItems,
+        handleDeleteItems,
+        handleDownloadItemsAndFolders,
+        getAllLabelsData,
+        search,
+        confirmDocumentFormik,
+        newLabelName,
+        setNewLabelName,
+        addNewLabelHandler,
+        updateTag,
+        setUpdateTag,
+        schemasStatusReadyData,
+        handleDeepUnderstanding
+    } = props;
 
-function DriveView(props: ViewProps) {
     return (
         <>
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
@@ -119,5 +217,3 @@ function DriveView(props: ViewProps) {
         </>
     );
 }
-
-export default DriveView;
