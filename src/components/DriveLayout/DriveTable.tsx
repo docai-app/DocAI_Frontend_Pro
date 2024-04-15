@@ -125,7 +125,7 @@ function stableSort<T>(array: readonly T[], comparator: (a: T, b: T) => number) 
 }
 
 
-export default function LabelTable() {
+export default function DriveTable() {
     const [order, setOrder] = React.useState<Order>('desc');
     const [selected, setSelected] = React.useState<readonly string[]>([]);
     const [open, setOpen] = React.useState(false);
@@ -134,7 +134,7 @@ export default function LabelTable() {
     return (
         <React.Fragment>
             <Sheet
-                className="LabelTableContainer"
+                className="DriveContainer"
                 variant="outlined"
                 sx={{
                     display: { xs: 'none', sm: 'initial' },
@@ -159,7 +159,7 @@ export default function LabelTable() {
                 >
                     <thead>
                         <tr>
-                            <th style={{ width: 80, padding: '12px 6px' }}>
+                            <th style={{ width: '40%', padding: '12px 6px' }}>
                                 <Link
                                     underline="none"
                                     color="primary"
@@ -178,8 +178,10 @@ export default function LabelTable() {
                                     名稱
                                 </Link>
                             </th>
-                            <th style={{ width: 140, padding: '12px 6px' }}> 功能</th>
-                            <th style={{ width: '20%', padding: '12px 6px' }}> </th>
+                            <th style={{ width: 20, padding: '12px 6px' }}> 標籤</th>
+                            <th style={{ width: 20, padding: '12px 6px' }}> 動作</th>
+                            <th style={{ width: 40, padding: '12px 6px' }}> 修改日期</th>
+                            <th style={{ width: 40, padding: '12px 6px' }}> 擁有人</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -194,20 +196,12 @@ export default function LabelTable() {
                                         {row.name}
                                     </Link>
                                 </td>
-                                <td>
-                                    {_.join(_.map(row?.functions, 'title'), ', ')}
-                                    {row?.smart_extraction_schemas_count > 0 && (
-                                        <>、數據提取({row?.smart_extraction_schemas_count || 0})</>
-                                    )}
-                                    {row?.meta?.chain_features?.length > 0 && (
-                                        <>、推薦功能({row?.meta?.chain_features?.length || 0})</>
-                                    )}
-                                </td>
+                                <td>標籤</td>
 
                                 <td>
-                                    <Box sx={{ 
-                                        display: 'flex', 
-                                        gap: 2, 
+                                    <Box sx={{
+                                        display: 'flex',
+                                        gap: 2,
                                         alignItems: 'center',
                                         justifyContent: 'center'
                                     }}>
@@ -215,22 +209,13 @@ export default function LabelTable() {
                                             level="body-xs"
                                             href={`/document/extraction/${row?.id}`}
                                         >
-                                            编辑
+                                            動作
                                         </Link>
-
-                                        {row && !row?.is_checked && (
-                                            <Button
-                                                size={"sm"}
-                                                endDecorator={<AddToPhotosOutlinedIcon />}
-                                                onClick={() => {
-                                                    console.log('加到名单！')
-                                                }}
-                                            >
-                                                加到名單
-                                            </Button>
-                                        )}
                                     </Box>
                                 </td>
+
+                                <td>修改日期</td>
+                                <td>擁有人</td>
                             </tr>
                         ))}
                     </tbody>

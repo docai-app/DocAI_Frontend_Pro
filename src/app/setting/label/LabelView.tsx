@@ -6,7 +6,8 @@ import React, { useEffect, useState } from 'react';
 import _ from 'lodash';
 
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
-import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
+// import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
+import Add from '@mui/icons-material/Add';
 
 interface ViewProps {
     loading: boolean;
@@ -77,7 +78,6 @@ function LabelView(props: ViewProps) {
         }
     }, [getAllLabelsData]);
 
-
     return (
         <>
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
@@ -122,7 +122,7 @@ function LabelView(props: ViewProps) {
                         </Typography>
                         <Button
                             color="primary"
-                            startDecorator={<FileDownloadOutlinedIcon />}
+                            startDecorator={<Add />}
                             size="sm"
                         >
                             新增
@@ -131,7 +131,7 @@ function LabelView(props: ViewProps) {
 
                     <LabelTable />
                     <Divider sx={{mt:1}} color="primary">
-                        <Typography level="h3">待查核標籤</Typography>
+                        <Typography level="h4">待查核標籤</Typography>
                     </Divider>
                     <LabelTable />
                 </Box>
