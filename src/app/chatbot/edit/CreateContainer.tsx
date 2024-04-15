@@ -2,7 +2,7 @@
 
 import useAxios from 'axios-hooks';
 import _ from 'lodash';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useCallback, useEffect, useState } from 'react';
 import Api from '../../../apis';
 import { getAllChainFeatureDatas } from '../../../apis/AirtableChainFeature';
@@ -14,7 +14,7 @@ const apiSetting = new Api();
 
 function CreateContainer() {
     const router = useRouter();
-    // const searchParams = useSearchParams();
+    const searchParams = useSearchParams();
     const { setAlert } = useAlert();
     const [open, setOpen] = useState(false);
     const [multipleDest, setMultipleDest] = useState<Folder[]>([]);

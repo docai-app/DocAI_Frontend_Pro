@@ -71,7 +71,7 @@ function ChatbotContainer() {
         }
     }, [showAllChatbotsData]);
 
-    const gatTags = () => { };
+    const gatTags = () => {};
     return (
         <HomeView
             {...{
