@@ -6,6 +6,10 @@ import LabelTable from '../../../components/OrderTable/LabelTable';
 import { CssVarsProvider } from '@mui/joy/styles';
 import CssBaseline from '@mui/joy/CssBaseline';
 
+
+import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
+import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
+
 interface ViewProps {
     data: any;
 }
@@ -53,6 +57,7 @@ function LabelView(props: ViewProps) {
                         sx={{
                             display: 'flex',
                             mb: 1,
+                            mr: 3,
                             gap: 1,
                             flexDirection: { xs: 'column', sm: 'row' },
                             alignItems: { xs: 'start', sm: 'center' },
@@ -61,7 +66,7 @@ function LabelView(props: ViewProps) {
                         }}
                     >
                         <Button color="primary" variant="plain"
-                        // startDecorator={<Add />}
+                            startDecorator={<KeyboardArrowLeftIcon />}
                         >
                             返回
                         </Button>
@@ -70,7 +75,7 @@ function LabelView(props: ViewProps) {
                         </Typography>
                         <Button
                             color="primary"
-                            // startDecorator={<DownloadRoundedIcon />}
+                            startDecorator={<FileDownloadOutlinedIcon />}
                             size="sm"
                         >
                             新增
@@ -79,10 +84,10 @@ function LabelView(props: ViewProps) {
 
                     <LabelTable />
 
-                    
+
                     <Typography level="h3">
-                    待查核標籤
-                        </Typography>
+                        待查核標籤
+                    </Typography>
                     <LabelTable />
                 </Box>
             </Box>

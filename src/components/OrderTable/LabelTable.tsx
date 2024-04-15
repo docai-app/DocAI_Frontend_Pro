@@ -24,12 +24,14 @@ import { ColorPaletteProp } from '@mui/joy/styles';
 import Table from '@mui/joy/Table';
 import Typography from '@mui/joy/Typography';
 import * as React from 'react';
+import { useRouter, usePathname } from 'next/navigation';
+// import _ from 'lodash';
 
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import AutorenewRoundedIcon from '@mui/icons-material/AutorenewRounded';
-import BlockIcon from '@mui/icons-material/Block';
+import AddToPhotosOutlinedIcon from '@mui/icons-material/AddToPhotosOutlined';
 import CheckRoundedIcon from '@mui/icons-material/CheckRounded';
-import FilterAltIcon from '@mui/icons-material/FilterAlt';
+import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import MoreHorizRoundedIcon from '@mui/icons-material/MoreHorizRounded';
@@ -37,16 +39,58 @@ import SearchIcon from '@mui/icons-material/Search';
 
 const rows = [
     {
-        id: '生產部文件',
-        status: '功能111',
+        id: 'a65ae4d7-2d3e-46fd-a611-dd061e69bf2b',
+        name: "生產部文件",
+        is_checked: true,
+        smart_extraction_schemas_count: 0,
+        functions: [
+            {
+                title: "一般審批",
+            }
+        ],
+        meta: { chain_features: [] },
     },
     {
-        id: '11月的請假表',
-        status: '功能1',
+        id: "0b4ae534-b227-4dbb-8884-2614393c027d",
+        name: '11月的請假表',
+        functions: [],
+        is_checked: true,
+        smart_extraction_schemas_count: 0,
+        meta: { chain_features: [] },
     },
     {
-        id: 'CHYB請假表',
-        status: '功能222',
+        id: "056b73e5-26cb-431e-8a42-fd77a8c1c511",
+        name: 'CHYB請假表',
+        functions: [
+            {
+                title: "表格深度理解",
+            },
+            {
+                title: "一般審批"
+            }
+        ],
+        is_checked: true,
+        smart_extraction_schemas_count: 0,
+        meta: {
+            chain_features: ["2", "7", "11", 27],
+        },
+    },
+    {
+        id: "056b73e5-26cb-431e-8a42-fd77a8c1c511",
+        name: 'CHYB請假表2',
+        functions: [
+            {
+                title: "表格深度理解",
+            },
+            {
+                title: "一般審批"
+            }
+        ],
+        is_checked: false,
+        smart_extraction_schemas_count: 0,
+        meta: {
+            chain_features: ["2", "7", "11", 27],
+        },
     }
 ];
 
@@ -111,6 +155,7 @@ export default function OrderTable() {
     const [order, setOrder] = React.useState<Order>('desc');
     const [selected, setSelected] = React.useState<readonly string[]>([]);
     const [open, setOpen] = React.useState(false);
+    const router = useRouter();
 
     return (
         <React.Fragment>
@@ -140,7 +185,7 @@ export default function OrderTable() {
                 >
                     <thead>
                         <tr>
-                            <th style={{ width: 120, padding: '12px 6px' }}>
+                            <th style={{ width: 80, padding: '12px 6px' }}>
                                 <Link
                                     underline="none"
                                     color="primary"
@@ -160,24 +205,57 @@ export default function OrderTable() {
                                 </Link>
                             </th>
                             <th style={{ width: 140, padding: '12px 6px' }}> 功能</th>
-                            <th style={{ width: 40, padding: '12px 6px' }}> </th>
+                            <th style={{ width: '20%', padding: '12px 6px' }}> </th>
                         </tr>
                     </thead>
                     <tbody>
                         {stableSort(rows, getComparator(order, 'id')).map((row) => (
                             <tr key={row.id}>
                                 <td>
-                                    <Typography level="body-xs">{row.id}</Typography>
+                                    <Link
+                                        color="primary"
+                                        underline="hover"
+                                        href={`/search?content=&tag_id=${row?.id}&from=&to=`}
+                                    >
+                                        {row.name}
+                                    </Link>
                                 </td>
                                 <td>
-                                    <Typography level="body-xs">{row.status}</Typography>
+                                    <Typography level="body-xs">row.functions</Typography>
+                                    {/* {_.join(_.map(row?.functions, 'title'), ', ')}
+                                    {row?.smart_extraction_schemas_count > 0 && (
+                                        <>、數據提取({row?.smart_extraction_schemas_count || 0})</>
+                                    )}
+                                    {row?.meta?.chain_features?.length > 0 && (
+                                        <>、推薦功能({row?.meta?.chain_features?.length || 0})</>
+                                    )} */}
                                 </td>
 
                                 <td>
-                                    <Box sx={{ display: 'flex', gap: 2, alignItems: 'center' }}>
-                                        <Link level="body-xs" component="button">
+                                    <Box sx={{ 
+                                        display: 'flex', 
+                                        gap: 2, 
+                                        alignItems: 'center',
+                                        justifyContent: 'center'
+                                    }}>
+                                        <Link
+                                            level="body-xs"
+                                            href={`/document/extraction/${row?.id}`}
+                                        >
                                             编辑
                                         </Link>
+
+                                        {row && !row?.is_checked && (
+                                            <Button
+                                                size={"sm"}
+                                                endDecorator={<AddToPhotosOutlinedIcon />}
+                                                onClick={() => {
+                                                    console.log('加到名单！')
+                                                }}
+                                            >
+                                                加到名單
+                                            </Button>
+                                        )}
                                     </Box>
                                 </td>
                             </tr>
@@ -185,7 +263,6 @@ export default function OrderTable() {
                     </tbody>
                 </Table>
             </Sheet>
-
         </React.Fragment>
     );
 }
