@@ -7,12 +7,7 @@ import useLoad from '../../../hooks/useLoad';
 
 function LoadModel() {
     const load = useLoad();
-    const {
-        title,
-        content,
-        show: loadShow,
-        setLoad
-    } = load;
+    const { title, content, show: loadShow, setLoad } = load;
     const [show, setShow] = useState(loadShow);
     useEffect(() => {
         setShow(loadShow);
@@ -67,7 +62,9 @@ function LoadModel() {
                                             {title || '正在進行中...'}
                                         </Dialog.Title>
                                         <div className="mt-2">
-                                            <p className="text-sm text-gray-500">{content || '正在加載數據'}</p>
+                                            <p className="text-sm text-gray-500">
+                                                {content || '正在加載數據'}
+                                            </p>
                                         </div>
                                     </div>
                                 </div>

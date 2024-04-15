@@ -9,7 +9,6 @@ import Api from '../../apis';
 
 const apiSetting = new Api();
 
-
 function LoginContainer() {
     const [data, setData] = React.useState();
     const { setAlert } = useAlert();
@@ -17,8 +16,9 @@ function LoginContainer() {
     const pathname = usePathname();
 
     const [{ data: signInData, loading: signInLoading, error: signInError }, signIn] = useAxios(
-        {}, { manual: true }
-    )
+        {},
+        { manual: true }
+    );
 
     useEffect(() => {
         localStorage.removeItem('authorization');
@@ -52,8 +52,9 @@ function LoginContainer() {
                 localStorage.removeItem('email');
                 document.cookie = `authorization=null; expires=Thu, 01 Jan 1970 00:00:01 GMT`;
             }
-        }, [router, signIn]
-    )
+        },
+        [router, signIn]
+    );
     return (
         <LoginView
             {...{

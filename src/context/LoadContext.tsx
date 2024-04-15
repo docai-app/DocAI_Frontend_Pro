@@ -15,12 +15,12 @@ interface AlertContextProps extends LoadModalProps {
 const initialState = {
     title: '',
     show: false,
-    onClose: (value: boolean) => { }
+    onClose: (value: boolean) => {}
 };
 
 const LoadContext = createContext<AlertContextProps>({
     ...initialState,
-    setLoad: (props: LoadModalProps) => { }
+    setLoad: (props: LoadModalProps) => {}
 });
 
 export const LoadProvider = ({ children }: any) => {

@@ -12,8 +12,8 @@ import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
 import DownloadRoundedIcon from '@mui/icons-material/DownloadRounded';
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 
+import OrderList from '@/components/OrderList';
 import Header from '../../components/Header';
-import OrderList from '../../components/OrderList';
 import OrderTable from '../../components/OrderTable';
 import Sidebar from '../../components/Sidebar';
 

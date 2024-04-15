@@ -25,7 +25,7 @@ import Table from '@mui/joy/Table';
 import Typography from '@mui/joy/Typography';
 import * as React from 'react';
 import { useRouter, usePathname } from 'next/navigation';
-// import _ from 'lodash';
+import _ from 'lodash';
 
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import AutorenewRoundedIcon from '@mui/icons-material/AutorenewRounded';
@@ -221,14 +221,13 @@ export default function OrderTable() {
                                     </Link>
                                 </td>
                                 <td>
-                                    <Typography level="body-xs">row.functions</Typography>
-                                    {/* {_.join(_.map(row?.functions, 'title'), ', ')}
+                                    {_.join(_.map(row?.functions, 'title'), ', ')}
                                     {row?.smart_extraction_schemas_count > 0 && (
                                         <>、數據提取({row?.smart_extraction_schemas_count || 0})</>
                                     )}
                                     {row?.meta?.chain_features?.length > 0 && (
                                         <>、推薦功能({row?.meta?.chain_features?.length || 0})</>
-                                    )} */}
+                                    )}
                                 </td>
 
                                 <td>
