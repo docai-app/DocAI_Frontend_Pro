@@ -4,7 +4,7 @@ import Api from '@/apis';
 import useAlert from '@/hooks/useAlert';
 import useLoad from '@/hooks/useLoad';
 import useAxios from 'axios-hooks';
-import { useParams, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import HomeView from './ChatbotView';
 
@@ -33,7 +33,7 @@ function ChatbotContainer() {
     const { setAlert } = useAlert();
     const { setLoad } = useLoad();
     const router = useRouter();
-    const searchParams = useParams();
+    // const searchParams = useSearchParams();
     const [page, setPage] = useState(1);
     const [chatbots, setChatbots] = useState<Chatbots[]>([]);
     const [meta, setMeta] = useState<any>();
@@ -47,6 +47,10 @@ function ChatbotContainer() {
         setLoad({ show: true });
         getAllChatbots(apiSetting.Chatbot.showAllChatbots(page));
     }, [page]);
+
+    // useEffect(() => {
+
+    // }, [searchParams]);
 
     // useEffect(() => {
     //     if (searchParams) {
