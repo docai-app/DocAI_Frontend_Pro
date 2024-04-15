@@ -4,7 +4,6 @@ import Api from '@/apis';
 import useAlert from '@/hooks/useAlert';
 import useLoad from '@/hooks/useLoad';
 import useAxios from 'axios-hooks';
-import { useRouter } from 'next/navigation';
 import React, { useEffect, useState, useCallback } from 'react';
 import LabelView from './LabelView';
 
@@ -14,6 +13,7 @@ function LabelContainer() {
     const [data, setData] = React.useState();
     const { setAlert } = useAlert();
     const [newLabelName, setNewLabelName] = useState('');
+    const { setLoad } = useLoad();
 
     //  API数据对接区
     const [{ data: addNewLabelData, error: addNewLabelError },

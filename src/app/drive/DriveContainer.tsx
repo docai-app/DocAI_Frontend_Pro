@@ -4,7 +4,7 @@ import Api from '@/apis';
 import useAlert from '@/hooks/useAlert';
 import useLoad from '@/hooks/useLoad';
 import useAxios from 'axios-hooks';
-import { useRouter } from 'next/navigation';
+import Router,{ useRouter } from 'next/navigation';
 import React, { useEffect } from 'react';
 import DriveView from './DriveView';
 

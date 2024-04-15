@@ -1,7 +1,7 @@
 import { Box, Breadcrumbs, Link, Typography } from '@mui/joy';
 import Button from '@mui/joy/Button';
 import Divider from '@mui/joy/Divider';
-import LabelTable from '../../../components/OrderTable/LabelTable';
+import LabelTable from '../../../components/setting/label/LabelTable';
 import EditLabel from '../../../components/setting/label/EditLabel';
 import SingleActionModel from '../../../components/common/Widget/SingleActionModel';
 import React, { useEffect, useState } from 'react';
@@ -85,27 +85,6 @@ function LabelView(props: ViewProps) {
 
     return (
         <>
-            <SingleActionModel
-                open={loading}
-                setOpen={() => { }}
-                title={'進行中......'}
-                content={'正在加载数据...'}
-                icon={<DownloadingIcon color="success" />}
-            />
-            <EditLabel
-                {...{
-                    open,
-                    setOpen,
-                    tag,
-                    tagTypes,
-                    newLabelName,
-                    setNewLabelName,
-                    addNewLabelHandler,
-                    updateLabelNameByIdHandler,
-                    updateTagFunctionsHandler,
-                    deleteTagFunctionsHandler
-                }} />
-
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
                 <Box
                     component="main"
@@ -144,9 +123,24 @@ function LabelView(props: ViewProps) {
                             }}>
                             返回
                         </Button>
+
                         <Typography level="h2" component="h1">
                             標籤管理
                         </Typography>
+                    </Box>
+                    <Box
+                        sx={{
+                            display: 'flex',
+                            mb: 1,
+                            mr: 3,
+                            gap: 1,
+                            flexDirection: { xs: 'column', sm: 'row' },
+                            alignItems: { xs: 'start', sm: 'center' },
+                            flexWrap: 'wrap',
+                            justifyContent: 'space-between'
+                        }}
+                    >
+                        <Box></Box>
                         <Button
                             color="primary"
                             startDecorator={<Add />}
