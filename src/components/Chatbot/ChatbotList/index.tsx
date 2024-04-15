@@ -76,10 +76,12 @@ export default function ChatbotList(props: ViewProps) {
                                             router.push(`/chatbot/edit?id=${listItem.chatbot?.id}`);
                                         }}
                                         editQuesion={() => {
-                                            router.push(`/chatbot/${listItem.chatbot?.id}/assistive_question`);
+                                            router.push(
+                                                `/chatbot/${listItem.chatbot?.id}/assistive_question`
+                                            );
                                         }}
                                         remove={() => {
-                                            handleDeleteChatbot(listItem.chatbot.id)
+                                            handleDeleteChatbot(listItem.chatbot.id);
                                         }}
                                     />
                                 </Box>

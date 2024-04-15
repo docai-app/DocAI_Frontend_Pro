@@ -217,17 +217,21 @@ export default function ChatbotTable(props: ViewProps) {
                                                     handleShare(row.chatbot);
                                                 }}
                                                 edit={() => {
-                                                    router.push(`/chatbot/edit?id=${row.chatbot?.id}`);
+                                                    router.push(
+                                                        `/chatbot/edit?id=${row.chatbot?.id}`
+                                                    );
                                                 }}
                                                 editQuesion={() => {
-                                                    router.push(`/chatbot/${row.chatbot?.id}/assistive_question`);
+                                                    router.push(
+                                                        `/chatbot/${row.chatbot?.id}/assistive_question`
+                                                    );
                                                 }}
                                                 remove={() => {
                                                     // remove(chatbot);
                                                 }}
-                                            // remove={() => {
-                                            //     handleDeleteChatbot(row.chatbot.id)
-                                            // }}
+                                                // remove={() => {
+                                                //     handleDeleteChatbot(row.chatbot.id)
+                                                // }}
                                             />
                                         </Box>
                                     </ListItemContent>

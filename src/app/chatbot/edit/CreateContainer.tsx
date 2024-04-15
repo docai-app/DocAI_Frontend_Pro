@@ -50,15 +50,15 @@ function CreateContainer() {
     }, [searchParams]);
 
     useEffect(() => {
-        setLoad({ show: loading })
+        setLoad({ show: loading });
     }, [loading]);
 
     useEffect(() => {
-        setLoad({ show: updateing, content: '正在保存數據' })
+        setLoad({ show: updateing, content: '正在保存數據' });
     }, [updateing]);
 
     useEffect(() => {
-        setLoad({ show: submitting, content: '正在保存數據' })
+        setLoad({ show: submitting, content: '正在保存數據' });
     }, [submitting]);
 
     useEffect(() => {

@@ -33,7 +33,9 @@ export default function Dropdowns(props: DropdownsProps) {
                 <MenuItem onClick={edit}>編輯資料</MenuItem>
                 <MenuItem onClick={editQuesion}>編輯輔助問題</MenuItem>
                 <Divider />
-                <MenuItem color="danger" onClick={remove}>刪除</MenuItem>
+                <MenuItem color="danger" onClick={remove}>
+                    刪除
+                </MenuItem>
             </Menu>
         </Dropdown>
     );

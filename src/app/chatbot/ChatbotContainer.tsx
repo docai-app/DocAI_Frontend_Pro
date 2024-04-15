@@ -39,12 +39,11 @@ function ChatbotContainer() {
     const [chatbots, setChatbots] = useState<Chatbots[]>([]);
     const [meta, setMeta] = useState<any>();
     const [visibleQRcode, setVisibleQRcode] = useState(false);
-    const [qrcodeContent, setQrcodeContent] = useState<any>()
+    const [qrcodeContent, setQrcodeContent] = useState<any>();
     const [
         { data: showAllChatbotsData, loading: showAllChatbotsLoading, error: showAllChatbotsError },
         getAllChatbots
     ] = useAxios({}, { manual: true });
-
 
     const [{ data: deleteChatbotByIdData }, deleteChatbotById] = useAxios(
         apiSetting.Chatbot.deleteChatbotById(''),
@@ -53,7 +52,6 @@ function ChatbotContainer() {
 
     const [{ data: getShareSignatureData, loading: getShareSignatureLoading }, getShareSignature] =
         useAxios({}, { manual: true });
-
 
     useEffect(() => {
         setLoad({ show: true });
@@ -108,15 +106,16 @@ function ChatbotContainer() {
                 const decodedKey = atob(res.data.signature);
                 const encryptedText = encrypt(decodedKey);
                 const link =
-                    process.env.NEXT_PUBLIC_CHATBOT_URL + `${chatbot.id}?token_key=${encryptedText}`;
+                    process.env.NEXT_PUBLIC_CHATBOT_URL +
+                    `${chatbot.id}?token_key=${encryptedText}`;
                 setQrcodeContent({
                     ...chatbot,
                     link: link
                 });
                 setVisibleQRcode(true);
             }
-        })
-    }
+        });
+    };
 
     return (
         <ChatbotView
