@@ -59,7 +59,7 @@ function LoadModel() {
                                             as="h3"
                                             className="text-lg leading-6 font-medium text-gray-900"
                                         >
-                                            {title || '正在進行中...'}
+                                            {title || '進行中...'}
                                         </Dialog.Title>
                                         <div className="mt-2">
                                             <p className="text-sm text-gray-500">

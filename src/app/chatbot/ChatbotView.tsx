@@ -1,5 +1,6 @@
 import ChatbotList from '@/components/Chatbot/ChatbotList';
 import ChatbotTable from '@/components/Chatbot/ChatbotTable';
+import ShareQRcodeModal from '@/components/Chatbot/feature/ShareQRcodeModal';
 import AddIcon from '@mui/icons-material/Add';
 import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
@@ -8,10 +9,23 @@ import { Chatbots } from './ChatbotContainer';
 interface ViewProps {
     chatbots: Chatbots[];
     meta: any;
+    handleDeleteChatbot: any;
+    handleShare: any;
+    qrcodeContent: any;
+    visibleQRcode: boolean;
+    setVisibleQRcode: any;
 }
 
 function ChatbotView(props: ViewProps) {
-    const { chatbots, meta } = props;
+    const {
+        chatbots,
+        meta,
+        handleDeleteChatbot,
+        handleShare,
+        qrcodeContent,
+        visibleQRcode,
+        setVisibleQRcode
+    } = props;
 
     return (
         <>
@@ -48,8 +62,28 @@ function ChatbotView(props: ViewProps) {
                     新增助手
                 </Button>
             </Box>
-            <ChatbotTable chatbots={chatbots} meta={meta} />
-            <ChatbotList chatbots={chatbots} meta={meta} />
+            <ChatbotTable
+                chatbots={chatbots}
+                meta={meta}
+                handleDeleteChatbot={handleDeleteChatbot}
+                handleShare={handleShare}
+            />
+            <ChatbotList
+                chatbots={chatbots}
+                meta={meta}
+                handleDeleteChatbot={handleDeleteChatbot}
+                handleShare={handleShare}
+            />
+
+            <ShareQRcodeModal
+                visable={visibleQRcode}
+                title={'掃描QR-code來訪問智能助手'}
+                name={qrcodeContent?.name}
+                link={qrcodeContent?.link}
+                cancelClick={() => {
+                    setVisibleQRcode(false);
+                }}
+            />
         </>
     );
 }

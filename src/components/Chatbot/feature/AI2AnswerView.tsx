@@ -48,8 +48,8 @@ export default function AI2AnswerView(props: ViewProps) {
     const updateFeature = () => {
         return checked
             ? _.remove(chatbot?.meta?.selected_features, function (feature) {
-                return feature != feature_name;
-            })
+                  return feature != feature_name;
+              })
             : _.concat(chatbot?.meta?.selected_features, feature_name);
     };
 
@@ -69,8 +69,7 @@ export default function AI2AnswerView(props: ViewProps) {
                                 }
                             });
                         }}
-                        onChange={() => {
-                        }}
+                        onChange={() => {}}
                     />
                 </div>
                 <div className="flex flex-col w-full">

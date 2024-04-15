@@ -1,5 +1,6 @@
 'use client';
 
+import useLoad from '@/hooks/useLoad';
 import useAxios from 'axios-hooks';
 import _ from 'lodash';
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -16,6 +17,7 @@ function CreateContainer() {
     const router = useRouter();
     const searchParams = useSearchParams();
     const { setAlert } = useAlert();
+    const { setLoad } = useLoad();
     const [open, setOpen] = useState(false);
     const [multipleDest, setMultipleDest] = useState<Folder[]>([]);
     const [{ data, loading: submitting, error }, createChatbot] = useAxios(
@@ -37,28 +39,26 @@ function CreateContainer() {
     const [expert_ids, setExpert_ids] = useState<any>([]);
 
     const [{ data: getChatbotData, loading: loading }, getChatbot] = useAxios(
-        apiSetting.Chatbot.getChatbotById(''),
+        apiSetting.Chatbot.getChatbotById(searchParams.get('id') || ''),
         { manual: true }
     );
 
     useEffect(() => {
-        // if (searchParams.get('id')) {
-        //     setActionContent('正在加載數據');
-        //     getChatbot();
-        // }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [router]);
+        if (searchParams.has('id')) {
+            getChatbot();
+        }
+    }, [searchParams]);
 
     useEffect(() => {
-        setOpen(loading);
+        setLoad({ show: loading })
     }, [loading]);
 
     useEffect(() => {
-        setOpen(updateing);
+        setLoad({ show: updateing, content: '正在保存數據' })
     }, [updateing]);
 
     useEffect(() => {
-        setOpen(submitting);
+        setLoad({ show: submitting, content: '正在保存數據' })
     }, [submitting]);
 
     useEffect(() => {
@@ -160,8 +160,6 @@ function CreateContainer() {
                 handleCreate,
                 chain_feature_ids,
                 set_chain_feature_ids,
-                open,
-                setOpen,
                 actionContent,
                 chain_features,
                 assistant_agents_data,

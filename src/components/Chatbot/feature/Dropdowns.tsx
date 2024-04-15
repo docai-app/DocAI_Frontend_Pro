@@ -1,12 +1,11 @@
-import { Menu, Transition } from '@headlessui/react';
-import {
-    EllipsisVerticalIcon,
-    PencilSquareIcon,
-    ShareIcon,
-    TrashIcon
-} from '@heroicons/react/20/solid';
-
-import { Fragment } from 'react';
+/* eslint-disable jsx-a11y/anchor-is-valid */
+import MoreHorizRoundedIcon from '@mui/icons-material/MoreHorizRounded';
+import Divider from '@mui/joy/Divider';
+import Dropdown from '@mui/joy/Dropdown';
+import IconButton from '@mui/joy/IconButton';
+import Menu from '@mui/joy/Menu';
+import MenuButton from '@mui/joy/MenuButton';
+import MenuItem from '@mui/joy/MenuItem';
 
 function classNames(...classes: any) {
     return classes.filter(Boolean).join(' ');
@@ -22,102 +21,20 @@ interface DropdownsProps {
 export default function Dropdowns(props: DropdownsProps) {
     const { share, edit, editQuesion, remove } = props;
     return (
-        <Menu as="div" className="relative inline-block text-left ">
-            <div>
-                <Menu.Button className="bg-gray-100 rounded-full flex items-center text-gray-400 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500">
-                    <span className="sr-only">Open options</span>
-                    <EllipsisVerticalIcon className="h-5 w-5" aria-hidden="true" />
-                </Menu.Button>
-            </div>
-
-            <Transition
-                as={Fragment}
-                enter="transition ease-out duration-100"
-                enterFrom="transform opacity-0 scale-95"
-                enterTo="transform opacity-100 scale-100"
-                leave="transition ease-in duration-75"
-                leaveFrom="transform opacity-100 scale-100"
-                leaveTo="transform opacity-0 scale-95"
+        <Dropdown>
+            <MenuButton
+                slots={{ root: IconButton }}
+                slotProps={{ root: { variant: 'plain', color: 'neutral', size: 'sm' } }}
             >
-                <Menu.Items className="origin-top-right absolute z-10 right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black  divide-y divide-gray-100 ring-opacity-5 focus:outline-none">
-                    <div className="py-1">
-                        <Menu.Item>
-                            {({ active }) => (
-                                <a
-                                    onClick={share}
-                                    className={classNames(
-                                        active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                                        'group flex items-center px-4 py-2 text-sm cursor-pointer'
-                                    )}
-                                >
-                                    <ShareIcon
-                                        className="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500"
-                                        aria-hidden="true"
-                                    />
-                                    分享
-                                </a>
-                            )}
-                        </Menu.Item>
-                    </div>
-                    <div className="py-1">
-                        <Menu.Item>
-                            {({ active }) => (
-                                <a
-                                    onClick={edit}
-                                    className={classNames(
-                                        active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                                        'group flex items-center px-4 py-2 text-sm cursor-pointer'
-                                    )}
-                                >
-                                    <PencilSquareIcon
-                                        className="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500"
-                                        aria-hidden="true"
-                                    />
-                                    編輯資料
-                                </a>
-                            )}
-                        </Menu.Item>
-                    </div>
-                    <div className="py-1">
-                        <Menu.Item>
-                            {({ active }) => (
-                                <a
-                                    onClick={editQuesion}
-                                    className={classNames(
-                                        active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                                        'group flex items-center px-4 py-2 text-sm cursor-pointer'
-                                    )}
-                                >
-                                    <PencilSquareIcon
-                                        className="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500"
-                                        aria-hidden="true"
-                                    />
-                                    編輯輔助問題
-                                </a>
-                            )}
-                        </Menu.Item>
-                    </div>
-                    <div className="py-1">
-                        <Menu.Item>
-                            {({ active }) => (
-                                <a
-                                    onClick={remove}
-                                    className={classNames(
-                                        active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                                        'group flex items-center px-4 py-2 text-sm cursor-pointer'
-                                    )}
-                                >
-                                    <TrashIcon
-                                        className="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500"
-                                        aria-hidden="true"
-                                    />
-                                    刪除
-                                </a>
-                            )}
-                        </Menu.Item>
-                    </div>
-                </Menu.Items>
-            </Transition>
-        </Menu>
+                <MoreHorizRoundedIcon />
+            </MenuButton>
+            <Menu size="sm" sx={{ minWidth: 140 }}>
+                <MenuItem onClick={share}>分享</MenuItem>
+                <MenuItem onClick={edit}>編輯資料</MenuItem>
+                <MenuItem onClick={editQuesion}>編輯輔助問題</MenuItem>
+                <Divider />
+                <MenuItem color="danger" onClick={remove}>刪除</MenuItem>
+            </Menu>
+        </Dropdown>
     );
 }

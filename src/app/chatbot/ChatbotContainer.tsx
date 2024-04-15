@@ -3,10 +3,11 @@
 import Api from '@/apis';
 import useAlert from '@/hooks/useAlert';
 import useLoad from '@/hooks/useLoad';
+import { encrypt } from '@/utils/util_crypto';
 import useAxios from 'axios-hooks';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import HomeView from './ChatbotView';
+import ChatbotView from './ChatbotView';
 
 const apiSetting = new Api();
 
@@ -37,11 +38,22 @@ function ChatbotContainer() {
     const [page, setPage] = useState(1);
     const [chatbots, setChatbots] = useState<Chatbots[]>([]);
     const [meta, setMeta] = useState<any>();
-
+    const [visibleQRcode, setVisibleQRcode] = useState(false);
+    const [qrcodeContent, setQrcodeContent] = useState<any>()
     const [
         { data: showAllChatbotsData, loading: showAllChatbotsLoading, error: showAllChatbotsError },
         getAllChatbots
     ] = useAxios({}, { manual: true });
+
+
+    const [{ data: deleteChatbotByIdData }, deleteChatbotById] = useAxios(
+        apiSetting.Chatbot.deleteChatbotById(''),
+        { manual: true }
+    );
+
+    const [{ data: getShareSignatureData, loading: getShareSignatureLoading }, getShareSignature] =
+        useAxios({}, { manual: true });
+
 
     useEffect(() => {
         setLoad({ show: true });
@@ -67,11 +79,55 @@ function ChatbotContainer() {
         }
     }, [showAllChatbotsData]);
 
+    useEffect(() => {
+        if (deleteChatbotByIdData && deleteChatbotByIdData.success) {
+            setAlert({ title: '删除成功!', type: 'success' });
+            setLoad({ show: false });
+            router.refresh();
+        } else if (deleteChatbotByIdData && !deleteChatbotByIdData.success) {
+            setLoad({ show: false });
+            setAlert({ title: deleteChatbotByIdData.error, type: 'error' });
+        }
+    }, [deleteChatbotByIdData]);
+
+    const handleDeleteChatbot = (chatbot_id: string) => {
+        // console.log('chatbot_id', chatbot_id);
+        setLoad({ show: true, content: '正在刪除數據...' });
+        deleteChatbotById({
+            ...apiSetting.Chatbot.deleteChatbotById(chatbot_id)
+        });
+    };
+
+    const handleShare = (chatbot: Chatbot) => {
+        setLoad({ show: true, content: '正在獲取連結...' });
+        getShareSignature({
+            ...apiSetting.Chatbot.getShareSignature(chatbot.id)
+        }).then((res) => {
+            setLoad({ show: false });
+            if (res.data.success) {
+                const decodedKey = atob(res.data.signature);
+                const encryptedText = encrypt(decodedKey);
+                const link =
+                    process.env.NEXT_PUBLIC_CHATBOT_URL + `${chatbot.id}?token_key=${encryptedText}`;
+                setQrcodeContent({
+                    ...chatbot,
+                    link: link
+                });
+                setVisibleQRcode(true);
+            }
+        })
+    }
+
     return (
-        <HomeView
+        <ChatbotView
             {...{
                 chatbots,
-                meta
+                meta,
+                handleDeleteChatbot,
+                handleShare,
+                qrcodeContent,
+                visibleQRcode,
+                setVisibleQRcode
             }}
         />
     );
