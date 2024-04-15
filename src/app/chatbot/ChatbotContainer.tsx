@@ -3,10 +3,11 @@
 import Api from '@/apis';
 import useAlert from '@/hooks/useAlert';
 import useLoad from '@/hooks/useLoad';
+import { encrypt } from '@/utils/util_crypto';
 import useAxios from 'axios-hooks';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import HomeView from './ChatbotView';
+import ChatbotView from './ChatbotView';
 
 const apiSetting = new Api();
 
@@ -33,35 +34,38 @@ function ChatbotContainer() {
     const { setAlert } = useAlert();
     const { setLoad } = useLoad();
     const router = useRouter();
-    // const searchParams = useSearchParams();
+    const searchParams = useSearchParams();
     const [page, setPage] = useState(1);
     const [chatbots, setChatbots] = useState<Chatbots[]>([]);
     const [meta, setMeta] = useState<any>();
-
+    const [visibleQRcode, setVisibleQRcode] = useState(false);
+    const [qrcodeContent, setQrcodeContent] = useState<any>();
     const [
         { data: showAllChatbotsData, loading: showAllChatbotsLoading, error: showAllChatbotsError },
         getAllChatbots
     ] = useAxios({}, { manual: true });
+
+    const [{ data: deleteChatbotByIdData }, deleteChatbotById] = useAxios(
+        apiSetting.Chatbot.deleteChatbotById(''),
+        { manual: true }
+    );
+
+    const [{ data: getShareSignatureData, loading: getShareSignatureLoading }, getShareSignature] =
+        useAxios({}, { manual: true });
 
     useEffect(() => {
         setLoad({ show: true });
         getAllChatbots(apiSetting.Chatbot.showAllChatbots(page));
     }, [page]);
 
-    // useEffect(() => {
-
-    // }, [searchParams]);
-
-    // useEffect(() => {
-    //     if (searchParams) {
-    //         setPage(parseInt(searchParams.get('page') || '1'));
-    //     }
-    // }, [searchParams]);
+    useEffect(() => {
+        if (searchParams) {
+            setPage(parseInt(searchParams.get('page') || '1'));
+        }
+    }, [searchParams]);
 
     useEffect(() => {
         if (showAllChatbotsData?.success) {
-            console.log(showAllChatbotsData.chatbots);
-
             setChatbots(showAllChatbotsData.chatbots);
             setMeta(showAllChatbotsData.meta);
             setLoad({ show: false });
@@ -71,12 +75,61 @@ function ChatbotContainer() {
         }
     }, [showAllChatbotsData]);
 
-    const gatTags = () => { };
+    useEffect(() => {
+        if (deleteChatbotByIdData && deleteChatbotByIdData.success) {
+            setAlert({ title: '删除成功!', type: 'success' });
+            setLoad({ show: false });
+            router.refresh();
+        } else if (deleteChatbotByIdData && !deleteChatbotByIdData.success) {
+            setLoad({ show: false });
+            setAlert({ title: deleteChatbotByIdData.error, type: 'error' });
+        }
+    }, [deleteChatbotByIdData]);
+
+    const handleDeleteChatbot = (chatbot_id: string) => {
+        // console.log('chatbot_id', chatbot_id);
+        setLoad({ show: true, content: '正在刪除數據...' });
+        deleteChatbotById({
+            ...apiSetting.Chatbot.deleteChatbotById(chatbot_id)
+        });
+    };
+
+    const handleShare = (chatbot: Chatbot, open?: boolean) => {
+        setLoad({ show: true, content: '正在獲取連結...' });
+        getShareSignature({
+            ...apiSetting.Chatbot.getShareSignature(chatbot.id)
+        }).then((res) => {
+            setLoad({ show: false });
+            if (res.data.success) {
+                const decodedKey = atob(res.data.signature);
+                const encryptedText = encrypt(decodedKey);
+                const link =
+                    process.env.NEXT_PUBLIC_CHATBOT_URL +
+                    `${chatbot.id}?token_key=${encryptedText}`;
+
+                if (open) {
+                    window.open(link);
+                } else {
+                    setQrcodeContent({
+                        ...chatbot,
+                        link: link
+                    });
+                    setVisibleQRcode(true);
+                }
+            }
+        });
+    };
+
     return (
-        <HomeView
+        <ChatbotView
             {...{
                 chatbots,
-                meta
+                meta,
+                handleDeleteChatbot,
+                handleShare,
+                qrcodeContent,
+                visibleQRcode,
+                setVisibleQRcode
             }}
         />
     );

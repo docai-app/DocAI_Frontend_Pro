@@ -44,6 +44,7 @@ export default function ReadingView(props: ViewProps) {
                                 }
                             });
                         }}
+                        onChange={() => {}}
                     />
                 </div>
                 <div className="flex flex-col w-full">

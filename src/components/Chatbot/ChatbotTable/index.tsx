@@ -1,15 +1,12 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
+'use client';
+
 import Box from '@mui/joy/Box';
 import Button from '@mui/joy/Button';
 import Divider from '@mui/joy/Divider';
-import Dropdown from '@mui/joy/Dropdown';
 import FormControl from '@mui/joy/FormControl';
 import FormLabel from '@mui/joy/FormLabel';
 import IconButton, { iconButtonClasses } from '@mui/joy/IconButton';
 import Input from '@mui/joy/Input';
-import Menu from '@mui/joy/Menu';
-import MenuButton from '@mui/joy/MenuButton';
-import MenuItem from '@mui/joy/MenuItem';
 import Modal from '@mui/joy/Modal';
 import ModalClose from '@mui/joy/ModalClose';
 import ModalDialog from '@mui/joy/ModalDialog';
@@ -23,7 +20,6 @@ import { Chatbots } from '@/app/chatbot/ChatbotContainer';
 import PaginationView from '@/components/common/Widget/PaginationView';
 import { Chatbot_Features } from '@/utils/constant';
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
-import MoreHorizRoundedIcon from '@mui/icons-material/MoreHorizRounded';
 import SearchIcon from '@mui/icons-material/Search';
 import Avatar from '@mui/joy/Avatar';
 import Link from '@mui/joy/Link';
@@ -32,39 +28,19 @@ import ListDivider from '@mui/joy/ListDivider';
 import ListItem from '@mui/joy/ListItem';
 import ListItemContent from '@mui/joy/ListItemContent';
 import ListItemDecorator from '@mui/joy/ListItemDecorator';
-
-function RowMenu() {
-    return (
-        <Dropdown>
-            <MenuButton
-                slots={{ root: IconButton }}
-                slotProps={{ root: { variant: 'plain', color: 'neutral', size: 'sm' } }}
-            >
-                <MoreHorizRoundedIcon />
-            </MenuButton>
-            <Menu size="sm" sx={{ minWidth: 140 }}>
-                <MenuItem>分享</MenuItem>
-                <MenuItem>編輯資料</MenuItem>
-                <MenuItem>編輯輔助問題</MenuItem>
-                <Divider />
-                <MenuItem color="danger">刪除</MenuItem>
-            </Menu>
-        </Dropdown>
-    );
-}
+import { useRouter } from 'next/navigation';
+import Dropdowns from '../feature/Dropdowns';
 
 interface ViewProps {
     chatbots: Chatbots[];
     meta: any;
+    handleDeleteChatbot: any;
+    handleShare: any;
 }
 
 export default function ChatbotTable(props: ViewProps) {
-    const { chatbots, meta } = props;
-
-    React.useEffect(() => {
-        console.log('chatbots', chatbots);
-    }, []);
-
+    const { chatbots, meta, handleDeleteChatbot, handleShare } = props;
+    const router = useRouter();
     const [open, setOpen] = React.useState(false);
     const renderFilters = () => (
         <React.Fragment>
@@ -197,13 +173,16 @@ export default function ChatbotTable(props: ViewProps) {
                                                 <Typography level="body-sm">
                                                     <Link
                                                         level="title-sm"
-                                                        href={`/chatbot/${row.chatbot.id}`}
                                                         sx={{
                                                             fontWeight: 'bold',
                                                             color: 'black'
                                                         }}
                                                     >
-                                                        {row.chatbot.name}
+                                                        <Typography onClick={() => {
+                                                            handleShare(row.chatbot, true);
+                                                        }}>
+                                                            {row.chatbot.name}
+                                                        </Typography>
                                                     </Link>
                                                     {getFeatureNames(
                                                         row.chatbot.meta?.selected_features
@@ -232,7 +211,24 @@ export default function ChatbotTable(props: ViewProps) {
                                                 mb: 1
                                             }}
                                         >
-                                            <RowMenu />
+                                            <Dropdowns
+                                                share={() => {
+                                                    handleShare(row.chatbot);
+                                                }}
+                                                edit={() => {
+                                                    router.push(
+                                                        `/chatbot/edit?id=${row.chatbot?.id}`
+                                                    );
+                                                }}
+                                                editQuesion={() => {
+                                                    router.push(
+                                                        `/chatbot/${row.chatbot?.id}/assistive_question`
+                                                    );
+                                                }}
+                                                remove={() => {
+                                                    handleDeleteChatbot(row.chatbot);
+                                                }}
+                                            />
                                         </Box>
                                     </ListItemContent>
                                 </ListItem>

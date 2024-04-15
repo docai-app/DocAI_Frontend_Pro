@@ -64,6 +64,7 @@ export default function ChainFeatureView(props: ViewProps) {
                                 }
                             });
                         }}
+                        onChange={() => {}}
                     />
                 </div>
                 <div className="flex flex-col w-full">

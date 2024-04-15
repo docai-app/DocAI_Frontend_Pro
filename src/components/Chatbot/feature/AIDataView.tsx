@@ -44,6 +44,7 @@ export default function AIDataView(props: ViewProps) {
                                 }
                             });
                         }}
+                        onChange={() => {}}
                     />
                 </div>
                 <div className="flex flex-col w-full">

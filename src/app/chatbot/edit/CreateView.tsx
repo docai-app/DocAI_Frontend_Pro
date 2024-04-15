@@ -3,7 +3,10 @@ import AIAnswerView from '@/components/Chatbot/feature/AIAnswerView';
 import AIDataView from '@/components/Chatbot/feature/AIDataView';
 import ChainFeatureView from '@/components/Chatbot/feature/ChainFeatureView';
 import ReadingView from '@/components/Chatbot/feature/ReadingView';
-import { Box } from '@mui/joy';
+import SetFolderView from '@/components/Chatbot/feature/SetFolderView';
+import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
+import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
+import { Box, Breadcrumbs, Link, Typography } from '@mui/joy';
 import _ from 'lodash';
 import moment from 'moment';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
@@ -17,8 +20,6 @@ interface CreateViewProps {
     handleCreate: any;
     chain_feature_ids?: any;
     set_chain_feature_ids?: any;
-    open: boolean;
-    setOpen: any;
     actionContent: string;
     chain_features: [];
     assistant_agents_data: any;
@@ -35,15 +36,12 @@ function CreateView(props: CreateViewProps) {
         handleCreate,
         chain_feature_ids,
         set_chain_feature_ids,
-        open,
-        setOpen,
         actionContent,
         chain_features,
         assistant_agents_data,
         expert_ids,
         setExpert_ids
     } = props;
-    const [folderTreeIsOpen, setFolderTreeIsOpen] = useState(false);
     const [assistants, setAssistants] = useState<any>([]);
     const [experts, setExperts] = useState<any>([]);
 
@@ -77,15 +75,42 @@ function CreateView(props: CreateViewProps) {
     }, [assistants, chatbot]);
     return (
         <>
-            {/* <h2 className="text-2xl font-semibold leading-7 text-gray-900">編輯智能助手</h2> */}
-            {/* <HeaderBreadCrumb
-                        title={'編輯智能助手'}
-                        back={() => {
-                            Router.back();
-                        }}
-                    /> */}
-            {/* <p className="mt-1 text-sm leading-6 text-gray-600">未有描述</p> */}
-            <Box sx={{ display: 'flex', overflow: 'auto', flexDirection: 'column', padding: 2 }}>
+            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                <Breadcrumbs
+                    size="sm"
+                    aria-label="breadcrumbs"
+                    separator={<ChevronRightRoundedIcon />}
+                    sx={{ pl: 0 }}
+                >
+                    <Link underline="none" color="neutral" href="/" aria-label="Home">
+                        <HomeRoundedIcon />
+                    </Link>
+                    <Typography color="primary" fontWeight={500} fontSize={12}>
+                        <Link underline="none" color="neutral" href="/chatbot" aria-label="Home">
+                            助手
+                        </Link>
+                    </Typography>
+                    <Typography color="primary" fontWeight={500} fontSize={12}>
+                        編輯
+                    </Typography>
+                </Breadcrumbs>
+            </Box>
+            <Box
+                sx={{
+                    display: 'flex',
+                    mb: 1,
+                    gap: 1,
+                    flexDirection: { xs: 'column', sm: 'row' },
+                    alignItems: { xs: 'start', sm: 'center' },
+                    flexWrap: 'wrap',
+                    justifyContent: 'space-between'
+                }}
+            >
+                <Typography level="h2" component="h1">
+                    編輯智能助手
+                </Typography>
+            </Box>
+            <Box sx={{ display: 'flex', overflow: 'auto', flexDirection: 'column', padding: 0 }}>
                 <div className="sm:col-span-6">
                     <label className="block text-sm font-medium leading-6 text-gray-900">
                         名稱
@@ -127,10 +152,10 @@ function CreateView(props: CreateViewProps) {
                         ></textarea>
                     </div>
                 </div>
-                {/* <SetFolderView
-                            multipleDest={multipleDest}
-                            setMultipleDest={setMultipleDest}
-                        /> */}
+                <SetFolderView
+                    multipleDest={multipleDest}
+                    setMultipleDest={setMultipleDest}
+                />
                 {/* <SetCategoryView chatbot={chatbot} setChatbot={setChatbot} /> */}
 
                 <div className="col-span-full w-full">
@@ -211,14 +236,6 @@ function CreateView(props: CreateViewProps) {
                     </button>
                 </div>
             </Box>
-            {/* <FolderTreeForMultipleSelect
-                {...{
-                    isOpen: folderTreeIsOpen,
-                    setIsOpen: setFolderTreeIsOpen,
-                    multipleDest,
-                    setMultipleDest
-                }}
-            /> */}
         </>
     );
 }

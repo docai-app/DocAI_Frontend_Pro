@@ -69,6 +69,7 @@ export default function AI2AnswerView(props: ViewProps) {
                                 }
                             });
                         }}
+                        onChange={() => {}}
                     />
                 </div>
                 <div className="flex flex-col w-full">

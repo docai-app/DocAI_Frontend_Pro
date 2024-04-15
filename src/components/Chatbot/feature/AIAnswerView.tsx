@@ -66,6 +66,7 @@ export default function AIAnswerView(props: ViewProps) {
                                 }
                             });
                         }}
+                        onChange={() => {}}
                     />
                 </div>
                 <div className="flex flex-col w-full">
