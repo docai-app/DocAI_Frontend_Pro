@@ -2,8 +2,10 @@ import { Box, Breadcrumbs, Link, Typography } from '@mui/joy';
 import Button from '@mui/joy/Button';
 import Divider from '@mui/joy/Divider';
 import LabelTable from '../../../components/OrderTable/LabelTable';
+import EditLabel from '../../../components/setting/label/EditLabel';
 import React, { useEffect, useState } from 'react';
 import _ from 'lodash';
+import { useRouter } from 'next/navigation';
 
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 // import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
@@ -48,6 +50,7 @@ function LabelView(props: ViewProps) {
     const [sortedUnCheckLabels, setSortedUnCheckLabels] = useState<any[]>([]);
     const [open, setOpen] = useState(false);
     const [tag, setTag] = useState('');
+    const router = useRouter();
 
     const [label, setLabel] = useState<any>();
     const [chainFeatureIsOpen, setChainFeatureIsOpen] = useState(false);
@@ -96,7 +99,6 @@ function LabelView(props: ViewProps) {
                         display: 'flex',
                         flexDirection: 'column',
                         minWidth: 0,
-                        height: '100dvh',
                         gap: 1
                     }}
                 >
@@ -114,7 +116,9 @@ function LabelView(props: ViewProps) {
                     >
                         <Button color="primary" variant="plain"
                             startDecorator={<KeyboardArrowLeftIcon />}
-                        >
+                            onClick={() => {
+                                router.back();
+                            }}>
                             返回
                         </Button>
                         <Typography level="h2" component="h1">
@@ -124,16 +128,38 @@ function LabelView(props: ViewProps) {
                             color="primary"
                             startDecorator={<Add />}
                             size="sm"
+                            onClick={() => {
+                                setOpen(true);
+                            }}
                         >
                             新增
                         </Button>
+                        <EditLabel
+                            {...{
+                                open,
+                                setOpen,
+                                tag,
+                                tagTypes,
+                                newLabelName,
+                                setNewLabelName,
+                                addNewLabelHandler,
+                                updateLabelNameByIdHandler,
+                                updateTagFunctionsHandler,
+                                deleteTagFunctionsHandler
+                            }} />
                     </Box>
 
-                    <LabelTable />
-                    <Divider sx={{mt:1}} color="primary">
+                    {sortedLabels && <LabelTable
+                        labels={sortedLabels}
+                        updateLabelNameByIdHandler={updateLabelNameByIdHandler}
+                    />}
+                    <Divider sx={{ mt: 1 }} color="primary">
                         <Typography level="h4">待查核標籤</Typography>
                     </Divider>
-                    <LabelTable />
+                    {sortedUnCheckLabels && <LabelTable
+                        labels={sortedUnCheckLabels}
+                        updateLabelNameByIdHandler={updateLabelNameByIdHandler}
+                    />}
                 </Box>
             </Box>
         </>

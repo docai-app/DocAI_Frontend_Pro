@@ -90,7 +90,7 @@ export default function LabelManagement() {
                         }}
                     >
                         {labels.map((label) => (
-                            <Chip key={label.id} variant="solid" startDecorator={<InsertDriveFileIcon />}
+                            <Chip key={label.id} color="primary" variant="solid" startDecorator={<InsertDriveFileIcon />}
                             >{label.name}</Chip>
                         ))}
                         <Link underline='always'>查看更多</Link>

@@ -124,12 +124,12 @@ function stableSort<T>(array: readonly T[], comparator: (a: T, b: T) => number) 
     return stabilizedThis.map((el) => el[0]);
 }
 
-
-export default function LabelTable() {
+export default function LabelTable(props: any) {
+    const { labels, updateLabelNameByIdHandler } = props;
     const [order, setOrder] = React.useState<Order>('desc');
     const [selected, setSelected] = React.useState<readonly string[]>([]);
     const [open, setOpen] = React.useState(false);
-    const router = useRouter();
+
 
     return (
         <React.Fragment>
@@ -183,7 +183,7 @@ export default function LabelTable() {
                         </tr>
                     </thead>
                     <tbody>
-                        {stableSort(rows, getComparator(order, 'id')).map((row) => (
+                        {labels && (stableSort(labels, getComparator(order, 'id')).map((row) => (
                             <tr key={row.id}>
                                 <td>
                                     <Link
@@ -205,9 +205,9 @@ export default function LabelTable() {
                                 </td>
 
                                 <td>
-                                    <Box sx={{ 
-                                        display: 'flex', 
-                                        gap: 2, 
+                                    <Box sx={{
+                                        display: 'flex',
+                                        gap: 2,
                                         alignItems: 'center',
                                         justifyContent: 'center'
                                     }}>
@@ -223,7 +223,7 @@ export default function LabelTable() {
                                                 size={"sm"}
                                                 endDecorator={<AddToPhotosOutlinedIcon />}
                                                 onClick={() => {
-                                                    console.log('加到名单！')
+                                                    updateLabelNameByIdHandler(row.id, row?.name, true);
                                                 }}
                                             >
                                                 加到名單
@@ -232,7 +232,8 @@ export default function LabelTable() {
                                     </Box>
                                 </td>
                             </tr>
-                        ))}
+                        )))
+                        }
                     </tbody>
                 </Table>
             </Sheet>
