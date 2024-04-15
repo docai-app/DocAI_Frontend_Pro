@@ -338,8 +338,8 @@ function DriveContainer() {
     }, [query.get('id')]);
 
     useEffect(() => {
-        const asPath = pathname + '?' + query.toString()
-        const route = pathname + '/[[...id]]'
+        const asPath = pathname + '?' + query.toString();
+        const route = pathname + '/[[...id]]';
         // if (router.asPath !== router.route) {
         if (asPath !== route) {
             queryId.current = query.get('id');

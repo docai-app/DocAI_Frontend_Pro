@@ -7,6 +7,7 @@ import SingleActionModel from '../../../components/common/Widget/SingleActionMod
 import React, { useEffect, useState } from 'react';
 import _ from 'lodash';
 import { useRouter } from 'next/navigation';
+import useLoad from '@/hooks/useLoad';
 
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import DownloadingIcon from '@mui/icons-material/Downloading';
@@ -14,7 +15,6 @@ import DownloadingIcon from '@mui/icons-material/Downloading';
 import Add from '@mui/icons-material/Add';
 
 interface ViewProps {
-    loading: boolean;
     addNewLabelHandler: any;
     addNewLabelData: any;
     getAllLabelsData: {
@@ -37,7 +37,6 @@ interface ViewProps {
 
 function LabelView(props: ViewProps) {
     const {
-        loading,
         getAllLabelsData,
         addNewLabelHandler,
         newLabelName,
@@ -53,6 +52,7 @@ function LabelView(props: ViewProps) {
     const [open, setOpen] = useState(false);
     const [tag, setTag] = useState('');
     const router = useRouter();
+    const { setLoad } = useLoad();
 
     const [label, setLabel] = useState<any>();
     const [chainFeatureIsOpen, setChainFeatureIsOpen] = useState(false);
