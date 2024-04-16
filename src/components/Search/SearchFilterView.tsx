@@ -1,6 +1,6 @@
-import { FormControl, FormLabel, Select } from "@mui/joy";
+import { FormControl, FormLabel, Select } from '@mui/joy';
 import Option from '@mui/joy/Option';
-import React from "react";
+import React from 'react';
 
 interface ViewProps {
     setTagId: any;
@@ -8,18 +8,14 @@ interface ViewProps {
 }
 
 export default function SearchFilterView(props: ViewProps) {
-    const {
-        setTagId,
-        getAllLabelsData
-    } = props;
+    const { setTagId, getAllLabelsData } = props;
 
     const handleChange = (event: any, newValue: any) => {
         console.log(newValue);
-        setTagId(newValue)
+        setTagId(newValue);
     };
 
     const renderFilters = () => (
-
         <React.Fragment>
             <FormControl size="sm">
                 <FormLabel>標籤</FormLabel>
@@ -30,16 +26,14 @@ export default function SearchFilterView(props: ViewProps) {
                     onChange={handleChange}
                 >
                     {getAllLabelsData?.tags?.map((tag: any, index: number) => (
-                        <Option value={tag?.id} key={index} >{tag?.name}</Option>
+                        <Option value={tag?.id} key={index}>
+                            {tag?.name}
+                        </Option>
                     ))}
                 </Select>
             </FormControl>
         </React.Fragment>
     );
 
-    return (
-        <>
-            {renderFilters()}
-        </>
-    )
+    return <>{renderFilters()}</>;
 }

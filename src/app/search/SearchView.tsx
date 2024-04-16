@@ -14,12 +14,12 @@ interface ViewProps {
     searchTreeData: any;
     getAllLabelsData: any;
     searchParams: {
-        tag_id?: string,
-        content?: string,
-        date?: string,
-        from?: string,
-        to?: string,
-        page?: number
+        tag_id?: string;
+        content?: string;
+        date?: string;
+        from?: string;
+        to?: string;
+        page?: number;
     };
     setSearchParams: any;
 }
@@ -86,29 +86,28 @@ function SearchView(props: ViewProps) {
                 >
                     <FormControl sx={{ flex: 1 }} size="sm">
                         <FormLabel>Search for local drive</FormLabel>
-                        <SearchInputView handleSearch={(content: string) => {
-                            setSearchParams({
-                                ...searchParams,
-                                content: content,
-                            })
-                            handleSearch()
-                        }} />
+                        <SearchInputView
+                            handleSearch={(content: string) => {
+                                setSearchParams({
+                                    ...searchParams,
+                                    content: content
+                                });
+                                handleSearch();
+                            }}
+                        />
                     </FormControl>
                     <SearchFilterView
                         getAllLabelsData={getAllLabelsData}
                         setTagId={(id: string) => {
                             setSearchParams({
                                 ...searchParams,
-                                tag_id: id,
-                            })
+                                tag_id: id
+                            });
                         }}
                     />
                 </Box>
 
-                <SearchTree
-                    tree={searchTreeData}
-                    getAllLabelsData={getAllLabelsData}
-                />
+                <SearchTree tree={searchTreeData} getAllLabelsData={getAllLabelsData} />
             </React.Fragment>
         </>
     );

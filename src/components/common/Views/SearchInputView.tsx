@@ -31,7 +31,7 @@ export default function SearchInputView(props: ViewProps) {
             <Sheet
                 className="SearchAndFilters-mobile"
                 sx={{
-                    display: { xs: 'flex', sm: 'flex' },
+                    display: { xs: 'flex', sm: 'flex' }
                 }}
             >
                 <Input

@@ -70,7 +70,6 @@ const trees = [
 export default function SearchRow(props: SearchRowProps) {
     const { tree = [], getAllLabelsData } = props;
 
-
     const ifChildren = (document: any, deep: number) => {
         // 判断是否为最后一层
         if (document?.children) {
@@ -88,8 +87,8 @@ export default function SearchRow(props: SearchRowProps) {
                     <div
                         className={
                             document?.children &&
-                                document.children.length > 0 &&
-                                document.children[0]?.subtree_title
+                            document.children.length > 0 &&
+                            document.children[0]?.subtree_title
                                 ? 'flex flex-col'
                                 : 'flex flex-row flex-wrap'
                         }

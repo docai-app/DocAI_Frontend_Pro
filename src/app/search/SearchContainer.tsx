@@ -27,7 +27,7 @@ function SearchContainer() {
         from: '',
         to: '',
         page: 1
-    })
+    });
 
     const [{ data: getAllLabelsData, error: getAllLabelsError }, getAllLabels] = useAxios(
         apiSetting.Tag.getAllTags(),
@@ -116,8 +116,8 @@ function SearchContainer() {
 
     const handleSearch = () => {
         if (!searchParams.tag_id) {
-            setAlert({ title: '請選擇標籤', type: 'info' })
-            return
+            setAlert({ title: '請選擇標籤', type: 'info' });
+            return;
         }
         console.log('searchParams', searchParams);
         searchDocumentFormik.setValues(searchParams);
