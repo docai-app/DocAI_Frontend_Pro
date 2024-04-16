@@ -1,7 +1,7 @@
 import { Box, Breadcrumbs, Link, Typography } from '@mui/joy';
 import Tabs from '@mui/joy/Tabs';
 import TabList from '@mui/joy/TabList';
-import Tab from '@mui/joy/Tab';
+import Tab, { tabClasses } from '@mui/joy/Tab';
 import TabPanel from '@mui/joy/TabPanel';
 import Checkbox from '@mui/joy/Checkbox';
 import Input from '@mui/joy/Input';
@@ -17,6 +17,7 @@ import SchemaList from '../../../../components/document/extraction/SchemasList';
 
 
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
+import ContrySelector from '@/components/CountrySelector';
 
 interface ExtractionDetailViewProps {
     open: boolean;
@@ -62,7 +63,7 @@ function ExtractionDetailView(props: ExtractionDetailViewProps) {
 
     useEffect(() => {
         if (label) {
-            console.log(label);
+            console.log(label)
 
             set_chain_feature_ids(label?.meta?.chain_features || []);
             setName(label.name);
@@ -71,7 +72,7 @@ function ExtractionDetailView(props: ExtractionDetailViewProps) {
 
     const isContain = (value: any) => {
         const index = _.find(label?.functions, function (func: any) {
-            return func.id == value;
+            return func.id === value;
         });
         return index;
     };
@@ -117,15 +118,16 @@ function ExtractionDetailView(props: ExtractionDetailViewProps) {
 
                         <Typography level="h2" component="h1">編輯標籤</Typography>
 
-                        <Button
-                            color="primary"
-                            // startDecorator={<Add />}
-                            size="sm"
-                            onClick={() => {
-                                updateTagNameHandler(label.id, name);
-                            }}>
-                            保存
-                        </Button>
+                        <Box sx={{ display: 'flex', justifyContent: 'end', width: '20%' }}>
+                            <Button
+                                color="primary"
+                                size="sm"
+                                onClick={() => {
+                                    updateTagNameHandler(label.id, name);
+                                }}>
+                                保存
+                            </Button>
+                        </Box>
                     </Box>
 
                     <Input autoFocus required fullWidth color="primary"
@@ -134,9 +136,9 @@ function ExtractionDetailView(props: ExtractionDetailViewProps) {
                         onChange={(e) => {
                             setName(e.target.value);
                         }} />
-                    <Box sx={{ display: 'flex', gap: 1, ml:1.5,my:1}}>
+                    <Box sx={{ display: 'flex', gap: 1, ml: 1.5, my: 1 }}>
                         功能:
-                        {tagTypes?.functions?.map((item: any, index: number) => {
+                        {label && tagTypes?.functions?.map((item: any, index: number) => {
                             return (
                                 <Checkbox key={index} variant="solid" color="primary"
                                     label={item.title}
@@ -151,27 +153,38 @@ function ExtractionDetailView(props: ExtractionDetailViewProps) {
                                                 label.id, item.id
                                             );
                                         }
-                                    }}
-                                />);
+                                    }} />
+                            );
                         })}
                     </Box>
 
                     <Tabs defaultValue="extraction"
                         sx={{ bgcolor: 'transparent' }}
                     >
-                        <TabList underlinePlacement="bottom"
+                        <TabList underlinePlacement="bottom" size="sm"
                             sx={{
-                                p: 0.5,
-                                gap: 0.5,
-                                borderRadius: 'xl',
-                                bgcolor: 'background.level1',
+                                pl: { xs: 0, md: 4 },
+                                justifyContent: 'left',
+                                [`&& .${tabClasses.root}`]: {
+                                    fontWeight: '600',
+                                    flex: 'initial',
+                                    color: 'text.tertiary',
+                                    [`&.${tabClasses.selected}`]: {
+                                        bgcolor: 'transparent',
+                                        color: 'text.primary',
+                                        '&::after': {
+                                            height: '2px',
+                                            bgcolor: 'primary.500'
+                                        }
+                                    }
+                                }
                             }}>
-                            <Tab value="extraction" indicatorPlacement="bottom">
-                                標籤填表與數據
-                            </Tab>
-                            <Tab value="chain_feature" indicatorPlacement="bottom">
-                                推薦功能
-                            </Tab>
+                            <Tab value="extraction" indicatorPlacement="bottom"
+                                sx={{ borderRadius: '6px 6px 0 0' }}>
+                                標籤填表與數據</Tab>
+                            <Tab value="chain_feature" indicatorPlacement="bottom"
+                                sx={{ borderRadius: '6px 6px 0 0' }}>
+                                推薦功能</Tab>
                         </TabList>
                         <TabPanel value="extraction">
                             <SchemaList

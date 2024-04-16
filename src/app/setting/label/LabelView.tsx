@@ -108,7 +108,6 @@ function LabelView(props: ViewProps) {
                         sx={{
                             display: 'flex',
                             mb: 1,
-                            mr: 3,
                             gap: 1,
                             flexDirection: { xs: 'column', sm: 'row' },
                             alignItems: { xs: 'start', sm: 'center' },
@@ -127,30 +126,16 @@ function LabelView(props: ViewProps) {
                         <Typography level="h2" component="h1">
                             標籤管理
                         </Typography>
-                    </Box>
-                    <Box
-                        sx={{
-                            display: 'flex',
-                            mb: 1,
-                            mr: 3,
-                            gap: 1,
-                            flexDirection: { xs: 'column', sm: 'row' },
-                            alignItems: { xs: 'start', sm: 'center' },
-                            flexWrap: 'wrap',
-                            justifyContent: 'space-between'
-                        }}
-                    >
-                        <Box></Box>
-                        <Button
-                            color="primary"
-                            startDecorator={<Add />}
-                            size="sm"
-                            onClick={() => {
-                                setOpen(true);
-                            }}>
-                            新增
-                        </Button>
-
+                        
+                        <Box sx={{ display:'flex',justifyContent:'end',width: '20%'}}>
+                            <Button
+                                color="primary"
+                                startDecorator={<Add />}
+                                size="sm"
+                                onClick={() => { setOpen(true); }}>
+                                新增
+                            </Button>
+                        </Box>
                     </Box>
 
                     {sortedLabels && <LabelTable
