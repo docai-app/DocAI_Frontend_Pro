@@ -91,7 +91,7 @@ export default function EditLabel(props: EditLabelProps) {
         //     </Modal>
         // </React.Fragment >
         <Transition.Root show={open} as={Fragment}>
-             <Dialog
+            <Dialog
                 as="div"
                 className="fixed z-10 inset-0 overflow-y-auto"
                 initialFocus={cancelButtonRef}

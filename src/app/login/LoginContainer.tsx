@@ -34,7 +34,7 @@ function LoginContainer() {
             const email = formData.get('email') as string;
             const password = formData.get('password') as string;
             const remember = formData.get('persistent');
-            axios.defaults.headers.common['authorization'] = ""
+            axios.defaults.headers.common['authorization'] = '';
             const res = await signIn(apiSetting.Authorization.signIn(email, password));
             if (res.data.success) {
                 const token = res.headers.authorization;

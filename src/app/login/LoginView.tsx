@@ -140,9 +140,7 @@ export default function LoginView(props: ViewProps) {
                             </Stack>
                         </Stack>
                         <Stack gap={4} sx={{ mt: 2 }}>
-                            <form
-                                onSubmit={handleSignIn}
-                            >
+                            <form onSubmit={handleSignIn}>
                                 <FormControl required>
                                     <FormLabel>Email</FormLabel>
                                     <Input type="email" name="email" />
@@ -161,7 +159,12 @@ export default function LoginView(props: ViewProps) {
                                     >
                                         <Checkbox size="sm" label="Remember me" name="persistent" />
                                     </Box>
-                                    <Button type="submit" fullWidth loading={signInLoading} loadingIndicator="登入中…">
+                                    <Button
+                                        type="submit"
+                                        fullWidth
+                                        loading={signInLoading}
+                                        loadingIndicator="登入中…"
+                                    >
                                         登入
                                     </Button>
                                 </Stack>

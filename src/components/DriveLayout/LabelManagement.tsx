@@ -33,19 +33,17 @@ import AddToPhotosOutlinedIcon from '@mui/icons-material/AddToPhotosOutlined';
 const labels = [
     {
         id: 'a65ae4d7-2d3e-46fd-a611-dd061e69bf2b',
-        name: "生產部文件",
-
+        name: '生產部文件'
     },
     {
-        id: "0b4ae534-b227-4dbb-8884-2614393c027d",
-        name: '11月的請假表',
+        id: '0b4ae534-b227-4dbb-8884-2614393c027d',
+        name: '11月的請假表'
     },
     {
-        id: "056b73e5-26cb-431e-8a42-fd77a8c1c511",
-        name: 'CHYB請假表',
-    },
+        id: '056b73e5-26cb-431e-8a42-fd77a8c1c511',
+        name: 'CHYB請假表'
+    }
 ];
-
 
 export default function LabelManagement() {
     const [selected, setSelected] = React.useState<readonly string[]>([]);
@@ -63,40 +61,49 @@ export default function LabelManagement() {
                     borderRadius: 'sm',
                     flexShrink: 1,
                     overflow: 'auto',
-                    minHeight: 0,
+                    minHeight: 0
                 }}
             >
                 <Box
-                sx={{
-                    mx:1,
-                    my:2
-                }}>
-                    <Box sx={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        my:1
-                    }}>
+                    sx={{
+                        mx: 1,
+                        my: 2
+                    }}
+                >
+                    <Box
+                        sx={{
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                            my: 1
+                        }}
+                    >
                         <Typography>標籤:</Typography>
                         <Link color="primary">標籤管理</Link>
                     </Box>
 
                     <Box
                         sx={{
-                            display: "flex",
+                            display: 'flex',
                             gap: 2,
-                            mx:2,
-                            mt:1,
-                            mb:2
+                            mx: 2,
+                            mt: 1,
+                            mb: 2
                         }}
                     >
                         {labels.map((label) => (
-                            <Chip key={label.id} color="primary" variant="solid" startDecorator={<InsertDriveFileIcon />}
-                            >{label.name}</Chip>
+                            <Chip
+                                key={label.id}
+                                color="primary"
+                                variant="solid"
+                                startDecorator={<InsertDriveFileIcon />}
+                            >
+                                {label.name}
+                            </Chip>
                         ))}
-                        <Link underline='always'>查看更多</Link>
+                        <Link underline="always">查看更多</Link>
                     </Box>
 
-                    <Input placeholder="輸入文件的關鍵字或文件的相關内容" variant="outlined"/>
+                    <Input placeholder="輸入文件的關鍵字或文件的相關内容" variant="outlined" />
                 </Box>
             </Sheet>
         </React.Fragment>

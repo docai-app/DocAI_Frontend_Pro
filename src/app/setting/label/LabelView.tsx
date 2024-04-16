@@ -119,7 +119,8 @@ function LabelView(props: ViewProps) {
                             startDecorator={<KeyboardArrowLeftIcon />}
                             onClick={() => {
                                 router.back();
-                            }}>
+                            }}
+                        >
                             返回
                         </Button>
 
@@ -150,20 +151,23 @@ function LabelView(props: ViewProps) {
                         >
                             新增
                         </Button>
-
                     </Box>
 
-                    {sortedLabels && <LabelTable
-                        labels={sortedLabels}
-                        updateLabelNameByIdHandler={updateLabelNameByIdHandler}
-                    />}
+                    {sortedLabels && (
+                        <LabelTable
+                            labels={sortedLabels}
+                            updateLabelNameByIdHandler={updateLabelNameByIdHandler}
+                        />
+                    )}
                     <Divider sx={{ mt: 1 }} color="primary">
                         <Typography level="h4">待查核標籤</Typography>
                     </Divider>
-                    {sortedUnCheckLabels && <LabelTable
-                        labels={sortedUnCheckLabels}
-                        updateLabelNameByIdHandler={updateLabelNameByIdHandler}
-                    />}
+                    {sortedUnCheckLabels && (
+                        <LabelTable
+                            labels={sortedUnCheckLabels}
+                            updateLabelNameByIdHandler={updateLabelNameByIdHandler}
+                        />
+                    )}
                 </Box>
             </Box>
         </>

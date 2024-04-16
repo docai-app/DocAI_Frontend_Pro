@@ -126,57 +126,69 @@ export default function LabelTable(props: any) {
                     </thead>
                     <tbody>
                         {/* {labels && (stableSort(labels, getComparator(order, 'id')).map((row) => ( */}
-                        {labels && (labels.map((label: any) => (
-                            <tr key={label.id}>
-                                <td>
-                                    <Link
-                                        color="primary"
-                                        underline="hover"
-                                        href={`/search?content=&tag_id=${label?.id}&from=&to=`}
-                                    >
-                                        {label.name}
-                                    </Link>
-                                </td>
-                                <td>
-                                    {_.join(_.map(label?.functions, 'title'), ', ')}
-                                    {label?.smart_extraction_schemas_count > 0 && (
-                                        <>、數據提取({label?.smart_extraction_schemas_count || 0})</>
-                                    )}
-                                    {label?.meta?.chain_features?.length > 0 && (
-                                        <>、推薦功能({label?.meta?.chain_features?.length || 0})</>
-                                    )}
-                                </td>
-
-                                <td>
-                                    <Box sx={{
-                                        display: 'flex',
-                                        gap: 2,
-                                        alignItems: 'center',
-                                        justifyContent: 'center'
-                                    }}>
+                        {labels &&
+                            labels.map((label: any) => (
+                                <tr key={label.id}>
+                                    <td>
                                         <Link
-                                            level="body-xs"
-                                            href={`/document/extraction/${label?.id}`}
+                                            color="primary"
+                                            underline="hover"
+                                            href={`/search?content=&tag_id=${label?.id}&from=&to=`}
                                         >
-                                            编辑
+                                            {label.name}
                                         </Link>
-
-                                        {label && !label?.is_checked && (
-                                            <Button
-                                                size={"sm"}
-                                                endDecorator={<AddToPhotosOutlinedIcon />}
-                                                onClick={() => {
-                                                    updateLabelNameByIdHandler(label.id, label?.name, true);
-                                                }}
-                                            >
-                                                加到名單
-                                            </Button>
+                                    </td>
+                                    <td>
+                                        {_.join(_.map(label?.functions, 'title'), ', ')}
+                                        {label?.smart_extraction_schemas_count > 0 && (
+                                            <>
+                                                、數據提取(
+                                                {label?.smart_extraction_schemas_count || 0})
+                                            </>
                                         )}
-                                    </Box>
-                                </td>
-                            </tr>
-                        )))
-                        }
+                                        {label?.meta?.chain_features?.length > 0 && (
+                                            <>
+                                                、推薦功能(
+                                                {label?.meta?.chain_features?.length || 0})
+                                            </>
+                                        )}
+                                    </td>
+
+                                    <td>
+                                        <Box
+                                            sx={{
+                                                display: 'flex',
+                                                gap: 2,
+                                                alignItems: 'center',
+                                                justifyContent: 'center'
+                                            }}
+                                        >
+                                            <Link
+                                                level="body-xs"
+                                                href={`/document/extraction/${label?.id}`}
+                                            >
+                                                编辑
+                                            </Link>
+
+                                            {label && !label?.is_checked && (
+                                                <Button
+                                                    size={'sm'}
+                                                    endDecorator={<AddToPhotosOutlinedIcon />}
+                                                    onClick={() => {
+                                                        updateLabelNameByIdHandler(
+                                                            label.id,
+                                                            label?.name,
+                                                            true
+                                                        );
+                                                    }}
+                                                >
+                                                    加到名單
+                                                </Button>
+                                            )}
+                                        </Box>
+                                    </td>
+                                </tr>
+                            ))}
                     </tbody>
                 </Table>
             </Sheet>

@@ -164,11 +164,12 @@ export default function DriveView(props: DriveViewProps) {
                                 display: 'flex',
                                 alignItems: 'flex-end',
                                 gap: 2
-                            }}>
+                            }}
+                        >
                             <Link
                                 color="primary"
-                                underline='always'
-                            // href={ }
+                                underline="always"
+                                // href={ }
                             >
                                 智能文檔處理
                             </Link>
@@ -184,16 +185,17 @@ export default function DriveView(props: DriveViewProps) {
                             alignItems: { xs: 'start', sm: 'center' },
                             flexWrap: 'wrap',
                             justifyContent: 'space-between'
-                        }}>
+                        }}
+                    >
                         <Typography level="title-md">Root</Typography>
                         <Button
                             color="primary"
                             startDecorator={<Add />}
                             endDecorator={<KeyboardDoubleArrowDownIcon />}
-
-                        >新增按钮</Button>
+                        >
+                            新增按钮
+                        </Button>
                     </Box>
-
 
                     <DriveTable />
                     <LabelManagement />
@@ -211,7 +213,6 @@ export default function DriveView(props: DriveViewProps) {
                         </Box>
                         <Typography level="h4">一个Search输入框</Typography>
                     </Box> */}
-
                 </Box>
             </Box>
         </>
