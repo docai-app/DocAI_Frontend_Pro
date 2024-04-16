@@ -85,6 +85,20 @@ function LabelView(props: ViewProps) {
 
     return (
         <>
+            <EditLabel
+                {...{
+                    open,
+                    setOpen,
+                    tag,
+                    tagTypes,
+                    newLabelName,
+                    setNewLabelName,
+                    addNewLabelHandler,
+                    updateLabelNameByIdHandler,
+                    updateTagFunctionsHandler,
+                    deleteTagFunctionsHandler
+                }}
+            />
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
                 <Box
                     component="main"
@@ -126,8 +140,8 @@ function LabelView(props: ViewProps) {
                         <Typography level="h2" component="h1">
                             標籤管理
                         </Typography>
-                        
-                        <Box sx={{ display:'flex',justifyContent:'end',width: '20%'}}>
+
+                        <Box sx={{ display: 'flex', justifyContent: 'end', width: '20%' }}>
                             <Button
                                 color="primary"
                                 startDecorator={<Add />}
