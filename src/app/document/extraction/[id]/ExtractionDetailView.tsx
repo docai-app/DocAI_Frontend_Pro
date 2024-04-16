@@ -7,14 +7,12 @@ import Checkbox from '@mui/joy/Checkbox';
 import Input from '@mui/joy/Input';
 import Button from '@mui/joy/Button';
 
-
 import _ from 'lodash';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import ChainFeatureSelect from '../../../../components/Chatbot/feature/ChainFeatureSelect';
 import ChainFeatureList from '../../../../components/document/extraction/ChainFeatureList';
 import SchemaList from '../../../../components/document/extraction/SchemasList';
-
 
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 
@@ -107,15 +105,20 @@ function ExtractionDetailView(props: ExtractionDetailViewProps) {
                             justifyContent: 'space-between'
                         }}
                     >
-                        <Button color="primary" variant="plain"
+                        <Button
+                            color="primary"
+                            variant="plain"
                             startDecorator={<KeyboardArrowLeftIcon />}
                             onClick={() => {
                                 router.back();
-                            }}>
+                            }}
+                        >
                             返回
                         </Button>
 
-                        <Typography level="h2" component="h1">編輯標籤</Typography>
+                        <Typography level="h2" component="h1">
+                            編輯標籤
+                        </Typography>
 
                         <Button
                             color="primary"
@@ -123,49 +126,55 @@ function ExtractionDetailView(props: ExtractionDetailViewProps) {
                             size="sm"
                             onClick={() => {
                                 updateTagNameHandler(label.id, name);
-                            }}>
+                            }}
+                        >
                             保存
                         </Button>
                     </Box>
 
-                    <Input autoFocus required fullWidth color="primary"
+                    <Input
+                        autoFocus
+                        required
+                        fullWidth
+                        color="primary"
                         startDecorator={<Typography>名稱:</Typography>}
                         defaultValue={label?.name}
                         onChange={(e) => {
                             setName(e.target.value);
-                        }} />
-                    <Box sx={{ display: 'flex', gap: 1, ml:1.5,my:1}}>
+                        }}
+                    />
+                    <Box sx={{ display: 'flex', gap: 1, ml: 1.5, my: 1 }}>
                         功能:
                         {tagTypes?.functions?.map((item: any, index: number) => {
                             return (
-                                <Checkbox key={index} variant="solid" color="primary"
+                                <Checkbox
+                                    key={index}
+                                    variant="solid"
+                                    color="primary"
                                     label={item.title}
                                     defaultChecked={isContain(item.id)}
                                     onChange={(e) => {
                                         if (e.target.checked) {
-                                            updateTagFunctionsHandler(
-                                                label.id, item.id
-                                            );
+                                            updateTagFunctionsHandler(label.id, item.id);
                                         } else {
-                                            deleteTagFunctionsHandler(
-                                                label.id, item.id
-                                            );
+                                            deleteTagFunctionsHandler(label.id, item.id);
                                         }
                                     }}
-                                />);
+                                />
+                            );
                         })}
                     </Box>
 
-                    <Tabs defaultValue="extraction"
-                        sx={{ bgcolor: 'transparent' }}
-                    >
-                        <TabList underlinePlacement="bottom"
+                    <Tabs defaultValue="extraction" sx={{ bgcolor: 'transparent' }}>
+                        <TabList
+                            underlinePlacement="bottom"
                             sx={{
                                 p: 0.5,
                                 gap: 0.5,
                                 borderRadius: 'xl',
-                                bgcolor: 'background.level1',
-                            }}>
+                                bgcolor: 'background.level1'
+                            }}
+                        >
                             <Tab value="extraction" indicatorPlacement="bottom">
                                 標籤填表與數據
                             </Tab>

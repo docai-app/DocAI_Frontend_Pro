@@ -39,11 +39,7 @@ function SearchContainer() {
     });
 
     useEffect(() => {
-        console.log('home');
-        setLoad({ show: false });
-        // setAlert({ title: 'success', type: 'error' })
-        // gatTags()
-        return () => {};
+        gatTags();
     }, [router]);
 
     // useEffect(() => {
@@ -140,7 +136,8 @@ function SearchContainer() {
                 data,
                 documents,
                 handleSearch,
-                searchTreeData
+                searchTreeData,
+                getAllLabelsData
             }}
         />
     );

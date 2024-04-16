@@ -9,18 +9,62 @@ import Menu from '@mui/joy/Menu';
 import MenuButton from '@mui/joy/MenuButton';
 import MenuItem from '@mui/joy/MenuItem';
 
-import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
-import EditRoundedIcon from '@mui/icons-material/EditRounded';
+import Api from '@/apis';
+import useAlert from '@/hooks/useAlert';
+import useLoad from '@/hooks/useLoad';
+import FileCopyIcon from '@mui/icons-material/FileCopy';
+import FileOpenIcon from '@mui/icons-material/FileOpen';
 import MoreVertRoundedIcon from '@mui/icons-material/MoreVertRounded';
-import ShareRoundedIcon from '@mui/icons-material/ShareRounded';
+import SellIcon from '@mui/icons-material/Sell';
 import Tooltip from '@mui/joy/Tooltip';
-
+import useAxios from 'axios-hooks';
+import { useFormik } from 'formik';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
+import AmendLabel from '../setting/label/AmendLabel';
+import EditLabel from '../setting/label/EditLabel';
+import SelectDataSchemaModal from './SelectDataSchemaModal';
 interface ViewProps {
     document: DocumentModel;
+    getAllLabelsData: any;
 }
-
+const apiSetting = new Api();
 export default function DocumentCard(props: ViewProps) {
-    const { document } = props;
+    const router = useRouter();
+    const { setAlert } = useAlert();
+    const { setLoad } = useLoad();
+    const { document, getAllLabelsData } = props;
+    const [openSelectShema, setOpenSelectShema] = useState(false);
+    const [openAmendLabel, setOpenAmendLabel] = useState(false);
+    const [openEditLabel, setOpenEditLabel] = useState(false);
+
+    const [{ data: updateDocumentTagData }, updateDocumentTag] = useAxios(
+        apiSetting.Classification.updateDocumentTag([], ''),
+        { manual: true }
+    );
+
+    const confirmDocumentFormik = useFormik({
+        initialValues: {
+            document_id: null,
+            tag_id: ''
+        },
+        onSubmit: async (values) => {
+            setLoad({ show: true, content: '正在更新數據' });
+            const res = await updateDocumentTag({
+                data: {
+                    document_ids: [document?.id],
+                    tag_id: values.tag_id
+                }
+            });
+            setLoad({ show: false });
+            if (res.data.success === true) {
+                setAlert({ title: '更新成功', type: 'success' });
+                // router.refresh();
+            } else {
+                setAlert({ title: '更新失敗', type: 'error' });
+            }
+        }
+    });
 
     const dropdown = () => {
         return (
@@ -48,17 +92,31 @@ export default function DocumentCard(props: ViewProps) {
                         '--ListItem-radius': 'var(--joy-radius-sm)'
                     }}
                 >
-                    <MenuItem>
-                        <EditRoundedIcon />
-                        Rename file
+                    <a
+                        href={document.storage_url}
+                        target={'_blank'}
+                        className=" hover:underline cursor-pointer "
+                    >
+                        <MenuItem>
+                            <FileOpenIcon />
+                            打開
+                        </MenuItem>
+                    </a>
+                    <MenuItem
+                        onClick={() => {
+                            setOpenAmendLabel(true);
+                        }}
+                    >
+                        <SellIcon />
+                        更新標籤
                     </MenuItem>
-                    <MenuItem>
-                        <ShareRoundedIcon />
-                        Share file
-                    </MenuItem>
-                    <MenuItem sx={{ textColor: 'danger.500' }}>
-                        <DeleteRoundedIcon color="warning" />
-                        Delete file
+                    <MenuItem
+                        onClick={() => {
+                            setOpenSelectShema(true);
+                        }}
+                    >
+                        <FileCopyIcon />
+                        搬資料到Execl
                     </MenuItem>
                 </Menu>
             </Dropdown>
@@ -74,7 +132,7 @@ export default function DocumentCard(props: ViewProps) {
                                 level="title-md"
                                 sx={{
                                     color: 'black',
-                                    width: 200,
+                                    width: { xs: 150, sm: 170 },
                                     textOverflow: 'ellipsis',
                                     overflow: 'hidden',
                                     whiteSpace: 'nowrap'
@@ -106,6 +164,7 @@ export default function DocumentCard(props: ViewProps) {
                         sx={{ borderRadius: 0 }}
                         objectFit="contain"
                         minHeight={250}
+                        maxHeight={250}
                     >
                         {document.storage_url && document.storage_url.trim().endsWith('.pdf') ? (
                             <object
@@ -134,6 +193,36 @@ export default function DocumentCard(props: ViewProps) {
                     {moment(document.created_at).format('YYYY-MM-DD HH:mm')}
                 </Typography> */}
             </Card>
+            {openSelectShema && (
+                <SelectDataSchemaModal
+                    open={openSelectShema}
+                    setOpen={setOpenSelectShema}
+                    document_ids={[document?.id]}
+                />
+            )}
+            {openAmendLabel && (
+                <AmendLabel
+                    open={openAmendLabel}
+                    setOpen={setOpenAmendLabel}
+                    allLabelsData={getAllLabelsData}
+                    confirmDocumentFormik={confirmDocumentFormik}
+                    isSubmit={true}
+                    setTagName={(name: string) => {}}
+                    setOpenEditLabel={setOpenEditLabel}
+                />
+            )}
+            {openEditLabel && (
+                <EditLabel
+                    {...{
+                        open: openEditLabel,
+                        setOpen: setOpenEditLabel,
+                        tagTypes: null,
+                        newLabelName: '',
+                        setNewLabelName: null,
+                        addNewLabelHandler: null
+                    }}
+                />
+            )}
         </>
     );
 }

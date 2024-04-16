@@ -1,3 +1,5 @@
+'use client';
+
 import useAxios from 'axios-hooks';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';

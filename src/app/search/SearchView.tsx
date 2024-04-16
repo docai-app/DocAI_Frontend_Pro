@@ -11,10 +11,11 @@ interface ViewProps {
     documents: DocumentModel[];
     handleSearch: any;
     searchTreeData: any;
+    getAllLabelsData: any;
 }
 
 function SearchView(props: ViewProps) {
-    const { documents, handleSearch, searchTreeData } = props;
+    const { documents, handleSearch, searchTreeData, getAllLabelsData } = props;
 
     return (
         <>
@@ -66,6 +67,7 @@ function SearchView(props: ViewProps) {
                     // checked={_.includes(documents_items, document?.id)}
                     setDocument={undefined}
                     tree={searchTreeData}
+                    getAllLabelsData={getAllLabelsData}
                 />
             </React.Fragment>
         </>

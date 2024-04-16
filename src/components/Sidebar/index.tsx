@@ -23,7 +23,6 @@ import * as React from 'react';
 import { useEffect } from 'react';
 
 import { closeSidebar } from '../../utils/utils';
-import ColorSchemeToggle from '../ColorSchemeToggle';
 import LogoutButton from '../common/Widget/buttons/LogoutButton';
 
 function Toggler({
@@ -123,7 +122,7 @@ export default function Sidebar() {
                     <BrightnessAutoRoundedIcon />
                 </IconButton>
                 <Typography level="title-lg">DocAI</Typography>
-                <ColorSchemeToggle sx={{ ml: 'auto' }} />
+                {/* <ColorSchemeToggle sx={{ ml: 'auto' }} /> */}
             </Box>
             {/* <Input size="sm" startDecorator={<SearchRoundedIcon />} placeholder="Search" /> */}
             <Box

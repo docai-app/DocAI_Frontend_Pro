@@ -147,7 +147,8 @@ function LabelView(props: ViewProps) {
                             size="sm"
                             onClick={() => {
                                 setOpen(true);
-                            }}>
+                            }}
+                        >
                             新增
                         </Button>
                     </Box>

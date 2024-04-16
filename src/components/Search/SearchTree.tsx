@@ -9,6 +9,7 @@ interface SearchRowProps {
     // checked: boolean;
     setDocument?: any;
     tree?: any;
+    getAllLabelsData: any;
 }
 
 const trees = [
@@ -72,7 +73,7 @@ const trees = [
 ];
 
 export default function SearchRow(props: SearchRowProps) {
-    const { document, setChecedkData, setDocument, tree = [] } = props;
+    const { document, setChecedkData, setDocument, tree = [], getAllLabelsData } = props;
 
     const [visable, setVisable] = useState(false);
     const [checked, setCheck] = useState(false);
@@ -124,7 +125,13 @@ export default function SearchRow(props: SearchRowProps) {
                 </>
             );
         } else {
-            return <DocumentCard key={document.id} document={document} />;
+            return (
+                <DocumentCard
+                    key={document.id}
+                    document={document}
+                    getAllLabelsData={getAllLabelsData}
+                />
+            );
         }
     };
 

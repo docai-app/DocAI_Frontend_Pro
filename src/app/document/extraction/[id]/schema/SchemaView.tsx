@@ -3,9 +3,9 @@ import { DocumentIcon } from '@heroicons/react/24/solid';
 import _ from 'lodash';
 import Router from 'next/router';
 import { useEffect, useState } from 'react';
-import EditSchemaDataModal from '../../../../../components/common/Widget/EditSchemaDataModal';
+// import EditSchemaDataModal from '../../../../../components/common/Widget/EditSchemaDataModal';
 import SingleActionModel from '../../../../../components/common/Widget/SingleActionModel';
-import ExtractSchemaRow from '../../../../../components/feature/document/extraction/ExtractSchemaRow';
+// import ExtractSchemaRow from '../../../../../components/feature/document/extraction/ExtractSchemaRow';
 
 interface SchemaViewProps {
     label: any;
@@ -223,7 +223,7 @@ function SchemaView(props: SchemaViewProps) {
                                         </tr>
                                     </thead>
                                     <tbody className="divide-y divide-gray-200">
-                                        {extractSchema?.schema?.map(
+                                        {/* {extractSchema?.schema?.map(
                                             (schema: any, index: number) => {
                                                 return (
                                                     <ExtractSchemaRow
@@ -236,7 +236,7 @@ function SchemaView(props: SchemaViewProps) {
                                                     />
                                                 );
                                             }
-                                        )}
+                                        )} */}
                                     </tbody>
                                 </table>
                             </div>
@@ -244,7 +244,7 @@ function SchemaView(props: SchemaViewProps) {
                     </div>
                 </div>
             </div>
-            <EditSchemaDataModal
+            {/* <EditSchemaDataModal
                 visable={visable}
                 extractSchema={currectExtraScheam}
                 accurateMode={accurateMode}
@@ -269,7 +269,7 @@ function SchemaView(props: SchemaViewProps) {
                         schema: extractSchema?.schema
                     });
                 }}
-            />
+            /> */}
         </>
     );
 }
