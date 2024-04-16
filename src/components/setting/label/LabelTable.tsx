@@ -28,71 +28,7 @@ import { useRouter, usePathname } from 'next/navigation';
 import _ from 'lodash';
 
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import AutorenewRoundedIcon from '@mui/icons-material/AutorenewRounded';
 import AddToPhotosOutlinedIcon from '@mui/icons-material/AddToPhotosOutlined';
-import CheckRoundedIcon from '@mui/icons-material/CheckRounded';
-import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
-import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
-import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
-import MoreHorizRoundedIcon from '@mui/icons-material/MoreHorizRounded';
-import SearchIcon from '@mui/icons-material/Search';
-
-const rows = [
-    {
-        id: 'a65ae4d7-2d3e-46fd-a611-dd061e69bf2b',
-        name: '生產部文件',
-        is_checked: true,
-        smart_extraction_schemas_count: 0,
-        functions: [
-            {
-                title: '一般審批'
-            }
-        ],
-        meta: { chain_features: [] }
-    },
-    {
-        id: '0b4ae534-b227-4dbb-8884-2614393c027d',
-        name: '11月的請假表',
-        functions: [],
-        is_checked: true,
-        smart_extraction_schemas_count: 0,
-        meta: { chain_features: [] }
-    },
-    {
-        id: '056b73e5-26cb-431e-8a42-fd77a8c1c511',
-        name: 'CHYB請假表',
-        functions: [
-            {
-                title: '表格深度理解'
-            },
-            {
-                title: '一般審批'
-            }
-        ],
-        is_checked: true,
-        smart_extraction_schemas_count: 0,
-        meta: {
-            chain_features: ['2', '7', '11', 27]
-        }
-    },
-    {
-        id: '056b73e5-26cb-431e-8a42-fd77a8c1c511',
-        name: 'CHYB請假表2',
-        functions: [
-            {
-                title: '表格深度理解'
-            },
-            {
-                title: '一般審批'
-            }
-        ],
-        is_checked: false,
-        smart_extraction_schemas_count: 0,
-        meta: {
-            chain_features: ['2', '7', '11', 27]
-        }
-    }
-];
 
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
     if (b[orderBy] < a[orderBy]) {
@@ -131,36 +67,16 @@ function stableSort<T>(array: readonly T[], comparator: (a: T, b: T) => number) 
     return stabilizedThis.map((el) => el[0]);
 }
 
-function RowMenu() {
-    return (
-        <Dropdown>
-            <MenuButton
-                slots={{ root: IconButton }}
-                slotProps={{ root: { variant: 'plain', color: 'neutral', size: 'sm' } }}
-            >
-                <MoreHorizRoundedIcon />
-            </MenuButton>
-            <Menu size="sm" sx={{ minWidth: 140 }}>
-                <MenuItem>Edit</MenuItem>
-                <MenuItem>Rename</MenuItem>
-                <MenuItem>Move</MenuItem>
-                <Divider />
-                <MenuItem color="danger">Delete</MenuItem>
-            </Menu>
-        </Dropdown>
-    );
-}
-
-export default function OrderTable() {
+export default function LabelTable(props: any) {
+    const { labels, updateLabelNameByIdHandler } = props;
     const [order, setOrder] = React.useState<Order>('desc');
     const [selected, setSelected] = React.useState<readonly string[]>([]);
     const [open, setOpen] = React.useState(false);
-    const router = useRouter();
 
     return (
         <React.Fragment>
             <Sheet
-                className="OrderTableContainer"
+                className="LabelTableContainer"
                 variant="outlined"
                 sx={{
                     display: { xs: 'none', sm: 'initial' },
@@ -209,49 +125,48 @@ export default function OrderTable() {
                         </tr>
                     </thead>
                     <tbody>
-                        {stableSort(rows, getComparator(order, 'id')).map((row) => (
-                            <tr key={row.id}>
+                        {/* {labels && (stableSort(labels, getComparator(order, 'id')).map((row) => ( */}
+                        {labels && (labels.map((label: any) => (
+                            <tr key={label.id}>
                                 <td>
                                     <Link
                                         color="primary"
                                         underline="hover"
-                                        href={`/search?content=&tag_id=${row?.id}&from=&to=`}
+                                        href={`/search?content=&tag_id=${label?.id}&from=&to=`}
                                     >
-                                        {row.name}
+                                        {label.name}
                                     </Link>
                                 </td>
                                 <td>
-                                    {_.join(_.map(row?.functions, 'title'), ', ')}
-                                    {row?.smart_extraction_schemas_count > 0 && (
-                                        <>、數據提取({row?.smart_extraction_schemas_count || 0})</>
+                                    {_.join(_.map(label?.functions, 'title'), ', ')}
+                                    {label?.smart_extraction_schemas_count > 0 && (
+                                        <>、數據提取({label?.smart_extraction_schemas_count || 0})</>
                                     )}
-                                    {row?.meta?.chain_features?.length > 0 && (
-                                        <>、推薦功能({row?.meta?.chain_features?.length || 0})</>
+                                    {label?.meta?.chain_features?.length > 0 && (
+                                        <>、推薦功能({label?.meta?.chain_features?.length || 0})</>
                                     )}
                                 </td>
 
                                 <td>
-                                    <Box
-                                        sx={{
-                                            display: 'flex',
-                                            gap: 2,
-                                            alignItems: 'center',
-                                            justifyContent: 'center'
-                                        }}
-                                    >
+                                    <Box sx={{
+                                        display: 'flex',
+                                        gap: 2,
+                                        alignItems: 'center',
+                                        justifyContent: 'center'
+                                    }}>
                                         <Link
                                             level="body-xs"
-                                            href={`/document/extraction/${row?.id}`}
+                                            href={`/document/extraction/${label?.id}`}
                                         >
                                             编辑
                                         </Link>
 
-                                        {row && !row?.is_checked && (
+                                        {label && !label?.is_checked && (
                                             <Button
-                                                size={'sm'}
+                                                size={"sm"}
                                                 endDecorator={<AddToPhotosOutlinedIcon />}
                                                 onClick={() => {
-                                                    console.log('加到名单！');
+                                                    updateLabelNameByIdHandler(label.id, label?.name, true);
                                                 }}
                                             >
                                                 加到名單
@@ -260,7 +175,8 @@ export default function OrderTable() {
                                     </Box>
                                 </td>
                             </tr>
-                        ))}
+                        )))
+                        }
                     </tbody>
                 </Table>
             </Sheet>
