@@ -142,7 +142,8 @@ function LabelView(props: ViewProps) {
                         labels={sortedLabels}
                         updateLabelNameByIdHandler={updateLabelNameByIdHandler}
                     />}
-                    <Divider sx={{ mt: 1 }} color="primary">
+
+                    <Divider sx={{ mt: 1, '--Divider-childPosition': `45%` }} color="primary">
                         <Typography level="h4">待查核標籤</Typography>
                     </Divider>
                     {sortedUnCheckLabels && <LabelTable
