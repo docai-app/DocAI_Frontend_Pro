@@ -3,7 +3,7 @@ import Tabs from '@mui/joy/Tabs';
 import TabList from '@mui/joy/TabList';
 import Tab, { tabClasses } from '@mui/joy/Tab';
 import TabPanel from '@mui/joy/TabPanel';
-import Checkbox from '@mui/joy/Checkbox';
+import Checkbox, { checkboxClasses } from '@mui/joy/Checkbox';
 import Input from '@mui/joy/Input';
 import Button from '@mui/joy/Button';
 import Textarea from '@mui/joy/Textarea';
@@ -123,7 +123,7 @@ function SchemaView(props: SchemaViewProps) {
                         </Box>
                     </Box>
 
-                    <Box sx={{display:'flex', alignItems:'center', gap:2}}>
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
                         <Typography level="h2" fontSize="md">來源:</Typography>
                         {label && (
                             <Button
@@ -134,40 +134,48 @@ function SchemaView(props: SchemaViewProps) {
                                         `?content=&tag_id=${label?.id}&from=&to=&label=${label?.name}`
                                     );
                                 }}
-                            // sx={{cursor:pointer}}
                             >
                                 {label?.name}({label?.taggings_count || 0})
                             </Button>
-                        )}  
+                        )}
 
                     </Box>
 
                     <Typography level="h2" fontSize="md">目的地:</Typography>
 
                     <Box>
-                        <Typography>名稱:</Typography>
-                        <Input defaultValue={extractSchema?.name}>
+                        <Input
+                            id="name"
+                            type="text"
+                            name="name"
+                            startDecorator={<Typography>名稱:</Typography>}
+                            placeholder="名稱"
+                            defaultValue={extractSchema?.name}
+                            onChange={(e) => {
+                                setExtractSchema({
+                                    ...extractSchema,
+                                    name: e.target.value
+                                });
+                            }}
+                            sx={{ mb: 1 }}>
                         </Input>
-                        {/* <input
-                                    id="name"
-                                    type="text"
-                                    name="name"
-                                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                    placeholder="名稱"
-                                    defaultValue={extractSchema?.name}
-                                    onChange={(e) => {
-                                        setExtractSchema({
-                                            ...extractSchema,
-                                            name: e.target.value -> description: e.target.value
-                                        });
-                                    }} */}
+                        <Textarea minRows={2}
+                            id="description"
+                            name="description"
+                            placeholder="描述"
+                            startDecorator={<Typography sx={{ ml: 1 }}>描述:</Typography>}
+                            defaultValue={extractSchema?.description}
+                            onChange={(e) => {
+                                setExtractSchema({
+                                    ...extractSchema,
+                                    description: e.target.value
+                                });
+                            }}
+                            sx={{ mb: 1 }}>
+                        </Textarea>
 
-                        <Typography>描述:</Typography>
-                        <Input defaultValue={extractSchema?.description}>
-                        </Input>
                     </Box>
-                    <Box
-                        sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
                         精準模式:
                         <Checkbox color="primary" variant="solid"
                             checked={accurateMode}
@@ -175,18 +183,8 @@ function SchemaView(props: SchemaViewProps) {
                             onChange={() => {
                                 setAccurateMode(!accurateMode);
                             }}
-                        >
-
-                            {/* <input
-                                type={'checkbox'}
-                                className={`mx-2 ${extractSchema?.schema?.length > 0 ? 'text-gray-500' : ''
-                                    }`}
-                                checked={accurateMode}
-                                disabled={extractSchema?.schema?.length > 0}
-                                onChange={() => {
-                                    setAccurateMode(!accurateMode);
-                                }}
-                            /> */}
+                            sx={{ [`& > .${checkboxClasses.checkbox}`]: { position: 'relative' } }}
+                            slotProps={{ action: { className: checkboxClasses.focusVisible } }}>
                         </Checkbox>
                     </Box>
 
@@ -253,7 +251,7 @@ function SchemaView(props: SchemaViewProps) {
                         </table>
                     </Box>
                 </Box>
-            </Box>
+            </Box >
 
             <EditSchemaDataModal
                 visable={visable}
