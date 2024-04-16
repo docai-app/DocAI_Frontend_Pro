@@ -20,6 +20,14 @@ function SearchContainer() {
     const [documents, setDocuments] = useState<DocumentModel[]>([]);
     const [meta, setMeta] = useState([]);
     const [searchTreeData, setSearchTreeData] = useState<any>([]);
+    const [searchParams, setSearchParams] = useState({
+        tag_id: '',
+        content: '',
+        date: '',
+        from: '',
+        to: '',
+        page: 1
+    })
 
     const [{ data: getAllLabelsData, error: getAllLabelsError }, getAllLabels] = useAxios(
         apiSetting.Tag.getAllTags(),
@@ -54,14 +62,7 @@ function SearchContainer() {
     // }, [searchDocumentByContentData]);
 
     const searchDocumentFormik = useFormik({
-        initialValues: {
-            tag_id: '',
-            content: '',
-            date: '',
-            from: '',
-            to: '',
-            page: 1
-        },
+        initialValues: searchParams,
         onSubmit: async (values) => {
             const res = await searchDocumentByContent({
                 params: {
@@ -114,14 +115,12 @@ function SearchContainer() {
     });
 
     const handleSearch = () => {
-        searchDocumentFormik.setValues({
-            content: '',
-            date: '',
-            tag_id: 'adafcb0d-79cd-4ef8-ad74-4ad77b73537a',
-            from: '',
-            to: '',
-            page: 1
-        });
+        if (!searchParams.tag_id) {
+            setAlert({ title: '請選擇標籤', type: 'info' })
+            return
+        }
+        console.log('searchParams', searchParams);
+        searchDocumentFormik.setValues(searchParams);
         searchDocumentFormik.handleSubmit();
     };
 
@@ -137,7 +136,9 @@ function SearchContainer() {
                 documents,
                 handleSearch,
                 searchTreeData,
-                getAllLabelsData
+                getAllLabelsData,
+                searchParams,
+                setSearchParams
             }}
         />
     );

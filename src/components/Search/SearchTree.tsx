@@ -1,13 +1,8 @@
 import { Box } from '@mui/joy';
-import { useEffect, useState } from 'react';
 import DocumentCard from './DocumentCard';
 import MyTreeView from './MyTreeView';
 
 interface SearchRowProps {
-    document?: any;
-    setChecedkData?: any;
-    // checked: boolean;
-    setDocument?: any;
     tree?: any;
     getAllLabelsData: any;
 }
@@ -73,29 +68,8 @@ const trees = [
 ];
 
 export default function SearchRow(props: SearchRowProps) {
-    const { document, setChecedkData, setDocument, tree = [], getAllLabelsData } = props;
+    const { tree = [], getAllLabelsData } = props;
 
-    const [visable, setVisable] = useState(false);
-    const [checked, setCheck] = useState(false);
-
-    const [hidden, setHidden] = useState([]);
-
-    useEffect(() => {
-        if (!checked) setVisable(false);
-    }, [checked]);
-
-    const onMouseEnter = () => {
-        if (checked) return;
-        setVisable(true);
-    };
-    const onMouseLeave = () => {
-        if (checked) return;
-        setVisable(false);
-    };
-    const check = (e: any) => {
-        setChecedkData(e.target.checked, e.target.value);
-        setDocument(document);
-    };
 
     const ifChildren = (document: any, deep: number) => {
         // 判断是否为最后一层
@@ -114,8 +88,8 @@ export default function SearchRow(props: SearchRowProps) {
                     <div
                         className={
                             document?.children &&
-                            document.children.length > 0 &&
-                            document.children[0]?.subtree_title
+                                document.children.length > 0 &&
+                                document.children[0]?.subtree_title
                                 ? 'flex flex-col'
                                 : 'flex flex-row flex-wrap'
                         }

@@ -2,9 +2,10 @@ import SearchInputView from '@/components/common/Views/SearchInputView';
 import { DocumentModel } from '@/models/Document';
 import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
-import { Box, Breadcrumbs, Link, Sheet, Typography } from '@mui/joy';
+import { Box, Breadcrumbs, FormControl, FormLabel, Link, Typography } from '@mui/joy';
 import * as React from 'react';
 
+import SearchFilterView from '@/components/Search/SearchFilterView';
 import SearchTree from '@/components/Search/SearchTree';
 interface ViewProps {
     data: any;
@@ -12,10 +13,26 @@ interface ViewProps {
     handleSearch: any;
     searchTreeData: any;
     getAllLabelsData: any;
+    searchParams: {
+        tag_id?: string,
+        content?: string,
+        date?: string,
+        from?: string,
+        to?: string,
+        page?: number
+    };
+    setSearchParams: any;
 }
 
 function SearchView(props: ViewProps) {
-    const { documents, handleSearch, searchTreeData, getAllLabelsData } = props;
+    const {
+        documents,
+        handleSearch,
+        searchTreeData,
+        getAllLabelsData,
+        searchParams,
+        setSearchParams
+    } = props;
 
     return (
         <>
@@ -30,7 +47,12 @@ function SearchView(props: ViewProps) {
                         <HomeRoundedIcon />
                     </Link>
                     <Typography color="primary" fontWeight={500} fontSize={12}>
-                        Home
+                        <Link underline="none" color="neutral" href="/" aria-label="Home">
+                            Home
+                        </Link>
+                    </Typography>
+                    <Typography color="primary" fontWeight={500} fontSize={12}>
+                        文件
                     </Typography>
                 </Breadcrumbs>
             </Box>
@@ -50,22 +72,40 @@ function SearchView(props: ViewProps) {
                 </Typography>
             </Box>
             <React.Fragment>
-                <Sheet
-                    className="SearchAndFilters-mobile"
+                <Box
+                    className="SearchAndFilters-tabletUp"
                     sx={{
+                        borderRadius: 'sm',
                         display: { xs: 'flex', sm: 'flex' },
-                        my: 1,
-                        gap: 1
+                        flexWrap: 'wrap',
+                        gap: 1.5,
+                        '& > *': {
+                            minWidth: { xs: '120px', md: '160px' }
+                        }
                     }}
                 >
-                    <SearchInputView handleSearch={handleSearch} />
-                </Sheet>
+                    <FormControl sx={{ flex: 1 }} size="sm">
+                        <FormLabel>Search for local drive</FormLabel>
+                        <SearchInputView handleSearch={(content: string) => {
+                            setSearchParams({
+                                ...searchParams,
+                                content: content,
+                            })
+                            handleSearch()
+                        }} />
+                    </FormControl>
+                    <SearchFilterView
+                        getAllLabelsData={getAllLabelsData}
+                        setTagId={(id: string) => {
+                            setSearchParams({
+                                ...searchParams,
+                                tag_id: id,
+                            })
+                        }}
+                    />
+                </Box>
 
                 <SearchTree
-                    document={documents}
-                    setChecedkData={undefined}
-                    // checked={_.includes(documents_items, document?.id)}
-                    setDocument={undefined}
                     tree={searchTreeData}
                     getAllLabelsData={getAllLabelsData}
                 />
