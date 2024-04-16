@@ -1,7 +1,7 @@
 'use client';
 
 import useAxios from 'axios-hooks';
-import { useRouter, useSearchParams, useParams } from 'next/navigation';
+import { useRouter, useParams } from 'next/navigation';
 import { useCallback, useEffect, useState } from 'react';
 import Api from '../../../../apis';
 import { getAllChainFeatureDatas } from '../../../../apis/AirtableChainFeature';
@@ -12,7 +12,6 @@ const apiSetting = new Api();
 
 export default function ExtractionDetailContainer() {
     const router = useRouter();
-    const searchParams = useSearchParams();
     const { id } = useParams();
     const { setAlert } = useAlert();
     const [open, setOpen] = useState(false);

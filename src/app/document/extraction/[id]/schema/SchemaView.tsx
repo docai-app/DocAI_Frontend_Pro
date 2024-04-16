@@ -1,11 +1,10 @@
 import { PaperAirplaneIcon } from '@heroicons/react/20/solid';
 import { DocumentIcon } from '@heroicons/react/24/solid';
 import _ from 'lodash';
-import Router from 'next/router';
+import {useRouter} from 'next/navigation';
 import { useEffect, useState } from 'react';
 import EditSchemaDataModal from '../../../../../components/common/Widget/EditSchemaDataModal';
-import SingleActionModel from '../../../../../components/common/Widget/SingleActionModel';
-import ExtractSchemaRow from '../../../../../components/feature/document/extraction/ExtractSchemaRow';
+import ExtractSchemaRow from '../../../../../components/document/extraction/ExtractSchemaRow';
 
 interface SchemaViewProps {
     label: any;
@@ -35,6 +34,7 @@ function SchemaView(props: SchemaViewProps) {
         actionContent,
         visableAdd = true
     } = props;
+    const router = useRouter();
     const [visable, setVisable] = useState(false);
     const [currectExtraScheam, setCurrectExtraSchema] = useState();
     const [currectPosition, setCurrectPosition] = useState(-1);
@@ -62,20 +62,13 @@ function SchemaView(props: SchemaViewProps) {
 
     return (
         <>
-            <SingleActionModel
-                open={open}
-                setOpen={setOpen}
-                title={'正在進行...'}
-                content={actionContent}
-                icon={<PaperAirplaneIcon className="h-6 w-6 text-green-600" aria-hidden="true" />}
-            />
             <div className="mx-auto max-w-7xl p-4">
                 <div className="mx-auto max-w-7xl pb-12">
                     <div className="flex items-center  justify-between mb-4 border-gray-300  ">
                         <label
                             className=" px-4 py-2 rounded-md cursor-pointer text-indigo-500"
                             onClick={() => {
-                                Router.back();
+                                router.back();
                             }}
                         >
                             {'<'} 返回
@@ -96,16 +89,9 @@ function SchemaView(props: SchemaViewProps) {
                             <button
                                 className="mx-2 flex flex-row items-center cursor-pointer rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                                 onClick={() => {
-                                    Router.push({
-                                        pathname: '/search',
-                                        query: {
-                                            content: '',
-                                            tag_id: label?.id,
-                                            from: '',
-                                            to: '',
-                                            label: label?.name
-                                        }
-                                    });
+                                    window.history.pushState(null,'/search',
+                                        `?content=&tag_id=${label?.id}&from=&to=&label=${label?.name}`
+                                    );
                                 }}
                             >
                                 <DocumentIcon className="ml-auto h-4 text-white" />

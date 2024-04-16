@@ -14,11 +14,11 @@ const apiSetting = new Api();
 
 function DriveContainer() {
     const router = useRouter();
-    const query = useSearchParams();
+    const searchParams = useSearchParams();
     const pathname = usePathname();
     const { setAlert } = useAlert();
-    const queryId = useRef(query.get('id'));
-    const queryName = useRef(query.get('name'));
+    const queryId = useRef(searchParams.get('id'));
+    const queryName = useRef(searchParams.get('name'));
     const [id, setId] = useState<string | null>(null);
     const [name, setName] = useState<string | null>(null);
     const [mode, setMode] = useState<'view' | 'move' | 'share' | 'newFolder'>('view');
@@ -177,8 +177,8 @@ function DriveContainer() {
             if (target_folder_id) {
                 formData.append('target_folder_id', target_folder_id);
             }
-            if (query.get('id')) {
-                formData.append('current_folder_id', query.get('id') + '');
+            if (searchParams.get('id')) {
+                formData.append('current_folder_id', searchParams.get('id') + '');
             }
             moveItemsToSpecificFolder({
                 data: formData
@@ -332,18 +332,18 @@ function DriveContainer() {
     };
 
     useEffect(() => {
-        if (query.get('id')) {
+        if (searchParams.get('id')) {
             setPage(1);
         }
-    }, [query.get('id')]);
+    }, [searchParams.get('id')]);
 
     useEffect(() => {
-        const asPath = pathname + '?' + query.toString();
+        const asPath = pathname + '?' + searchParams.toString();
         const route = pathname + '/[[...id]]';
         // if (router.asPath !== router.route) {
         if (asPath !== route) {
-            queryId.current = query.get('id');
-            queryName.current = query.get('name');
+            queryId.current = searchParams.get('id');
+            queryName.current = searchParams.get('name');
             if (queryId.current) {
                 // setPage(1);
                 showAllItems(apiSetting.Drive.showAllFolderItems(queryId.current.toString(), page));
