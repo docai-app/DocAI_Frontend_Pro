@@ -7,14 +7,12 @@ import Checkbox from '@mui/joy/Checkbox';
 import Input from '@mui/joy/Input';
 import Button from '@mui/joy/Button';
 
-
 import _ from 'lodash';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import ChainFeatureSelect from '../../../../components/Chatbot/feature/ChainFeatureSelect';
 import ChainFeatureList from '../../../../components/document/extraction/ChainFeatureList';
 import SchemaList from '../../../../components/document/extraction/SchemasList';
-
 
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import ContrySelector from '@/components/CountrySelector';

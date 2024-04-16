@@ -2,7 +2,7 @@
 
 import useAxios from 'axios-hooks';
 import _ from 'lodash';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams, useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import Api from '../../../../../apis';
 import useAlert from '../../../../../hooks/useAlert';
@@ -13,6 +13,7 @@ const apiSetting = new Api();
 export default function SchemaContainer() {
     const router = useRouter();
     const searchParams = useSearchParams();
+    const { id } = useParams();
     const { setAlert } = useAlert();
     const [open, setOpen] = useState(false);
     const [actionContent, setActionContent] = useState('');
@@ -59,15 +60,15 @@ export default function SchemaContainer() {
     }, [getTagByIdData]);
 
     useEffect(() => {
-        console.log(searchParams)
         setActionContent('正在加載數據');
-        if (router && searchParams.get('id')) {
+        if (router && id) {
+            console.log('id', id)
             getTagById({
-                ...apiSetting.Tag.getTagById(searchParams.get('id') as string)
+                ...apiSetting.Tag.getTagById(id.toString())
             });
             setExtractSchema({
                 ...extractSchema,
-                label_id: searchParams.get('id') as string
+                label_id: id.toString()
             });
         }
         if (router && searchParams.get('schema_id')) {
