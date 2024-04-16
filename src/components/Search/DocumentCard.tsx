@@ -14,7 +14,6 @@ import EditRoundedIcon from '@mui/icons-material/EditRounded';
 import MoreVertRoundedIcon from '@mui/icons-material/MoreVertRounded';
 import ShareRoundedIcon from '@mui/icons-material/ShareRounded';
 import Tooltip from '@mui/joy/Tooltip';
-import moment from 'moment';
 
 interface ViewProps {
     document: DocumentModel;
@@ -131,9 +130,9 @@ export default function DocumentCard(props: ViewProps) {
                         )}
                     </AspectRatio>
                 </CardOverflow>
-                <Typography level="body-xs">
+                {/* <Typography level="body-xs">
                     {moment(document.created_at).format('YYYY-MM-DD HH:mm')}
-                </Typography>
+                </Typography> */}
             </Card>
         </>
     );
