@@ -2,10 +2,7 @@
 import { StreamingTextResponse } from 'ai';
 import { createParser, ParsedEvent, ReconnectInterval } from 'eventsource-parser';
 
-// export const config = {
-//     runtime: 'edge'
-// };
-export const runtime = "edge"
+export const runtime = 'edge';
 
 export async function POST(req: Request) {
     const encoder = new TextEncoder();
