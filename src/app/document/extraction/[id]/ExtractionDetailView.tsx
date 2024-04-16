@@ -3,7 +3,8 @@ import Tabs from '@mui/joy/Tabs';
 import TabList from '@mui/joy/TabList';
 import Tab from '@mui/joy/Tab';
 import TabPanel from '@mui/joy/TabPanel';
-
+import Checkbox from '@mui/joy/Checkbox';
+import Input from '@mui/joy/Input';
 import Button from '@mui/joy/Button';
 
 
@@ -130,48 +131,35 @@ function ExtractionDetailView(props: ExtractionDetailViewProps) {
                         </Button>
                     </Box>
 
-                    <div className="my-2">
-                        <div className="my-2 flex flex-row items-center">
-                            <label className="flex-0">名稱:</label>
-                            <input
-                                className="block flex-1 mx-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                defaultValue={label?.name}
-                                onChange={(e) => {
-                                    setName(e.target.value);
-                                }}
-                            />
-                        </div>
-                        <div className="my-2 flex flex-row items-start">
-                            <label>功能:</label>
-                            <div className="mx-2 flex flex-col justify-start items-start ">
-                                {tagTypes?.functions?.map((item: any, index: number) => {
-                                    return (
-                                        <div key={index}>
-                                            <input
-                                                type={'checkbox'}
-                                                name={item.title}
-                                                defaultChecked={isContain(item.id)}
-                                                onChange={(e) => {
-                                                    if (e.target.checked) {
-                                                        updateTagFunctionsHandler(
-                                                            label.id,
-                                                            item.id
-                                                        );
-                                                    } else {
-                                                        deleteTagFunctionsHandler(
-                                                            label.id,
-                                                            item.id
-                                                        );
-                                                    }
-                                                }}
-                                            />
-                                            <label className="ml-2"> {item.title}</label>
-                                        </div>
-                                    );
-                                })}
-                            </div>
-                        </div>
-                    </div>
+                    <Input autoFocus required fullWidth color="primary"
+                        startDecorator={<Typography>名稱:</Typography>}
+                        defaultValue={label?.name}
+                        onChange={(e) => {
+                            setName(e.target.value);
+                        }} />
+                    <Box sx={{ display: 'flex', gap: 1 }}>
+                        功能:
+                        <Checkbox label="测试1" variant="solid" color="primary" />
+                        <Checkbox variant="solid" color="primary" label="测试2" />
+                        {tagTypes?.functions?.map((item: any, index: number) => {
+                            return (
+                                <Checkbox key={index} variant="solid" color="primary"
+                                    label={item.title}
+                                    defaultChecked={isContain(item.id)}
+                                    onChange={(e) => {
+                                        if (e.target.checked) {
+                                            updateTagFunctionsHandler(
+                                                label.id, item.id
+                                            );
+                                        } else {
+                                            deleteTagFunctionsHandler(
+                                                label.id, item.id
+                                            );
+                                        }
+                                    }}
+                                />);
+                        })}
+                    </Box>
 
                     <Tabs defaultValue="extraction"
                         sx={{ bgcolor: 'transparent' }}
