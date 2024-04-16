@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import PaginationView from '../../../common/Widget/PaginationView';
+import PaginationView from '../../common/Widget/PaginationView';
 import SchemaRow from './SchemaRow';
 
 interface Props {

@@ -11,10 +11,9 @@ import Button from '@mui/joy/Button';
 import _ from 'lodash';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-// import HeaderBreadCrumb from '../../../../components/common/Widget/HeaderBreadCrumb';
-// import ChainFeatureSelect from '../../../../components/chatbot/ChainFeatureSelect';
-// import ChainFeatureList from '../../../../components/document/extraction/ChainFeatureList';
-// import SchemaList from '../../../../components/document/extraction/SchemasList';
+import ChainFeatureSelect from '../../../../components/Chatbot/feature/ChainFeatureSelect';
+import ChainFeatureList from '../../../../components/document/extraction/ChainFeatureList';
+import SchemaList from '../../../../components/document/extraction/SchemasList';
 
 
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
@@ -76,7 +75,6 @@ function ExtractionDetailView(props: ExtractionDetailViewProps) {
         });
         return index;
     };
-
     return (
         <>
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
@@ -102,7 +100,6 @@ function ExtractionDetailView(props: ExtractionDetailViewProps) {
                         sx={{
                             display: 'flex',
                             mb: 1,
-                            mr: 3,
                             gap: 1,
                             flexDirection: { xs: 'column', sm: 'row' },
                             alignItems: { xs: 'start', sm: 'center' },
@@ -137,10 +134,8 @@ function ExtractionDetailView(props: ExtractionDetailViewProps) {
                         onChange={(e) => {
                             setName(e.target.value);
                         }} />
-                    <Box sx={{ display: 'flex', gap: 1 }}>
+                    <Box sx={{ display: 'flex', gap: 1, ml:1.5,my:1}}>
                         功能:
-                        <Checkbox label="测试1" variant="solid" color="primary" />
-                        <Checkbox variant="solid" color="primary" label="测试2" />
                         {tagTypes?.functions?.map((item: any, index: number) => {
                             return (
                                 <Checkbox key={index} variant="solid" color="primary"
@@ -179,37 +174,31 @@ function ExtractionDetailView(props: ExtractionDetailViewProps) {
                             </Tab>
                         </TabList>
                         <TabPanel value="extraction">
-                            <Box sx={{ my: 2 }}>
-                                標籤填表與數據 extraction
-                            </Box>
-                            {/* <SchemaList
+                            <SchemaList
                                 label={label}
                                 smart_extraction_schemas={smart_extraction_schemas}
                                 meta={meta}
-                            /> */}
+                            />
                         </TabPanel>
                         <TabPanel value="chain_feature">
-                            <Box sx={{ my: 2 }}>
-                                推薦功能 ChainFeatureList
-                            </Box>
-                            {/* <ChainFeatureList
-                                        label={label}
-                                        chain_features={chain_features}
-                                        chain_feature_ids={chain_feature_ids}
-                                        set_chain_feature_ids={set_chain_feature_ids}
-                                        handleSave={handleSave}
-                                    /> */}
+                            <ChainFeatureList
+                                label={label}
+                                chain_features={chain_features}
+                                chain_feature_ids={chain_feature_ids}
+                                set_chain_feature_ids={set_chain_feature_ids}
+                                handleSave={handleSave}
+                            />
                         </TabPanel>
                     </Tabs>
 
-                    {/* <ChainFeatureSelect
+                    <ChainFeatureSelect
                         chain_features={chain_features}
                         isOpen={chainFeatureIsOpen}
                         setIsOpen={setChainFeatureIsOpen}
                         chain_feature_ids={chain_feature_ids}
                         set_chain_feature_ids={set_chain_feature_ids}
                         handleSave={handleSave}
-                    /> */}
+                    />
                 </Box>
             </Box>
         </>

@@ -1,7 +1,7 @@
 'use client';
 
 import useAxios from 'axios-hooks';
-import { useRouter,useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams, useParams } from 'next/navigation';
 import { useCallback, useEffect, useState } from 'react';
 import Api from '../../../../apis';
 import { getAllChainFeatureDatas } from '../../../../apis/AirtableChainFeature';
@@ -13,6 +13,7 @@ const apiSetting = new Api();
 export default function ExtractionDetailContainer() {
     const router = useRouter();
     const searchParams = useSearchParams();
+    const { id } = useParams();
     const { setAlert } = useAlert();
     const [open, setOpen] = useState(false);
     const [label, setLabel] = useState();
@@ -20,6 +21,7 @@ export default function ExtractionDetailContainer() {
     const [page, setPage] = useState(1);
     const [chain_features, set_chain_features] = useState<any>([]);
     const [smart_extraction_schemas, set_smart_extraction_schemas] = useState<any>([]);
+
     //数据提取，填表，推荐功能 ———— MUI中不需要判断TypeValue
     // const [currentTypeTab, setCurrentTypeTab] = useState<
     //     'extraction' | 'form_filling' | 'chain_feature'
@@ -51,7 +53,6 @@ export default function ExtractionDetailContainer() {
         apiSetting.Tag.getTagFunctions(),
         { manual: true }
     );
-
     const [{ data: updateTagFunctionsData, error: updateTagFunctionsError }, updateTagFunctions] =
         useAxios(apiSetting.Tag.updateTagFunctions(), { manual: true });
 
@@ -59,15 +60,15 @@ export default function ExtractionDetailContainer() {
         useAxios(apiSetting.Tag.deleteTagFunctions(), { manual: true });
 
     useEffect(() => {
-        if (router && searchParams.get('id')) {
+        if (router && id) {
             getAllSmartExtractionSchemas({
                 ...apiSetting.SmartExtractionSchemas.getSmartExtractionSchemasByLabel(
-                    searchParams.get('id') as string,
+                    id as string,
                     page
                 )
             });
             getTagById({
-                ...apiSetting.Tag.getTagById(searchParams.get('id') as string)
+                ...apiSetting.Tag.getTagById(id as string)
             });
             getAllTagFunctions();
             getAllChainFeatureDatas().then((datas) => {
@@ -94,7 +95,7 @@ export default function ExtractionDetailContainer() {
         }
     }, [getTagByIdData]);
 
-    useEffect(() => {}, []);
+    useEffect(() => { }, []);
 
     const updateTagFeatureHandler = useCallback(
         async (tag_id: string, chain_feature_ids: []) => {
