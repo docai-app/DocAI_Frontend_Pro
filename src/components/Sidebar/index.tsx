@@ -160,7 +160,11 @@ export default function Sidebar() {
                     </ListItem>
 
                     <ListItem>
-                        <ListItemButton>
+                        <ListItemButton
+                            component="a"
+                            href="/search"
+                            selected={pathname.indexOf('/search') != -1}
+                        >
                             <SourceIcon />
                             <ListItemContent>
                                 <Typography level="title-sm">文件</Typography>
@@ -198,11 +202,12 @@ export default function Sidebar() {
                         <ListItemButton
                             role="menuitem"
                             component="a"
-                            href="/joy-ui/getting-started/templates/messages/"
+                            href="/project"
+                            selected={pathname.indexOf('/project') != -1}
                         >
                             <QuestionAnswerRoundedIcon />
                             <ListItemContent>
-                                <Typography level="title-sm">Messages</Typography>
+                                <Typography level="title-sm">待辦事項與工作流</Typography>
                             </ListItemContent>
                             <Chip size="sm" color="primary" variant="solid">
                                 4

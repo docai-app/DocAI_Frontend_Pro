@@ -2,7 +2,7 @@ import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
 export default async function middleware(req: NextRequest): Promise<NextResponse> {
     const authorization = req.cookies.get('authorization');
-    if (authorization || req.url.indexOf('/home') != -1) {
+    if (authorization || req.url.indexOf('/home') != -1 || req.url.indexOf('/api') != -1) {
         return NextResponse.next();
     }
 
