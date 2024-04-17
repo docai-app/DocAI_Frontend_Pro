@@ -32,7 +32,7 @@ const MenuItem = ({ item, level, last, last_last }: any) => {
                 <ul className={'submenu'}>
                     {item.children.map((child: any, index: number) => (
                         <MenuItem
-                            key={child.id}
+                            key={index}
                             item={child}
                             level={level + 1}
                             last={item.children.length - 1 == index}

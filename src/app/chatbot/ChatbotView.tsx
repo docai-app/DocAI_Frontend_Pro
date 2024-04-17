@@ -1,6 +1,7 @@
 import ChatbotList from '@/components/Chatbot/ChatbotList';
 import ChatbotTable from '@/components/Chatbot/ChatbotTable';
 import ShareQRcodeModal from '@/components/Chatbot/feature/ShareQRcodeModal';
+import SearchInputView from '@/components/common/Views/SearchInputView';
 import AlertDialogModal from '@/components/common/Widget/AlertDialogModal';
 import AddIcon from '@mui/icons-material/Add';
 import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
@@ -76,6 +77,7 @@ function ChatbotView(props: ViewProps) {
                     新增助手
                 </Button>
             </Box>
+            <SearchInputView handleSearch={undefined} />
             <ChatbotTable
                 chatbots={chatbots}
                 meta={meta}

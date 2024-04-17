@@ -22,6 +22,7 @@ interface ViewProps {
         page?: number;
     };
     setSearchParams: any;
+    loading?: boolean;
 }
 
 function SearchView(props: ViewProps) {
@@ -31,7 +32,8 @@ function SearchView(props: ViewProps) {
         searchTreeData,
         getAllLabelsData,
         searchParams,
-        setSearchParams
+        setSearchParams,
+        loading
     } = props;
 
     return (
@@ -87,6 +89,7 @@ function SearchView(props: ViewProps) {
                     <FormControl sx={{ flex: 1 }} size="sm">
                         <FormLabel>Search for local drive</FormLabel>
                         <SearchInputView
+                            loading={loading}
                             handleSearch={(content: string) => {
                                 setSearchParams({
                                     ...searchParams,
