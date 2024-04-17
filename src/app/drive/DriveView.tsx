@@ -10,10 +10,9 @@ import {
 } from 'react';
 import Router from 'next/navigation';
 import { Folder } from '../../components/common/Widget/FolderTree';
-import DriveTable from '../../components/DriveLayout/DriveTable';
-import LabelManagement from '../../components/DriveLayout/LabelManagement';
+import DriveTable from '../../components/drive/DriveTable';
+import SearchLabelDocumentForm from '../../components/drive/SearchLabelDocumentForm';
 import Button from '@mui/joy/Button';
-import Accordion from '@mui/joy/Accordion';
 
 import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
@@ -72,15 +71,15 @@ export default function DriveView(props: DriveViewProps) {
         showAllItemsData = null,
         showAllItemsLoading = null,
         mode = 'view',
-        setMode = () => {},
+        setMode = () => { },
         target = [],
-        setTarget = () => {},
+        setTarget = () => { },
         dest = null,
-        setDest = () => {},
+        setDest = () => { },
         shareWith = [],
-        setShareWith = () => {},
-        handleShare = async () => {},
-        handleNewFolder = async () => {},
+        setShareWith = () => { },
+        handleShare = async () => { },
+        handleNewFolder = async () => { },
         countDocumentsByDateData = null,
         current,
         setCurrent,
@@ -138,7 +137,6 @@ export default function DriveView(props: DriveViewProps) {
                         sx={{
                             display: 'flex',
                             mb: 1,
-                            mr: 3,
                             gap: 1,
                             flexDirection: { xs: 'column', sm: 'row' },
                             alignItems: { xs: 'start', sm: 'center' },
@@ -156,63 +154,40 @@ export default function DriveView(props: DriveViewProps) {
                                 <HomeRoundedIcon />
                             </Link>
                             <Typography color="primary" fontWeight={500} fontSize={12}>
-                                Drive
+                                Root
                             </Typography>
                         </Breadcrumbs>
+                        <Typography level="h2">文件倉庫</Typography>
                         <Box
                             sx={{
                                 display: 'flex',
+                                flexDirection:'column',
                                 alignItems: 'flex-end',
-                                gap: 2
+                                gap:1,
+                                width: '20%' 
                             }}
                         >
-                            <Link
+                            <Link fontWeight={500} fontSize={12}
                                 color="primary"
                                 underline="always"
-                                // href={ }
                             >
                                 智能文檔處理
                             </Link>
-                            <Typography level="h2">文件倉庫</Typography>
+                            <Button size='sm'
+                                color="primary"
+                                startDecorator={<Add />}
+                                endDecorator={<KeyboardDoubleArrowDownIcon />}
+                            >
+                                新增
+                            </Button>
                         </Box>
-                    </Box>
 
-                    <Box
-                        sx={{
-                            display: 'flex',
-                            gap: 1,
-                            flexDirection: { xs: 'column', sm: 'row' },
-                            alignItems: { xs: 'start', sm: 'center' },
-                            flexWrap: 'wrap',
-                            justifyContent: 'space-between'
-                        }}
-                    >
-                        <Typography level="title-md">Root</Typography>
-                        <Button
-                            color="primary"
-                            startDecorator={<Add />}
-                            endDecorator={<KeyboardDoubleArrowDownIcon />}
-                        >
-                            新增按钮
-                        </Button>
                     </Box>
 
                     <DriveTable />
-                    <LabelManagement />
 
-                    {/* <Box>
-                        <Box sx={{
-                            display: 'flex',
-                            justifyContent: 'space-between'
-                        }}>
-                            <Typography>标签</Typography>
-                            <Typography>标签管理</Typography>
-                        </Box>
-                        <Box>
-                            <Chip >一堆标签</Chip><Typography>查看更多</Typography>
-                        </Box>
-                        <Typography level="h4">一个Search输入框</Typography>
-                    </Box> */}
+                    <SearchLabelDocumentForm getAllLabelsData={getAllLabelsData} search={search} />
+                
                 </Box>
             </Box>
         </>

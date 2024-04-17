@@ -151,8 +151,7 @@ function SchemaView(props: SchemaViewProps) {
                                     name: e.target.value
                                 });
                             }}
-                            sx={{ mb: 1 }}>
-                        </Input>
+                            sx={{ mb: 1 }}/>
                         <Textarea minRows={2}
                             id="description"
                             name="description"
@@ -178,8 +177,7 @@ function SchemaView(props: SchemaViewProps) {
                                 setAccurateMode(!accurateMode);
                             }}
                             sx={{ [`& > .${checkboxClasses.checkbox}`]: { position: 'relative' } }}
-                            slotProps={{ action: { className: checkboxClasses.focusVisible } }}>
-                        </Checkbox>
+                            slotProps={{ action: { className: checkboxClasses.focusVisible } }} />
                     </Box>
 
                     <Box >

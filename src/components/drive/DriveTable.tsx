@@ -193,7 +193,7 @@ export default function DriveTable() {
                                             動作
                                         </Link>
 
-                                        {row && !row?.is_checked && (
+                                        {/* {row && !row?.is_checked && (
                                             <Button
                                                 size={'sm'}
                                                 endDecorator={<AddToPhotosOutlinedIcon />}
@@ -203,7 +203,7 @@ export default function DriveTable() {
                                             >
                                                 加到名單
                                             </Button>
-                                        )}
+                                        )} */}
                                     </Box>
                                 </td>
 
