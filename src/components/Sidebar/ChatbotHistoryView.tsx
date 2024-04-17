@@ -10,7 +10,8 @@ export default function ChatbotHistoryView() {
                 <ListItem
                     sx={{
                         p: 0
-                    }}>
+                    }}
+                >
                     <ListItemButton>
                         <ListItemContent>
                             <Typography noWrap fontSize={14}>
@@ -18,16 +19,16 @@ export default function ChatbotHistoryView() {
                             </Typography>
                             <Typography
                                 sx={{
-                                    fontSize: '10px',
-                                }}>
-                                {moment("2024-04-04 10:10").fromNow()}
+                                    fontSize: '10px'
+                                }}
+                            >
+                                {moment('2024-04-04 10:10').fromNow()}
                             </Typography>
                         </ListItemContent>
-
                     </ListItemButton>
                 </ListItem>
                 <ListDivider />
             </List>
         </>
-    )
+    );
 }

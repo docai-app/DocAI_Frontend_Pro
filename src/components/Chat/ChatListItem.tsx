@@ -34,7 +34,7 @@ export default function ChatListItem(props: ChatListItemProps) {
                     sx={{
                         flexDirection: 'column',
                         alignItems: 'initial',
-                        gap: 1,
+                        gap: 1
                     }}
                 >
                     <Stack direction="row" spacing={1.5}>
@@ -46,7 +46,7 @@ export default function ChatListItem(props: ChatListItemProps) {
                         <Box
                             sx={{
                                 lineHeight: 1.5,
-                                textAlign: 'right',
+                                textAlign: 'right'
                             }}
                         >
                             <Typography
@@ -65,7 +65,7 @@ export default function ChatListItem(props: ChatListItemProps) {
                             WebkitLineClamp: '2',
                             WebkitBoxOrient: 'vertical',
                             overflow: 'hidden',
-                            textOverflow: 'ellipsis',
+                            textOverflow: 'ellipsis'
                         }}
                     >
                         {messages[0].content}

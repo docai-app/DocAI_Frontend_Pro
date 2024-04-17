@@ -17,7 +17,7 @@ export default function ContentView(props: ViewProps) {
                 sx={{
                     color: isSent
                         ? 'var(--joy-palette-common-white)'
-                        : 'var(--joy-palette-text-primary)',
+                        : 'var(--joy-palette-text-primary)'
                 }}
             >
                 {content.split('\n').map((item: string, index: number) => (

@@ -20,7 +20,7 @@ function SearchContainer() {
     const [documents, setDocuments] = useState<DocumentModel[]>([]);
     const [meta, setMeta] = useState([]);
     const [searchTreeData, setSearchTreeData] = useState<any>([]);
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(false);
     const [searchParams, setSearchParams] = useState({
         tag_id: '',
         content: '',
@@ -86,7 +86,7 @@ function SearchContainer() {
                         // console.log('Response body:', response.body);
                         const reader = response.body.getReader();
                         const decoder = new TextDecoder();
-                        setLoading(false)
+                        setLoading(false);
                         try {
                             while (true) {
                                 const { done, value } = await reader.read();
@@ -121,7 +121,7 @@ function SearchContainer() {
             return;
         }
         console.log('searchParams', searchParams);
-        setLoading(true)
+        setLoading(true);
         searchDocumentFormik.setValues(searchParams);
         searchDocumentFormik.handleSubmit();
     };

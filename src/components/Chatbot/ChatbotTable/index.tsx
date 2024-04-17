@@ -133,7 +133,9 @@ export default function ChatbotTable(props: ViewProps) {
                                                             sx={{
                                                                 mx: 0.5
                                                             }}
-                                                        >{name}</Chip>
+                                                        >
+                                                            {name}
+                                                        </Chip>
                                                     ))}
                                                 </Typography>
                                                 <Typography level="body-xs" gutterBottom>

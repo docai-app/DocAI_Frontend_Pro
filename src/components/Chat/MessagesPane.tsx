@@ -21,7 +21,7 @@ export default function MessagesPane(props: MessagesPaneProps) {
     const { chat } = props;
     const [chatMessages, setChatMessages] = React.useState(chat.messages);
     const [textAreaValue, setTextAreaValue] = React.useState('');
-    const [model, setModel] = React.useState<'none' | 'chart' | 'statistics'>('none')
+    const [model, setModel] = React.useState<'none' | 'chart' | 'statistics'>('none');
 
     React.useEffect(() => {
         setChatMessages(chat.messages);
@@ -47,16 +47,16 @@ export default function MessagesPane(props: MessagesPaneProps) {
     const handleSendMessage = () => {
         switch (model) {
             case 'chart':
-                handlerGenerateChart('101324d3-5d70-4dc7-9028-b1e8fe7ba224', textAreaValue)
+                handlerGenerateChart('101324d3-5d70-4dc7-9028-b1e8fe7ba224', textAreaValue);
                 break;
             case 'statistics':
-                handlerGenerateStatistics('101324d3-5d70-4dc7-9028-b1e8fe7ba224', textAreaValue)
+                handlerGenerateStatistics('101324d3-5d70-4dc7-9028-b1e8fe7ba224', textAreaValue);
                 break;
             default:
-                handleGeneralMessage(textAreaValue)
+                handleGeneralMessage(textAreaValue);
                 break;
         }
-    }
+    };
 
     const addMessageToChat = (content: any, type?: string) => {
         const newId = chatMessages.length + 1;
@@ -68,25 +68,22 @@ export default function MessagesPane(props: MessagesPaneProps) {
                 sender: { username: 'ai', name: 'ai', avatar: '', online: false },
                 content: content,
                 type: type || 'text',
-                timestamp: moment().format('MM-DD HH:mm'),
-            },
+                timestamp: moment().format('MM-DD HH:mm')
+            }
         ]);
-    }
+    };
 
     const handleGeneralMessage = async (prompt: string) => {
         if (prompt) {
-            const res = await getDocAiLLM(
-                apiSetting.Prompt.doc_ai_llm(prompt)
-            );
+            const res = await getDocAiLLM(apiSetting.Prompt.doc_ai_llm(prompt));
             if (res.data.success) {
-                addMessageToChat(res.data.data.raw_response)
+                addMessageToChat(res.data.data.raw_response);
             }
         }
-    }
+    };
 
     const handlerGenerateChart = async (smart_extraction_schema_id: string, query: string) => {
         if (query) {
-
             // setOpen(true);
             // setModalDescription({
             //     title: '進行中......',
@@ -96,7 +93,7 @@ export default function MessagesPane(props: MessagesPaneProps) {
                 apiSetting.SmartExtractionSchemas.generateChart(smart_extraction_schema_id, query)
             );
             if (res.data.success) {
-                addMessageToChat(res.data.chart, 'chart')
+                addMessageToChat(res.data.chart, 'chart');
                 // setVisibleHtmlCode(true);
                 // setChart(res.data.chart);
                 // setCurrentStoryboardItemId(res.data.item_id);
@@ -108,13 +105,11 @@ export default function MessagesPane(props: MessagesPaneProps) {
         }
     };
 
-
     const handlerGenerateStatistics = async (smart_extraction_schema_id: string, query: string) => {
         console.log('query', query);
         console.log('smart_extraction_schema_id', smart_extraction_schema_id);
 
         if (query) {
-
             // setOpen(true);
             // setModalDescription({
             //     title: '進行中......',
@@ -127,7 +122,7 @@ export default function MessagesPane(props: MessagesPaneProps) {
                 )
             );
             if (res.data.success) {
-                addMessageToChat(res.data.report, 'text')
+                addMessageToChat(res.data.report, 'text');
                 // setVisibleHtmlToPdf(true);
                 // setReport(res.data.report);
                 // setCurrentStoryboardItemId(res.data.item_id);
@@ -139,15 +134,13 @@ export default function MessagesPane(props: MessagesPaneProps) {
         }
     };
 
-
-
     return (
         <Sheet
             sx={{
                 height: { xs: 'calc(95dvh - var(--Header-height))', lg: '95dvh' },
                 display: 'flex',
                 flexDirection: 'column',
-                backgroundColor: 'background.level1',
+                backgroundColor: 'background.level1'
             }}
         >
             <MessagesPaneHeader sender={chat.sender} />
@@ -159,7 +152,7 @@ export default function MessagesPane(props: MessagesPaneProps) {
                     px: 2,
                     py: 3,
                     overflowY: 'scroll',
-                    flexDirection: 'column-reverse',
+                    flexDirection: 'column-reverse'
                 }}
             >
                 <Stack spacing={2} justifyContent="flex-end">
@@ -173,9 +166,7 @@ export default function MessagesPane(props: MessagesPaneProps) {
                                 flexDirection={isYou ? 'row-reverse' : 'row'}
                             >
                                 {message.sender !== 'You' && (
-                                    <AvatarWithStatus
-                                        src={message.sender.avatar}
-                                    />
+                                    <AvatarWithStatus src={message.sender.avatar} />
                                 )}
                                 <ChatBubble variant={isYou ? 'sent' : 'received'} {...message} />
                             </Stack>
@@ -189,7 +180,6 @@ export default function MessagesPane(props: MessagesPaneProps) {
                 model={model}
                 setModel={setModel}
                 onSubmit={() => {
-
                     console.log(model);
 
                     const newId = chatMessages.length + 1;
@@ -201,10 +191,10 @@ export default function MessagesPane(props: MessagesPaneProps) {
                             sender: 'You',
                             type: 'text',
                             content: textAreaValue,
-                            timestamp: moment().fromNow(),
-                        },
+                            timestamp: moment().fromNow()
+                        }
                     ]);
-                    handleSendMessage()
+                    handleSendMessage();
                 }}
             />
         </Sheet>

@@ -12,7 +12,7 @@ interface ViewProps {
 
 export default function SearchSourceView(props: ViewProps) {
     const { setTagId } = props;
-    const router = useRouter()
+    const router = useRouter();
 
     const [sources] = useState([
         {
@@ -20,9 +20,9 @@ export default function SearchSourceView(props: ViewProps) {
             description: '3 files',
             icon: <FolderOutlinedIcon />,
             onClick: () => {
-                router.push('/drive')
+                router.push('/drive');
             }
-        },
+        }
         // {
         //     title: 'Website',
         //     description: '3 files',
@@ -31,7 +31,7 @@ export default function SearchSourceView(props: ViewProps) {
         //         console.log('title');
         //     }
         // }
-    ])
+    ]);
 
     const item = (item: any) => {
         return (
@@ -50,47 +50,46 @@ export default function SearchSourceView(props: ViewProps) {
                     <ListItemContent
                         sx={{
                             ml: 1
-                        }}>
+                        }}
+                    >
                         <Typography
                             sx={{
                                 fontSize: 16,
                                 color: 'black'
-                            }}>
+                            }}
+                        >
                             {item?.title}
                         </Typography>
                         <Typography
                             sx={{
                                 fontSize: 12,
                                 color: 'GrayText'
-                            }}>
+                            }}
+                        >
                             {item?.description}
                         </Typography>
                     </ListItemContent>
                     <KeyboardArrowRight />
                 </ListItemButton>
             </ListItem>
-        )
-    }
+        );
+    };
     return (
         <>
-            <Box
-                width={'100%'}
-                display={'flex'}
-                marginTop={0}
-            >
-                <Box m="auto"
+            <Box width={'100%'} display={'flex'} marginTop={0}>
+                <Box
+                    m="auto"
                     sx={{
                         width: { xs: '100%', sm: '75%' }
-                    }}>
-                    <List
-                        sx={{
-                        }}>
+                    }}
+                >
+                    <List sx={{}}>
                         {sources.map((source, index) => {
-                            return <Box key={index}>{item(source)}</Box>
+                            return <Box key={index}>{item(source)}</Box>;
                         })}
                     </List>
                 </Box>
             </Box>
         </>
-    )
+    );
 }

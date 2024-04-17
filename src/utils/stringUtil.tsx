@@ -10,7 +10,8 @@ const isChinese = (str: string) => {
 export const getStrTokens = (str: string) => {
     let strlength = 0;
     for (let i = 0; i < str.length; ++i) {
-        if (isChinese(str.charAt(i)) == true) strlength = strlength + 2; //中文计算为2个字符
+        if (isChinese(str.charAt(i)) == true)
+            strlength = strlength + 2; //中文计算为2个字符
         else strlength = strlength + 1; //中文计算为1个字符
     }
     if (strlength > 0) {
@@ -38,17 +39,17 @@ export const isValidEmail = (email: string) => {
     const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     // 使用正则表达式测试字符串
     return pattern.test(email);
-}
+};
 
 export const isValidJSON = (jsonStr: string) => {
-    if (!jsonStr) return false
+    if (!jsonStr) return false;
     const cleanedContent = jsonStr.replace(/\n/g, '\\n');
     try {
         const jsonObject = JSON.parse(cleanedContent);
         if (typeof jsonObject === 'object' && jsonObject !== null) {
             return true;
         } else {
-            return false
+            return false;
         }
     } catch (error) {
         return false;
@@ -56,12 +57,12 @@ export const isValidJSON = (jsonStr: string) => {
 };
 
 export const unlessHtmlTag = (content: string) => {
-    if (_.isEmpty(content)) return ""
+    if (_.isEmpty(content)) return '';
     // 正则表达式模式
     const pattern = /<[^>]*>/g;
     // 使用正则表达式测试字符串
-    return content.replace(pattern, '')
-}
+    return content.replace(pattern, '');
+};
 
 export const removeHtmlTags = (text: string) => {
     const cleanText = text.replace(

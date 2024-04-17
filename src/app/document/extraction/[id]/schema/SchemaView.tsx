@@ -99,32 +99,46 @@ function SchemaView(props: SchemaViewProps) {
                             justifyContent: 'space-between'
                         }}
                     >
-                        <Button color="primary" variant="plain"
+                        <Button
+                            color="primary"
+                            variant="plain"
                             startDecorator={<KeyboardArrowLeftIcon />}
                             onClick={() => {
                                 router.back();
-                            }}>
+                            }}
+                        >
                             返回
                         </Button>
 
-                        <Typography level="h2" component="h1">編輯Schema</Typography>
+                        <Typography level="h2" component="h1">
+                            編輯Schema
+                        </Typography>
 
                         <Box sx={{ display: 'flex', justifyContent: 'end', width: '20%' }}>
-                            <Button color="primary" size="sm"
-                                onClick={() => { handleSave(); }}>
+                            <Button
+                                color="primary"
+                                size="sm"
+                                onClick={() => {
+                                    handleSave();
+                                }}
+                            >
                                 確認
                             </Button>
                         </Box>
                     </Box>
 
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-                        <Typography level="h2" fontSize="md">來源:</Typography>
+                        <Typography level="h2" fontSize="md">
+                            來源:
+                        </Typography>
                         {label && (
                             <Button
                                 startDecorator={<DescriptionTwoToneIcon />}
                                 // className="mx-2 flex flex-row items-center cursor-pointer rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                                 onClick={() => {
-                                    window.history.pushState(null, '/search',
+                                    window.history.pushState(
+                                        null,
+                                        '/search',
                                         `?content=&tag_id=${label?.id}&from=&to=&label=${label?.name}`
                                     );
                                 }}
@@ -132,10 +146,11 @@ function SchemaView(props: SchemaViewProps) {
                                 {label?.name}({label?.taggings_count || 0})
                             </Button>
                         )}
-
                     </Box>
 
-                    <Typography level="h2" fontSize="md">目的地:</Typography>
+                    <Typography level="h2" fontSize="md">
+                        目的地:
+                    </Typography>
 
                     <Box>
                         <Input
@@ -151,8 +166,10 @@ function SchemaView(props: SchemaViewProps) {
                                     name: e.target.value
                                 });
                             }}
-                            sx={{ mb: 1 }}/>
-                        <Textarea minRows={2}
+                            sx={{ mb: 1 }}
+                        />
+                        <Textarea
+                            minRows={2}
                             id="description"
                             name="description"
                             placeholder="描述"
@@ -164,23 +181,25 @@ function SchemaView(props: SchemaViewProps) {
                                     description: e.target.value
                                 });
                             }}
-                            sx={{ mb: 1 }}>
-                        </Textarea>
-
+                            sx={{ mb: 1 }}
+                        ></Textarea>
                     </Box>
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
                         精準模式:
-                        <Checkbox color="primary" variant="solid"
+                        <Checkbox
+                            color="primary"
+                            variant="solid"
                             checked={accurateMode}
                             disabled={extractSchema?.schema?.length > 0}
                             onChange={() => {
                                 setAccurateMode(!accurateMode);
                             }}
                             sx={{ [`& > .${checkboxClasses.checkbox}`]: { position: 'relative' } }}
-                            slotProps={{ action: { className: checkboxClasses.focusVisible } }} />
+                            slotProps={{ action: { className: checkboxClasses.focusVisible } }}
+                        />
                     </Box>
 
-                    <Box >
+                    <Box>
                         <table className="min-w-full divide-y divide-gray-300">
                             <thead className=" border-b">
                                 <tr>
@@ -204,10 +223,7 @@ function SchemaView(props: SchemaViewProps) {
                                         Prompt
                                     </th>
 
-                                    <th
-                                        scope="col"
-                                        className="relative py-3.5 pl-3 pr-4 sm:pr-0"
-                                    >
+                                    <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-0">
                                         {visableAdd && (
                                             <div className="flex justify-end">
                                                 <a
@@ -225,25 +241,23 @@ function SchemaView(props: SchemaViewProps) {
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-gray-200">
-                                {extractSchema?.schema?.map(
-                                    (schema: any, index: number) => {
-                                        return (
-                                            <ExtractSchemaRow
-                                                key={index}
-                                                position={index}
-                                                schema={schema}
-                                                edit={editExtraSchema}
-                                                remove={removeExtraSchema}
-                                                visableAdd={visableAdd}
-                                            />
-                                        );
-                                    }
-                                )}
+                                {extractSchema?.schema?.map((schema: any, index: number) => {
+                                    return (
+                                        <ExtractSchemaRow
+                                            key={index}
+                                            position={index}
+                                            schema={schema}
+                                            edit={editExtraSchema}
+                                            remove={removeExtraSchema}
+                                            visableAdd={visableAdd}
+                                        />
+                                    );
+                                })}
                             </tbody>
                         </table>
                     </Box>
                 </Box>
-            </Box >
+            </Box>
 
             <EditSchemaDataModal
                 visable={visable}

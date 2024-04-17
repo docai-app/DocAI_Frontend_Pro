@@ -20,7 +20,7 @@ export default function Header() {
                 gap: 1,
                 borderBottom: '1px solid',
                 borderColor: 'background.level1',
-                boxShadow: 'sm',
+                boxShadow: 'sm'
             }}
         >
             <GlobalStyles
@@ -28,9 +28,9 @@ export default function Header() {
                     ':root': {
                         '--Header-height': '52px',
                         [theme.breakpoints.up('lg')]: {
-                            '--Header-height': '0px',
-                        },
-                    },
+                            '--Header-height': '0px'
+                        }
+                    }
                 })}
             />
             <IconButton

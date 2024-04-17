@@ -52,8 +52,8 @@ function Toggler(props: {
                     gridTemplateRows: open ? '1fr' : '0fr',
                     transition: '0.2s ease',
                     '& > *': {
-                        overflow: 'hidden',
-                    },
+                        overflow: 'hidden'
+                    }
                 }}
             >
                 {children}
@@ -70,7 +70,7 @@ export default function Sidebar() {
                 position: { xs: 'fixed', md: 'sticky' },
                 transform: {
                     xs: 'translateX(calc(100% * (var(--SideNavigation-slideIn, 0) - 1)))',
-                    md: 'none',
+                    md: 'none'
                 },
                 transition: 'transform 0.4s, width 0.4s',
                 zIndex: 10000,
@@ -83,7 +83,7 @@ export default function Sidebar() {
                 flexDirection: 'column',
                 gap: 2,
                 borderRight: '1px solid',
-                borderColor: 'divider',
+                borderColor: 'divider'
             }}
         >
             <GlobalStyles
@@ -91,9 +91,9 @@ export default function Sidebar() {
                     ':root': {
                         '--Sidebar-width': '220px',
                         [theme.breakpoints.up('lg')]: {
-                            '--Sidebar-width': '240px',
-                        },
-                    },
+                            '--Sidebar-width': '240px'
+                        }
+                    }
                 })}
             />
             <Box
@@ -110,8 +110,8 @@ export default function Sidebar() {
                     transition: 'opacity 0.4s',
                     transform: {
                         xs: 'translateX(calc(100% * (var(--SideNavigation-slideIn, 0) - 1) + var(--SideNavigation-slideIn, 0) * var(--Sidebar-width, 0px)))',
-                        lg: 'translateX(-100%)',
-                    },
+                        lg: 'translateX(-100%)'
+                    }
                 }}
                 onClick={() => closeSidebar()}
             />
@@ -131,8 +131,8 @@ export default function Sidebar() {
                     display: 'flex',
                     flexDirection: 'column',
                     [`& .${listItemButtonClasses.root}`]: {
-                        gap: 1.5,
-                    },
+                        gap: 1.5
+                    }
                 }}
             >
                 <List
@@ -140,7 +140,7 @@ export default function Sidebar() {
                     sx={{
                         gap: 1,
                         '--List-nestedInsetStart': '30px',
-                        '--ListItem-radius': (theme) => theme.vars.radius.sm,
+                        '--ListItem-radius': (theme) => theme.vars.radius.sm
                     }}
                 >
                     <ListItem>
@@ -253,7 +253,7 @@ export default function Sidebar() {
                         flexGrow: 0,
                         '--ListItem-radius': (theme) => theme.vars.radius.sm,
                         '--List-gap': '8px',
-                        mb: 2,
+                        mb: 2
                     }}
                 >
                     <ListItem>

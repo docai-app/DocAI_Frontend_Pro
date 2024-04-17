@@ -25,15 +25,8 @@ export default function ChatBubble(props: ChatBubbleProps) {
     const [isCelebrated, setIsCelebrated] = React.useState<boolean>(false);
     return (
         <Box sx={{ maxWidth: '60%', minWidth: 'auto' }}>
-            <Stack
-                direction="row"
-                justifyContent="space-between"
-                spacing={2}
-                sx={{ mb: 0.25 }}
-            >
-                <Typography level="body-xs">
-                    {sender === 'You' ? sender : sender.name}
-                </Typography>
+            <Stack direction="row" justifyContent="space-between" spacing={2} sx={{ mb: 0.25 }}>
+                <Typography level="body-xs">{sender === 'You' ? sender : sender.name}</Typography>
                 <Typography level="body-xs">{timestamp}</Typography>
             </Stack>
             {attachment ? (
@@ -44,7 +37,7 @@ export default function ChatBubble(props: ChatBubbleProps) {
                         py: 1.25,
                         borderRadius: 'lg',
                         borderTopRightRadius: isSent ? 0 : 'lg',
-                        borderTopLeftRadius: isSent ? 'lg' : 0,
+                        borderTopLeftRadius: isSent ? 'lg' : 0
                     }}
                 >
                     <Stack direction="row" spacing={1.5} alignItems="center">
@@ -73,19 +66,22 @@ export default function ChatBubble(props: ChatBubbleProps) {
                             borderTopLeftRadius: isSent ? 'lg' : 0,
                             backgroundColor: isSent
                                 ? 'var(--joy-palette-primary-solidBg)'
-                                : 'background.body',
+                                : 'background.body'
                         }}
                     >
-                        {(!type || type == 'text') && <ContentView content={content} isSent={isSent} />}
+                        {(!type || type == 'text') && (
+                            <ContentView content={content} isSent={isSent} />
+                        )}
                         {type == 'image' && <ImageView content={content} />}
                         {type == 'pdf' && <PdfView content={content} />}
                         {type == 'markdown' && <MarkmapView value={content} />}
 
-                        {type == 'chart' &&
-                            <ChartView content={getTransitionChartContent(
-                                content,
-                                0
-                            )} position={0} />}
+                        {type == 'chart' && (
+                            <ChartView
+                                content={getTransitionChartContent(content, 0)}
+                                position={0}
+                            />
+                        )}
                     </Sheet>
                     {/* {(isHovered || isLiked || isCelebrated) && (
                         <Stack

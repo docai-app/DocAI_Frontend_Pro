@@ -14,7 +14,7 @@ export default function MarkmapView(props: ViewProps) {
     useEffect(() => {
         if (value) {
             if (!refSvg.current) return;
-            refSvg.current.innerHTML = ''
+            refSvg.current.innerHTML = '';
             const mm = Markmap.create(refSvg.current);
             if (!mm) return;
             const { root } = transformer.transform(value);
@@ -26,7 +26,7 @@ export default function MarkmapView(props: ViewProps) {
     }, [value]);
     return (
         <>
-            <div className='w-full overflow-auto items-center flex flex-col justify-center  '>
+            <div className="w-full overflow-auto items-center flex flex-col justify-center  ">
                 {/* <p className=' text-sm text-black font-bold'>以下是生成的知識圖譜</p>
                 <p className='w-full h-[0.1px] bg-black my-2'></p> */}
                 <svg

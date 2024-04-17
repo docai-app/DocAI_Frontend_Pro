@@ -20,7 +20,7 @@ export default function MessagesPaneHeader(props: MessagesPaneHeaderProps) {
             sx={{
                 borderBottom: '1px solid',
                 borderColor: 'divider',
-                backgroundColor: 'background.body',
+                backgroundColor: 'background.body'
             }}
             py={{ xs: 2, md: 2 }}
             px={{ xs: 1, md: 2 }}
@@ -31,7 +31,7 @@ export default function MessagesPaneHeader(props: MessagesPaneHeaderProps) {
                     color="neutral"
                     size="sm"
                     sx={{
-                        display: { xs: 'inline-flex', sm: 'none' },
+                        display: { xs: 'inline-flex', sm: 'none' }
                     }}
                     onClick={() => toggleMessagesPane()}
                 >
@@ -39,12 +39,7 @@ export default function MessagesPaneHeader(props: MessagesPaneHeaderProps) {
                 </IconButton>
                 <Avatar size="lg" src={sender.avatar} />
                 <div>
-                    <Typography
-                        fontWeight="lg"
-                        fontSize="lg"
-                        component="h2"
-                        noWrap
-                    >
+                    <Typography fontWeight="lg" fontSize="lg" component="h2" noWrap>
                         {sender.name}
                     </Typography>
                     <Typography level="body-sm">{sender.username}</Typography>

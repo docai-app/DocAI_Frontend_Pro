@@ -279,7 +279,9 @@ export default function Sidebar() {
                     <ListSubheader sx={{ letterSpacing: '2px', fontWeight: '800' }}>
                         Chatbot
                     </ListSubheader>
-                    <Button component="a" href='/chat' startDecorator={<Add />} size="sm">新增聊天</Button>
+                    <Button component="a" href="/chat" startDecorator={<Add />} size="sm">
+                        新增聊天
+                    </Button>
                     <ChatbotHistoryView />
                 </List>
             </Box>

@@ -2,7 +2,7 @@ import { Box, Breadcrumbs, Link, Typography, Chip, Button, Input } from '@mui/jo
 import Textarea from '@mui/joy/Textarea';
 import Radio from '@mui/joy/Radio';
 import Checkbox, { checkboxClasses } from '@mui/joy/Checkbox';
-import { ArrowLongDownIcon, } from '@heroicons/react/20/solid';
+import { ArrowLongDownIcon } from '@heroicons/react/20/solid';
 import { PlusIcon } from '@heroicons/react/24/outline';
 import _ from 'lodash';
 import { useRouter, useSearchParams, usePathname } from 'next/navigation';
@@ -135,15 +135,20 @@ function ProjectEditView(props: ProjectViewProps) {
                             justifyContent: 'space-between'
                         }}
                     >
-                        <Button color="primary" variant="plain"
+                        <Button
+                            color="primary"
+                            variant="plain"
                             startDecorator={<KeyboardArrowLeftIcon />}
                             onClick={() => {
                                 router.back();
-                            }}>
+                            }}
+                        >
                             返回
                         </Button>
 
-                        <Typography level="h2" component="h1">Workflow Builder</Typography>
+                        <Typography level="h2" component="h1">
+                            Workflow Builder
+                        </Typography>
 
                         <Box sx={{ display: 'flex', justifyContent: 'end', width: '20%' }}>
                             <Button
@@ -151,7 +156,8 @@ function ProjectEditView(props: ProjectViewProps) {
                                 size="sm"
                                 onClick={() => {
                                     handleSave(project, tasks);
-                                }}>
+                                }}
+                            >
                                 部署
                             </Button>
                         </Box>
@@ -168,8 +174,10 @@ function ProjectEditView(props: ProjectViewProps) {
                                     name: e.target.value
                                 });
                             }}
-                            sx={{ mb: 1 }} />
-                        <Textarea minRows={2}
+                            sx={{ mb: 1 }}
+                        />
+                        <Textarea
+                            minRows={2}
                             placeholder="描述..."
                             startDecorator={<Typography sx={{ ml: 1 }}>描述:</Typography>}
                             defaultValue={project?.description}
@@ -179,8 +187,8 @@ function ProjectEditView(props: ProjectViewProps) {
                                     description: e.target.value
                                 });
                             }}
-                            sx={{ mb: 1 }}>
-                        </Textarea>
+                            sx={{ mb: 1 }}
+                        ></Textarea>
                         <DocumentPath
                             modeType={'move'}
                             target_folder_id={target_folder_id}
@@ -192,7 +200,14 @@ function ProjectEditView(props: ProjectViewProps) {
                             }}
                         />
 
-                        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', my: 2 }}>
+                        <Box
+                            sx={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'space-between',
+                                my: 2
+                            }}
+                        >
                             <Box sx={{ display: 'flex', gap: 10 }}>
                                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                                     <Typography>任務關係:</Typography>
@@ -201,7 +216,9 @@ function ProjectEditView(props: ProjectViewProps) {
                                             <Radio
                                                 name="is_process_workflow"
                                                 label="不依賴"
-                                                defaultChecked={project?.is_process_workflow == false}
+                                                defaultChecked={
+                                                    project?.is_process_workflow == false
+                                                }
                                                 disabled={searchParams.get('id') != null}
                                                 onChange={(e) => {
                                                     setProject({
@@ -213,7 +230,9 @@ function ProjectEditView(props: ProjectViewProps) {
                                             <Radio
                                                 name="is_process_workflow"
                                                 label="依賴"
-                                                defaultChecked={project?.is_process_workflow == true}
+                                                defaultChecked={
+                                                    project?.is_process_workflow == true
+                                                }
                                                 disabled={searchParams.get('id') != null}
                                                 onChange={(e) => {
                                                     setProject({
@@ -238,7 +257,9 @@ function ProjectEditView(props: ProjectViewProps) {
 
                                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
                                     設定為範本:
-                                    <Checkbox color="primary" variant="plain"
+                                    <Checkbox
+                                        color="primary"
+                                        variant="plain"
                                         name="is_process_workflow"
                                         defaultChecked={project?.is_template}
                                         onChange={(e) => {
@@ -247,17 +268,27 @@ function ProjectEditView(props: ProjectViewProps) {
                                                 is_template: e.target.checked
                                             });
                                         }}
-                                        sx={{ [`& > .${checkboxClasses.checkbox}`]: { position: 'relative' } }}
-                                        slotProps={{ action: { className: checkboxClasses.focusVisible } }} />
+                                        sx={{
+                                            [`& > .${checkboxClasses.checkbox}`]: {
+                                                position: 'relative'
+                                            }
+                                        }}
+                                        slotProps={{
+                                            action: { className: checkboxClasses.focusVisible }
+                                        }}
+                                    />
                                 </Box>
                             </Box>
 
-                            <Button size='sm' variant="soft"
+                            <Button
+                                size="sm"
+                                variant="soft"
                                 color="primary"
                                 startDecorator={<Add />}
                                 onClick={() => {
                                     setMode('add');
-                                }}>
+                                }}
+                            >
                                 新增
                             </Button>
                         </Box>
@@ -274,7 +305,7 @@ function ProjectEditView(props: ProjectViewProps) {
                                             task={task}
                                             users={users}
                                             disabled={true}
-                                            completeTask={() => { }}
+                                            completeTask={() => {}}
                                             updateTask={() => updateTask(task, index)}
                                             removeTask={() => removeTask(task, index)}
                                         />
@@ -315,7 +346,7 @@ function ProjectEditView(props: ProjectViewProps) {
                         }}
                     />
                 </Box>
-            </Box >
+            </Box>
         </>
     );
 }

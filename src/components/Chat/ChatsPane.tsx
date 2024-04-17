@@ -23,7 +23,7 @@ export default function ChatsPane(props: ChatsPaneProps) {
                 borderRight: '1px solid',
                 borderColor: 'divider',
                 height: 'calc(95dvh - var(--Header-height))',
-                overflowY: 'auto',
+                overflowY: 'auto'
             }}
         >
             <Stack
@@ -78,7 +78,7 @@ export default function ChatsPane(props: ChatsPaneProps) {
                 sx={{
                     py: 0,
                     '--ListItem-paddingY': '0.75rem',
-                    '--ListItem-paddingX': '1rem',
+                    '--ListItem-paddingX': '1rem'
                 }}
             >
                 {chats.map((chat) => (

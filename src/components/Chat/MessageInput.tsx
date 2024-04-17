@@ -45,13 +45,15 @@ export default function MessageInput(props: MessageInputProps) {
                             py: 1,
                             pr: 1,
                             borderTop: '1px solid',
-                            borderColor: 'divider',
+                            borderColor: 'divider'
                         }}
                     >
                         <div>
-                            <Box sx={{
-                                display: 'flex'
-                            }}>
+                            <Box
+                                sx={{
+                                    display: 'flex'
+                                }}
+                            >
                                 <Select
                                     size="sm"
                                     placeholder="請選擇模型"
@@ -61,19 +63,15 @@ export default function MessageInput(props: MessageInputProps) {
                                     }}
                                     slotProps={{ button: { sx: { whiteSpace: 'nowrap' } } }}
                                     onChange={(event, value) => {
-                                        setModel(value)
+                                        setModel(value);
                                     }}
                                     value={model}
                                 >
-                                    <Option value={''} disabled >
+                                    <Option value={''} disabled>
                                         請選擇模型
                                     </Option>
-                                    <Option value={'chart'}  >
-                                        圖表
-                                    </Option>
-                                    <Option value={'statistics'}  >
-                                        統計
-                                    </Option>
+                                    <Option value={'chart'}>圖表</Option>
+                                    <Option value={'statistics'}>統計</Option>
                                 </Select>
                                 <Select
                                     size="sm"
@@ -84,18 +82,14 @@ export default function MessageInput(props: MessageInputProps) {
                                     }}
                                     slotProps={{ button: { sx: { whiteSpace: 'nowrap' } } }}
                                     onChange={(event, value) => {
-                                        setModel(value)
+                                        setModel(value);
                                     }}
                                 >
-                                    <Option value={''} disabled >
+                                    <Option value={''} disabled>
                                         請選擇來源或機器人
                                     </Option>
-                                    <Option value={'chart'}  >
-                                        圖表
-                                    </Option>
-                                    <Option value={'statistics'}  >
-                                        統計
-                                    </Option>
+                                    <Option value={'chart'}>圖表</Option>
+                                    <Option value={'statistics'}>統計</Option>
                                 </Select>
                             </Box>
                         </div>
@@ -117,8 +111,8 @@ export default function MessageInput(props: MessageInputProps) {
                 }}
                 sx={{
                     '& textarea:first-of-type': {
-                        minHeight: 72,
-                    },
+                        minHeight: 72
+                    }
                 }}
             />
         </Box>

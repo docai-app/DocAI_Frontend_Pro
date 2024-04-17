@@ -138,13 +138,15 @@ function ProjectView(props: ProjectViewProps) {
                             justifyContent: 'center'
                         }}
                     >
-                        <Typography level="h2" component="h1">待辦事項與工作流</Typography>
+                        <Typography level="h2" component="h1">
+                            待辦事項與工作流
+                        </Typography>
                     </Box>
 
-                    <Tabs defaultValue="tasks"
-                        sx={{ bgcolor: 'transparent' }}
-                    >
-                        <TabList underlinePlacement="bottom" size="sm"
+                    <Tabs defaultValue="tasks" sx={{ bgcolor: 'transparent' }}>
+                        <TabList
+                            underlinePlacement="bottom"
+                            size="sm"
                             sx={{
                                 display: 'flex',
                                 pl: { xs: 0, md: 4 },
@@ -162,33 +164,47 @@ function ProjectView(props: ProjectViewProps) {
                                         }
                                     }
                                 }
-                            }}>
+                            }}
+                        >
                             <Box>
                                 <Link underline="none" onClick={() => setCurrentTypeTab('tasks')}>
-                                    <Tab value="tasks" indicatorPlacement="bottom"
-                                        sx={{ borderRadius: '6px 6px 0 0' }}>
+                                    <Tab
+                                        value="tasks"
+                                        indicatorPlacement="bottom"
+                                        sx={{ borderRadius: '6px 6px 0 0' }}
+                                    >
                                         待辦事項
                                     </Tab>
                                 </Link>
-                                <Link underline="none" onClick={() => setCurrentTypeTab('project_workflow')}>
-                                    <Tab value="project_workflow" indicatorPlacement="bottom"
-                                        sx={{ borderRadius: '6px 6px 0 0' }}>
+                                <Link
+                                    underline="none"
+                                    onClick={() => setCurrentTypeTab('project_workflow')}
+                                >
+                                    <Tab
+                                        value="project_workflow"
+                                        indicatorPlacement="bottom"
+                                        sx={{ borderRadius: '6px 6px 0 0' }}
+                                    >
                                         工作流
                                     </Tab>
                                 </Link>
-
                             </Box>
 
-                            {currentTypeTab == 'tasks' ? (<Button size='sm'
-                                color="primary"
-                                variant="plain"
-                                startDecorator={<Add />}
-                                onClick={() => { handleClickAdd(); }}
-                            >
-                                新增
-                            </Button>)
-                                :
-                                <span></span>}
+                            {currentTypeTab == 'tasks' ? (
+                                <Button
+                                    size="sm"
+                                    color="primary"
+                                    variant="plain"
+                                    startDecorator={<Add />}
+                                    onClick={() => {
+                                        handleClickAdd();
+                                    }}
+                                >
+                                    新增
+                                </Button>
+                            ) : (
+                                <span></span>
+                            )}
                         </TabList>
                         <TabPanel value="tasks">
                             <StepsListView
@@ -200,7 +216,6 @@ function ProjectView(props: ProjectViewProps) {
                                 chain_features={chain_features}
                             />
                             <PaginationView meta={metaSteps} pathname={'/project'} params={null} />
-
                         </TabPanel>
                         <TabPanel value="project_workflow">
                             <ProjectItem
@@ -211,7 +226,6 @@ function ProjectView(props: ProjectViewProps) {
                             />
                         </TabPanel>
                     </Tabs>
-
 
                     {/* <div className="mt-4 pb-4">
                             <div className="flex flex-row justify-between items-center  py-2">
@@ -279,7 +293,6 @@ function ProjectView(props: ProjectViewProps) {
                                 </div>
                             )}
                         </div>*/}
-
 
                     <EditTaskModal
                         title={currentTask ? '編輯任務' : '新增任務'}
