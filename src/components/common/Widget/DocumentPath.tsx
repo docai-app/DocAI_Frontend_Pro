@@ -1,3 +1,4 @@
+import { Box, Breadcrumbs, Link, Typography, Chip, Button, Input, Card } from '@mui/joy';
 import { FolderIcon } from '@heroicons/react/20/solid';
 import { ChevronRightIcon } from '@heroicons/react/24/outline';
 import useAxios from 'axios-hooks';
@@ -51,11 +52,11 @@ export default function DocumentPath(props: DocumentPathProps) {
 
     return (
         <>
-            <div className="mt-4 rounded-md border-2 border-gray-200 p-4 bg-white">
-                <label className="text-md font-bold text-gray-900">儲存路徑</label>
-                <div className="flex flex-row justify-between mt-2">
-                    <div className="flex flex-row">
-                        <FolderIcon className="h-6 text-blue-200" />
+            <Card >
+                <Typography level="h2" fontSize="md">儲存路徑</Typography>
+                <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                    <Box sx={{ display: 'flex', alignItems: 'center' }} fontSize={14}>
+                        <FolderIcon className="h-6 text-blue-200 mr-1" />
                         {documentPath &&
                             documentPath.slice(0, documentPath.length - 1).map((folder) => (
                                 <div key={folder.id} className="flex flex-row items-center">
@@ -63,23 +64,18 @@ export default function DocumentPath(props: DocumentPathProps) {
                                     <ChevronRightIcon className="text-gray-400 text-sm h-5" />
                                 </div>
                             ))}
-                        <div className="flex flex-row items-center">
-                            {documentPath && documentPath[documentPath.length - 1].name}
-                        </div>
-                    </div>
+                        {documentPath && documentPath[documentPath.length - 1].name}
+                    </Box>
                     {canEditPath && (
-                        <a
-                            className="text-indigo-600 underline cursor-pointer"
+                        <Link underline='always'
                             onClick={() => {
-                                // setMode('move');
                                 setMode(modeType);
-                            }}
-                        >
+                            }}>
                             編輯
-                        </a>
+                        </Link>
                     )}
-                </div>
-            </div>
+                </Box>
+            </Card >
 
             <FolderTreeForSelect
                 {...{

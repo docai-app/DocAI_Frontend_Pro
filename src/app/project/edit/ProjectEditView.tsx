@@ -8,7 +8,6 @@ import _ from 'lodash';
 import { useRouter, useSearchParams, usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import Api from '../../../apis';
-import BButton from '../../../components/common/Widget/buttons/BButton';
 import DocumentPath from '../../../components/common/Widget/DocumentPath';
 import EditTaskModal from '../../../components/project/task/EditTaskModal';
 import TaskRow from '../../../components/project/task/TaskRow';
@@ -193,65 +192,66 @@ function ProjectEditView(props: ProjectViewProps) {
                             }}
                         />
 
-                        <Box sx={{ display: 'flex', alignItems: 'center', my: 1, gap: 10 }}>
-                            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                                <Typography>任務關係:</Typography>
-                                {searchParams.get('id') == null && (
-                                    <>
-                                        <Radio
-                                            name="is_process_workflow"
-                                            label="不依賴"
-                                            defaultChecked={project?.is_process_workflow == false}
-                                            disabled={searchParams.get('id') != null}
-                                            onChange={(e) => {
-                                                setProject({
-                                                    ...project,
-                                                    is_process_workflow: false
-                                                });
-                                            }}
-                                        />
-                                        <Radio
-                                            name="is_process_workflow"
-                                            label="依賴"
-                                            defaultChecked={project?.is_process_workflow == true}
-                                            disabled={searchParams.get('id') != null}
-                                            onChange={(e) => {
-                                                setProject({
-                                                    ...project,
-                                                    is_process_workflow: true
-                                                });
-                                            }}
-                                        />
-                                    </>
-                                )}
-                                {searchParams.get('id') != null &&
-                                    (project?.is_process_workflow ? (
-                                        <label className="ml-2 block text-sm font-medium text-gray-500">
-                                            依賴
-                                        </label>
-                                    ) : (
-                                        <label className="ml-2 block text-sm font-medium text-gray-500">
-                                            不依賴
-                                        </label>
-                                    ))}
-                            </Box>
-                            <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-                                設定為範本:
-                                <Checkbox color="primary" variant="plain"
-                                    name="is_process_workflow"
-                                    defaultChecked={project?.is_template}
-                                    onChange={(e) => {
-                                        setProject({
-                                            ...project,
-                                            is_template: e.target.checked
-                                        });
-                                    }}
-                                    sx={{ [`& > .${checkboxClasses.checkbox}`]: { position: 'relative' } }}
-                                    slotProps={{ action: { className: checkboxClasses.focusVisible } }} />
-                            </Box>
-                        </Box>
+                        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', my: 2 }}>
+                            <Box sx={{ display: 'flex', gap: 10 }}>
+                                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                                    <Typography>任務關係:</Typography>
+                                    {searchParams.get('id') == null && (
+                                        <>
+                                            <Radio
+                                                name="is_process_workflow"
+                                                label="不依賴"
+                                                defaultChecked={project?.is_process_workflow == false}
+                                                disabled={searchParams.get('id') != null}
+                                                onChange={(e) => {
+                                                    setProject({
+                                                        ...project,
+                                                        is_process_workflow: false
+                                                    });
+                                                }}
+                                            />
+                                            <Radio
+                                                name="is_process_workflow"
+                                                label="依賴"
+                                                defaultChecked={project?.is_process_workflow == true}
+                                                disabled={searchParams.get('id') != null}
+                                                onChange={(e) => {
+                                                    setProject({
+                                                        ...project,
+                                                        is_process_workflow: true
+                                                    });
+                                                }}
+                                            />
+                                        </>
+                                    )}
+                                    {searchParams.get('id') != null &&
+                                        (project?.is_process_workflow ? (
+                                            <label className="ml-2 block text-sm font-medium text-gray-500">
+                                                依賴
+                                            </label>
+                                        ) : (
+                                            <label className="ml-2 block text-sm font-medium text-gray-500">
+                                                不依賴
+                                            </label>
+                                        ))}
+                                </Box>
 
-                        <div className="my-2 flex justify-end">
+                                <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                                    設定為範本:
+                                    <Checkbox color="primary" variant="plain"
+                                        name="is_process_workflow"
+                                        defaultChecked={project?.is_template}
+                                        onChange={(e) => {
+                                            setProject({
+                                                ...project,
+                                                is_template: e.target.checked
+                                            });
+                                        }}
+                                        sx={{ [`& > .${checkboxClasses.checkbox}`]: { position: 'relative' } }}
+                                        slotProps={{ action: { className: checkboxClasses.focusVisible } }} />
+                                </Box>
+                            </Box>
+
                             <Button size='sm' variant="soft"
                                 color="primary"
                                 startDecorator={<Add />}
@@ -260,12 +260,13 @@ function ProjectEditView(props: ProjectViewProps) {
                                 }}>
                                 新增
                             </Button>
-                        </div>
+                        </Box>
+
                         {tasks
                             ?.sort((a: any, b: any) => (a.status > b.status ? -1 : 1))
                             ?.map((task: any, index: number) => {
                                 return (
-                                    <div 
+                                    <div
                                         key={index}
                                         className="flex flex-col justify-center items-center"
                                     >
