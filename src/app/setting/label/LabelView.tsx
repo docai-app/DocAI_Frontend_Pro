@@ -5,6 +5,7 @@ import Divider from '@mui/joy/Divider';
 import _ from 'lodash';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import EditLabel from '../../../components/setting/label/EditLabel';
 import LabelTable from '../../../components/setting/label/LabelTable';
 
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
@@ -82,6 +83,20 @@ function LabelView(props: ViewProps) {
 
     return (
         <>
+            <EditLabel
+                {...{
+                    open,
+                    setOpen,
+                    tag,
+                    tagTypes,
+                    newLabelName,
+                    setNewLabelName,
+                    addNewLabelHandler,
+                    updateLabelNameByIdHandler,
+                    updateTagFunctionsHandler,
+                    deleteTagFunctionsHandler
+                }}
+            />
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
                 <Box
                     component="main"
@@ -105,7 +120,6 @@ function LabelView(props: ViewProps) {
                         sx={{
                             display: 'flex',
                             mb: 1,
-                            mr: 3,
                             gap: 1,
                             flexDirection: { xs: 'column', sm: 'row' },
                             alignItems: { xs: 'start', sm: 'center' },
@@ -113,61 +127,41 @@ function LabelView(props: ViewProps) {
                             justifyContent: 'space-between'
                         }}
                     >
-                        <Button
-                            color="primary"
-                            variant="plain"
+                        <Button color="primary" variant="plain"
                             startDecorator={<KeyboardArrowLeftIcon />}
                             onClick={() => {
                                 router.back();
-                            }}
-                        >
+                            }}>
                             返回
                         </Button>
 
                         <Typography level="h2" component="h1">
                             標籤管理
                         </Typography>
-                    </Box>
-                    <Box
-                        sx={{
-                            display: 'flex',
-                            mb: 1,
-                            mr: 3,
-                            gap: 1,
-                            flexDirection: { xs: 'column', sm: 'row' },
-                            alignItems: { xs: 'start', sm: 'center' },
-                            flexWrap: 'wrap',
-                            justifyContent: 'space-between'
-                        }}
-                    >
-                        <Box></Box>
-                        <Button
-                            color="primary"
-                            startDecorator={<Add />}
-                            size="sm"
-                            onClick={() => {
-                                setOpen(true);
-                            }}
-                        >
-                            新增
-                        </Button>
+
+                        <Box sx={{ display: 'flex', justifyContent: 'end', width: '20%' }}>
+                            <Button
+                                color="primary"
+                                startDecorator={<Add />}
+                                size="sm"
+                                onClick={() => { setOpen(true); }}>
+                                新增
+                            </Button>
+                        </Box>
                     </Box>
 
-                    {sortedLabels && (
-                        <LabelTable
-                            labels={sortedLabels}
-                            updateLabelNameByIdHandler={updateLabelNameByIdHandler}
-                        />
-                    )}
-                    <Divider sx={{ mt: 1 }} color="primary">
+                    {sortedLabels && <LabelTable
+                        labels={sortedLabels}
+                        updateLabelNameByIdHandler={updateLabelNameByIdHandler}
+                    />}
+
+                    <Divider sx={{ mt: 1, '--Divider-childPosition': `45%` }} color="primary">
                         <Typography level="h4">待查核標籤</Typography>
                     </Divider>
-                    {sortedUnCheckLabels && (
-                        <LabelTable
-                            labels={sortedUnCheckLabels}
-                            updateLabelNameByIdHandler={updateLabelNameByIdHandler}
-                        />
-                    )}
+                    {sortedUnCheckLabels && <LabelTable
+                        labels={sortedUnCheckLabels}
+                        updateLabelNameByIdHandler={updateLabelNameByIdHandler}
+                    />}
                 </Box>
             </Box>
         </>

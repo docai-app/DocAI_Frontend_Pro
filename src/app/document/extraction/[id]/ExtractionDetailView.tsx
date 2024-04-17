@@ -1,11 +1,11 @@
-import { Box, Breadcrumbs, Link, Typography } from '@mui/joy';
-import Tabs from '@mui/joy/Tabs';
-import TabList from '@mui/joy/TabList';
-import Tab from '@mui/joy/Tab';
-import TabPanel from '@mui/joy/TabPanel';
+import { Box, Typography } from '@mui/joy';
+import Button from '@mui/joy/Button';
 import Checkbox from '@mui/joy/Checkbox';
 import Input from '@mui/joy/Input';
-import Button from '@mui/joy/Button';
+import Tab, { tabClasses } from '@mui/joy/Tab';
+import TabList from '@mui/joy/TabList';
+import TabPanel from '@mui/joy/TabPanel';
+import Tabs from '@mui/joy/Tabs';
 
 import _ from 'lodash';
 import { useRouter } from 'next/navigation';
@@ -60,7 +60,7 @@ function ExtractionDetailView(props: ExtractionDetailViewProps) {
 
     useEffect(() => {
         if (label) {
-            console.log(label);
+            console.log(label)
 
             set_chain_feature_ids(label?.meta?.chain_features || []);
             setName(label.name);
@@ -69,7 +69,7 @@ function ExtractionDetailView(props: ExtractionDetailViewProps) {
 
     const isContain = (value: any) => {
         const index = _.find(label?.functions, function (func: any) {
-            return func.id == value;
+            return func.id === value;
         });
         return index;
     };
@@ -105,82 +105,83 @@ function ExtractionDetailView(props: ExtractionDetailViewProps) {
                             justifyContent: 'space-between'
                         }}
                     >
-                        <Button
-                            color="primary"
-                            variant="plain"
+                        <Button color="primary" variant="plain"
                             startDecorator={<KeyboardArrowLeftIcon />}
                             onClick={() => {
                                 router.back();
-                            }}
-                        >
+                            }}>
                             返回
                         </Button>
 
-                        <Typography level="h2" component="h1">
-                            編輯標籤
-                        </Typography>
+                        <Typography level="h2" component="h1">編輯標籤</Typography>
 
-                        <Button
-                            color="primary"
-                            // startDecorator={<Add />}
-                            size="sm"
-                            onClick={() => {
-                                updateTagNameHandler(label.id, name);
-                            }}
-                        >
-                            保存
-                        </Button>
+                        <Box sx={{ display: 'flex', justifyContent: 'end', width: '20%' }}>
+                            <Button
+                                color="primary"
+                                size="sm"
+                                onClick={() => {
+                                    updateTagNameHandler(label.id, name);
+                                }}>
+                                保存
+                            </Button>
+                        </Box>
                     </Box>
 
-                    <Input
-                        autoFocus
-                        required
-                        fullWidth
-                        color="primary"
+                    <Input autoFocus required fullWidth color="primary"
                         startDecorator={<Typography>名稱:</Typography>}
                         defaultValue={label?.name}
                         onChange={(e) => {
                             setName(e.target.value);
-                        }}
-                    />
+                        }} />
                     <Box sx={{ display: 'flex', gap: 1, ml: 1.5, my: 1 }}>
                         功能:
-                        {tagTypes?.functions?.map((item: any, index: number) => {
+                        {label && tagTypes?.functions?.map((item: any, index: number) => {
                             return (
-                                <Checkbox
-                                    key={index}
-                                    variant="solid"
-                                    color="primary"
+                                <Checkbox key={index} variant="solid" color="primary"
                                     label={item.title}
                                     defaultChecked={isContain(item.id)}
                                     onChange={(e) => {
                                         if (e.target.checked) {
-                                            updateTagFunctionsHandler(label.id, item.id);
+                                            updateTagFunctionsHandler(
+                                                label.id, item.id
+                                            );
                                         } else {
-                                            deleteTagFunctionsHandler(label.id, item.id);
+                                            deleteTagFunctionsHandler(
+                                                label.id, item.id
+                                            );
                                         }
-                                    }}
-                                />
+                                    }} />
                             );
                         })}
                     </Box>
 
-                    <Tabs defaultValue="extraction" sx={{ bgcolor: 'transparent' }}>
-                        <TabList
-                            underlinePlacement="bottom"
+                    <Tabs defaultValue="extraction"
+                        sx={{ bgcolor: 'transparent' }}
+                    >
+                        <TabList underlinePlacement="bottom" size="sm"
                             sx={{
-                                p: 0.5,
-                                gap: 0.5,
-                                borderRadius: 'xl',
-                                bgcolor: 'background.level1'
-                            }}
-                        >
-                            <Tab value="extraction" indicatorPlacement="bottom">
-                                標籤填表與數據
-                            </Tab>
-                            <Tab value="chain_feature" indicatorPlacement="bottom">
-                                推薦功能
-                            </Tab>
+                                pl: { xs: 0, md: 4 },
+                                justifyContent: 'left',
+                                [`&& .${tabClasses.root}`]: {
+                                    fontWeight: '600',
+                                    flex: 'initial',
+                                    color: 'text.tertiary',
+                                    [`&.${tabClasses.selected}`]: {
+                                        bgcolor: 'transparent',
+                                        color: 'text.primary',
+                                        '&::after': {
+                                            height: '2px',
+                                            bgcolor: 'primary.500'
+                                        }
+                                    }
+                                }
+                            }}>
+                            <Tab value="extraction" indicatorPlacement="bottom"
+                                sx={{ borderRadius: '6px 6px 0 0' }}>
+                                標籤填表與數據</Tab>
+                            <Tab value="chain_feature" indicatorPlacement="bottom"
+                                sx={{ borderRadius: '6px 6px 0 0' }}>
+                                推薦功能</Tab>
                         </TabList>
                         <TabPanel value="extraction">
                             <SchemaList

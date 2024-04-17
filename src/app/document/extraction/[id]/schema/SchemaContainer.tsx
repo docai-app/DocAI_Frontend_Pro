@@ -2,7 +2,7 @@
 
 import useAxios from 'axios-hooks';
 import _ from 'lodash';
-import { useRouter } from 'next/router';
+import { useRouter, useSearchParams, useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import Api from '../../../../../apis';
 import useAlert from '../../../../../hooks/useAlert';
@@ -12,6 +12,8 @@ const apiSetting = new Api();
 
 export default function SchemaContainer() {
     const router = useRouter();
+    const searchParams = useSearchParams();
+    const { id } = useParams();
     const { setAlert } = useAlert();
     const [open, setOpen] = useState(false);
     const [actionContent, setActionContent] = useState('');
@@ -59,20 +61,21 @@ export default function SchemaContainer() {
 
     useEffect(() => {
         setActionContent('正在加載數據');
-        if (router && router.query.id) {
+        if (router && id) {
+            console.log('id', id)
             getTagById({
-                ...apiSetting.Tag.getTagById(router.query.id.toString())
+                ...apiSetting.Tag.getTagById(id.toString())
             });
             setExtractSchema({
                 ...extractSchema,
-                label_id: router.query.id.toString()
+                label_id: id.toString()
             });
         }
-        if (router && router.query.schema_id) {
+        if (router && searchParams.get('schema_id')) {
             // setVisableAdd(false);
             getSmartExtractionSchemasById({
                 ...apiSetting.SmartExtractionSchemas.getSmartExtractionSchemasById(
-                    router.query.schema_id as string
+                    searchParams.get('schema_id') as string
                 )
             });
         }
@@ -134,7 +137,7 @@ export default function SchemaContainer() {
             return;
         }
         setActionContent('正在保存數據,等待時間較長，請耐心等候...');
-        if (router && router.query.schema_id) {
+        if (router && searchParams.get('schema_id')) {
             // const isSame = _.isEqual(
             //     getSmartExtractionSchemasByIdData.smart_extraction_schema.data_schema,
             //     data_schema
@@ -151,7 +154,7 @@ export default function SchemaContainer() {
             // } else {
             updateSmartExtractionSchemasById({
                 ...apiSetting.SmartExtractionSchemas.updateSmartExtractionSchemasById(
-                    router.query.schema_id as string
+                    searchParams.get('schema_id') as string
                 ),
                 data: extractSchema
             });
