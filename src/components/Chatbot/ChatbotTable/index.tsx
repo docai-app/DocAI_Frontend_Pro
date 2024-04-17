@@ -13,6 +13,7 @@ import * as React from 'react';
 import { Chatbots } from '@/app/chatbot/ChatbotContainer';
 import PaginationView from '@/components/common/Widget/PaginationView';
 import { Chatbot_Features } from '@/utils/constant';
+import { Chip } from '@mui/joy';
 import Avatar from '@mui/joy/Avatar';
 import Link from '@mui/joy/Link';
 import List from '@mui/joy/List';
@@ -124,15 +125,15 @@ export default function ChatbotTable(props: ViewProps) {
                                                     {getFeatureNames(
                                                         row.chatbot.meta?.selected_features
                                                     )?.map((name, index) => (
-                                                        <Typography
+                                                        <Chip
                                                             key={index}
-                                                            variant="soft"
                                                             color="primary"
-                                                            fontSize="xs"
-                                                            sx={{ marginLeft: 1 }}
-                                                        >
-                                                            {name}
-                                                        </Typography>
+                                                            variant="soft"
+                                                            size="sm"
+                                                            sx={{
+                                                                mx: 0.5
+                                                            }}
+                                                        >{name}</Chip>
                                                     ))}
                                                 </Typography>
                                                 <Typography level="body-xs" gutterBottom>

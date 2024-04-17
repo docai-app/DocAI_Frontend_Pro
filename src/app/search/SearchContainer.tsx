@@ -71,7 +71,6 @@ function SearchContainer() {
                 }
             });
             if (res.data) {
-                setLoading(true)
                 const fetchData = async () => {
                     const response = await fetch('/api/stream/tree', {
                         method: 'POST',
@@ -122,6 +121,7 @@ function SearchContainer() {
             return;
         }
         console.log('searchParams', searchParams);
+        setLoading(true)
         searchDocumentFormik.setValues(searchParams);
         searchDocumentFormik.handleSubmit();
     };

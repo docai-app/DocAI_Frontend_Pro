@@ -1,39 +1,39 @@
-import Add from '@mui/icons-material/Add';
+import AssignmentRoundedIcon from '@mui/icons-material/AssignmentRounded';
 import BrightnessAutoRoundedIcon from '@mui/icons-material/BrightnessAutoRounded';
+import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
+import DashboardRoundedIcon from '@mui/icons-material/DashboardRounded';
 import GroupRoundedIcon from '@mui/icons-material/GroupRounded';
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import LocalOfferIcon from '@mui/icons-material/LocalOffer';
+import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 import QuestionAnswerRoundedIcon from '@mui/icons-material/QuestionAnswerRounded';
+import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
+import SettingsRoundedIcon from '@mui/icons-material/SettingsRounded';
 import ShoppingCartRoundedIcon from '@mui/icons-material/ShoppingCartRounded';
-import SmsIcon from '@mui/icons-material/Sms';
-import SourceIcon from '@mui/icons-material/Source';
-import { Button, ListSubheader } from '@mui/joy';
+import SupportRoundedIcon from '@mui/icons-material/SupportRounded';
 import Avatar from '@mui/joy/Avatar';
 import Box from '@mui/joy/Box';
+import Button from '@mui/joy/Button';
+import Card from '@mui/joy/Card';
 import Chip from '@mui/joy/Chip';
 import Divider from '@mui/joy/Divider';
 import GlobalStyles from '@mui/joy/GlobalStyles';
 import IconButton from '@mui/joy/IconButton';
+import Input from '@mui/joy/Input';
+import LinearProgress from '@mui/joy/LinearProgress';
 import List from '@mui/joy/List';
 import ListItem from '@mui/joy/ListItem';
 import ListItemButton, { listItemButtonClasses } from '@mui/joy/ListItemButton';
 import ListItemContent from '@mui/joy/ListItemContent';
 import Sheet from '@mui/joy/Sheet';
+import Stack from '@mui/joy/Stack';
 import Typography from '@mui/joy/Typography';
-import { usePathname } from 'next/navigation';
 import * as React from 'react';
-import { useEffect } from 'react';
 
-import { closeSidebar } from '../../utils/utils';
-import LogoutButton from '../common/Widget/buttons/LogoutButton';
-import ChatbotHistoryView from './ChatbotHistoryView';
+import ColorSchemeToggle from './ColorSchemeToggle';
+import { closeSidebar } from './utils';
 
-function Toggler({
-    defaultExpanded = false,
-    renderToggle,
-    children
-}: {
+function Toggler(props: {
     defaultExpanded?: boolean;
     children: React.ReactNode;
     renderToggle: (params: {
@@ -41,6 +41,7 @@ function Toggler({
         setOpen: React.Dispatch<React.SetStateAction<boolean>>;
     }) => React.ReactNode;
 }) {
+    const { defaultExpanded = false, renderToggle, children } = props;
     const [open, setOpen] = React.useState(defaultExpanded);
     return (
         <React.Fragment>
@@ -51,8 +52,8 @@ function Toggler({
                     gridTemplateRows: open ? '1fr' : '0fr',
                     transition: '0.2s ease',
                     '& > *': {
-                        overflow: 'hidden'
-                    }
+                        overflow: 'hidden',
+                    },
                 }}
             >
                 {children}
@@ -62,13 +63,6 @@ function Toggler({
 }
 
 export default function Sidebar() {
-    const pathname = usePathname();
-    const [email, setEmail] = React.useState<string>('');
-
-    useEffect(() => {
-        setEmail(localStorage.getItem('email') || '');
-    }, []);
-
     return (
         <Sheet
             className="Sidebar"
@@ -76,7 +70,7 @@ export default function Sidebar() {
                 position: { xs: 'fixed', md: 'sticky' },
                 transform: {
                     xs: 'translateX(calc(100% * (var(--SideNavigation-slideIn, 0) - 1)))',
-                    md: 'none'
+                    md: 'none',
                 },
                 transition: 'transform 0.4s, width 0.4s',
                 zIndex: 10000,
@@ -89,7 +83,7 @@ export default function Sidebar() {
                 flexDirection: 'column',
                 gap: 2,
                 borderRight: '1px solid',
-                borderColor: 'divider'
+                borderColor: 'divider',
             }}
         >
             <GlobalStyles
@@ -97,9 +91,9 @@ export default function Sidebar() {
                     ':root': {
                         '--Sidebar-width': '220px',
                         [theme.breakpoints.up('lg')]: {
-                            '--Sidebar-width': '240px'
-                        }
-                    }
+                            '--Sidebar-width': '240px',
+                        },
+                    },
                 })}
             />
             <Box
@@ -116,8 +110,8 @@ export default function Sidebar() {
                     transition: 'opacity 0.4s',
                     transform: {
                         xs: 'translateX(calc(100% * (var(--SideNavigation-slideIn, 0) - 1) + var(--SideNavigation-slideIn, 0) * var(--Sidebar-width, 0px)))',
-                        lg: 'translateX(-100%)'
-                    }
+                        lg: 'translateX(-100%)',
+                    },
                 }}
                 onClick={() => closeSidebar()}
             />
@@ -125,10 +119,10 @@ export default function Sidebar() {
                 <IconButton variant="soft" color="primary" size="sm">
                     <BrightnessAutoRoundedIcon />
                 </IconButton>
-                <Typography level="title-lg">DocAI</Typography>
-                {/* <ColorSchemeToggle sx={{ ml: 'auto' }} /> */}
+                <Typography level="title-lg">Acme Co.</Typography>
+                <ColorSchemeToggle sx={{ ml: 'auto' }} />
             </Box>
-            {/* <Input size="sm" startDecorator={<SearchRoundedIcon />} placeholder="Search" /> */}
+            <Input size="sm" startDecorator={<SearchRoundedIcon />} placeholder="Search" />
             <Box
                 sx={{
                     minHeight: 0,
@@ -137,8 +131,8 @@ export default function Sidebar() {
                     display: 'flex',
                     flexDirection: 'column',
                     [`& .${listItemButtonClasses.root}`]: {
-                        gap: 1.5
-                    }
+                        gap: 1.5,
+                    },
                 }}
             >
                 <List
@@ -146,43 +140,22 @@ export default function Sidebar() {
                     sx={{
                         gap: 1,
                         '--List-nestedInsetStart': '30px',
-                        '--ListItem-radius': (theme) => theme.vars.radius.sm
+                        '--ListItem-radius': (theme) => theme.vars.radius.sm,
                     }}
                 >
                     <ListItem>
-                        <ListItemButton
-                            selected={pathname == '/' || pathname == '/home'}
-                            component="a"
-                            href="/"
-                        >
+                        <ListItemButton>
                             <HomeRoundedIcon />
                             <ListItemContent>
                                 <Typography level="title-sm">Home</Typography>
                             </ListItemContent>
                         </ListItemButton>
                     </ListItem>
-
                     <ListItem>
-                        <ListItemButton
-                            component="a"
-                            href="/search"
-                            selected={pathname.indexOf('/search') != -1}
-                        >
-                            <SourceIcon />
+                        <ListItemButton>
+                            <DashboardRoundedIcon />
                             <ListItemContent>
-                                <Typography level="title-sm">文件</Typography>
-                            </ListItemContent>
-                        </ListItemButton>
-                    </ListItem>
-                    <ListItem>
-                        <ListItemButton
-                            component="a"
-                            href="/setting/label"
-                            selected={pathname.indexOf('/setting/label') != -1}
-                        >
-                            <LocalOfferIcon />
-                            <ListItemContent>
-                                <Typography level="title-sm">標簽</Typography>
+                                <Typography level="title-sm">Dashboard</Typography>
                             </ListItemContent>
                         </ListItemButton>
                     </ListItem>
@@ -190,53 +163,62 @@ export default function Sidebar() {
                         <ListItemButton
                             role="menuitem"
                             component="a"
-                            href="/chatbot"
-                            selected={pathname.indexOf('/chatbot') != -1}
-                        >
-                            <SmsIcon />
-                            <ListItemContent>
-                                <Typography level="title-sm">助手</Typography>
-                            </ListItemContent>
-                        </ListItemButton>
-                    </ListItem>
-
-                    <ListItem>
-                        <ListItemButton
-                            selected={pathname.indexOf('/shop') != -1}
-                            component="a"
-                            href="/shop"
+                            href="/joy-ui/getting-started/templates/order-dashboard/"
                         >
                             <ShoppingCartRoundedIcon />
                             <ListItemContent>
-                                <Typography level="title-sm">商城</Typography>
+                                <Typography level="title-sm">Orders</Typography>
                             </ListItemContent>
                         </ListItemButton>
                     </ListItem>
-
-                    <ListItem>
-                        <ListItemButton
-                            role="menuitem"
-                            component="a"
-                            href="/project"
-                            selected={pathname.indexOf('/project') != -1}
+                    <ListItem nested>
+                        <Toggler
+                            renderToggle={({ open, setOpen }) => (
+                                <ListItemButton onClick={() => setOpen(!open)}>
+                                    <AssignmentRoundedIcon />
+                                    <ListItemContent>
+                                        <Typography level="title-sm">Tasks</Typography>
+                                    </ListItemContent>
+                                    <KeyboardArrowDownIcon
+                                        sx={{ transform: open ? 'rotate(180deg)' : 'none' }}
+                                    />
+                                </ListItemButton>
+                            )}
                         >
+                            <List sx={{ gap: 0.5 }}>
+                                <ListItem sx={{ mt: 0.5 }}>
+                                    <ListItemButton>All tasks</ListItemButton>
+                                </ListItem>
+                                <ListItem>
+                                    <ListItemButton>Backlog</ListItemButton>
+                                </ListItem>
+                                <ListItem>
+                                    <ListItemButton>In progress</ListItemButton>
+                                </ListItem>
+                                <ListItem>
+                                    <ListItemButton>Done</ListItemButton>
+                                </ListItem>
+                            </List>
+                        </Toggler>
+                    </ListItem>
+                    <ListItem>
+                        <ListItemButton selected>
                             <QuestionAnswerRoundedIcon />
                             <ListItemContent>
-                                <Typography level="title-sm">待辦事項</Typography>
+                                <Typography level="title-sm">Messages</Typography>
                             </ListItemContent>
                             <Chip size="sm" color="primary" variant="solid">
                                 4
                             </Chip>
                         </ListItemButton>
                     </ListItem>
-
                     <ListItem nested>
                         <Toggler
                             renderToggle={({ open, setOpen }) => (
                                 <ListItemButton onClick={() => setOpen(!open)}>
                                     <GroupRoundedIcon />
                                     <ListItemContent>
-                                        <Typography level="title-sm">example</Typography>
+                                        <Typography level="title-sm">Users</Typography>
                                     </ListItemContent>
                                     <KeyboardArrowDownIcon
                                         sx={{ transform: open ? 'rotate(180deg)' : 'none' }}
@@ -249,39 +231,65 @@ export default function Sidebar() {
                                     <ListItemButton
                                         role="menuitem"
                                         component="a"
-                                        href="/drive-example"
+                                        href="/joy-ui/getting-started/templates/profile-dashboard/"
                                     >
-                                        drive-example
-                                    </ListItemButton>
-                                </ListItem>
-                                <ListItem sx={{ mt: 0.5 }}>
-                                    <ListItemButton
-                                        role="menuitem"
-                                        component="a"
-                                        href="/profile-example"
-                                    >
-                                        profile-example
+                                        My profile
                                     </ListItemButton>
                                 </ListItem>
                                 <ListItem>
-                                    <ListItemButton component="a" href="/sign-in-example">
-                                        sign-in-example
-                                    </ListItemButton>
+                                    <ListItemButton>Create a new user</ListItemButton>
                                 </ListItem>
                                 <ListItem>
-                                    <ListItemButton component="a" href="/order-example">
-                                        order-example
-                                    </ListItemButton>
+                                    <ListItemButton>Roles & permission</ListItemButton>
                                 </ListItem>
                             </List>
                         </Toggler>
                     </ListItem>
-                    <ListSubheader sx={{ letterSpacing: '2px', fontWeight: '800' }}>
-                        Chatbot
-                    </ListSubheader>
-                    <Button component="a" href='/chat' startDecorator={<Add />} size="sm">新增聊天</Button>
-                    <ChatbotHistoryView />
                 </List>
+                <List
+                    size="sm"
+                    sx={{
+                        mt: 'auto',
+                        flexGrow: 0,
+                        '--ListItem-radius': (theme) => theme.vars.radius.sm,
+                        '--List-gap': '8px',
+                        mb: 2,
+                    }}
+                >
+                    <ListItem>
+                        <ListItemButton>
+                            <SupportRoundedIcon />
+                            Support
+                        </ListItemButton>
+                    </ListItem>
+                    <ListItem>
+                        <ListItemButton>
+                            <SettingsRoundedIcon />
+                            Settings
+                        </ListItemButton>
+                    </ListItem>
+                </List>
+                <Card
+                    invertedColors
+                    variant="soft"
+                    color="warning"
+                    size="sm"
+                    sx={{ boxShadow: 'none' }}
+                >
+                    <Stack direction="row" justifyContent="space-between" alignItems="center">
+                        <Typography level="title-sm">Used space</Typography>
+                        <IconButton size="sm">
+                            <CloseRoundedIcon />
+                        </IconButton>
+                    </Stack>
+                    <Typography level="body-xs">
+                        Your team has used 80% of your available space. Need more?
+                    </Typography>
+                    <LinearProgress variant="outlined" value={80} determinate sx={{ my: 1 }} />
+                    <Button size="sm" variant="solid">
+                        Upgrade plan
+                    </Button>
+                </Card>
             </Box>
             <Divider />
             <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
@@ -291,9 +299,12 @@ export default function Sidebar() {
                     src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=286"
                 />
                 <Box sx={{ minWidth: 0, flex: 1 }}>
-                    <Typography level="body-sm">{email}</Typography>
+                    <Typography level="title-sm">Siriwat K.</Typography>
+                    <Typography level="body-xs">siriwatk@test.com</Typography>
                 </Box>
-                <LogoutButton />
+                <IconButton size="sm" variant="plain" color="neutral">
+                    <LogoutRoundedIcon />
+                </IconButton>
             </Box>
         </Sheet>
     );
