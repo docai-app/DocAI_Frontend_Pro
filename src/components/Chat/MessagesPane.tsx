@@ -1,12 +1,17 @@
+import Api from '@/apis';
 import Box from '@mui/joy/Box';
 import Sheet from '@mui/joy/Sheet';
 import Stack from '@mui/joy/Stack';
+import useAxios from 'axios-hooks';
+import moment from 'moment';
 import * as React from 'react';
 import AvatarWithStatus from './AvatarWithStatus';
 import ChatBubble from './ChatBubble';
 import MessageInput from './MessageInput';
 import MessagesPaneHeader from './MessagesPaneHeader';
 import { ChatProps, MessageProps } from './types';
+
+const apiSetting = new Api();
 
 type MessagesPaneProps = {
     chat: ChatProps;
@@ -16,10 +21,108 @@ export default function MessagesPane(props: MessagesPaneProps) {
     const { chat } = props;
     const [chatMessages, setChatMessages] = React.useState(chat.messages);
     const [textAreaValue, setTextAreaValue] = React.useState('');
+    const [model, setModel] = React.useState<'none' | 'chart' | 'statistics'>('none')
 
     React.useEffect(() => {
         setChatMessages(chat.messages);
     }, [chat.messages]);
+
+
+    const [{ data: generateChartData, loading: generateChartLoading }, generateChart] = useAxios(
+        '',
+        { manual: true }
+    );
+
+    const [
+        { data: generateStatisticsData, loading: generateStatisticsLoading },
+        generateStatistics
+    ] = useAxios('', { manual: true });
+
+    const handleSendMessage = () => {
+        switch (model) {
+            case 'chart':
+                handlerGenerateChart('101324d3-5d70-4dc7-9028-b1e8fe7ba224', textAreaValue)
+                break;
+            case 'statistics':
+                handlerGenerateStatistics('101324d3-5d70-4dc7-9028-b1e8fe7ba224', textAreaValue)
+                break;
+            default:
+                break;
+        }
+    }
+
+    const addMessageToChat = (content: any, type?: string) => {
+        const newId = chatMessages.length + 1;
+        const newIdString = newId.toString();
+        setChatMessages((arr) => [
+            ...arr,
+            {
+                id: newIdString,
+                sender: { username: 'ai', name: 'ai', avatar: '', online: false },
+                content: content,
+                type: type || 'text',
+                timestamp: moment().format('MM-DD HH:mm'),
+            },
+        ]);
+    }
+
+
+    const handlerGenerateChart = async (smart_extraction_schema_id: string, query: string) => {
+        if (query) {
+            addMessageToChat('chart')
+            // setOpen(true);
+            // setModalDescription({
+            //     title: '進行中......',
+            //     content: '請耐心等候...'
+            // });
+            const res = await generateChart(
+                apiSetting.SmartExtractionSchemas.generateChart(smart_extraction_schema_id, query)
+            );
+            if (res.data.success) {
+                addMessageToChat(res.data.chart, 'chart')
+                // setVisibleHtmlCode(true);
+                // setChart(res.data.chart);
+                // setCurrentStoryboardItemId(res.data.item_id);
+            } else {
+                console.log(res.data);
+                // setAlert({ title: res.data.chart, type: 'error' });
+            }
+            // setOpen(false);
+        }
+    };
+
+
+    const handlerGenerateStatistics = async (smart_extraction_schema_id: string, query: string) => {
+        console.log('query', query);
+        console.log('smart_extraction_schema_id', smart_extraction_schema_id);
+
+        if (query) {
+
+            // setOpen(true);
+            // setModalDescription({
+            //     title: '進行中......',
+            //     content: '請耐心等候...'
+            // });
+            const res = await generateStatistics(
+                apiSetting.SmartExtractionSchemas.generateStatistics(
+                    smart_extraction_schema_id,
+                    query
+                )
+            );
+            if (res.data.success) {
+                addMessageToChat(res.data.report, 'text')
+                // setVisibleHtmlToPdf(true);
+                // setReport(res.data.report);
+                // setCurrentStoryboardItemId(res.data.item_id);
+            } else {
+                console.log(res.data);
+                // setAlert({ title: res.data.report, type: 'error' });
+            }
+            // setOpen(false);
+        }
+    };
+
+
 
     return (
         <Sheet
@@ -66,18 +169,25 @@ export default function MessagesPane(props: MessagesPaneProps) {
             <MessageInput
                 textAreaValue={textAreaValue}
                 setTextAreaValue={setTextAreaValue}
+                model={model}
+                setModel={setModel}
                 onSubmit={() => {
+
+                    console.log(model);
+
                     const newId = chatMessages.length + 1;
                     const newIdString = newId.toString();
-                    setChatMessages([
-                        ...chatMessages,
+                    setChatMessages((arr) => [
+                        ...arr,
                         {
                             id: newIdString,
                             sender: 'You',
+                            type: 'text',
                             content: textAreaValue,
-                            timestamp: 'Just now',
+                            timestamp: moment().fromNow(),
                         },
                     ]);
+                    handleSendMessage()
                 }}
             />
         </Sheet>

@@ -121,7 +121,8 @@ export const chats: ChatProps[] = [
                 id: '10',
                 timestamp: 'Today 2:20pm',
                 sender: users[0],
-                content: 'Hey Olivia, can you please review the latest design when you can?',
+                type: 'chart',
+                content: `<html> <head> <script src="https://code.highcharts.com/highcharts.js"></script> </head> <body> <div id="chart-container-1" style="width:100%; height:500px;"></div> <script> // Your provided data var data = [{'dataSchema': ['count'], 'data': [(0,)]}]; // Extract the count value from the provided data var counts = data[0].data.map(function(item) { return item[0]; }); // Initialize the Highcharts chart Highcharts.chart('chart-container-1', { chart: { type: 'column' // You can change the type to 'line', 'bar', etc. }, title: { text: 'Number of People on Leave' }, xAxis: { categories: ['Leave Count'] }, yAxis: { min: 0, title: { text: 'Number of People' } }, series: [{ name: 'People on Leave', data: counts }] }); </script> </body> </html>`,
             },
             {
                 id: '11',

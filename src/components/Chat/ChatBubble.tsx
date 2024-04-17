@@ -1,13 +1,16 @@
-import CelebrationOutlinedIcon from '@mui/icons-material/CelebrationOutlined';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import { getTransitionChartContent } from '@/utils/stringUtil';
 import InsertDriveFileRoundedIcon from '@mui/icons-material/InsertDriveFileRounded';
 import Avatar from '@mui/joy/Avatar';
 import Box from '@mui/joy/Box';
-import IconButton from '@mui/joy/IconButton';
 import Sheet from '@mui/joy/Sheet';
 import Stack from '@mui/joy/Stack';
 import Typography from '@mui/joy/Typography';
 import * as React from 'react';
+import ChartView from './messages/ChartView';
+import ContentView from './messages/ContentView';
+import ImageView from './messages/ImageView';
+import MarkmapView from './messages/MarkmapView';
+import PdfView from './messages/PdfView';
 import { MessageProps } from './types';
 
 type ChatBubbleProps = MessageProps & {
@@ -15,7 +18,7 @@ type ChatBubbleProps = MessageProps & {
 };
 
 export default function ChatBubble(props: ChatBubbleProps) {
-    const { content, variant, timestamp, attachment = undefined, sender } = props;
+    const { content, variant, timestamp, attachment = undefined, sender, type } = props;
     const isSent = variant === 'sent';
     const [isHovered, setIsHovered] = React.useState<boolean>(false);
     const [isLiked, setIsLiked] = React.useState<boolean>(false);
@@ -73,18 +76,18 @@ export default function ChatBubble(props: ChatBubbleProps) {
                                 : 'background.body',
                         }}
                     >
-                        <Typography
-                            level="body-sm"
-                            sx={{
-                                color: isSent
-                                    ? 'var(--joy-palette-common-white)'
-                                    : 'var(--joy-palette-text-primary)',
-                            }}
-                        >
-                            {content}
-                        </Typography>
+                        {(!type || type == 'text') && <ContentView content={content} isSent={isSent} />}
+                        {type == 'image' && <ImageView content={content} />}
+                        {type == 'pdf' && <PdfView content={content} />}
+                        {type == 'markdown' && <MarkmapView value={content} />}
+
+                        {type == 'chart' &&
+                            <ChartView content={getTransitionChartContent(
+                                content,
+                                0
+                            )} position={0} />}
                     </Sheet>
-                    {(isHovered || isLiked || isCelebrated) && (
+                    {/* {(isHovered || isLiked || isCelebrated) && (
                         <Stack
                             direction="row"
                             justifyContent={isSent ? 'flex-end' : 'flex-start'}
@@ -121,7 +124,7 @@ export default function ChatBubble(props: ChatBubbleProps) {
                                 {isCelebrated ? '🎉' : <CelebrationOutlinedIcon />}
                             </IconButton>
                         </Stack>
-                    )}
+                    )} */}
                 </Box>
             )}
         </Box>
