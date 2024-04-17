@@ -1,11 +1,7 @@
-import { Box, Breadcrumbs, Link, Typography } from '@mui/joy';
-import Tabs from '@mui/joy/Tabs';
-import TabList from '@mui/joy/TabList';
-import Tab, { tabClasses } from '@mui/joy/Tab';
-import TabPanel from '@mui/joy/TabPanel';
+import { Box, Typography } from '@mui/joy';
+import Button from '@mui/joy/Button';
 import Checkbox, { checkboxClasses } from '@mui/joy/Checkbox';
 import Input from '@mui/joy/Input';
-import Button from '@mui/joy/Button';
 import Textarea from '@mui/joy/Textarea';
 
 import _ from 'lodash';
@@ -14,10 +10,8 @@ import { useEffect, useState } from 'react';
 import EditSchemaDataModal from '../../../../../components/common/Widget/EditSchemaDataModal';
 import ExtractSchemaRow from '../../../../../components/document/extraction/ExtractSchemaRow';
 
-import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
-import ContrySelector from '@/components/CountrySelector';
 import DescriptionTwoToneIcon from '@mui/icons-material/DescriptionTwoTone';
-import CloseIcon from '@mui/icons-material/Close';
+import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 
 interface SchemaViewProps {
     label: any;

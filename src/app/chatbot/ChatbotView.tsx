@@ -1,6 +1,7 @@
 import ChatbotList from '@/components/Chatbot/ChatbotList';
 import ChatbotTable from '@/components/Chatbot/ChatbotTable';
 import ShareQRcodeModal from '@/components/Chatbot/feature/ShareQRcodeModal';
+import SearchInputView from '@/components/common/Views/SearchInputView';
 import AlertDialogModal from '@/components/common/Widget/AlertDialogModal';
 import AddIcon from '@mui/icons-material/Add';
 import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
@@ -30,9 +31,9 @@ function ChatbotView(props: ViewProps) {
         setVisibleQRcode
     } = props;
 
-    const router = useRouter()
-    const [visibleDelete, setVisibleDelete] = useState(false)
-    const [currectChabot, setCurrectChabot] = useState<Chatbot>()
+    const router = useRouter();
+    const [visibleDelete, setVisibleDelete] = useState(false);
+    const [currectChabot, setCurrectChabot] = useState<Chatbot>();
 
     return (
         <>
@@ -70,21 +71,29 @@ function ChatbotView(props: ViewProps) {
                     startDecorator={<AddIcon />}
                     size="sm"
                     onClick={() => {
-                        router.push('/chatbot/edit')
-                    }}>
+                        router.push('/chatbot/edit');
+                    }}
+                >
                     新增助手
                 </Button>
             </Box>
+            <SearchInputView handleSearch={undefined} />
             <ChatbotTable
                 chatbots={chatbots}
                 meta={meta}
-                handleDeleteChatbot={(chatbot: any) => { setCurrectChabot(chatbot); setVisibleDelete(true) }}
+                handleDeleteChatbot={(chatbot: any) => {
+                    setCurrectChabot(chatbot);
+                    setVisibleDelete(true);
+                }}
                 handleShare={handleShare}
             />
             <ChatbotList
                 chatbots={chatbots}
                 meta={meta}
-                handleDeleteChatbot={(chatbot: any) => { setCurrectChabot(chatbot); setVisibleDelete(true) }}
+                handleDeleteChatbot={(chatbot: any) => {
+                    setCurrectChabot(chatbot);
+                    setVisibleDelete(true);
+                }}
                 handleShare={handleShare}
             />
 
@@ -103,7 +112,7 @@ function ChatbotView(props: ViewProps) {
                 setVisible={setVisibleDelete}
                 content={`是否刪除 ${currectChabot?.name}?`}
                 confirm={() => {
-                    handleDeleteChatbot(currectChabot?.id)
+                    handleDeleteChatbot(currectChabot?.id);
                 }}
             />
         </>

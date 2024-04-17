@@ -14,22 +14,27 @@ export default function AlertDialogModal(props: any) {
             <Modal open={props?.visible || false} onClose={() => props?.setVisible(false)}>
                 <ModalDialog variant="outlined" role="alertdialog">
                     <DialogTitle>
-                        <WarningRoundedIcon color='warning' />
+                        <WarningRoundedIcon color="warning" />
                         Tip
                     </DialogTitle>
                     <Divider />
-                    <DialogContent>
-                        {props?.content}
-                    </DialogContent>
+                    <DialogContent>{props?.content}</DialogContent>
                     <DialogActions>
-                        <Button variant="solid" color="danger"
+                        <Button
+                            variant="solid"
+                            color="danger"
                             onClick={() => {
                                 props?.confirm();
-                                props?.setVisible(false)
-                            }}>
+                                props?.setVisible(false);
+                            }}
+                        >
                             Confirm
                         </Button>
-                        <Button variant="plain" color="neutral" onClick={() => props?.setVisible(false)}>
+                        <Button
+                            variant="plain"
+                            color="neutral"
+                            onClick={() => props?.setVisible(false)}
+                        >
                             Cancel
                         </Button>
                     </DialogActions>

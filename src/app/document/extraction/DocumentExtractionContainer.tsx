@@ -1,3 +1,5 @@
+'use client';
+
 import useAxios from 'axios-hooks';
 import _ from 'lodash';
 import { useRouter } from 'next/navigation';

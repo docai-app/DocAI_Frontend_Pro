@@ -7,16 +7,14 @@ import Box from '@mui/joy/Box';
 import Button from '@mui/joy/Button';
 import Checkbox from '@mui/joy/Checkbox';
 import CssBaseline from '@mui/joy/CssBaseline';
-import Divider from '@mui/joy/Divider';
 import FormControl from '@mui/joy/FormControl';
 import FormLabel from '@mui/joy/FormLabel';
 import GlobalStyles from '@mui/joy/GlobalStyles';
 import IconButton, { IconButtonProps } from '@mui/joy/IconButton';
 import Input from '@mui/joy/Input';
-import Link from '@mui/joy/Link';
 import Stack from '@mui/joy/Stack';
-import Typography from '@mui/joy/Typography';
 import { CssVarsProvider, useColorScheme } from '@mui/joy/styles';
+import Typography from '@mui/joy/Typography';
 import * as React from 'react';
 import { FormEventHandler } from 'react';
 
@@ -25,12 +23,12 @@ interface FormElements extends HTMLFormControlsCollection {
     password: HTMLInputElement;
     persistent: HTMLInputElement;
 }
-interface SignInFormElement extends HTMLFormElement {
-    readonly elements: FormElements;
-}
+
 interface ViewProps {
     data: any;
     handleSignIn: FormEventHandler;
+    signInLoading: boolean;
+    signInError: any;
 }
 
 function ColorSchemeToggle(props: IconButtonProps) {
@@ -58,7 +56,7 @@ function ColorSchemeToggle(props: IconButtonProps) {
 }
 
 export default function LoginView(props: ViewProps) {
-    const { handleSignIn } = props;
+    const { handleSignIn, signInLoading, signInError } = props;
     return (
         <CssVarsProvider defaultMode="dark" disableTransitionOnChange>
             <CssBaseline />
@@ -107,7 +105,7 @@ export default function LoginView(props: ViewProps) {
                             <IconButton variant="soft" color="primary" size="sm">
                                 <BadgeRoundedIcon />
                             </IconButton>
-                            <Typography level="title-lg">Company logo</Typography>
+                            <Typography level="title-lg">DocAI</Typography>
                         </Box>
                         <ColorSchemeToggle />
                     </Box>
@@ -142,19 +140,7 @@ export default function LoginView(props: ViewProps) {
                             </Stack>
                         </Stack>
                         <Stack gap={4} sx={{ mt: 2 }}>
-                            <form
-                                onSubmit={handleSignIn}
-                                // {(event: React.FormEvent<SignInFormElement>) => {
-                                //     event.preventDefault();
-                                //     const formElements = event.currentTarget.elements;
-                                //     const data = {
-                                //         email: formElements.email.value,
-                                //         password: formElements.password.value,
-                                //         persistent: formElements.persistent.checked
-                                //     };
-                                //     alert(JSON.stringify(data, null, 2));
-                                // }}
-                            >
+                            <form onSubmit={handleSignIn}>
                                 <FormControl required>
                                     <FormLabel>Email</FormLabel>
                                     <Input type="email" name="email" />
@@ -173,16 +159,26 @@ export default function LoginView(props: ViewProps) {
                                     >
                                         <Checkbox size="sm" label="Remember me" name="persistent" />
                                     </Box>
-                                    <Button type="submit" fullWidth>
-                                        Sign in
+                                    <Button
+                                        type="submit"
+                                        fullWidth
+                                        loading={signInLoading}
+                                        loadingIndicator="登入中…"
+                                    >
+                                        登入
                                     </Button>
                                 </Stack>
                             </form>
+                            {signInError && (
+                                <div className="flex flex-row gap-1 mt-2 text-red-500">
+                                    <div>帳戶或密碼錯誤</div>
+                                </div>
+                            )}
                         </Stack>
                     </Box>
                     <Box component="footer" sx={{ py: 3 }}>
                         <Typography level="body-xs" textAlign="center">
-                            © Your company {new Date().getFullYear()}
+                            © {new Date().getFullYear()} DocAI. All rights reserved.
                         </Typography>
                     </Box>
                 </Box>

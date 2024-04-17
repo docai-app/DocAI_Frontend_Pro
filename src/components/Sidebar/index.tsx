@@ -23,7 +23,6 @@ import * as React from 'react';
 import { useEffect } from 'react';
 
 import { closeSidebar } from '../../utils/utils';
-import ColorSchemeToggle from '../ColorSchemeToggle';
 import LogoutButton from '../common/Widget/buttons/LogoutButton';
 
 function Toggler({
@@ -59,7 +58,7 @@ function Toggler({
 }
 
 export default function Sidebar() {
-    const pathname = usePathname()
+    const pathname = usePathname();
     const [email, setEmail] = React.useState<string>('');
 
     useEffect(() => {
@@ -123,7 +122,7 @@ export default function Sidebar() {
                     <BrightnessAutoRoundedIcon />
                 </IconButton>
                 <Typography level="title-lg">DocAI</Typography>
-                <ColorSchemeToggle sx={{ ml: 'auto' }} />
+                {/* <ColorSchemeToggle sx={{ ml: 'auto' }} /> */}
             </Box>
             {/* <Input size="sm" startDecorator={<SearchRoundedIcon />} placeholder="Search" /> */}
             <Box
@@ -150,7 +149,8 @@ export default function Sidebar() {
                         <ListItemButton
                             selected={pathname == '/' || pathname == '/home'}
                             component="a"
-                            href='/'>
+                            href="/"
+                        >
                             <HomeRoundedIcon />
                             <ListItemContent>
                                 <Typography level="title-sm">Home</Typography>
@@ -159,7 +159,11 @@ export default function Sidebar() {
                     </ListItem>
 
                     <ListItem>
-                        <ListItemButton>
+                        <ListItemButton
+                            component="a"
+                            href="/search"
+                            selected={pathname.indexOf('/search') != -1}
+                        >
                             <SourceIcon />
                             <ListItemContent>
                                 <Typography level="title-sm">文件</Typography>
@@ -168,8 +172,11 @@ export default function Sidebar() {
                     </ListItem>
                     <ListItem>
                         <ListItemButton
-                            role="menuitem" component="a" href="/chatbot"
-                            selected={pathname.indexOf('/chatbot') != -1}>
+                            role="menuitem"
+                            component="a"
+                            href="/chatbot"
+                            selected={pathname.indexOf('/chatbot') != -1}
+                        >
                             <SmsIcon />
                             <ListItemContent>
                                 <Typography level="title-sm">助手</Typography>
@@ -180,7 +187,9 @@ export default function Sidebar() {
                     <ListItem>
                         <ListItemButton
                             selected={pathname.indexOf('/shop') != -1}
-                            component="a" href="/shop">
+                            component="a"
+                            href="/shop"
+                        >
                             <ShoppingCartRoundedIcon />
                             <ListItemContent>
                                 <Typography level="title-sm">商城</Typography>
@@ -192,11 +201,12 @@ export default function Sidebar() {
                         <ListItemButton
                             role="menuitem"
                             component="a"
-                            href="/joy-ui/getting-started/templates/messages/"
+                            href="/project"
+                            selected={pathname.indexOf('/project') != -1}
                         >
                             <QuestionAnswerRoundedIcon />
                             <ListItemContent>
-                                <Typography level="title-sm">Messages</Typography>
+                                <Typography level="title-sm">待辦事項與工作流</Typography>
                             </ListItemContent>
                             <Chip size="sm" color="primary" variant="solid">
                                 4

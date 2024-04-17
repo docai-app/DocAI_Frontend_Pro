@@ -94,7 +94,7 @@ export default function ExtractionDetailContainer() {
         }
     }, [getTagByIdData]);
 
-    useEffect(() => { }, []);
+    useEffect(() => {}, []);
 
     const updateTagFeatureHandler = useCallback(
         async (tag_id: string, chain_feature_ids: []) => {

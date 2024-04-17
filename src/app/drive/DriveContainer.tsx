@@ -211,7 +211,7 @@ function DriveContainer() {
             a.href = dataURL;
             a.download = 'documents.zip';
             a.click();
-        } catch { }
+        } catch {}
     }, [folders_items, documents_items]);
 
     const confirmDocumentFormik = useFormik({
@@ -322,13 +322,16 @@ function DriveContainer() {
             setAlert({ title: '起始日期不能大於結束日期', type: 'info' });
             return;
         }
-        window.history.pushState(null, '/search',
+        window.history.pushState(
+            null,
+            '/search',
             `?content=${content}&
             tag_id=${tag_id}&
             from=${startDate}&
             to=${endDate}&
             label=${tag_name}
-            `);
+            `
+        );
     };
 
     useEffect(() => {

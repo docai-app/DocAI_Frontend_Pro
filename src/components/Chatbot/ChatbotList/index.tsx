@@ -45,7 +45,9 @@ export default function ChatbotList(props: ViewProps) {
                         >
                             <ListItemContent sx={{ display: 'flex', gap: 2, alignItems: 'start' }}>
                                 <ListItemDecorator>
-                                    <Avatar size="sm">{listItem.chatbot.name.substring(0, 1)}</Avatar>
+                                    <Avatar size="sm">
+                                        {listItem.chatbot.name.substring(0, 1)}
+                                    </Avatar>
                                 </ListItemDecorator>
                                 <div>
                                     <Typography fontWeight={600} gutterBottom>
@@ -54,10 +56,13 @@ export default function ChatbotList(props: ViewProps) {
                                             sx={{
                                                 fontWeight: 'bold',
                                                 color: 'black'
-                                            }}>
-                                            <Typography onClick={() => {
-                                                handleShare(listItem.chatbot, true);
-                                            }}>
+                                            }}
+                                        >
+                                            <Typography
+                                                onClick={() => {
+                                                    handleShare(listItem.chatbot, true);
+                                                }}
+                                            >
                                                 {listItem.chatbot.name}
                                             </Typography>
                                         </Link>
@@ -80,13 +85,22 @@ export default function ChatbotList(props: ViewProps) {
                                             )}
                                         </Typography>
                                     </Box>
-                                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
+                                    <Box
+                                        sx={{
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            gap: 1,
+                                            mb: 1
+                                        }}
+                                    >
                                         <Dropdowns
                                             share={() => {
                                                 handleShare(listItem.chatbot);
                                             }}
                                             edit={() => {
-                                                router.push(`/chatbot/edit?id=${listItem.chatbot?.id}`);
+                                                router.push(
+                                                    `/chatbot/edit?id=${listItem.chatbot?.id}`
+                                                );
                                             }}
                                             editQuesion={() => {
                                                 router.push(
@@ -110,9 +124,7 @@ export default function ChatbotList(props: ViewProps) {
                 >
                     <PaginationView meta={meta} pathname={'/chatbot'} params={null} />
                 </Box>
-
             </Box>
-
         </>
     );
 }

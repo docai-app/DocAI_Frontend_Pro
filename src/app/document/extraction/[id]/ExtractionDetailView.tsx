@@ -1,11 +1,11 @@
-import { Box, Breadcrumbs, Link, Typography } from '@mui/joy';
-import Tabs from '@mui/joy/Tabs';
-import TabList from '@mui/joy/TabList';
-import Tab, { tabClasses } from '@mui/joy/Tab';
-import TabPanel from '@mui/joy/TabPanel';
+import { Box, Typography } from '@mui/joy';
+import Button from '@mui/joy/Button';
 import Checkbox from '@mui/joy/Checkbox';
 import Input from '@mui/joy/Input';
-import Button from '@mui/joy/Button';
+import Tab, { tabClasses } from '@mui/joy/Tab';
+import TabList from '@mui/joy/TabList';
+import TabPanel from '@mui/joy/TabPanel';
+import Tabs from '@mui/joy/Tabs';
 
 import _ from 'lodash';
 import { useRouter } from 'next/navigation';
@@ -15,7 +15,6 @@ import ChainFeatureList from '../../../../components/document/extraction/ChainFe
 import SchemaList from '../../../../components/document/extraction/SchemasList';
 
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
-import ContrySelector from '@/components/CountrySelector';
 
 interface ExtractionDetailViewProps {
     open: boolean;

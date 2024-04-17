@@ -1,11 +1,12 @@
 'use client';
 
 import useAlert from '@/hooks/useAlert';
-import React, { FormEventHandler, useCallback, useEffect } from 'react';
-import { useRouter, usePathname } from 'next/navigation';
+import axios from 'axios';
 import useAxios from 'axios-hooks';
-import LoginView from './LoginView';
+import { usePathname, useRouter } from 'next/navigation';
+import React, { FormEventHandler, useCallback, useEffect } from 'react';
 import Api from '../../apis';
+import LoginView from './LoginView';
 
 const apiSetting = new Api();
 
@@ -33,7 +34,7 @@ function LoginContainer() {
             const email = formData.get('email') as string;
             const password = formData.get('password') as string;
             const remember = formData.get('persistent');
-
+            axios.defaults.headers.common['authorization'] = '';
             const res = await signIn(apiSetting.Authorization.signIn(email, password));
             if (res.data.success) {
                 const token = res.headers.authorization;
@@ -45,7 +46,7 @@ function LoginContainer() {
                 } else {
                     document.cookie = `authorization=${escape(token)}`;
                 }
-                if (pathname === '/login') router.push('/home');
+                if (pathname === '/login') router.push('/');
                 else router.refresh();
             } else {
                 localStorage.removeItem('authorization');
@@ -59,7 +60,9 @@ function LoginContainer() {
         <LoginView
             {...{
                 data,
-                handleSignIn
+                handleSignIn,
+                signInLoading,
+                signInError
             }}
         />
     );

@@ -1,5 +1,5 @@
 // components/feature/classification/AmendLabel.tsx
-import { Box, Breadcrumbs, Link, Typography } from '@mui/joy';
+import { Box } from '@mui/joy';
 import Modal from '@mui/joy/Modal';
 import ModalDialog from '@mui/joy/ModalDialog';
 import DialogTitle from '@mui/joy/DialogTitle';
@@ -12,7 +12,7 @@ import Checkbox, { checkboxClasses } from '@mui/joy/Checkbox';
 import { Dialog, Transition } from '@headlessui/react';
 import { PencilSquareIcon } from '@heroicons/react/20/solid';
 import _ from 'lodash';
-import React, { Fragment, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 
 interface EditLabelProps {
     open: boolean;

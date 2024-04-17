@@ -1,15 +1,9 @@
 'use client';
 
 import Box from '@mui/joy/Box';
-import Button from '@mui/joy/Button';
-import Divider from '@mui/joy/Divider';
 import FormControl from '@mui/joy/FormControl';
 import FormLabel from '@mui/joy/FormLabel';
-import IconButton, { iconButtonClasses } from '@mui/joy/IconButton';
-import Input from '@mui/joy/Input';
-import Modal from '@mui/joy/Modal';
-import ModalClose from '@mui/joy/ModalClose';
-import ModalDialog from '@mui/joy/ModalDialog';
+import { iconButtonClasses } from '@mui/joy/IconButton';
 import Option from '@mui/joy/Option';
 import Select from '@mui/joy/Select';
 import Sheet from '@mui/joy/Sheet';
@@ -19,8 +13,6 @@ import * as React from 'react';
 import { Chatbots } from '@/app/chatbot/ChatbotContainer';
 import PaginationView from '@/components/common/Widget/PaginationView';
 import { Chatbot_Features } from '@/utils/constant';
-import FilterAltIcon from '@mui/icons-material/FilterAlt';
-import SearchIcon from '@mui/icons-material/Search';
 import Avatar from '@mui/joy/Avatar';
 import Link from '@mui/joy/Link';
 import List from '@mui/joy/List';
@@ -68,63 +60,6 @@ export default function ChatbotTable(props: ViewProps) {
     };
     return (
         <React.Fragment>
-            <Sheet
-                className="SearchAndFilters-mobile"
-                sx={{
-                    display: { xs: 'flex', sm: 'none' },
-                    my: 1,
-                    gap: 1
-                }}
-            >
-                <Input
-                    size="sm"
-                    placeholder="Search"
-                    startDecorator={<SearchIcon />}
-                    sx={{ flexGrow: 1 }}
-                />
-                <IconButton
-                    size="sm"
-                    variant="outlined"
-                    color="neutral"
-                    onClick={() => setOpen(true)}
-                >
-                    <FilterAltIcon />
-                </IconButton>
-                <Modal open={open} onClose={() => setOpen(false)}>
-                    <ModalDialog aria-labelledby="filter-modal" layout="fullscreen">
-                        <ModalClose />
-                        <Typography id="filter-modal" level="h2">
-                            Filters
-                        </Typography>
-                        <Divider sx={{ my: 2 }} />
-                        <Sheet sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-                            {renderFilters()}
-                            <Button color="primary" onClick={() => setOpen(false)}>
-                                Submit
-                            </Button>
-                        </Sheet>
-                    </ModalDialog>
-                </Modal>
-            </Sheet>
-            <Box
-                className="SearchAndFilters-tabletUp"
-                sx={{
-                    borderRadius: 'sm',
-                    py: 2,
-                    display: { xs: 'none', sm: 'flex' },
-                    flexWrap: 'wrap',
-                    gap: 1.5,
-                    '& > *': {
-                        minWidth: { xs: '120px', md: '160px' }
-                    }
-                }}
-            >
-                <FormControl sx={{ flex: 1 }} size="sm">
-                    <FormLabel>Search for assistant</FormLabel>
-                    <Input size="sm" placeholder="Search" startDecorator={<SearchIcon />} />
-                </FormControl>
-                {/* {renderFilters()} */}
-            </Box>
             <Sheet
                 className="OrderTableContainer"
                 variant="outlined"
@@ -178,9 +113,11 @@ export default function ChatbotTable(props: ViewProps) {
                                                             color: 'black'
                                                         }}
                                                     >
-                                                        <Typography onClick={() => {
-                                                            handleShare(row.chatbot, true);
-                                                        }}>
+                                                        <Typography
+                                                            onClick={() => {
+                                                                handleShare(row.chatbot, true);
+                                                            }}
+                                                        >
                                                             {row.chatbot.name}
                                                         </Typography>
                                                     </Link>

@@ -12,12 +12,7 @@ interface ViewProps {
     handleUpdate: any;
 }
 export default function AssistiveQuestionView(props: ViewProps) {
-    const {
-        chatbot,
-        assistive_questions,
-        set_assistive_questions,
-        handleUpdate
-    } = props;
+    const { chatbot, assistive_questions, set_assistive_questions, handleUpdate } = props;
 
     const router = useRouter();
 
@@ -78,13 +73,13 @@ export default function AssistiveQuestionView(props: ViewProps) {
                     startDecorator={<SaveIcon />}
                     size="sm"
                     onClick={() => {
-                        handleUpdate()
-                    }}>
+                        handleUpdate();
+                    }}
+                >
                     保存
                 </Button>
             </Box>
-            <div  >
-
+            <div>
                 <div className="col-span-full">
                     <div className="flex flex-row justify-between items-center">
                         <label className="block text-sm font-medium leading-6 text-gray-900">

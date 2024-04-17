@@ -35,10 +35,14 @@ export default function Dropdowns(props: DropdownsProps) {
                     <EditIcon />
                     編輯資料
                 </MenuItem>
-                <MenuItem onClick={editQuesion}><EditIcon />編輯輔助問題</MenuItem>
+                <MenuItem onClick={editQuesion}>
+                    <EditIcon />
+                    編輯輔助問題
+                </MenuItem>
                 <Divider />
                 <MenuItem color="danger" onClick={remove}>
-                    <DeleteIcon />刪除
+                    <DeleteIcon />
+                    刪除
                 </MenuItem>
             </Menu>
         </Dropdown>

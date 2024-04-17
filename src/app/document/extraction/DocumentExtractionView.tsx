@@ -1,7 +1,7 @@
 import { PaperAirplaneIcon } from '@heroicons/react/20/solid';
 import { useState } from 'react';
 import SingleActionModel from '../../../components/common/Widget/SingleActionModel';
-import DocumentExtractionRow from '../../../components/document/extraction/DocumentExtractionRow';
+// import DocumentExtractionRow from '../../../components/document/extraction/DocumentExtractionRow';
 
 interface DocumentExtractionViewProps {
     open: boolean;
@@ -52,7 +52,7 @@ function DocumentExtractionView(props: DocumentExtractionViewProps) {
                         </div>
                     </div>
                     <div className="flex float-row flex-wrap">
-                        {labels?.map((label, index) => {
+                        {/* {labels?.map((label, index) => {
                             return (
                                 <DocumentExtractionRow
                                     key={index}
@@ -63,7 +63,7 @@ function DocumentExtractionView(props: DocumentExtractionViewProps) {
                                     chain_features={chain_features}
                                 />
                             );
-                        })}
+                        })} */}
                     </div>
                 </div>
             </div>
