@@ -1,6 +1,10 @@
 import { Box, Breadcrumbs, Link, Typography, Chip } from '@mui/joy';
+import Tab, { tabClasses } from '@mui/joy/Tab';
+import TabList from '@mui/joy/TabList';
+import TabPanel from '@mui/joy/TabPanel';
+import Tabs from '@mui/joy/Tabs';
 import { PlusIcon } from '@heroicons/react/24/outline';
-import Router, { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { Folder } from '../../components/common/Widget/FolderTree';
 // import HeaderBreadCrumb from '../../components/common/Widget/HeaderBreadCrumb';
@@ -9,6 +13,10 @@ import PaginationView from '../../components/common/Widget/PaginationView';
 import ProjectItem from '../../components/project/ProjectItem';
 import StepsListView from '../../components/project/step/StepsListView';
 import EditTaskModal from '../../components/project/task/EditTaskModal';
+
+import Button from '@mui/joy/Button';
+
+import Add from '@mui/icons-material/Add';
 
 interface ProjectViewProps {
     id: string | string[] | null | undefined;
@@ -100,52 +108,89 @@ function ProjectView(props: ProjectViewProps) {
 
     return (
         <>
-            <div className="max-w-7xl mx-auto h-[calc(100vh-18.5rem)] px-4 py-4 sm:px-6 lg:px-8">
-                <Typography level="h2" component="h1">待辦事項與工作流</Typography>
-                <div className="mt-4 pb-4">
-                    <div className="flex flex-row justify-between items-center  py-2">
-                        <ul className="flex flex-row -my-px">
-                            <li
-                                onClick={() => setCurrentTypeTab('tasks')}
-                                className={`p-4 cursor-pointer ${currentTypeTab === 'tasks'
-                                        ? 'text-indigo-700 border-b-2 border-indigo-700'
-                                        : 'text-gray-400'
-                                    } font-bold text-sm`}
+            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                <Box
+                    component="main"
+                    className="MainContent"
+                    sx={{
+                        px: { xs: 2, md: 6 },
+                        pt: {
+                            xs: 'calc(12px + var(--Header-height))',
+                            sm: 'calc(12px + var(--Header-height))',
+                            md: 3
+                        },
+                        pb: { xs: 2, sm: 2, md: 3 },
+                        flex: 1,
+                        display: 'flex',
+                        flexDirection: 'column',
+                        minWidth: 0,
+                        gap: 1
+                    }}
+                >
+                    <Box
+                        sx={{
+                            display: 'flex',
+                            mb: 1,
+                            gap: 1,
+                            flexDirection: { xs: 'column', sm: 'row' },
+                            alignItems: { xs: 'start', sm: 'center' },
+                            flexWrap: 'wrap',
+                            justifyContent: 'center'
+                        }}
+                    >
+                        <Typography level="h2" component="h1">待辦事項與工作流</Typography>
+                    </Box>
+
+                    <Tabs defaultValue="tasks"
+                        sx={{ bgcolor: 'transparent' }}
+                    >
+                        <TabList underlinePlacement="bottom" size="sm"
+                            sx={{
+                                display: 'flex',
+                                pl: { xs: 0, md: 4 },
+                                justifyContent: 'space-between',
+                                [`&& .${tabClasses.root}`]: {
+                                    fontWeight: '600',
+                                    flex: 'initial',
+                                    color: 'text.tertiary',
+                                    [`&.${tabClasses.selected}`]: {
+                                        bgcolor: 'transparent',
+                                        color: 'text.primary',
+                                        '&::after': {
+                                            height: '2px',
+                                            bgcolor: 'primary.500'
+                                        }
+                                    }
+                                }
+                            }}>
+                            <Box>
+                                <Link underline="none" onClick={() => setCurrentTypeTab('tasks')}>
+                                    <Tab value="tasks" indicatorPlacement="bottom"
+                                        sx={{ borderRadius: '6px 6px 0 0' }}>
+                                        待辦事項
+                                    </Tab>
+                                </Link>
+                                <Link underline="none" onClick={() => setCurrentTypeTab('project_workflow')}>
+                                    <Tab value="project_workflow" indicatorPlacement="bottom"
+                                        sx={{ borderRadius: '6px 6px 0 0' }}>
+                                        工作流
+                                    </Tab>
+                                </Link>
+
+                            </Box>
+
+                            {currentTypeTab == 'tasks' ? (<Button size='sm'
+                                color="primary"
+                                variant="plain"
+                                startDecorator={<Add />}
+                                onClick={() => { handleClickAdd(); }}
                             >
-                                待辦事項
-                            </li>
-                            <li
-                                onClick={() => setCurrentTypeTab('project_workflow')}
-                                className={`p-4 cursor-pointer ${currentTypeTab === 'project_workflow'
-                                        ? 'text-indigo-700 border-b-2 border-indigo-700'
-                                        : 'text-gray-400'
-                                    } font-bold text-sm`}
-                            >
-                                工作流
-                            </li>
-                        </ul>
-                        {currentTypeTab == 'tasks' && (
-                            <button
-                                type="button"
-                                className="relative inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                                onClick={() => {
-                                    handleClickAdd();
-                                }}
-                            >
-                                <PlusIcon className="h-4" />
-                                <span>新增</span>
-                            </button>
-                        )}
-                    </div>
-                    <div className="my-2 hidden">
-                        <MyDateDropdown
-                            value={status}
-                            datas={statusDatas}
-                            onSwitch={onSwitchStatus}
-                        />
-                    </div>
-                    {currentTypeTab == 'tasks' && (
-                        <div className="mt-0 rounded-lg">
+                                新增
+                            </Button>)
+                                :
+                                <span></span>}
+                        </TabList>
+                        <TabPanel value="tasks">
                             <StepsListView
                                 tasks={tasks}
                                 setTasks={setTasks}
@@ -155,39 +200,105 @@ function ProjectView(props: ProjectViewProps) {
                                 chain_features={chain_features}
                             />
                             <PaginationView meta={metaSteps} pathname={'/project'} params={null} />
-                        </div>
-                    )}
-                    {currentTypeTab == 'project_workflow' && (
-                        <div>
+
+                        </TabPanel>
+                        <TabPanel value="project_workflow">
                             <ProjectItem
                                 projects={projects}
                                 setVisiable={setVisiable}
                                 setProject={setProject}
                                 meta={meta}
                             />
-                        </div>
-                    )}
-                </div>
-            </div>
+                        </TabPanel>
+                    </Tabs>
 
-            <EditTaskModal
-                title={currentTask ? '編輯任務' : '新增任務'}
-                users={users}
-                chain_features={chain_features}
-                visable={mode != ''}
-                task={currentTask}
-                cancelClick={() => {
-                    setMode('');
-                    setCurrentTask(null);
-                }}
-                confirmClick={(data: never) => {
-                    setMode('');
-                    setCurrentTask(null);
-                    addProjectStepHandler(data);
-                }}
-            />
 
-            {/* <FolderTreeForSelect
+                    {/* <div className="mt-4 pb-4">
+                            <div className="flex flex-row justify-between items-center  py-2">
+                                <ul className="flex flex-row -my-px">
+                                    <li
+                                        onClick={() => setCurrentTypeTab('tasks')}
+                                        className={`p-4 cursor-pointer ${currentTypeTab === 'tasks'
+                                            ? 'text-indigo-700 border-b-2 border-indigo-700'
+                                            : 'text-gray-400'
+                                            } font-bold text-sm`}
+                                    >
+                                        待辦事項
+                                    </li>
+                                    <li
+                                        onClick={() => setCurrentTypeTab('project_workflow')}
+                                        className={`p-4 cursor-pointer ${currentTypeTab === 'project_workflow'
+                                            ? 'text-indigo-700 border-b-2 border-indigo-700'
+                                            : 'text-gray-400'
+                                            } font-bold text-sm`}
+                                    >
+                                        工作流
+                                    </li>
+                                </ul>
+                                {currentTypeTab == 'tasks' && (
+                                    <button
+                                        type="button"
+                                        className="relative inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                        onClick={() => {
+                                            handleClickAdd();
+                                        }}
+                                    >
+                                        <PlusIcon className="h-4" />
+                                        <span>新增</span>
+                                    </button>
+                                )}
+                            </div>
+                            <div className="my-2 hidden">
+                                <MyDateDropdown
+                                    value={status}
+                                    datas={statusDatas}
+                                    onSwitch={onSwitchStatus}
+                                />
+                            </div>
+                            {currentTypeTab == 'tasks' && (
+                                <div className="mt-0 rounded-lg">
+                                    <StepsListView
+                                        tasks={tasks}
+                                        setTasks={setTasks}
+                                        users={users}
+                                        showArrow={false}
+                                        showProjectName={true}
+                                        chain_features={chain_features}
+                                    />
+                                    <PaginationView meta={metaSteps} pathname={'/project'} params={null} />
+                                </div>
+                            )}
+                            {currentTypeTab == 'project_workflow' && (
+                                <div>
+                                    <ProjectItem
+                                        projects={projects}
+                                        setVisiable={setVisiable}
+                                        setProject={setProject}
+                                        meta={meta}
+                                    />
+                                </div>
+                            )}
+                        </div>*/}
+
+
+                    <EditTaskModal
+                        title={currentTask ? '編輯任務' : '新增任務'}
+                        users={users}
+                        chain_features={chain_features}
+                        visable={mode != ''}
+                        task={currentTask}
+                        cancelClick={() => {
+                            setMode('');
+                            setCurrentTask(null);
+                        }}
+                        confirmClick={(data: never) => {
+                            setMode('');
+                            setCurrentTask(null);
+                            addProjectStepHandler(data);
+                        }}
+                    />
+
+                    {/* <FolderTreeForSelect
                 {...{
                     mode,
                     setMode,
@@ -196,6 +307,8 @@ function ProjectView(props: ProjectViewProps) {
                     targetId: ''
                 }}
             /> */}
+                </Box>
+            </Box>
         </>
     );
 }
