@@ -27,6 +27,12 @@ export default function MessagesPane(props: MessagesPaneProps) {
         setChatMessages(chat.messages);
     }, [chat.messages]);
 
+    const [{ data: getDocAiLLMData, loading: loading }, getDocAiLLM] = useAxios(
+        apiSetting.Prompt.doc_ai_llm(''),
+        {
+            manual: true
+        }
+    );
 
     const [{ data: generateChartData, loading: generateChartLoading }, generateChart] = useAxios(
         '',
@@ -47,6 +53,7 @@ export default function MessagesPane(props: MessagesPaneProps) {
                 handlerGenerateStatistics('101324d3-5d70-4dc7-9028-b1e8fe7ba224', textAreaValue)
                 break;
             default:
+                handleGeneralMessage(textAreaValue)
                 break;
         }
     }
@@ -66,10 +73,20 @@ export default function MessagesPane(props: MessagesPaneProps) {
         ]);
     }
 
+    const handleGeneralMessage = async (prompt: string) => {
+        if (prompt) {
+            const res = await getDocAiLLM(
+                apiSetting.Prompt.doc_ai_llm(prompt)
+            );
+            if (res.data.success) {
+                addMessageToChat(res.data.data.raw_response)
+            }
+        }
+    }
 
     const handlerGenerateChart = async (smart_extraction_schema_id: string, query: string) => {
         if (query) {
-            addMessageToChat('chart')
+
             // setOpen(true);
             // setModalDescription({
             //     title: '進行中......',
