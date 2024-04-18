@@ -1,6 +1,6 @@
 import useAxios from 'axios-hooks';
 import _ from 'lodash';
-import { useRouter } from 'next/router';
+import { useRouter, useParams } from 'next/navigation';
 import { useCallback, useEffect, useState } from 'react';
 import Api from '../../../apis';
 import TaskView from './TaskView';
@@ -9,6 +9,7 @@ const apiSetting = new Api();
 
 export default function TaskContainer() {
     const router = useRouter();
+    const { id } = useParams();
     const [project, setProject] = useState<any>();
     const [tasks, setTasks] = useState<any>([]);
     const [documentPath, setDocumentPath] = useState<{ id: string | null; name: string }[]>([
@@ -18,7 +19,7 @@ export default function TaskContainer() {
     const [
         { data: showProjectByIdData, loading: showProjectByIdLoading, error: showrojectByIdError },
         showProjectById
-    ] = useAxios(apiSetting.Project.getProjectById(router.query.id + ''), { manual: false });
+    ] = useAxios(apiSetting.Project.getProjectById(id + ''), { manual: false });
 
     const [
         {
@@ -27,7 +28,7 @@ export default function TaskContainer() {
             error: showProjectTaskByIdError
         },
         showProjectTaskById
-    ] = useAxios(apiSetting.Project.getProjectTasksById(router.query.id + ''), { manual: false });
+    ] = useAxios(apiSetting.Project.getProjectTasksById(id + ''), { manual: false });
 
     const [
         { data: addNewTaskData, loading: addNewTaskLoading, error: addNewTaskError },
@@ -52,7 +53,7 @@ export default function TaskContainer() {
 
             addNewTask({
                 data: {
-                    project_id: router.query.id,
+                    project_id: id,
                     title: title,
                     description: description,
                     deadline_at: deadline_at
