@@ -1,12 +1,13 @@
+import { ChatProps, MessageProps, UserProps } from '@/utils/types';
 import Box from '@mui/joy/Box';
 import ListDivider from '@mui/joy/ListDivider';
 import ListItem from '@mui/joy/ListItem';
 import ListItemButton, { ListItemButtonProps } from '@mui/joy/ListItemButton';
 import Stack from '@mui/joy/Stack';
 import Typography from '@mui/joy/Typography';
+import moment from 'moment';
 import * as React from 'react';
 import AvatarWithStatus from './AvatarWithStatus';
-import { ChatProps, MessageProps, UserProps } from './types';
 import { toggleMessagesPane } from './utils';
 
 type ChatListItemProps = ListItemButtonProps & {
@@ -42,21 +43,22 @@ export default function ChatListItem(props: ChatListItemProps) {
                         <Box sx={{ flex: 1 }}>
                             <Typography level="title-sm">{sender.name}</Typography>
                             <Typography level="body-sm">{sender.username}</Typography>
-                        </Box>
-                        <Box
-                            sx={{
-                                lineHeight: 1.5,
-                                textAlign: 'right'
-                            }}
-                        >
-                            <Typography
-                                level="body-xs"
-                                display={{ xs: 'none', md: 'block' }}
-                                noWrap
+                            <Box
+                                sx={{
+                                    lineHeight: 1.5,
+                                    textAlign: 'left'
+                                }}
                             >
-                                5 mins ago
-                            </Typography>
+                                <Typography
+                                    level="body-xs"
+                                    display={{ xs: 'none', md: 'block' }}
+                                    noWrap
+                                >
+                                    {moment(messages.length > 0 && messages[messages.length - 1] && messages[messages.length - 1].created_at || moment()).fromNow()}
+                                </Typography>
+                            </Box>
                         </Box>
+
                     </Stack>
                     <Typography
                         level="body-sm"
@@ -68,7 +70,7 @@ export default function ChatListItem(props: ChatListItemProps) {
                             textOverflow: 'ellipsis'
                         }}
                     >
-                        {messages[0].content}
+                        {messages.length > 0 && messages[messages.length - 1] && messages[messages.length - 1].content || ''}
                     </Typography>
                 </ListItemButton>
             </ListItem>

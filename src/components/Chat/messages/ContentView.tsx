@@ -1,5 +1,4 @@
-import { Typography } from '@mui/joy';
-import { useState } from 'react';
+import { Box, Typography } from '@mui/joy';
 
 interface ViewProps {
     content: string;
@@ -8,22 +7,22 @@ interface ViewProps {
 
 export default function ContentView(props: ViewProps) {
     const { content, isSent } = props;
-    const [showMore, setShowMore] = useState(false);
-
     return (
         <>
-            <Typography
-                level="body-sm"
-                sx={{
-                    color: isSent
-                        ? 'var(--joy-palette-common-white)'
-                        : 'var(--joy-palette-text-primary)'
-                }}
+            <Box
             >
                 {content.split('\n').map((item: string, index: number) => (
-                    <p key={index}>{item}</p>
+                    <Typography
+                        key={index}
+                        sx={{
+                            color: isSent
+                                ? 'var(--joy-palette-common-white)'
+                                : 'var(--joy-palette-text-primary)'
+                        }}>
+                        {item}
+                    </Typography>
                 ))}
-            </Typography>
+            </Box>
         </>
     );
 }

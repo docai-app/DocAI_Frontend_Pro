@@ -1,12 +1,12 @@
+import { ChatProps } from '@/utils/types';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import NotInterestedIcon from '@mui/icons-material/NotInterested';
-import { Chip, IconButton } from '@mui/joy';
+import { IconButton } from '@mui/joy';
 import List from '@mui/joy/List';
 import Sheet from '@mui/joy/Sheet';
 import Stack from '@mui/joy/Stack';
 import Typography from '@mui/joy/Typography';
 import ChatListItem from './ChatListItem';
-import { ChatProps } from './types';
 import { toggleMessagesPane } from './utils';
 
 type ChatsPaneProps = {
@@ -38,16 +38,16 @@ export default function ChatsPane(props: ChatsPaneProps) {
                     fontSize={{ xs: 'md', md: 'lg' }}
                     component="h1"
                     fontWeight="lg"
-                    endDecorator={
-                        <Chip
-                            variant="soft"
-                            color="primary"
-                            size="md"
-                            slotProps={{ root: { component: 'span' } }}
-                        >
-                            4
-                        </Chip>
-                    }
+                    // endDecorator={
+                    //     <Chip
+                    //         variant="soft"
+                    //         color="primary"
+                    //         size="md" 
+                    //         slotProps={{ root: { component: 'span' } }}
+                    //     >
+                    //         {chats?.length}
+                    //     </Chip>
+                    // }
                     sx={{ mr: 'auto' }}
                 >
                     Messages
@@ -81,7 +81,7 @@ export default function ChatsPane(props: ChatsPaneProps) {
                     '--ListItem-paddingX': '1rem'
                 }}
             >
-                {chats.map((chat) => (
+                {chats?.map((chat) => (
                     <ChatListItem
                         key={chat.id}
                         {...chat}

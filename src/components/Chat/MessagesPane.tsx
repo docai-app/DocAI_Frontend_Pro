@@ -1,31 +1,57 @@
 import Api from '@/apis';
+import useAlert from '@/hooks/useAlert';
+import { ChatProps, MessageProps } from '@/utils/types';
 import Box from '@mui/joy/Box';
 import Sheet from '@mui/joy/Sheet';
 import Stack from '@mui/joy/Stack';
 import useAxios from 'axios-hooks';
+import _ from 'lodash';
 import moment from 'moment';
 import * as React from 'react';
+import { v4 } from "uuid";
 import AvatarWithStatus from './AvatarWithStatus';
 import ChatBubble from './ChatBubble';
 import MessageInput from './MessageInput';
 import MessagesPaneHeader from './MessagesPaneHeader';
-import { ChatProps, MessageProps } from './types';
-
 const apiSetting = new Api();
 
 type MessagesPaneProps = {
-    chat: ChatProps;
+    chat: ChatProps | undefined;
+    getAllLabelsData: any;
+    getAllSchemasData: any;
 };
 
 export default function MessagesPane(props: MessagesPaneProps) {
-    const { chat } = props;
-    const [chatMessages, setChatMessages] = React.useState(chat.messages);
+    const {
+        chat,
+        getAllLabelsData,
+        getAllSchemasData
+    } = props;
+    const { setAlert } = useAlert()
+    const [chatMessages, setChatMessages] = React.useState<MessageProps[]>([]);
     const [textAreaValue, setTextAreaValue] = React.useState('');
     const [model, setModel] = React.useState<'none' | 'chart' | 'statistics'>('none');
 
     React.useEffect(() => {
-        setChatMessages(chat.messages);
-    }, [chat.messages]);
+        if (chat) {
+            const tmp = window.localStorage?.getItem(
+                'chat_by_' + window.localStorage?.getItem('email')
+            );
+            let localChats: any
+            if (tmp && tmp.length > 0) {
+                localChats = JSON.parse(tmp);
+            }
+            const _chat = _.find(localChats, function (c) {
+                return c.id == chat.id
+            })
+            console.log('localChats', localChats);
+
+            console.log('_chat', _chat);
+
+            setChatMessages(_chat?.messages || []);
+        }
+
+    }, [chat]);
 
     const [{ data: getDocAiLLMData, loading: loading }, getDocAiLLM] = useAxios(
         apiSetting.Prompt.doc_ai_llm(''),
@@ -58,20 +84,65 @@ export default function MessagesPane(props: MessagesPaneProps) {
         }
     };
 
+
     const addMessageToChat = (content: any, type?: string) => {
-        const newId = chatMessages.length + 1;
-        const newIdString = newId.toString();
+        const message: MessageProps = {
+            id: v4(),
+            sender: chat?.sender || 'You',
+            content: content,
+            type: type || 'text',
+            created_at: moment().format('YYYY-MM-DD HH:mm')
+        }
         setChatMessages((arr) => [
-            ...arr,
-            {
-                id: newIdString,
-                sender: { username: 'ai', name: 'ai', avatar: '', online: false },
-                content: content,
-                type: type || 'text',
-                timestamp: moment().format('MM-DD HH:mm')
-            }
+            ...arr, message
         ]);
+        addMessageToLocalStorage(message)
     };
+
+
+    /**
+    * 添加消息到本地
+    * @param message 
+    */
+    const addMessageToLocalStorage = (message: any) => {
+        const tmp: any = window.localStorage?.getItem(
+            'chat_by_' + window.localStorage?.getItem('email')
+        );
+
+        let localChats: any = [];
+
+        if (tmp && !_.isEmpty(tmp)) {
+            localChats = JSON.parse(tmp);
+        }
+        console.log('localChats', localChats);
+
+        const _chats = _.map(localChats, (cha: ChatProps) => {
+            if (cha?.id == chat?.id) {
+                cha.messages.push(message)
+                return {
+                    ...cha,
+                    messages: cha.messages
+                }
+            } else {
+                return cha
+            }
+        })
+        console.log('_chats', _chats);
+
+        try {
+            window.localStorage?.setItem(
+                'chat_by_' +
+                window.localStorage?.getItem('email'),
+                JSON.stringify(_chats)
+            );
+        } catch (error) {
+            setAlert({
+                title: '聊天記錄保存已超出限額，請清空聊天記錄歷史再試!!',
+                type: 'error'
+            });
+        }
+    };
+
 
     const handleGeneralMessage = async (prompt: string) => {
         if (prompt) {
@@ -84,24 +155,15 @@ export default function MessagesPane(props: MessagesPaneProps) {
 
     const handlerGenerateChart = async (smart_extraction_schema_id: string, query: string) => {
         if (query) {
-            // setOpen(true);
-            // setModalDescription({
-            //     title: '進行中......',
-            //     content: '請耐心等候...'
-            // });
             const res = await generateChart(
                 apiSetting.SmartExtractionSchemas.generateChart(smart_extraction_schema_id, query)
             );
             if (res.data.success) {
                 addMessageToChat(res.data.chart, 'chart');
-                // setVisibleHtmlCode(true);
-                // setChart(res.data.chart);
-                // setCurrentStoryboardItemId(res.data.item_id);
             } else {
                 console.log(res.data);
-                // setAlert({ title: res.data.chart, type: 'error' });
+                setAlert({ title: res.data.chart, type: 'error' });
             }
-            // setOpen(false);
         }
     };
 
@@ -110,11 +172,6 @@ export default function MessagesPane(props: MessagesPaneProps) {
         console.log('smart_extraction_schema_id', smart_extraction_schema_id);
 
         if (query) {
-            // setOpen(true);
-            // setModalDescription({
-            //     title: '進行中......',
-            //     content: '請耐心等候...'
-            // });
             const res = await generateStatistics(
                 apiSetting.SmartExtractionSchemas.generateStatistics(
                     smart_extraction_schema_id,
@@ -123,14 +180,9 @@ export default function MessagesPane(props: MessagesPaneProps) {
             );
             if (res.data.success) {
                 addMessageToChat(res.data.report, 'text');
-                // setVisibleHtmlToPdf(true);
-                // setReport(res.data.report);
-                // setCurrentStoryboardItemId(res.data.item_id);
             } else {
-                console.log(res.data);
-                // setAlert({ title: res.data.report, type: 'error' });
+                setAlert({ title: res.data.report, type: 'error' });
             }
-            // setOpen(false);
         }
     };
 
@@ -140,10 +192,10 @@ export default function MessagesPane(props: MessagesPaneProps) {
                 height: { xs: 'calc(95dvh - var(--Header-height))', lg: '95dvh' },
                 display: 'flex',
                 flexDirection: 'column',
-                backgroundColor: 'background.level1'
+                backgroundColor: '#eff7fe'
             }}
         >
-            <MessagesPaneHeader sender={chat.sender} />
+            <MessagesPaneHeader sender={chat?.sender} />
             <Box
                 sx={{
                     display: 'flex',
@@ -156,13 +208,13 @@ export default function MessagesPane(props: MessagesPaneProps) {
                 }}
             >
                 <Stack spacing={2} justifyContent="flex-end">
-                    {chatMessages.map((message: MessageProps, index: number) => {
+                    {chatMessages?.map((message: MessageProps, index: number) => {
                         const isYou = message.sender === 'You';
                         return (
                             <Stack
                                 key={index}
                                 direction="row"
-                                spacing={2}
+                                spacing={1}
                                 flexDirection={isYou ? 'row-reverse' : 'row'}
                             >
                                 {message.sender !== 'You' && (
@@ -179,21 +231,21 @@ export default function MessagesPane(props: MessagesPaneProps) {
                 setTextAreaValue={setTextAreaValue}
                 model={model}
                 setModel={setModel}
+                getAllLabelsData={getAllLabelsData}
+                getAllSchemasData={getAllSchemasData}
                 onSubmit={() => {
-                    console.log(model);
-
-                    const newId = chatMessages.length + 1;
-                    const newIdString = newId.toString();
-                    setChatMessages((arr) => [
-                        ...arr,
-                        {
-                            id: newIdString,
-                            sender: 'You',
-                            type: 'text',
-                            content: textAreaValue,
-                            timestamp: moment().fromNow()
-                        }
+                    const message: MessageProps = {
+                        id: v4(),
+                        sender: 'You',
+                        content: textAreaValue,
+                        type: 'text',
+                        created_at: moment().format('YYYY-MM-DD HH:mm')
+                    }
+                    setChatMessages((arr: any) => [
+                        ...arr, message
                     ]);
+                    addMessageToLocalStorage(message)
+
                     handleSendMessage();
                 }}
             />

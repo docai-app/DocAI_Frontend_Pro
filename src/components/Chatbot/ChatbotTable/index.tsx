@@ -13,7 +13,7 @@ import * as React from 'react';
 import { Chatbots } from '@/app/chatbot/ChatbotContainer';
 import PaginationView from '@/components/common/Widget/PaginationView';
 import { Chatbot_Features } from '@/utils/constant';
-import { Chip } from '@mui/joy';
+import { Chip, Stack } from '@mui/joy';
 import Avatar from '@mui/joy/Avatar';
 import Link from '@mui/joy/Link';
 import List from '@mui/joy/List';
@@ -106,38 +106,40 @@ export default function ChatbotTable(props: ViewProps) {
                                                 </Avatar>
                                             </ListItemDecorator>
                                             <div>
-                                                <Typography level="body-sm">
-                                                    <Link
-                                                        level="title-sm"
-                                                        sx={{
-                                                            fontWeight: 'bold',
-                                                            color: 'black'
-                                                        }}
-                                                    >
-                                                        <Typography
-                                                            onClick={() => {
-                                                                handleShare(row.chatbot, true);
-                                                            }}
-                                                        >
-                                                            {row.chatbot.name}
-                                                        </Typography>
-                                                    </Link>
-                                                    {getFeatureNames(
-                                                        row.chatbot.meta?.selected_features
-                                                    )?.map((name, index) => (
-                                                        <Chip
-                                                            key={index}
-                                                            color="primary"
-                                                            variant="soft"
-                                                            size="sm"
+                                                <Box sx={{ display: 'flex', gap: 1 }}>
+                                                    <Typography level="body-sm">
+                                                        <Link
+                                                            level="title-sm"
                                                             sx={{
-                                                                mx: 0.5
+                                                                fontWeight: 'bold',
+                                                                color: 'black'
                                                             }}
                                                         >
-                                                            {name}
-                                                        </Chip>
-                                                    ))}
-                                                </Typography>
+                                                            <Typography
+                                                                onClick={() => {
+                                                                    handleShare(row.chatbot, true);
+                                                                }}
+                                                            >
+                                                                {row.chatbot.name}
+                                                            </Typography>
+                                                        </Link>
+
+                                                    </Typography>
+                                                    <Stack direction="row" spacing={1}>
+                                                        {getFeatureNames(
+                                                            row.chatbot.meta?.selected_features
+                                                        )?.map((name, index) => (
+                                                            <Chip
+                                                                key={index}
+                                                                color="primary"
+                                                                variant="soft"
+                                                                size="sm"
+                                                            >
+                                                                {name}
+                                                            </Chip>
+                                                        ))}
+                                                    </Stack>
+                                                </Box>
                                                 <Typography level="body-xs" gutterBottom>
                                                     {row.chatbot.description}
                                                 </Typography>

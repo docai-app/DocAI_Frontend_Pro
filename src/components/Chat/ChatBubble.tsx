@@ -1,24 +1,25 @@
 import { getTransitionChartContent } from '@/utils/stringUtil';
+import { MessageProps } from '@/utils/types';
 import InsertDriveFileRoundedIcon from '@mui/icons-material/InsertDriveFileRounded';
 import Avatar from '@mui/joy/Avatar';
 import Box from '@mui/joy/Box';
 import Sheet from '@mui/joy/Sheet';
 import Stack from '@mui/joy/Stack';
 import Typography from '@mui/joy/Typography';
+import moment from 'moment';
 import * as React from 'react';
 import ChartView from './messages/ChartView';
 import ContentView from './messages/ContentView';
 import ImageView from './messages/ImageView';
 import MarkmapView from './messages/MarkmapView';
 import PdfView from './messages/PdfView';
-import { MessageProps } from './types';
 
 type ChatBubbleProps = MessageProps & {
     variant: 'sent' | 'received';
 };
 
 export default function ChatBubble(props: ChatBubbleProps) {
-    const { content, variant, timestamp, attachment = undefined, sender, type } = props;
+    const { content, variant, created_at, attachment = undefined, sender, type } = props;
     const isSent = variant === 'sent';
     const [isHovered, setIsHovered] = React.useState<boolean>(false);
     const [isLiked, setIsLiked] = React.useState<boolean>(false);
@@ -26,8 +27,8 @@ export default function ChatBubble(props: ChatBubbleProps) {
     return (
         <Box sx={{ maxWidth: '60%', minWidth: 'auto' }}>
             <Stack direction="row" justifyContent="space-between" spacing={2} sx={{ mb: 0.25 }}>
-                <Typography level="body-xs">{sender === 'You' ? sender : sender.name}</Typography>
-                <Typography level="body-xs">{timestamp}</Typography>
+                <Typography level="body-xs">{sender === 'You' ? '' : sender.name}</Typography>
+                <Typography level="body-xs">{moment(created_at).format('MM-DD HH:mm')}</Typography>
             </Stack>
             {attachment ? (
                 <Sheet
