@@ -1,5 +1,9 @@
 import { Box, Breadcrumbs, Link, Typography, Chip, Button, Input, Card } from '@mui/joy';
-import { Switch } from '@headlessui/react';
+import Switch from '@mui/joy/Switch';
+import Tab, { tabClasses } from '@mui/joy/Tab';
+import TabList from '@mui/joy/TabList';
+import TabPanel from '@mui/joy/TabPanel';
+import Tabs from '@mui/joy/Tabs';
 import _ from 'lodash';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -7,7 +11,7 @@ import LogRowView from '../../../components/project/step/LogRowView';
 import StepsListView from '../../../components/project/step/StepsListView';
 
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
-
+import PlayArrowTwoToneIcon from '@mui/icons-material/PlayArrowTwoTone';
 interface ProjectDetailViewProps {
     project: any;
     tasks: [];
@@ -99,131 +103,71 @@ function ProjectDetailView(props: ProjectDetailViewProps) {
                         <Box sx={{ width: '20%' }}>
                         </Box>
                     </Box>
+
                     <Card>
-                        <Box>
-                            <Box>
-                                <Typography color="primary" fontWeight={500} fontSize={12}>{project?.name}</Typography>
-                                <Link href={`/project/edit?id=${project?.id}`}>編輯</Link>
+                        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                            <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
+                                <Typography level="title-lg" fontWeight={700}> {project?.name} </Typography>
+                                <Link underline='always' fontWeight={500} fontSize={14}
+                                    href={`/project/edit?id=${project?.id}`}
+                                >編輯</Link>
+                                <Typography> {project?.description} </Typography>
                             </Box>
                             <Button
                                 color="primary"
                                 size="sm"
+                                startDecorator={<PlayArrowTwoToneIcon />}
                                 onClick={() => { }}>
                                 開始
                             </Button>
                         </Box>
 
-                    </Card>
-                    <header className="shadow bg-white py-4 flex flex-col justify-between items-center">
-                        <div className="w-full flex flex-row px-4 sm:px-6 lg:px-8 ">
-                            <div className="flex-1   ">
-                                <h1 className="text-2xl font-bold text-gray-900">
-                                    {project?.name}
-                                    <a
-                                        className="text-sm underline text-blue-500 ml-4 cursor-pointer"
-                                        href={`/project/edit?id=${project?.id}`}
-                                    >
-                                        編輯
-                                    </a>
-                                </h1>
-                                <span className="text-md text-gray-500 sm:text-md">
-                                    {project?.description}
-                                </span>
-                            </div>
-                            <div className="flex-0 flex flex-row justify-center items-center">
-                                <Button
-                                    color="primary"
-                                    size="sm"
-                                    onClick={() => { }}>
-                                    開始
-                                </Button>
-                                {/* <BButton
-                                    name="開始"
-                                    icon={<PlayIcon className="w-4 mr-2" />}
-                                    onClick={() => { }}
-                                /> */}
-                                {/* <BButton
-                                name='暫停'
-                                icon={<PlayPauseIcon className="w-4 mr-2" />}
-                                onClick={() => {
-
-                                }}
-                            />
-                            <BButton
-                                name='由頭開始'
-                                icon={<PauseIcon className="w-4 mr-2" />}
-                                onClick={() => {
-
-                                }}
-                            />
-                            <BButton
-                                name='恢復'
-                                icon={<BackwardIcon className="w-4 mr-2" />}
-                                onClick={() => {
-
-                                }}
-                            /> */}
-                            </div>
-                        </div>
                         {project && (
-                            <div className="flex w-full px-4 sm:px-6 lg:px-8  justify-between flex-row items-center mt-2">
-                                <span className="text-sm">狀態: 進行中</span>
-                                <div>
-                                    <Switch.Group as="div" className="flex items-center">
-                                        <Switch
-                                            defaultChecked={hideCompletedTask}
-                                            onChange={() => {
-                                                setHideCompleted(!hideCompletedTask);
-                                            }}
-                                            className={`${hideCompletedTask ? 'bg-indigo-600' : 'bg-gray-200'
-                                                }
-                                'relative inline-flex flex-shrink-0 h-5 w-10 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
-                            `}
-                                        >
-                                            <span
-                                                aria-hidden="true"
-                                                className={`${hideCompletedTask
-                                                    ? 'translate-x-5'
-                                                    : 'translate-x-0'
-                                                    }
-                                    'pointer-events-none inline-block h-4 w-4 rounded-full bg-white shadow transform ring-0 transition ease-in-out duration-200'
-                                `}
-                                            />
-                                        </Switch>
-                                        <Switch.Label as="span" className="ml-3">
-                                            <span className="text-sm font-medium text-gray-900">
-                                                隱藏完成任務{' '}
-                                            </span>
-                                        </Switch.Label>
-                                    </Switch.Group>
-                                </div>
-                            </div>
+                            <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                                <Typography>狀態: 進行中</Typography>
+                                <Switch variant="solid"
+                                    checked={hideCompletedTask}
+                                    onChange={() => {
+                                        setHideCompleted(!hideCompletedTask);
+                                    }}
+                                    startDecorator={<Typography>隱藏完成任務</Typography>}
+                                />
+                            </Box>
                         )}
-                    </header>
-                    <div className="my-2">
-                        <ul className="flex flex-row -my-px">
-                            <li
-                                onClick={() => setCurrentTypeTab('tasks')}
-                                className={`p-4 cursor-pointer ${currentTypeTab === 'tasks'
-                                    ? 'text-indigo-700 border-b-2 border-indigo-700'
-                                    : 'text-gray-400'
-                                    } font-bold text-sm`}
-                            >
+                    </Card>
+
+                    <Tabs defaultValue="tasks"
+                        sx={{ bgcolor: 'transparent' }}
+                    >
+                        <TabList underlinePlacement="bottom" size="sm"
+                            sx={{
+                                display: 'flex',
+                                pl: { xs: 0, md: 4 },
+                                justifyContent: 'left',
+                                [`&& .${tabClasses.root}`]: {
+                                    fontWeight: '600',
+                                    flex: 'initial',
+                                    color: 'text.tertiary',
+                                    [`&.${tabClasses.selected}`]: {
+                                        bgcolor: 'transparent',
+                                        color: 'text.primary',
+                                        '&::after': {
+                                            height: '2px',
+                                            bgcolor: 'primary.500'
+                                        }
+                                    }
+                                }
+                            }}>
+                            <Tab value="tasks" indicatorPlacement="bottom"
+                                sx={{ borderRadius: '6px 6px 0 0' }}>
                                 任務
-                            </li>
-                            <li
-                                onClick={() => setCurrentTypeTab('logs')}
-                                className={`p-4 cursor-pointer ${currentTypeTab === 'logs'
-                                    ? 'text-indigo-700 border-b-2 border-indigo-700'
-                                    : 'text-gray-400'
-                                    } font-bold text-sm`}
-                            >
+                            </Tab>
+                            <Tab value="logs" indicatorPlacement="bottom"
+                                sx={{ borderRadius: '6px 6px 0 0' }}>
                                 操作日誌
-                            </li>
-                        </ul>
-                    </div>
-                    {currentTypeTab === 'tasks' && (
-                        <div className="my-2">
+                            </Tab>
+                        </TabList>
+                        <TabPanel value="tasks">
                             <StepsListView
                                 tasks={tmpTasks?.sort((a: any, b: any) =>
                                     a.status > b.status ? -1 : 1
@@ -232,18 +176,16 @@ function ProjectDetailView(props: ProjectDetailViewProps) {
                                 users={users}
                                 chain_features={[]}
                             />
-                        </div>
-                    )}
-                    {currentTypeTab === 'logs' && (
-                        <div className="my-2">
-                            <LogRowView title="第一次運行" />
-                            <LogRowView title="第二次運行" />
-                            <LogRowView title="第三次運行" />
-                        </div>
-                    )}
-
+                        </TabPanel>
+                        <TabPanel value="logs">
+                            <div className="my-2">
+                                <LogRowView title="第一次運行" />
+                                <LogRowView title="第二次運行" />
+                                <LogRowView title="第三次運行" />
+                            </div>
+                        </TabPanel>
+                    </Tabs>
                 </Box >
-
             </Box >
         </>
     );

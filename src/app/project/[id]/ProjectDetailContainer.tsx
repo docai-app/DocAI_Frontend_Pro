@@ -1,7 +1,7 @@
 'use client';
 
 import useAxios from 'axios-hooks';
-import { useRouter, useSearchParams, usePathname } from 'next/navigation';
+import { useRouter, useSearchParams, useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import Api from '../../../apis';
 import ProjectDetailView from './ProjectDetailView';
@@ -10,7 +10,7 @@ const apiSetting = new Api();
 
 export default function ProjectDetailContainer() {
     const router = useRouter();
-    const searchParams = useSearchParams();
+    const { id } = useParams();
     const [project, setProject] = useState<any>();
     const [tasks, setTasks] = useState<any>([]);
     const [open, setOpen] = useState(false);
@@ -30,9 +30,9 @@ export default function ProjectDetailContainer() {
     }, [loading]);
 
     useEffect(() => {
-        if (router && searchParams.get('id')) {
+        if (router && id) {
             getProjectWorkflowById({
-                ...apiSetting.ProjectWorkflow.getProjectWorkflowById(searchParams.get('id') as string)
+                ...apiSetting.ProjectWorkflow.getProjectWorkflowById(id as string)
             });
             getAllUsers();
         }
@@ -46,7 +46,7 @@ export default function ProjectDetailContainer() {
 
     useEffect(() => {
         if (getProjectWorkflowByIdData && getProjectWorkflowByIdData.success) {
-            // console.log(getProjectWorkflowByIdData);
+            // console.log('getProjectWorkflowByIdData', getProjectWorkflowByIdData);
             setProject(getProjectWorkflowByIdData.project_workflow);
             setTasks(getProjectWorkflowByIdData.project_workflow.steps);
         }

@@ -47,7 +47,7 @@ export default function TaskContainer() {
     const [{ data: showFolderByIDData }, showFolderByID] = useAxios({}, { manual: true });
 
     const addNewTaskHandler = useCallback(
-        async (data) => {
+        async (data: any) => {
             const { title, description, deadline_at } = data;
 
             addNewTask({
@@ -63,7 +63,7 @@ export default function TaskContainer() {
     );
 
     const updateTaskHandler = useCallback(
-        async (data) => {
+        async (data: any) => {
             const { id, title, description, is_completed, deadline_at } = data;
             // console.log(data);
 
@@ -81,7 +81,7 @@ export default function TaskContainer() {
     );
 
     const removeTaskHandler = useCallback(
-        async (task_id) => {
+        async (task_id: any) => {
             if (task_id) removeTask(apiSetting.ProjectTask.deleteProjectTaskById(task_id));
         },
         [removeTask]
