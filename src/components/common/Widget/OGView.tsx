@@ -1,7 +1,7 @@
 import { ChevronRightIcon } from '@heroicons/react/24/outline';
 import { FolderIcon } from '@heroicons/react/20/solid';
 import Link from 'next/link';
-import { Image } from 'react-bootstrap';
+// import { Image } from 'react-bootstrap';
 import useAlert from '../../../hooks/useAlert';
 
 interface OGProps {
@@ -48,9 +48,9 @@ export default function OGView(props: OGProps) {
                         </div>
                     </div>
                     <div className="flex flex-0">
-                        <Image
+                        <img
                             alt="OG Image"
-                            thumbnail={true}
+                            // thumbnail={true}
                             width={80}
                             src="https://png.pngtree.com/element_our/20190529/ourmid/pngtree-link-icon-image_1198606.jpg"
                         />
