@@ -16,19 +16,18 @@ interface ViewProps {
     handleSelectSchema: any;
 }
 export default function SelectSourceModal(props: ViewProps) {
-    const {
-        visible,
-        setVisible,
-        getAllLabelsData,
-        getAllSchemasData,
-        handleSelectSchema
-    } = props;
-    const [layout, setLayout] = React.useState<ModalDialogProps['layout'] | undefined>(
-        undefined,
-    );
+    const { visible, setVisible, getAllLabelsData, getAllSchemasData, handleSelectSchema } = props;
+    const [layout, setLayout] = React.useState<ModalDialogProps['layout'] | undefined>(undefined);
     const [selectedValue, setSelectedValue] = React.useState<SmartExtractionSchema>();
     return (
-        <Modal open={props?.visible} onClose={() => { props?.setVisible(false); setLayout(undefined) }} sx={{ mt: { xs: 'var(--Header-height)', sm: 0 }, height: { xs: '90dvh', sm: '100vh' } }}>
+        <Modal
+            open={props?.visible}
+            onClose={() => {
+                props?.setVisible(false);
+                setLayout(undefined);
+            }}
+            sx={{ mt: { xs: 'var(--Header-height)', sm: 0 }, height: { xs: '90dvh', sm: '100vh' } }}
+        >
             <ModalDialog layout={layout}>
                 <ModalClose />
                 <DialogTitle>Modal Dialog</DialogTitle>
@@ -37,10 +36,7 @@ export default function SelectSourceModal(props: ViewProps) {
                         This is a <code>{layout}</code> modal dialog. Press <code>esc</code> to
                         close it.
                     </div>
-                    <Box
-                        className="Pagination-laptopUp"
-
-                    >
+                    <Box className="Pagination-laptopUp">
                         <Box sx={{ flex: 1 }} />
 
                         <Button
@@ -49,7 +45,7 @@ export default function SelectSourceModal(props: ViewProps) {
                             color="primary"
                             disabled={!selectedValue}
                             onClick={() => {
-                                handleSelectSchema(selectedValue)
+                                handleSelectSchema(selectedValue);
                             }}
                         >
                             <label>確認</label>
@@ -59,8 +55,9 @@ export default function SelectSourceModal(props: ViewProps) {
                         getAllLabelsData={getAllLabelsData}
                         getAllSchemasData={getAllSchemasData}
                         handleSelectedValue={(schema: SmartExtractionSchema) => {
-                            setSelectedValue(schema)
-                        }} />
+                            setSelectedValue(schema);
+                        }}
+                    />
                 </DialogContent>
             </ModalDialog>
         </Modal>

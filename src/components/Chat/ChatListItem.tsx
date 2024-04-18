@@ -54,11 +54,15 @@ export default function ChatListItem(props: ChatListItemProps) {
                                     display={{ xs: 'none', md: 'block' }}
                                     noWrap
                                 >
-                                    {moment(messages.length > 0 && messages[messages.length - 1] && messages[messages.length - 1].created_at || moment()).fromNow()}
+                                    {moment(
+                                        (messages.length > 0 &&
+                                            messages[messages.length - 1] &&
+                                            messages[messages.length - 1].created_at) ||
+                                            moment()
+                                    ).fromNow()}
                                 </Typography>
                             </Box>
                         </Box>
-
                     </Stack>
                     <Typography
                         level="body-sm"
@@ -70,7 +74,10 @@ export default function ChatListItem(props: ChatListItemProps) {
                             textOverflow: 'ellipsis'
                         }}
                     >
-                        {messages.length > 0 && messages[messages.length - 1] && messages[messages.length - 1].content || ''}
+                        {(messages.length > 0 &&
+                            messages[messages.length - 1] &&
+                            messages[messages.length - 1].content) ||
+                            ''}
                     </Typography>
                 </ListItemButton>
             </ListItem>

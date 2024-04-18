@@ -8,11 +8,7 @@ interface ViewProps {
 }
 
 function ChatView(props: ViewProps) {
-    const {
-        chats,
-        getAllLabelsData,
-        getAllSchemasData
-    } = props;
+    const { chats, getAllLabelsData, getAllSchemasData } = props;
 
     return (
         <>
@@ -20,9 +16,9 @@ function ChatView(props: ViewProps) {
                 <MyMessages
                     chats={chats}
                     getAllLabelsData={getAllLabelsData}
-                    getAllSchemasData={getAllSchemasData} />
+                    getAllSchemasData={getAllSchemasData}
+                />
             </Box>
-
         </>
     );
 }

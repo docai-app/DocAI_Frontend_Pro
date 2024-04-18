@@ -7,7 +7,7 @@ import { ChatProps } from '@/utils/types';
 import useAxios from 'axios-hooks';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
-import { v4 } from "uuid";
+import { v4 } from 'uuid';
 import ChatView from './ChatView';
 
 const apiSetting = new Api();
@@ -17,7 +17,7 @@ function ChatContainer() {
     const { setAlert } = useAlert();
     const { setLoad } = useLoad();
     const router = useRouter();
-    const [chats, setChats] = useState<ChatProps[]>()
+    const [chats, setChats] = useState<ChatProps[]>();
 
     const [{ data: getAllLabelsData, error: getAllLabelsError }, getAllLabels] = useAxios(
         apiSetting.Tag.getAllTags(),
@@ -30,13 +30,12 @@ function ChatContainer() {
     );
 
     useEffect(() => {
-
         let tmp: any = window.localStorage?.getItem(
             'chat_by_' + window.localStorage?.getItem('email')
         );
-        tmp = JSON.parse(tmp)
+        tmp = JSON.parse(tmp);
         if (tmp && tmp.length > 0) {
-            setChats(tmp)
+            setChats(tmp);
         } else {
             const id = v4();
             const chas: ChatProps[] = [
@@ -46,11 +45,11 @@ function ChatContainer() {
                         name: '新建聊天',
                         username: '',
                         avatar: '/static/images/avatar/2.jpg',
-                        source: '',
+                        source: ''
                     },
                     messages: []
                 }
-            ]
+            ];
 
             window.localStorage?.setItem(
                 'chat_by_' + window.localStorage?.getItem('email'),
@@ -58,12 +57,11 @@ function ChatContainer() {
             );
             console.log('chas', chas);
 
-            setChats(chas)
+            setChats(chas);
         }
-        getAllSchemas()
-        getAllLabels()
+        getAllSchemas();
+        getAllLabels();
     }, []);
-
 
     return (
         <ChatView

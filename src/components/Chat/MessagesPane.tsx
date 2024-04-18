@@ -8,7 +8,7 @@ import useAxios from 'axios-hooks';
 import _ from 'lodash';
 import moment from 'moment';
 import * as React from 'react';
-import { v4 } from "uuid";
+import { v4 } from 'uuid';
 import AvatarWithStatus from './AvatarWithStatus';
 import ChatBubble from './ChatBubble';
 import MessageInput from './MessageInput';
@@ -22,12 +22,8 @@ type MessagesPaneProps = {
 };
 
 export default function MessagesPane(props: MessagesPaneProps) {
-    const {
-        chat,
-        getAllLabelsData,
-        getAllSchemasData
-    } = props;
-    const { setAlert } = useAlert()
+    const { chat, getAllLabelsData, getAllSchemasData } = props;
+    const { setAlert } = useAlert();
     const [chatMessages, setChatMessages] = React.useState<MessageProps[]>([]);
     const [textAreaValue, setTextAreaValue] = React.useState('');
     const [model, setModel] = React.useState<'none' | 'chart' | 'statistics'>('none');
@@ -37,20 +33,19 @@ export default function MessagesPane(props: MessagesPaneProps) {
             const tmp = window.localStorage?.getItem(
                 'chat_by_' + window.localStorage?.getItem('email')
             );
-            let localChats: any
+            let localChats: any;
             if (tmp && tmp.length > 0) {
                 localChats = JSON.parse(tmp);
             }
             const _chat = _.find(localChats, function (c) {
-                return c.id == chat.id
-            })
+                return c.id == chat.id;
+            });
             console.log('localChats', localChats);
 
             console.log('_chat', _chat);
 
             setChatMessages(_chat?.messages || []);
         }
-
     }, [chat]);
 
     const [{ data: getDocAiLLMData, loading: loading }, getDocAiLLM] = useAxios(
@@ -84,7 +79,6 @@ export default function MessagesPane(props: MessagesPaneProps) {
         }
     };
 
-
     const addMessageToChat = (content: any, type?: string) => {
         const message: MessageProps = {
             id: v4(),
@@ -92,18 +86,15 @@ export default function MessagesPane(props: MessagesPaneProps) {
             content: content,
             type: type || 'text',
             created_at: moment().format('YYYY-MM-DD HH:mm')
-        }
-        setChatMessages((arr) => [
-            ...arr, message
-        ]);
-        addMessageToLocalStorage(message)
+        };
+        setChatMessages((arr) => [...arr, message]);
+        addMessageToLocalStorage(message);
     };
 
-
     /**
-    * 添加消息到本地
-    * @param message 
-    */
+     * 添加消息到本地
+     * @param message
+     */
     const addMessageToLocalStorage = (message: any) => {
         const tmp: any = window.localStorage?.getItem(
             'chat_by_' + window.localStorage?.getItem('email')
@@ -118,21 +109,20 @@ export default function MessagesPane(props: MessagesPaneProps) {
 
         const _chats = _.map(localChats, (cha: ChatProps) => {
             if (cha?.id == chat?.id) {
-                cha.messages.push(message)
+                cha.messages.push(message);
                 return {
                     ...cha,
                     messages: cha.messages
-                }
+                };
             } else {
-                return cha
+                return cha;
             }
-        })
+        });
         console.log('_chats', _chats);
 
         try {
             window.localStorage?.setItem(
-                'chat_by_' +
-                window.localStorage?.getItem('email'),
+                'chat_by_' + window.localStorage?.getItem('email'),
                 JSON.stringify(_chats)
             );
         } catch (error) {
@@ -142,7 +132,6 @@ export default function MessagesPane(props: MessagesPaneProps) {
             });
         }
     };
-
 
     const handleGeneralMessage = async (prompt: string) => {
         if (prompt) {
@@ -240,11 +229,9 @@ export default function MessagesPane(props: MessagesPaneProps) {
                         content: textAreaValue,
                         type: 'text',
                         created_at: moment().format('YYYY-MM-DD HH:mm')
-                    }
-                    setChatMessages((arr: any) => [
-                        ...arr, message
-                    ]);
-                    addMessageToLocalStorage(message)
+                    };
+                    setChatMessages((arr: any) => [...arr, message]);
+                    addMessageToLocalStorage(message);
 
                     handleSendMessage();
                 }}

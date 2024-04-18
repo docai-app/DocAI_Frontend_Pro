@@ -9,7 +9,6 @@ export type SmartExtractionSchema = {
     has_label: boolean;
     schema: Schema[];
     user: User;
-
 };
 
 export type Schema = {
@@ -28,7 +27,6 @@ export type User = {
     email: string;
     nickname: string;
 };
-
 
 export type UserProps = {
     name: string;

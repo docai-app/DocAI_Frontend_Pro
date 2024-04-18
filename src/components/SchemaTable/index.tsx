@@ -28,13 +28,14 @@ import { Chip } from '@mui/joy';
 import Radio from '@mui/joy/Radio';
 import moment from 'moment';
 
-
 function RowMenu() {
     return (
         <Dropdown>
             <MenuButton
                 slots={{ root: IconButton }}
-                slotProps={{ root: { variant: 'plain', color: 'neutral', size: 'sm', 'z-index': 100 } }}
+                slotProps={{
+                    root: { variant: 'plain', color: 'neutral', size: 'sm', 'z-index': 100 }
+                }}
             >
                 <MoreHorizRoundedIcon />
             </MenuButton>
@@ -53,11 +54,7 @@ interface ViewProps {
     handleSelectedValue: any;
 }
 export default function SchemaTable(props: ViewProps) {
-    const {
-        getAllLabelsData,
-        getAllSchemasData,
-        handleSelectedValue
-    } = props
+    const { getAllLabelsData, getAllSchemasData, handleSelectedValue } = props;
 
     const [open, setOpen] = React.useState(false);
     const [selectedValue, setSelectedValue] = React.useState<SmartExtractionSchema>();
@@ -163,12 +160,10 @@ export default function SchemaTable(props: ViewProps) {
                 >
                     <thead>
                         <tr>
-                            <th style={{ width: 48, textAlign: 'center', padding: '12px 6px' }}>
-
-                            </th>
-                            <th style={{ width: 300, padding: '12px 6px' }}>
-                                名稱
-                            </th>
+                            <th
+                                style={{ width: 48, textAlign: 'center', padding: '12px 6px' }}
+                            ></th>
+                            <th style={{ width: 300, padding: '12px 6px' }}>名稱</th>
                             <th style={{ width: 200, padding: '12px 6px' }}>標籤</th>
                             <th style={{ width: 120, padding: '12px 6px' }}>更新日期</th>
                             <th style={{ width: 120, padding: '12px 6px' }}>擁有人</th>
@@ -176,45 +171,53 @@ export default function SchemaTable(props: ViewProps) {
                         </tr>
                     </thead>
                     <tbody>
-                        {getAllSchemasData?.smart_extraction_schemas?.map((row: SmartExtractionSchema) => (
-                            <tr key={row.id}>
-                                <td style={{ textAlign: 'center', width: 120 }}>
-                                    <Radio
-                                        size='sm'
-                                        checked={selectedValue?.id === row.id}
-                                        onChange={(event) => {
-                                            setSelectedValue(row)
-                                            handleSelectedValue(row)
-                                        }}
-                                        name="radio-buttons"
-                                    />
-                                </td>
-                                <td>
-                                    <Typography level="body-sm" sx={{ fontWeight: 'bold' }}>{row.name}</Typography>
-                                </td>
-                                <td>
-                                    <Typography level="body-xs">
-                                        <Chip color='success' sx={{
-                                            fontSize: 12
-                                        }}>
-                                            {row.has_label ? row.label.name : '數據總表'}
-                                        </Chip>
-
-                                    </Typography>
-                                </td>
-                                <td>
-                                    <Typography level="body-xs">{moment(row.updated_at).format("YYYY-MM-DD")}</Typography>
-                                </td>
-                                <td>
-                                    <Typography level="body-xs">{row.user.nickname}</Typography>
-                                </td>
-                                {/* <td>
+                        {getAllSchemasData?.smart_extraction_schemas?.map(
+                            (row: SmartExtractionSchema) => (
+                                <tr key={row.id}>
+                                    <td style={{ textAlign: 'center', width: 120 }}>
+                                        <Radio
+                                            size="sm"
+                                            checked={selectedValue?.id === row.id}
+                                            onChange={(event) => {
+                                                setSelectedValue(row);
+                                                handleSelectedValue(row);
+                                            }}
+                                            name="radio-buttons"
+                                        />
+                                    </td>
+                                    <td>
+                                        <Typography level="body-sm" sx={{ fontWeight: 'bold' }}>
+                                            {row.name}
+                                        </Typography>
+                                    </td>
+                                    <td>
+                                        <Typography level="body-xs">
+                                            <Chip
+                                                color="success"
+                                                sx={{
+                                                    fontSize: 12
+                                                }}
+                                            >
+                                                {row.has_label ? row.label.name : '數據總表'}
+                                            </Chip>
+                                        </Typography>
+                                    </td>
+                                    <td>
+                                        <Typography level="body-xs">
+                                            {moment(row.updated_at).format('YYYY-MM-DD')}
+                                        </Typography>
+                                    </td>
+                                    <td>
+                                        <Typography level="body-xs">{row.user.nickname}</Typography>
+                                    </td>
+                                    {/* <td>
                                     <Box sx={{ display: 'flex', gap: 2, alignItems: 'center' }}>
                                         <RowMenu />
                                     </Box>
                                 </td> */}
-                            </tr>
-                        ))}
+                                </tr>
+                            )
+                        )}
                     </tbody>
                 </Table>
             </Sheet>

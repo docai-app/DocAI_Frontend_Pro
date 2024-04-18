@@ -19,14 +19,21 @@ export type MessageInputProps = {
 };
 
 export default function MessageInput(props: MessageInputProps) {
-    const { textAreaValue, setTextAreaValue, onSubmit, model, setModel, getAllLabelsData, getAllSchemasData } = props;
+    const {
+        textAreaValue,
+        setTextAreaValue,
+        onSubmit,
+        model,
+        setModel,
+        getAllLabelsData,
+        getAllSchemasData
+    } = props;
     const textAreaRef = React.useRef<HTMLDivElement>(null);
-    const [visibleSchema, setVisibleSchema] = React.useState(false)
+    const [visibleSchema, setVisibleSchema] = React.useState(false);
 
     const handleChangeSource = (value: any) => {
         console.log(value);
-
-    }
+    };
     const handleClick = () => {
         if (textAreaValue.trim() !== '') {
             onSubmit();
@@ -35,10 +42,9 @@ export default function MessageInput(props: MessageInputProps) {
     };
 
     const handleSelectSchema = (schema: SmartExtractionSchema) => {
-        setVisibleSchema(false)
+        setVisibleSchema(false);
         console.log(schema);
-
-    }
+    };
     return (
         <>
             <Box sx={{ px: 0, pb: 0 }}>
@@ -85,7 +91,12 @@ export default function MessageInput(props: MessageInputProps) {
                                             請選擇來源
                                         </Option>
                                         <Option value={'none'}>無來源</Option>
-                                        <Option value={'schema'} onClick={() => setVisibleSchema(true)}>數據源</Option>
+                                        <Option
+                                            value={'schema'}
+                                            onClick={() => setVisibleSchema(true)}
+                                        >
+                                            數據源
+                                        </Option>
                                         <Option value={'documents'}>文件夾或文件</Option>
                                         {/* <Option value={'chatbot'}>機器人</Option> */}
                                     </Select>
@@ -108,7 +119,6 @@ export default function MessageInput(props: MessageInputProps) {
                                         <Option value={'chart'}>圖表</Option>
                                         <Option value={'statistics'}>統計</Option>
                                     </Select>
-
                                 </Box>
                             </div>
                             <Button
@@ -142,7 +152,8 @@ export default function MessageInput(props: MessageInputProps) {
                     getAllLabelsData,
                     getAllSchemasData,
                     handleSelectSchema
-                }} />
+                }}
+            />
         </>
     );
 }

@@ -42,7 +42,7 @@ export default function ChatsPane(props: ChatsPaneProps) {
                     //     <Chip
                     //         variant="soft"
                     //         color="primary"
-                    //         size="md" 
+                    //         size="md"
                     //         slotProps={{ root: { component: 'span' } }}
                     //     >
                     //         {chats?.length}

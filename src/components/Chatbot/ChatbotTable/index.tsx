@@ -123,7 +123,6 @@ export default function ChatbotTable(props: ViewProps) {
                                                                 {row.chatbot.name}
                                                             </Typography>
                                                         </Link>
-
                                                     </Typography>
                                                     <Stack direction="row" spacing={1}>
                                                         {getFeatureNames(

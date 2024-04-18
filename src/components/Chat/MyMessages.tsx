@@ -11,18 +11,14 @@ interface ViewProps {
     getAllSchemasData: any;
 }
 export default function MyProfile(props: ViewProps) {
-    const {
-        chats,
-        getAllLabelsData,
-        getAllSchemasData
-    } = props;
+    const { chats, getAllLabelsData, getAllSchemasData } = props;
 
     const [selectedChat, setSelectedChat] = React.useState<ChatProps>();
     React.useEffect(() => {
         if (chats) {
-            setSelectedChat(chats[0])
+            setSelectedChat(chats[0]);
         }
-    }, [chats])
+    }, [chats]);
     return (
         <Sheet
             sx={{
@@ -57,7 +53,11 @@ export default function MyProfile(props: ViewProps) {
                     setSelectedChat={setSelectedChat}
                 />
             </Sheet>
-            <MessagesPane chat={selectedChat} getAllLabelsData={getAllLabelsData} getAllSchemasData={getAllSchemasData} />
+            <MessagesPane
+                chat={selectedChat}
+                getAllLabelsData={getAllLabelsData}
+                getAllSchemasData={getAllSchemasData}
+            />
         </Sheet>
     );
 }
