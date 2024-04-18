@@ -1,6 +1,6 @@
 import { Box, Breadcrumbs, Link, Typography, Chip, Button, Input, Card } from '@mui/joy';
 import IconButton from '@mui/joy/IconButton';
-import useAlert from '../../hooks/useAlert';;
+import useAlert from '../../hooks/useAlert';
 
 import LocalGroceryStoreTwoToneIcon from '@mui/icons-material/LocalGroceryStoreTwoTone';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
@@ -15,22 +15,42 @@ export default function ShopRow(props: Props) {
     const { setAlert } = useAlert();
     return (
         <>
-            <Card variant="outlined" color="primary"
+            <Card
+                variant="outlined"
+                color="primary"
                 sx={{
-                    display: 'flex', justifyContent: 'space-between', width: '12rem',
-                    '&:hover': { boxShadow: 'md', borderColor: 'neutral.outlinedHoverBorder' },
-                }}>
-                <Box >
-                    <Typography level="title-sm" fontWeight={600} color="primary" sx={{ overflow: 'hidden' }}>{title}</Typography>
-                    <Typography level="body-sm" fontSize={12}
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    width: '12rem',
+                    '&:hover': { boxShadow: 'md', borderColor: 'neutral.outlinedHoverBorder' }
+                }}
+            >
+                <Box>
+                    <Typography
+                        level="title-sm"
+                        fontWeight={600}
+                        color="primary"
+                        sx={{ overflow: 'hidden' }}
+                    >
+                        {title}
+                    </Typography>
+                    <Typography
+                        level="body-sm"
+                        fontSize={12}
                         sx={{ mt: 0.5, overflow: 'hidden', height: '9rem' }}
-                    >{description}</Typography>
+                    >
+                        {description}
+                    </Typography>
                 </Box>
 
-                <Chip size='lg' variant='plain'
+                <Chip
+                    size="lg"
+                    variant="plain"
                     startDecorator={<AttachMoneyIcon />}
                     sx={{ position: 'absolute', bottom: '0.875rem', left: '0.5rem' }}
-                >{price}</Chip>
+                >
+                    {price}
+                </Chip>
                 <IconButton
                     aria-label="Add to cart"
                     variant="plain"
@@ -43,7 +63,9 @@ export default function ShopRow(props: Props) {
                             type: 'info'
                         });
                     }}
-                ><LocalGroceryStoreTwoToneIcon /></IconButton>
+                >
+                    <LocalGroceryStoreTwoToneIcon />
+                </IconButton>
             </Card>
         </>
     );

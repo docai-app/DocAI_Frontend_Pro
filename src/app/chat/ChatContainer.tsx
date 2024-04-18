@@ -20,7 +20,7 @@ const newChat = {
         source: ''
     },
     messages: []
-}
+};
 
 function ChatContainer() {
     const [data, setData] = React.useState();
@@ -47,11 +47,11 @@ function ChatContainer() {
         if (tmp && tmp.length > 0) {
             setChats(tmp);
         } else {
-            tmp = []
+            tmp = [];
             tmp.push({
                 ...newChat,
                 id: v4()
-            })
+            });
             window.localStorage?.setItem(
                 'chat_by_' + window.localStorage?.getItem('email'),
                 JSON.stringify(tmp)
@@ -66,20 +66,19 @@ function ChatContainer() {
         chats?.push({
             ...newChat,
             id: v4()
-        })
+        });
         console.log('chats', chats);
 
         if (chats) {
-            const newChats = [...chats]
-            setChats(newChats)
+            const newChats = [...chats];
+            setChats(newChats);
         }
         window.localStorage?.setItem(
             'chat_by_' + window.localStorage?.getItem('email'),
             JSON.stringify(chats)
         );
         console.log(chats);
-
-    }
+    };
 
     return (
         <ChatView

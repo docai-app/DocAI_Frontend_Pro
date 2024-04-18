@@ -36,46 +36,39 @@ export default function MessageInput(props: MessageInputProps) {
     } = props;
     const textAreaRef = React.useRef<HTMLDivElement>(null);
     const [visibleSchema, setVisibleSchema] = React.useState(false);
-    const [types, setTypes] = React.useState<any>([])
+    const [types, setTypes] = React.useState<any>([]);
 
     React.useEffect(() => {
         if (sender?.source) {
-            if (sender?.source.value == 'none')
-                setTypes(ModelTypes['none'])
-            if (sender?.source.value == 'schema')
-                setTypes(ModelTypes['schema'])
-            if (sender?.source.value == 'documents')
-                setTypes(ModelTypes['documents'])
+            if (sender?.source.value == 'none') setTypes(ModelTypes['none']);
+            if (sender?.source.value == 'schema') setTypes(ModelTypes['schema']);
+            if (sender?.source.value == 'documents') setTypes(ModelTypes['documents']);
         }
-    }, [sender?.source])
+    }, [sender?.source]);
     const sources = [
         {
             name: '無來源',
             value: 'none',
-            onClick: () => {
-
-            }
+            onClick: () => {}
         },
         {
             name: '數據源',
             value: 'schema',
             onClick: () => {
-                setVisibleSchema(true)
+                setVisibleSchema(true);
             }
         },
         {
             name: '文件夾或文件',
             value: 'documents',
-            onClick: () => {
-
-            }
+            onClick: () => {}
         }
-    ]
+    ];
 
     const handleChangeSource = (value: any) => {
         const _source = _.find(sources, function (s) {
-            return s.value == value
-        })
+            return s.value == value;
+        });
 
         updateChatSender({
             ...sender,
@@ -83,22 +76,21 @@ export default function MessageInput(props: MessageInputProps) {
                 name: _source?.name,
                 value: _source?.value
             }
-        })
+        });
     };
 
     const handleChangeModel = (value: any) => {
         console.log('value', value);
 
         const _model = _.find(types, function (s) {
-            return s.value == value
-        })
+            return s.value == value;
+        });
         console.log('_model', _model);
-
 
         updateChatSender({
             ...sender,
             model_type: _model
-        })
+        });
     };
 
     const handleClick = () => {
@@ -116,7 +108,7 @@ export default function MessageInput(props: MessageInputProps) {
                 ...sender?.source,
                 schema: schema
             }
-        })
+        });
     };
     return (
         <>
@@ -158,14 +150,22 @@ export default function MessageInput(props: MessageInputProps) {
                                             mx: 1
                                         }}
                                         slotProps={{ button: { sx: { whiteSpace: 'nowrap' } } }}
-                                        onChange={(event, value) => { handleChangeSource(value) }}
+                                        onChange={(event, value) => {
+                                            handleChangeSource(value);
+                                        }}
                                         value={sender?.source?.value || ''}
                                     >
                                         <Option value={''} disabled>
                                             請選擇來源
                                         </Option>
                                         {sources.map((so) => (
-                                            <Option key={so.value} value={so.value} onClick={so.onClick} >{so.name}</Option>
+                                            <Option
+                                                key={so.value}
+                                                value={so.value}
+                                                onClick={so.onClick}
+                                            >
+                                                {so.name}
+                                            </Option>
                                         ))}
                                     </Select>
                                     <Select
@@ -178,7 +178,7 @@ export default function MessageInput(props: MessageInputProps) {
                                         slotProps={{ button: { sx: { whiteSpace: 'nowrap' } } }}
                                         onChange={(event, value) => {
                                             setModel(value);
-                                            handleChangeModel(value)
+                                            handleChangeModel(value);
                                         }}
                                         value={model}
                                     >
@@ -186,7 +186,9 @@ export default function MessageInput(props: MessageInputProps) {
                                             請選擇模型
                                         </Option>
                                         {types.map((model: any, index: number) => (
-                                            <Option key={index} value={model.value}>{model.name}</Option>
+                                            <Option key={index} value={model.value}>
+                                                {model.name}
+                                            </Option>
                                         ))}
                                     </Select>
                                 </Box>

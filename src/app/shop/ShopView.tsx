@@ -39,7 +39,9 @@ export default function ShopView(props: ViewProps) {
                             justifyContent: 'center'
                         }}
                     >
-                        <Typography level="h2" component="h1">商城</Typography>
+                        <Typography level="h2" component="h1">
+                            商城
+                        </Typography>
                     </Box>
                     <Typography level="title-md">Recommended LLM Functions</Typography>
                     <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2, maxWidth: '80rem' }}>

@@ -90,34 +90,53 @@ function ProjectDetailView(props: ProjectDetailViewProps) {
                             justifyContent: 'space-between'
                         }}
                     >
-                        <Button color="primary" variant="plain"
+                        <Button
+                            color="primary"
+                            variant="plain"
                             startDecorator={<KeyboardArrowLeftIcon />}
                             onClick={() => {
                                 router.back();
-                            }}>
+                            }}
+                        >
                             返回
                         </Button>
 
-                        <Typography level="h2" component="h1">工作流</Typography>
+                        <Typography level="h2" component="h1">
+                            工作流
+                        </Typography>
 
-                        <Box sx={{ width: '20%' }}>
-                        </Box>
+                        <Box sx={{ width: '20%' }}></Box>
                     </Box>
 
                     <Card>
-                        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <Box
+                            sx={{
+                                display: 'flex',
+                                justifyContent: 'space-between',
+                                alignItems: 'center'
+                            }}
+                        >
                             <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
-                                <Typography level="title-lg" fontWeight={700}> {project?.name} </Typography>
-                                <Link underline='always' fontWeight={500} fontSize={14}
+                                <Typography level="title-lg" fontWeight={700}>
+                                    {' '}
+                                    {project?.name}{' '}
+                                </Typography>
+                                <Link
+                                    underline="always"
+                                    fontWeight={500}
+                                    fontSize={14}
                                     href={`/project/edit?id=${project?.id}`}
-                                >編輯</Link>
+                                >
+                                    編輯
+                                </Link>
                                 <Typography> {project?.description} </Typography>
                             </Box>
                             <Button
                                 color="primary"
                                 size="sm"
                                 startDecorator={<PlayArrowTwoToneIcon />}
-                                onClick={() => { }}>
+                                onClick={() => {}}
+                            >
                                 開始
                             </Button>
                         </Box>
@@ -125,7 +144,8 @@ function ProjectDetailView(props: ProjectDetailViewProps) {
                         {project && (
                             <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
                                 <Typography>狀態: 進行中</Typography>
-                                <Switch variant="solid"
+                                <Switch
+                                    variant="solid"
                                     checked={hideCompletedTask}
                                     onChange={() => {
                                         setHideCompleted(!hideCompletedTask);
@@ -136,10 +156,10 @@ function ProjectDetailView(props: ProjectDetailViewProps) {
                         )}
                     </Card>
 
-                    <Tabs defaultValue="tasks"
-                        sx={{ bgcolor: 'transparent' }}
-                    >
-                        <TabList underlinePlacement="bottom" size="sm"
+                    <Tabs defaultValue="tasks" sx={{ bgcolor: 'transparent' }}>
+                        <TabList
+                            underlinePlacement="bottom"
+                            size="sm"
                             sx={{
                                 display: 'flex',
                                 pl: { xs: 0, md: 4 },
@@ -157,13 +177,20 @@ function ProjectDetailView(props: ProjectDetailViewProps) {
                                         }
                                     }
                                 }
-                            }}>
-                            <Tab value="tasks" indicatorPlacement="bottom"
-                                sx={{ borderRadius: '6px 6px 0 0' }}>
+                            }}
+                        >
+                            <Tab
+                                value="tasks"
+                                indicatorPlacement="bottom"
+                                sx={{ borderRadius: '6px 6px 0 0' }}
+                            >
                                 任務
                             </Tab>
-                            <Tab value="logs" indicatorPlacement="bottom"
-                                sx={{ borderRadius: '6px 6px 0 0' }}>
+                            <Tab
+                                value="logs"
+                                indicatorPlacement="bottom"
+                                sx={{ borderRadius: '6px 6px 0 0' }}
+                            >
                                 操作日誌
                             </Tab>
                         </TabList>
@@ -185,8 +212,8 @@ function ProjectDetailView(props: ProjectDetailViewProps) {
                             </div>
                         </TabPanel>
                     </Tabs>
-                </Box >
-            </Box >
+                </Box>
+            </Box>
         </>
     );
 }

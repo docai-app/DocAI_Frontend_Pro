@@ -27,7 +27,7 @@ export default function MessagesPane(props: MessagesPaneProps) {
     const [chatMessages, setChatMessages] = React.useState<MessageProps[]>([]);
     const [textAreaValue, setTextAreaValue] = React.useState('');
     const [model, setModel] = React.useState<'none' | 'chart' | 'statistics'>('none');
-    const [sender, setSender] = React.useState<UserProps>()
+    const [sender, setSender] = React.useState<UserProps>();
 
     React.useEffect(() => {
         if (chat) {
@@ -42,7 +42,7 @@ export default function MessagesPane(props: MessagesPaneProps) {
                 return c.id == chat.id;
             });
             setChatMessages(_chat?.messages || []);
-            setSender(chat.sender)
+            setSender(chat.sender);
         }
     }, [chat]);
 
@@ -94,7 +94,6 @@ export default function MessagesPane(props: MessagesPaneProps) {
      * @param message
      */
     const addMessageToLocalStorage = (message: any) => {
-
         let localChats: any = getChatsFromLocalStorage();
 
         const _chats = _.map(localChats, (cha: ChatProps) => {
@@ -109,12 +108,12 @@ export default function MessagesPane(props: MessagesPaneProps) {
             }
         });
         // console.log('_chats', _chats);
-        saveChatsToLocalSrory(_chats)
+        saveChatsToLocalSrory(_chats);
     };
 
     const updateChatSender = (_sender: UserProps) => {
         let localChats: any = getChatsFromLocalStorage();
-        setSender(_sender)
+        setSender(_sender);
         const _chats = _.map(localChats, (cha: ChatProps) => {
             if (cha?.id == chat?.id) {
                 return {
@@ -125,15 +124,15 @@ export default function MessagesPane(props: MessagesPaneProps) {
                 return cha;
             }
         });
-        saveChatsToLocalSrory(_chats)
-    }
+        saveChatsToLocalSrory(_chats);
+    };
 
     function getChatsFromLocalStorage() {
         let localChats: any = window.localStorage?.getItem(
             'chat_by_' + window.localStorage?.getItem('email')
         );
         localChats = JSON.parse(localChats) || [];
-        return localChats
+        return localChats;
     }
 
     function saveChatsToLocalSrory(localChats: any) {
