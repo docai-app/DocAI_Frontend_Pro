@@ -3,11 +3,9 @@ import Tab, { tabClasses } from '@mui/joy/Tab';
 import TabList from '@mui/joy/TabList';
 import TabPanel from '@mui/joy/TabPanel';
 import Tabs from '@mui/joy/Tabs';
-import { PlusIcon } from '@heroicons/react/24/outline';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { Folder } from '../../components/common/Widget/FolderTree';
-// import HeaderBreadCrumb from '../../components/common/Widget/HeaderBreadCrumb';
 import MyDateDropdown from '../../components/common/Widget/MyDateDropdown';
 import PaginationView from '../../components/common/Widget/PaginationView';
 import ProjectItem from '../../components/project/ProjectItem';
@@ -226,73 +224,6 @@ function ProjectView(props: ProjectViewProps) {
                             />
                         </TabPanel>
                     </Tabs>
-
-                    {/* <div className="mt-4 pb-4">
-                            <div className="flex flex-row justify-between items-center  py-2">
-                                <ul className="flex flex-row -my-px">
-                                    <li
-                                        onClick={() => setCurrentTypeTab('tasks')}
-                                        className={`p-4 cursor-pointer ${currentTypeTab === 'tasks'
-                                            ? 'text-indigo-700 border-b-2 border-indigo-700'
-                                            : 'text-gray-400'
-                                            } font-bold text-sm`}
-                                    >
-                                        待辦事項
-                                    </li>
-                                    <li
-                                        onClick={() => setCurrentTypeTab('project_workflow')}
-                                        className={`p-4 cursor-pointer ${currentTypeTab === 'project_workflow'
-                                            ? 'text-indigo-700 border-b-2 border-indigo-700'
-                                            : 'text-gray-400'
-                                            } font-bold text-sm`}
-                                    >
-                                        工作流
-                                    </li>
-                                </ul>
-                                {currentTypeTab == 'tasks' && (
-                                    <button
-                                        type="button"
-                                        className="relative inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                                        onClick={() => {
-                                            handleClickAdd();
-                                        }}
-                                    >
-                                        <PlusIcon className="h-4" />
-                                        <span>新增</span>
-                                    </button>
-                                )}
-                            </div>
-                            <div className="my-2 hidden">
-                                <MyDateDropdown
-                                    value={status}
-                                    datas={statusDatas}
-                                    onSwitch={onSwitchStatus}
-                                />
-                            </div>
-                            {currentTypeTab == 'tasks' && (
-                                <div className="mt-0 rounded-lg">
-                                    <StepsListView
-                                        tasks={tasks}
-                                        setTasks={setTasks}
-                                        users={users}
-                                        showArrow={false}
-                                        showProjectName={true}
-                                        chain_features={chain_features}
-                                    />
-                                    <PaginationView meta={metaSteps} pathname={'/project'} params={null} />
-                                </div>
-                            )}
-                            {currentTypeTab == 'project_workflow' && (
-                                <div>
-                                    <ProjectItem
-                                        projects={projects}
-                                        setVisiable={setVisiable}
-                                        setProject={setProject}
-                                        meta={meta}
-                                    />
-                                </div>
-                            )}
-                        </div>*/}
 
                     <EditTaskModal
                         title={currentTask ? '編輯任務' : '新增任務'}
