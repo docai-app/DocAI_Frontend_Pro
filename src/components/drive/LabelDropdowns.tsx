@@ -31,7 +31,8 @@ export default function LabelDropdowns(props: DropdownsProps) {
                         color="primary"
                         variant="soft"
                         startDecorator={<InsertDriveFileIcon />}
-                        slotProps={{ action: { component: 'a' } }}>
+                        slotProps={{ action: { component: 'a' } }}
+                    >
                         {label?.name}({label.taggings_count || 0})
                     </Chip>
                 </Menu.Button>
@@ -46,8 +47,6 @@ export default function LabelDropdowns(props: DropdownsProps) {
                 leaveFrom="transform opacity-100 scale-100"
                 leaveTo="transform opacity-0 scale-95"
             >
-
-
                 <Menu.Items className=" origin-bottom-left absolute z-10 bottom-10 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black  divide-y divide-gray-100 ring-opacity-5 focus:outline-none">
                     <div className="py-1">
                         <Menu.Item>

@@ -61,7 +61,9 @@ export default function EditLabel(props: EditLabelProps) {
     return (
         <React.Fragment>
             <Modal open={open} onClose={() => setOpen(false)}>
-                <ModalDialog sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                <ModalDialog
+                    sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
+                >
                     {/* This element is to trick the browser into centering the modal contents. */}
                     {/* <span
                         className="hidden sm:inline-block sm:align-middle sm:h-screen"
@@ -70,10 +72,7 @@ export default function EditLabel(props: EditLabelProps) {
                         &#8203;
                     </span> */}
                     <DialogTitle>
-                        <PencilSquareIcon
-                            className="h-6 w-6 text-sky-600"
-                            aria-hidden="true"
-                        />
+                        <PencilSquareIcon className="h-6 w-6 text-sky-600" aria-hidden="true" />
                         {tag ? '編輯標籤' : '新增標籤'}
                     </DialogTitle>
                     <form
@@ -87,61 +86,75 @@ export default function EditLabel(props: EditLabelProps) {
                         <Stack spacing={2}>
                             <FormControl>
                                 <FormLabel>名稱:</FormLabel>
-                                <Input autoFocus required
+                                <Input
+                                    autoFocus
+                                    required
                                     id="type"
                                     name="type"
                                     type="string"
                                     defaultValue={tag && tag.name}
                                     onChange={async (e) => {
                                         setNewLabelName(e.target.value);
-                                    }} />
+                                    }}
+                                />
                                 {tag && tagTypes && tagTypes?.functions && (
                                     <Box sx={{ display: 'flex', gap: 2 }}>
                                         <FormLabel>名稱:</FormLabel>
-                                        {tagTypes?.functions?.map(
-                                            (item: any, index: number) => {
-                                                return (
-                                                    <Checkbox key={index} color="primary" variant="solid"
-                                                        name={item.title}
-                                                        defaultChecked={!isContain(item.id)}
-                                                        onChange={(e) => {
-                                                            if (e.target.checked) {
-                                                                updateTagFunctionsHandler(
-                                                                    tag.id,
-                                                                    item.id
-                                                                );
-                                                            } else {
-                                                                deleteTagFunctionsHandler(
-                                                                    tag.id,
-                                                                    item.id
-                                                                );
-                                                            }
-                                                        }}
+                                        {tagTypes?.functions?.map((item: any, index: number) => {
+                                            return (
+                                                <Checkbox
+                                                    key={index}
+                                                    color="primary"
+                                                    variant="solid"
+                                                    name={item.title}
+                                                    defaultChecked={!isContain(item.id)}
+                                                    onChange={(e) => {
+                                                        if (e.target.checked) {
+                                                            updateTagFunctionsHandler(
+                                                                tag.id,
+                                                                item.id
+                                                            );
+                                                        } else {
+                                                            deleteTagFunctionsHandler(
+                                                                tag.id,
+                                                                item.id
+                                                            );
+                                                        }
+                                                    }}
                                                     // sx={{ [`& > .${checkboxClasses.checkbox}`]: { position: 'relative' } }}
-                                                    // slotProps={{ action: { className: checkboxClasses.focusVisible } }} 
-                                                    />
-                                                );
-                                            })
-                                        }
+                                                    // slotProps={{ action: { className: checkboxClasses.focusVisible } }}
+                                                />
+                                            );
+                                        })}
                                     </Box>
                                 )}
                             </FormControl>
 
-                            <Box sx={{ display: 'flex', flexDirection: 'row', gap: 2, justifyContent: 'center' }}>
+                            <Box
+                                sx={{
+                                    display: 'flex',
+                                    flexDirection: 'row',
+                                    gap: 2,
+                                    justifyContent: 'center'
+                                }}
+                            >
                                 <Button
                                     onClick={() => {
                                         setFeature('');
                                         setOpen(false);
                                     }}
                                     ref={cancelButtonRef}
-                                >取消</Button>
-                                <Button color="neutral" type="submit">確認</Button>
+                                >
+                                    取消
+                                </Button>
+                                <Button color="neutral" type="submit">
+                                    確認
+                                </Button>
                             </Box>
                         </Stack>
                     </form>
                 </ModalDialog>
             </Modal>
-        </React.Fragment >
-
+        </React.Fragment>
     );
 }

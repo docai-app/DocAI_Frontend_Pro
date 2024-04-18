@@ -127,11 +127,14 @@ function LabelView(props: ViewProps) {
                             justifyContent: 'space-between'
                         }}
                     >
-                        <Button color="primary" variant="plain"
+                        <Button
+                            color="primary"
+                            variant="plain"
                             startDecorator={<KeyboardArrowLeftIcon />}
                             onClick={() => {
                                 router.back();
-                            }}>
+                            }}
+                        >
                             返回
                         </Button>
 
@@ -144,24 +147,31 @@ function LabelView(props: ViewProps) {
                                 color="primary"
                                 startDecorator={<Add />}
                                 size="sm"
-                                onClick={() => { setOpen(true); }}>
+                                onClick={() => {
+                                    setOpen(true);
+                                }}
+                            >
                                 新增
                             </Button>
                         </Box>
                     </Box>
 
-                    {sortedLabels && <LabelTable
-                        labels={sortedLabels}
-                        updateLabelNameByIdHandler={updateLabelNameByIdHandler}
-                    />}
+                    {sortedLabels && (
+                        <LabelTable
+                            labels={sortedLabels}
+                            updateLabelNameByIdHandler={updateLabelNameByIdHandler}
+                        />
+                    )}
 
                     <Divider sx={{ mt: 1, '--Divider-childPosition': `45%` }} color="primary">
                         <Typography level="h4">待查核標籤</Typography>
                     </Divider>
-                    {sortedUnCheckLabels && <LabelTable
-                        labels={sortedUnCheckLabels}
-                        updateLabelNameByIdHandler={updateLabelNameByIdHandler}
-                    />}
+                    {sortedUnCheckLabels && (
+                        <LabelTable
+                            labels={sortedUnCheckLabels}
+                            updateLabelNameByIdHandler={updateLabelNameByIdHandler}
+                        />
+                    )}
                 </Box>
             </Box>
         </>

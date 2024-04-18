@@ -52,8 +52,10 @@ export default function DocumentPath(props: DocumentPathProps) {
 
     return (
         <>
-            <Card >
-                <Typography level="h2" fontSize="md">儲存路徑</Typography>
+            <Card>
+                <Typography level="h2" fontSize="md">
+                    儲存路徑
+                </Typography>
                 <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
                     <Box sx={{ display: 'flex', alignItems: 'center' }} fontSize={14}>
                         <FolderIcon className="h-6 text-blue-200 mr-1" />
@@ -67,15 +69,17 @@ export default function DocumentPath(props: DocumentPathProps) {
                         {documentPath && documentPath[documentPath.length - 1].name}
                     </Box>
                     {canEditPath && (
-                        <Link underline='always'
+                        <Link
+                            underline="always"
                             onClick={() => {
                                 setMode(modeType);
-                            }}>
+                            }}
+                        >
                             編輯
                         </Link>
                     )}
                 </Box>
-            </Card >
+            </Card>
 
             <FolderTreeForSelect
                 {...{

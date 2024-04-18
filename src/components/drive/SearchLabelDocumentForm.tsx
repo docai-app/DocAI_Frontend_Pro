@@ -43,22 +43,27 @@ export default function SearchLabelDocumentForm(props: any) {
                         borderRadius: 'sm',
                         flexShrink: 1,
                         px: 1,
-                        py: 1.5,
-                    }}>
+                        py: 1.5
+                    }}
+                >
                     <Box
                         sx={{
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'space-between',
-                            mx: 1,
+                            mx: 1
                         }}
                     >
-                        <Typography level="title-lg" fontSize={16}>標籤:</Typography>
-                        <Link variant="plain" fontSize={14}
-                            href={'/setting/label'}>
-                            <Chip variant="solid" color="primary"
+                        <Typography level="title-lg" fontSize={16}>
+                            標籤:
+                        </Typography>
+                        <Link variant="plain" fontSize={14} href={'/setting/label'}>
+                            <Chip
+                                variant="solid"
+                                color="primary"
                                 startDecorator={<BookmarksSharpIcon />}
-                                sx={{px:1.5}}>
+                                sx={{ px: 1.5 }}
+                            >
                                 標籤管理
                             </Chip>
                         </Link>
@@ -78,13 +83,7 @@ export default function SearchLabelDocumentForm(props: any) {
                                     label={tag}
                                     key={index}
                                     search={() => {
-                                        props.search(
-                                            tag.name,
-                                            tag.id,
-                                            content,
-                                            startDate,
-                                            endDate
-                                        );
+                                        props.search(tag.name, tag.id, content, startDate, endDate);
                                     }}
                                     visibleFromFilling={tag?.form_schema}
                                     from_filling={() => {
@@ -113,7 +112,14 @@ export default function SearchLabelDocumentForm(props: any) {
                         })}
 
                         {tags != null && (
-                            <Link fontWeight={500} fontSize={12} underline="always" onClick={() => { setVisible(!visible); }}>
+                            <Link
+                                fontWeight={500}
+                                fontSize={12}
+                                underline="always"
+                                onClick={() => {
+                                    setVisible(!visible);
+                                }}
+                            >
                                 {visible ? '查看更多' : '隱藏'}
                             </Link>
                         )}
@@ -127,11 +133,14 @@ export default function SearchLabelDocumentForm(props: any) {
                         type="search"
                         name="content"
                         id="content"
-                        placeholder="輸入文件的關鍵字或文件的相關内容" variant="outlined"
-                        onChange={(e) => { setContent(e.target.value); }}
+                        placeholder="輸入文件的關鍵字或文件的相關内容"
+                        variant="outlined"
+                        onChange={(e) => {
+                            setContent(e.target.value);
+                        }}
                     />
                 </Sheet>
-            </React.Fragment >
+            </React.Fragment>
         </>
     );
 }

@@ -71,15 +71,15 @@ export default function DriveView(props: DriveViewProps) {
         showAllItemsData = null,
         showAllItemsLoading = null,
         mode = 'view',
-        setMode = () => { },
+        setMode = () => {},
         target = [],
-        setTarget = () => { },
+        setTarget = () => {},
         dest = null,
-        setDest = () => { },
+        setDest = () => {},
         shareWith = [],
-        setShareWith = () => { },
-        handleShare = async () => { },
-        handleNewFolder = async () => { },
+        setShareWith = () => {},
+        handleShare = async () => {},
+        handleNewFolder = async () => {},
         countDocumentsByDateData = null,
         current,
         setCurrent,
@@ -161,19 +161,17 @@ export default function DriveView(props: DriveViewProps) {
                         <Box
                             sx={{
                                 display: 'flex',
-                                flexDirection:'column',
+                                flexDirection: 'column',
                                 alignItems: 'flex-end',
-                                gap:1,
-                                width: '20%' 
+                                gap: 1,
+                                width: '20%'
                             }}
                         >
-                            <Link fontWeight={500} fontSize={12}
-                                color="primary"
-                                underline="always"
-                            >
+                            <Link fontWeight={500} fontSize={12} color="primary" underline="always">
                                 智能文檔處理
                             </Link>
-                            <Button size='sm'
+                            <Button
+                                size="sm"
                                 color="primary"
                                 startDecorator={<Add />}
                                 endDecorator={<KeyboardDoubleArrowDownIcon />}
@@ -181,13 +179,11 @@ export default function DriveView(props: DriveViewProps) {
                                 新增
                             </Button>
                         </Box>
-
                     </Box>
 
                     <DriveTable />
 
                     <SearchLabelDocumentForm getAllLabelsData={getAllLabelsData} search={search} />
-                
                 </Box>
             </Box>
         </>

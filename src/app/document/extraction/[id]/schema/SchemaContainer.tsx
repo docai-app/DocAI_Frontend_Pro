@@ -62,7 +62,7 @@ export default function SchemaContainer() {
     useEffect(() => {
         setActionContent('正在加載數據');
         if (router && id) {
-            console.log('id', id)
+            console.log('id', id);
             getTagById({
                 ...apiSetting.Tag.getTagById(id.toString())
             });

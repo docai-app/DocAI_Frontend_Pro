@@ -6,6 +6,7 @@ import { Box, Breadcrumbs, FormControl, FormLabel, Link, Typography } from '@mui
 import * as React from 'react';
 
 import SearchFilterView from '@/components/Search/SearchFilterView';
+import SearchSourceView from '@/components/Search/SearchSourceView';
 import SearchTree from '@/components/Search/SearchTree';
 interface ViewProps {
     data: any;
@@ -109,8 +110,10 @@ function SearchView(props: ViewProps) {
                         }}
                     />
                 </Box>
-
-                <SearchTree tree={searchTreeData} getAllLabelsData={getAllLabelsData} />
+                <Box height={'80%'} overflow={'auto'}>
+                    <SearchTree tree={searchTreeData} getAllLabelsData={getAllLabelsData} />
+                </Box>
+                <SearchSourceView />
             </React.Fragment>
         </>
     );

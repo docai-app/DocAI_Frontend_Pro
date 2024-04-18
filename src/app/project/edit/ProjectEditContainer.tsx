@@ -90,7 +90,9 @@ export default function ProjectEditContainer() {
     useEffect(() => {
         if (router && searchParams.get('id')) {
             getProjectWorkflowById({
-                ...apiSetting.ProjectWorkflow.getProjectWorkflowById(searchParams.get('id') as string)
+                ...apiSetting.ProjectWorkflow.getProjectWorkflowById(
+                    searchParams.get('id') as string
+                )
             });
         }
         if (router && searchParams.get('template')) {

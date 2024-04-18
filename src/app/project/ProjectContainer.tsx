@@ -92,7 +92,7 @@ export default function ProjectContainer() {
     }, [getAllUsersData]);
 
     const addProjectStepHandler = useCallback(
-        async (data:any) => {
+        async (data: any) => {
             console.log(data);
             // console.log(project?.id);
             const { name, description, deadline, assignee_id } = data;
