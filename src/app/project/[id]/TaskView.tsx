@@ -1,10 +1,10 @@
 import { ChevronLeftIcon } from '@heroicons/react/20/solid';
-import Router, { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import OGView from '../../../components/common/Widget/OGView';
 import Progress from '../../../components/common/Widget/Progress';
-import EditTaskModal from '../../../components/feature/project/task/EditTaskModal';
-import TaskRow from '../../../components/feature/project/task/TaskRow';
+import EditTaskModal from '../../../components/project/task/EditTaskModal';
+import TaskRow from '../../../components/project/task/TaskRow';
 
 interface TaskViewProps {
     project: any;
@@ -28,7 +28,7 @@ function TaskView(props: TaskViewProps) {
     } = props;
     const [mode, setMode] = useState('');
     const [currentTask, setCurrentTask] = useState<any>(null);
-    const route = useRouter();
+    const router = useRouter();
     return (
         <>
             <div className="w-full mx-auto h-[calc(100vh-18.5rem)] px-1 sm:px-0 lg:px-8 mb-6">
@@ -38,7 +38,7 @@ function TaskView(props: TaskViewProps) {
                             <ChevronLeftIcon
                                 className="w-8 h-8 mr-2 text-gray-500 hover:bg-slate-50 cursor-pointer"
                                 onClick={() => {
-                                    Router.back();
+                                    router.back();
                                 }}
                             />
                             <h1 className="text-md font-bold text-gray-900">{project?.name}</h1>
