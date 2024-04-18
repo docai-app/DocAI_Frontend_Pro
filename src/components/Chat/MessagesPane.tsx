@@ -1,6 +1,6 @@
 import Api from '@/apis';
 import useAlert from '@/hooks/useAlert';
-import { ChatProps, MessageProps } from '@/utils/types';
+import { ChatProps, MessageProps, UserProps } from '@/utils/types';
 import Box from '@mui/joy/Box';
 import Sheet from '@mui/joy/Sheet';
 import Stack from '@mui/joy/Stack';
@@ -27,6 +27,7 @@ export default function MessagesPane(props: MessagesPaneProps) {
     const [chatMessages, setChatMessages] = React.useState<MessageProps[]>([]);
     const [textAreaValue, setTextAreaValue] = React.useState('');
     const [model, setModel] = React.useState<'none' | 'chart' | 'statistics'>('none');
+    const [sender, setSender] = React.useState<UserProps>()
 
     React.useEffect(() => {
         if (chat) {
@@ -40,11 +41,8 @@ export default function MessagesPane(props: MessagesPaneProps) {
             const _chat = _.find(localChats, function (c) {
                 return c.id == chat.id;
             });
-            console.log('localChats', localChats);
-
-            console.log('_chat', _chat);
-
             setChatMessages(_chat?.messages || []);
+            setSender(chat.sender)
         }
     }, [chat]);
 
@@ -82,7 +80,7 @@ export default function MessagesPane(props: MessagesPaneProps) {
     const addMessageToChat = (content: any, type?: string) => {
         const message: MessageProps = {
             id: v4(),
-            sender: chat?.sender || 'You',
+            sender: sender || 'You',
             content: content,
             type: type || 'text',
             created_at: moment().format('YYYY-MM-DD HH:mm')
@@ -96,16 +94,8 @@ export default function MessagesPane(props: MessagesPaneProps) {
      * @param message
      */
     const addMessageToLocalStorage = (message: any) => {
-        const tmp: any = window.localStorage?.getItem(
-            'chat_by_' + window.localStorage?.getItem('email')
-        );
 
-        let localChats: any = [];
-
-        if (tmp && !_.isEmpty(tmp)) {
-            localChats = JSON.parse(tmp);
-        }
-        console.log('localChats', localChats);
+        let localChats: any = getChatsFromLocalStorage();
 
         const _chats = _.map(localChats, (cha: ChatProps) => {
             if (cha?.id == chat?.id) {
@@ -118,12 +108,39 @@ export default function MessagesPane(props: MessagesPaneProps) {
                 return cha;
             }
         });
-        console.log('_chats', _chats);
+        // console.log('_chats', _chats);
+        saveChatsToLocalSrory(_chats)
+    };
 
+    const updateChatSender = (_sender: UserProps) => {
+        let localChats: any = getChatsFromLocalStorage();
+        setSender(_sender)
+        const _chats = _.map(localChats, (cha: ChatProps) => {
+            if (cha?.id == chat?.id) {
+                return {
+                    ...cha,
+                    sender: _sender
+                };
+            } else {
+                return cha;
+            }
+        });
+        saveChatsToLocalSrory(_chats)
+    }
+
+    function getChatsFromLocalStorage() {
+        let localChats: any = window.localStorage?.getItem(
+            'chat_by_' + window.localStorage?.getItem('email')
+        );
+        localChats = JSON.parse(localChats) || [];
+        return localChats
+    }
+
+    function saveChatsToLocalSrory(localChats: any) {
         try {
             window.localStorage?.setItem(
                 'chat_by_' + window.localStorage?.getItem('email'),
-                JSON.stringify(_chats)
+                JSON.stringify(localChats)
             );
         } catch (error) {
             setAlert({
@@ -131,7 +148,7 @@ export default function MessagesPane(props: MessagesPaneProps) {
                 type: 'error'
             });
         }
-    };
+    }
 
     const handleGeneralMessage = async (prompt: string) => {
         if (prompt) {
@@ -184,7 +201,7 @@ export default function MessagesPane(props: MessagesPaneProps) {
                 backgroundColor: '#eff7fe'
             }}
         >
-            <MessagesPaneHeader sender={chat?.sender} />
+            <MessagesPaneHeader sender={sender} />
             <Box
                 sx={{
                     display: 'flex',
@@ -204,6 +221,7 @@ export default function MessagesPane(props: MessagesPaneProps) {
                                 key={index}
                                 direction="row"
                                 spacing={1}
+                                width={'100%'}
                                 flexDirection={isYou ? 'row-reverse' : 'row'}
                             >
                                 {message.sender !== 'You' && (
@@ -222,6 +240,8 @@ export default function MessagesPane(props: MessagesPaneProps) {
                 setModel={setModel}
                 getAllLabelsData={getAllLabelsData}
                 getAllSchemasData={getAllSchemasData}
+                sender={sender}
+                updateChatSender={updateChatSender}
                 onSubmit={() => {
                     const message: MessageProps = {
                         id: v4(),

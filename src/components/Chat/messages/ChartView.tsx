@@ -1,3 +1,4 @@
+import { Box } from '@mui/joy';
 import parse from 'html-react-parser';
 import { useEffect } from 'react';
 interface ViewProps {
@@ -25,9 +26,9 @@ export default function ChartView(props: ViewProps) {
     const parsedContent = bodyContent && bodyContent.length > 1 ? bodyContent[1] : '';
     return (
         <>
-            <div id={`chart${position}`} className="w-full flex flex-col items-center p-0">
+            <Box id={`chart${position}`} className="w-[500px] flex flex-col items-center p-0">
                 {parse(parsedContent)}
-            </div>
+            </Box>
         </>
     );
 }

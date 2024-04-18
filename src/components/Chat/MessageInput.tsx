@@ -1,10 +1,12 @@
-import { SmartExtractionSchema } from '@/utils/types';
+import { ModelTypes } from '@/utils/constant';
+import { SmartExtractionSchema, UserProps } from '@/utils/types';
 import SendRoundedIcon from '@mui/icons-material/SendRounded';
 import { Select, Stack } from '@mui/joy';
 import Box from '@mui/joy/Box';
 import Button from '@mui/joy/Button';
 import Option from '@mui/joy/Option';
 import Textarea from '@mui/joy/Textarea';
+import _ from 'lodash';
 import * as React from 'react';
 import SelectSourceModal from './modals/SelectSourceModal';
 
@@ -16,6 +18,8 @@ export type MessageInputProps = {
     setModel: any;
     getAllLabelsData: any;
     getAllSchemasData: any;
+    sender?: UserProps;
+    updateChatSender: any;
 };
 
 export default function MessageInput(props: MessageInputProps) {
@@ -26,14 +30,77 @@ export default function MessageInput(props: MessageInputProps) {
         model,
         setModel,
         getAllLabelsData,
-        getAllSchemasData
+        getAllSchemasData,
+        sender,
+        updateChatSender
     } = props;
     const textAreaRef = React.useRef<HTMLDivElement>(null);
     const [visibleSchema, setVisibleSchema] = React.useState(false);
+    const [types, setTypes] = React.useState<any>([])
+
+    React.useEffect(() => {
+        if (sender?.source) {
+            if (sender?.source.value == 'none')
+                setTypes(ModelTypes['none'])
+            if (sender?.source.value == 'schema')
+                setTypes(ModelTypes['schema'])
+            if (sender?.source.value == 'documents')
+                setTypes(ModelTypes['documents'])
+        }
+    }, [sender?.source])
+    const sources = [
+        {
+            name: '無來源',
+            value: 'none',
+            onClick: () => {
+
+            }
+        },
+        {
+            name: '數據源',
+            value: 'schema',
+            onClick: () => {
+                setVisibleSchema(true)
+            }
+        },
+        {
+            name: '文件夾或文件',
+            value: 'documents',
+            onClick: () => {
+
+            }
+        }
+    ]
 
     const handleChangeSource = (value: any) => {
-        console.log(value);
+        const _source = _.find(sources, function (s) {
+            return s.value == value
+        })
+
+        updateChatSender({
+            ...sender,
+            source: {
+                name: _source?.name,
+                value: _source?.value
+            }
+        })
     };
+
+    const handleChangeModel = (value: any) => {
+        console.log('value', value);
+
+        const _model = _.find(types, function (s) {
+            return s.value == value
+        })
+        console.log('_model', _model);
+
+
+        updateChatSender({
+            ...sender,
+            model_type: _model
+        })
+    };
+
     const handleClick = () => {
         if (textAreaValue.trim() !== '') {
             onSubmit();
@@ -43,7 +110,13 @@ export default function MessageInput(props: MessageInputProps) {
 
     const handleSelectSchema = (schema: SmartExtractionSchema) => {
         setVisibleSchema(false);
-        console.log(schema);
+        updateChatSender({
+            ...sender,
+            source: {
+                ...sender?.source,
+                schema: schema
+            }
+        })
     };
     return (
         <>
@@ -85,20 +158,15 @@ export default function MessageInput(props: MessageInputProps) {
                                             mx: 1
                                         }}
                                         slotProps={{ button: { sx: { whiteSpace: 'nowrap' } } }}
-                                        onChange={(event, value) => handleChangeSource(value)}
+                                        onChange={(event, value) => { handleChangeSource(value) }}
+                                        value={sender?.source?.value || ''}
                                     >
                                         <Option value={''} disabled>
                                             請選擇來源
                                         </Option>
-                                        <Option value={'none'}>無來源</Option>
-                                        <Option
-                                            value={'schema'}
-                                            onClick={() => setVisibleSchema(true)}
-                                        >
-                                            數據源
-                                        </Option>
-                                        <Option value={'documents'}>文件夾或文件</Option>
-                                        {/* <Option value={'chatbot'}>機器人</Option> */}
+                                        {sources.map((so) => (
+                                            <Option key={so.value} value={so.value} onClick={so.onClick} >{so.name}</Option>
+                                        ))}
                                     </Select>
                                     <Select
                                         size="sm"
@@ -110,14 +178,16 @@ export default function MessageInput(props: MessageInputProps) {
                                         slotProps={{ button: { sx: { whiteSpace: 'nowrap' } } }}
                                         onChange={(event, value) => {
                                             setModel(value);
+                                            handleChangeModel(value)
                                         }}
                                         value={model}
                                     >
                                         <Option value={''} disabled>
                                             請選擇模型
                                         </Option>
-                                        <Option value={'chart'}>圖表</Option>
-                                        <Option value={'statistics'}>統計</Option>
+                                        {types.map((model: any, index: number) => (
+                                            <Option key={index} value={model.value}>{model.name}</Option>
+                                        ))}
                                     </Select>
                                 </Box>
                             </div>

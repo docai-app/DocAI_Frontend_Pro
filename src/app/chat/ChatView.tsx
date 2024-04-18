@@ -5,10 +5,11 @@ interface ViewProps {
     chats: any;
     getAllLabelsData: any;
     getAllSchemasData: any;
+    handleAddChat: any;
 }
 
 function ChatView(props: ViewProps) {
-    const { chats, getAllLabelsData, getAllSchemasData } = props;
+    const { chats, getAllLabelsData, getAllSchemasData, handleAddChat } = props;
 
     return (
         <>
@@ -17,6 +18,7 @@ function ChatView(props: ViewProps) {
                     chats={chats}
                     getAllLabelsData={getAllLabelsData}
                     getAllSchemasData={getAllSchemasData}
+                    handleAddChat={handleAddChat}
                 />
             </Box>
         </>

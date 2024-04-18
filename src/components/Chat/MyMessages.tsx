@@ -9,9 +9,10 @@ interface ViewProps {
     chats: ChatProps[];
     getAllLabelsData: any;
     getAllSchemasData: any;
+    handleAddChat: any;
 }
-export default function MyProfile(props: ViewProps) {
-    const { chats, getAllLabelsData, getAllSchemasData } = props;
+export default function MyMessages(props: ViewProps) {
+    const { chats, getAllLabelsData, getAllSchemasData, handleAddChat } = props;
 
     const [selectedChat, setSelectedChat] = React.useState<ChatProps>();
     React.useEffect(() => {
@@ -51,6 +52,7 @@ export default function MyProfile(props: ViewProps) {
                     chats={chats}
                     selectedChatId={selectedChat?.id || ''}
                     setSelectedChat={setSelectedChat}
+                    handleAddChat={handleAddChat}
                 />
             </Sheet>
             <MessagesPane

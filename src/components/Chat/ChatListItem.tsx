@@ -42,7 +42,7 @@ export default function ChatListItem(props: ChatListItemProps) {
                         <AvatarWithStatus online={sender.online} src={sender.avatar} />
                         <Box sx={{ flex: 1 }}>
                             <Typography level="title-sm">{sender.name}</Typography>
-                            <Typography level="body-sm">{sender.username}</Typography>
+                            <Typography level="body-sm">{sender.source?.name}</Typography>
                             <Box
                                 sx={{
                                     lineHeight: 1.5,
@@ -58,7 +58,7 @@ export default function ChatListItem(props: ChatListItemProps) {
                                         (messages.length > 0 &&
                                             messages[messages.length - 1] &&
                                             messages[messages.length - 1].created_at) ||
-                                            moment()
+                                        moment()
                                     ).fromNow()}
                                 </Typography>
                             </Box>

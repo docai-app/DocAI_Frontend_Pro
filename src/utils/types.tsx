@@ -33,8 +33,8 @@ export type UserProps = {
     username: string;
     avatar: string;
     online?: boolean;
-    source: string;
-    model_type?: string;
+    source: any;
+    model_type?: any;
     schema?: SmartExtractionSchema;
 };
 

@@ -11,6 +11,16 @@ import { v4 } from 'uuid';
 import ChatView from './ChatView';
 
 const apiSetting = new Api();
+const newChat = {
+    id: '',
+    sender: {
+        name: '新建聊天',
+        username: '',
+        avatar: '/static/images/avatar/2.jpg',
+        source: ''
+    },
+    messages: []
+}
 
 function ChatContainer() {
     const [data, setData] = React.useState();
@@ -37,38 +47,47 @@ function ChatContainer() {
         if (tmp && tmp.length > 0) {
             setChats(tmp);
         } else {
-            const id = v4();
-            const chas: ChatProps[] = [
-                {
-                    id: id,
-                    sender: {
-                        name: '新建聊天',
-                        username: '',
-                        avatar: '/static/images/avatar/2.jpg',
-                        source: ''
-                    },
-                    messages: []
-                }
-            ];
-
+            tmp = []
+            tmp.push({
+                ...newChat,
+                id: v4()
+            })
             window.localStorage?.setItem(
                 'chat_by_' + window.localStorage?.getItem('email'),
-                JSON.stringify(chas)
+                JSON.stringify(tmp)
             );
-            console.log('chas', chas);
-
-            setChats(chas);
+            setChats(tmp);
         }
         getAllSchemas();
         getAllLabels();
     }, []);
+
+    const handleAddChat = () => {
+        chats?.push({
+            ...newChat,
+            id: v4()
+        })
+        console.log('chats', chats);
+
+        if (chats) {
+            const newChats = [...chats]
+            setChats(newChats)
+        }
+        window.localStorage?.setItem(
+            'chat_by_' + window.localStorage?.getItem('email'),
+            JSON.stringify(chats)
+        );
+        console.log(chats);
+
+    }
 
     return (
         <ChatView
             {...{
                 chats,
                 getAllLabelsData,
-                getAllSchemasData
+                getAllSchemasData,
+                handleAddChat
             }}
         />
     );

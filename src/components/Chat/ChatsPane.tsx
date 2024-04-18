@@ -13,10 +13,11 @@ type ChatsPaneProps = {
     chats: ChatProps[];
     setSelectedChat: (chat: ChatProps) => void;
     selectedChatId: string;
+    handleAddChat: any;
 };
 
 export default function ChatsPane(props: ChatsPaneProps) {
-    const { chats, setSelectedChat, selectedChatId } = props;
+    const { chats, setSelectedChat, selectedChatId, handleAddChat } = props;
     return (
         <Sheet
             sx={{
@@ -58,6 +59,7 @@ export default function ChatsPane(props: ChatsPaneProps) {
                     color="neutral"
                     size="sm"
                     sx={{ display: { xs: 'none', sm: 'unset' } }}
+                    onClick={handleAddChat}
                 >
                     <NotInterestedIcon />
                 </IconButton>

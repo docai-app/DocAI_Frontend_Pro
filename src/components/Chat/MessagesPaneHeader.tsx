@@ -1,10 +1,10 @@
 import { UserProps } from '@/utils/types';
 import ArrowBackIosNewRoundedIcon from '@mui/icons-material/ArrowBackIosNewRounded';
 import MoreVertRoundedIcon from '@mui/icons-material/MoreVertRounded';
-import Avatar from '@mui/joy/Avatar';
 import IconButton from '@mui/joy/IconButton';
 import Stack from '@mui/joy/Stack';
 import Typography from '@mui/joy/Typography';
+import AvatarWithStatus from './AvatarWithStatus';
 import { toggleMessagesPane } from './utils';
 
 type MessagesPaneHeaderProps = {
@@ -37,12 +37,12 @@ export default function MessagesPaneHeader(props: MessagesPaneHeaderProps) {
                 >
                     <ArrowBackIosNewRoundedIcon />
                 </IconButton>
-                <Avatar size="lg" src={sender?.avatar} />
+                <AvatarWithStatus src={sender?.avatar} />
                 <div>
                     <Typography fontWeight="lg" fontSize="lg" component="h2" noWrap>
                         {sender?.name}
                     </Typography>
-                    <Typography level="body-sm">{sender?.username}</Typography>
+                    <Typography level="body-sm">{sender?.source?.name}</Typography>
                 </div>
             </Stack>
             <Stack spacing={1} direction="row" alignItems="center">
