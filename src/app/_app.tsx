@@ -33,18 +33,20 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
         );
     }, [router]);
     return (
-        <SessionProvider session={session}>
-            <AlertProvider>
-                <script src="https://accounts.google.com/gsi/client" async defer></script>
-                <Helmet>
-                    {/* eslint-disable-next-line @next/next/no-sync-scripts */}
-                    <script src="https://code.highcharts.com/highcharts.js"></script>
+        <>
+            <SessionProvider session={session}>
+                <AlertProvider>
                     <script src="https://accounts.google.com/gsi/client" async defer></script>
-                </Helmet>
-                <Component {...pageProps} />
-                <AlertModel />
-            </AlertProvider>
-        </SessionProvider>
+                    <Helmet>
+                        {/* eslint-disable-next-line @next/next/no-sync-scripts */}
+                        <script src="https://code.highcharts.com/highcharts.js"></script>
+                        <script src="https://accounts.google.com/gsi/client" async defer></script>
+                    </Helmet>
+                    <Component {...pageProps} />
+                    <AlertModel />
+                </AlertProvider>
+            </SessionProvider>
+        </>
     );
 }
 

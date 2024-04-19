@@ -10,6 +10,7 @@ import { useRouter } from 'next/navigation';
 import * as React from 'react';
 import { Helmet } from 'react-helmet';
 import './globals.css';
+import { SessionProvider } from 'next-auth/react';
 
 const canUseDOM = typeof window !== 'undefined';
 const useIsomorphicLayoutEffect = canUseDOM ? React.useLayoutEffect : React.useEffect;
@@ -37,14 +38,16 @@ export default function RootLayout(props: { children: React.ReactNode }) {
         <html lang="en">
             <body>
                 <LoadProvider>
-                    <AlertProvider>
-                        <script src="https://accounts.google.com/gsi/client" async defer></script>
-                        <Helmet>
-                            <script src="https://code.highcharts.com/highcharts.js"></script>
-                        </Helmet>
-                        <ThemeRegistry>{props.children}</ThemeRegistry>
-                        <AlertModel />
-                    </AlertProvider>
+                    <SessionProvider>
+                        <AlertProvider>
+                            <script src="https://accounts.google.com/gsi/client" async defer></script>
+                            <Helmet>
+                                <script src="https://code.highcharts.com/highcharts.js"></script>
+                            </Helmet>
+                            <ThemeRegistry>{props.children}</ThemeRegistry>
+                            <AlertModel />
+                        </AlertProvider>
+                    </SessionProvider>
                     <LoadModel />
                 </LoadProvider>
             </body>
