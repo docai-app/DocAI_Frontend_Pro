@@ -29,7 +29,7 @@ export default function MessagesPane(props: MessagesPaneProps) {
     const [textAreaValue, setTextAreaValue] = React.useState('');
     const [model, setModel] = React.useState('');
     const [sender, setSender] = React.useState<UserProps>();
-    const [writing, setWriting] = React.useState(false)
+    const [writing, setWriting] = React.useState(false);
 
     React.useEffect(() => {
         if (chat) {
@@ -45,7 +45,7 @@ export default function MessagesPane(props: MessagesPaneProps) {
             });
             setChatMessages(_chat?.messages || []);
             setSender(chat.sender);
-            setModel(chat.sender?.model_type?.value)
+            setModel(chat.sender?.model_type?.value);
         }
     }, [chat]);
 
@@ -59,7 +59,6 @@ export default function MessagesPane(props: MessagesPaneProps) {
     const [{ data: assistantMessageData, loading: assistantMessageDataing }, assistantMessag] =
         useAxios(apiSetting.Document.assistant_message(''), { manual: true });
 
-
     const [{ data: generateChartData, loading: generateChartLoading }, generateChart] = useAxios(
         '',
         { manual: true }
@@ -72,7 +71,7 @@ export default function MessagesPane(props: MessagesPaneProps) {
 
     const handleSendMessage = () => {
         console.log(sender);
-        setWriting(true)
+        setWriting(true);
         switch (sender?.source?.value) {
             case 'schema':
                 switch (sender?.model_type?.value) {
@@ -92,7 +91,7 @@ export default function MessagesPane(props: MessagesPaneProps) {
             case 'documents':
                 switch (sender?.model_type?.value) {
                     default:
-                        handleDocumentMessage(sender?.source?.document?.id, textAreaValue)
+                        handleDocumentMessage(sender?.source?.document?.id, textAreaValue);
                         break;
                 }
                 break;
@@ -100,7 +99,6 @@ export default function MessagesPane(props: MessagesPaneProps) {
                 handleGeneralMessage(textAreaValue);
                 break;
         }
-
     };
 
     const addMessageToChat = (content: any, type?: string) => {
@@ -118,7 +116,7 @@ export default function MessagesPane(props: MessagesPaneProps) {
     const newMessage = (message: MessageProps) => {
         setChatMessages((arr) => [...arr, message]);
         addMessageToLocalStorage(message);
-    }
+    };
     /**
      * 添加消息到本地
      * @param message
@@ -181,7 +179,9 @@ export default function MessagesPane(props: MessagesPaneProps) {
 
     const handleGeneralMessage = async (prompt: string) => {
         if (prompt) {
-            const res = await getDocAiLLM(apiSetting.Prompt.doc_ai_llm(prompt, sender?.model_type?.value));
+            const res = await getDocAiLLM(
+                apiSetting.Prompt.doc_ai_llm(prompt, sender?.model_type?.value)
+            );
             if (res.data.success) {
                 newMessage({
                     id: v4(),
@@ -189,9 +189,9 @@ export default function MessagesPane(props: MessagesPaneProps) {
                     content: res.data.data.raw_response,
                     type: 'text',
                     created_at: moment().format('YYYY-MM-DD HH:mm')
-                })
+                });
             }
-            setWriting(false)
+            setWriting(false);
         }
     };
 
@@ -210,8 +210,8 @@ export default function MessagesPane(props: MessagesPaneProps) {
         } else {
             console.log(res.data);
         }
-        setWriting(false)
-    }
+        setWriting(false);
+    };
 
     const handlerGenerateChart = async (smart_extraction_schema_id: string, query: string) => {
         if (query) {
@@ -224,7 +224,7 @@ export default function MessagesPane(props: MessagesPaneProps) {
                 console.log(res.data);
                 setAlert({ title: res.data.chart, type: 'error' });
             }
-            setWriting(false)
+            setWriting(false);
         }
     };
 
@@ -244,184 +244,180 @@ export default function MessagesPane(props: MessagesPaneProps) {
             } else {
                 setAlert({ title: res.data.report, type: 'error' });
             }
-            setWriting(false)
+            setWriting(false);
         }
     };
 
-
     //回调函数
-    const receiveMessageFromIndex = React.useCallback(
-        (event: any) => {
-            if (event != undefined && event.data?.from == 'chain_feature') {
-                // console.log('收到信息：', event.data);
-                const message = event.data;
-                switch (message.type) {
-                    case 'input':
-                        newMessage({
-                            id: v4(),
-                            sender: sender || 'You',
-                            content: `請輸入"${message.block?.name}"`,
-                            type: 'text',
-                            created_at: moment().format('YYYY-MM-DD HH:mm')
-                        })
+    const receiveMessageFromIndex = React.useCallback((event: any) => {
+        if (event != undefined && event.data?.from == 'chain_feature') {
+            // console.log('收到信息：', event.data);
+            const message = event.data;
+            switch (message.type) {
+                case 'input':
+                    newMessage({
+                        id: v4(),
+                        sender: sender || 'You',
+                        content: `請輸入"${message.block?.name}"`,
+                        type: 'text',
+                        created_at: moment().format('YYYY-MM-DD HH:mm')
+                    });
 
-                        newMessage({
-                            id: v4(),
-                            sender: 'You',
-                            content: message.content,
-                            type: 'text',
-                            created_at: moment().format('YYYY-MM-DD HH:mm')
-                        })
-                        break;
-                    case 'output':
-                        newMessage({
-                            id: v4(),
-                            sender: sender || 'You',
-                            content: message.content,
-                            type: 'text',
-                            created_at: moment().format('YYYY-MM-DD HH:mm')
-                        })
-                        break;
-                    case 'file':
-                        const file = message.content;
-                        const fileURL = URL.createObjectURL(file);
+                    newMessage({
+                        id: v4(),
+                        sender: 'You',
+                        content: message.content,
+                        type: 'text',
+                        created_at: moment().format('YYYY-MM-DD HH:mm')
+                    });
+                    break;
+                case 'output':
+                    newMessage({
+                        id: v4(),
+                        sender: sender || 'You',
+                        content: message.content,
+                        type: 'text',
+                        created_at: moment().format('YYYY-MM-DD HH:mm')
+                    });
+                    break;
+                case 'file':
+                    const file = message.content;
+                    const fileURL = URL.createObjectURL(file);
 
-                        newMessage({
-                            id: v4(),
-                            sender: sender || 'You',
-                            content: `請輸入"${message.block?.name}"`,
-                            type: 'text',
-                            created_at: moment().format('YYYY-MM-DD HH:mm')
-                        })
+                    newMessage({
+                        id: v4(),
+                        sender: sender || 'You',
+                        content: `請輸入"${message.block?.name}"`,
+                        type: 'text',
+                        created_at: moment().format('YYYY-MM-DD HH:mm')
+                    });
 
-                        newMessage({
-                            id: v4(),
-                            sender: 'You',
-                            content: {
-                                type: 'file',
-                                fileURL: fileURL,
-                                fileName: file.name,
-                                text: file.name
-                            },
+                    newMessage({
+                        id: v4(),
+                        sender: 'You',
+                        content: {
                             type: 'file',
-                            created_at: moment().format('YYYY-MM-DD HH:mm')
-                        })
-                        break;
-                    case 'document':
-                        const document = message.content;
+                            fileURL: fileURL,
+                            fileName: file.name,
+                            text: file.name
+                        },
+                        type: 'file',
+                        created_at: moment().format('YYYY-MM-DD HH:mm')
+                    });
+                    break;
+                case 'document':
+                    const document = message.content;
 
-                        newMessage({
-                            id: v4(),
-                            sender: sender || 'You',
-                            content: `請輸入"${message.block?.name}"`,
-                            type: 'text',
-                            created_at: moment().format('YYYY-MM-DD HH:mm')
-                        })
+                    newMessage({
+                        id: v4(),
+                        sender: sender || 'You',
+                        content: `請輸入"${message.block?.name}"`,
+                        type: 'text',
+                        created_at: moment().format('YYYY-MM-DD HH:mm')
+                    });
 
-                        newMessage({
-                            id: v4(),
-                            sender: 'You',
-                            content: {
-                                type: 'file',
-                                fileURL: document.storage_url,
-                                fileName: document.name,
-                                text: document.name
-                            },
+                    newMessage({
+                        id: v4(),
+                        sender: 'You',
+                        content: {
                             type: 'file',
-                            created_at: moment().format('YYYY-MM-DD HH:mm')
-                        })
-                        break;
-                    case 'infographic':
-                        // newMessage('human', { type: 'text', text: '幫我生成信息圖' });
-                        // // setCacheChatHistory((prev) => [...prev, { 'ai': "幫我生成信息圖" }]);
-                        // newMessage(
-                        //     'ai',
-                        //     {
-                        //         type: 'infographic',
-                        //         url: message.content,
-                        //         text: message.content
-                        //     },
-                        //     false,
-                        //     true,
-                        //     false
-                        // );
-                        break;
-                    case 'storybook':
-                        newMessage({
-                            id: v4(),
-                            sender: 'You',
-                            content: '幫我生成故事書',
-                            type: 'text',
-                            created_at: moment().format('YYYY-MM-DD HH:mm')
-                        })
+                            fileURL: document.storage_url,
+                            fileName: document.name,
+                            text: document.name
+                        },
+                        type: 'file',
+                        created_at: moment().format('YYYY-MM-DD HH:mm')
+                    });
+                    break;
+                case 'infographic':
+                    // newMessage('human', { type: 'text', text: '幫我生成信息圖' });
+                    // // setCacheChatHistory((prev) => [...prev, { 'ai': "幫我生成信息圖" }]);
+                    // newMessage(
+                    //     'ai',
+                    //     {
+                    //         type: 'infographic',
+                    //         url: message.content,
+                    //         text: message.content
+                    //     },
+                    //     false,
+                    //     true,
+                    //     false
+                    // );
+                    break;
+                case 'storybook':
+                    newMessage({
+                        id: v4(),
+                        sender: 'You',
+                        content: '幫我生成故事書',
+                        type: 'text',
+                        created_at: moment().format('YYYY-MM-DD HH:mm')
+                    });
 
-                        newMessage({
-                            id: v4(),
-                            sender: sender || 'You',
-                            content: message.content,
-                            type: 'pdf_link',
-                            created_at: moment().format('YYYY-MM-DD HH:mm')
-                        })
-                        break;
-                    case 'image':
-                        newMessage({
-                            id: v4(),
-                            sender: 'You',
-                            content: '幫我生成圖片',
-                            type: 'text',
-                            created_at: moment().format('YYYY-MM-DD HH:mm')
-                        })
+                    newMessage({
+                        id: v4(),
+                        sender: sender || 'You',
+                        content: message.content,
+                        type: 'pdf_link',
+                        created_at: moment().format('YYYY-MM-DD HH:mm')
+                    });
+                    break;
+                case 'image':
+                    newMessage({
+                        id: v4(),
+                        sender: 'You',
+                        content: '幫我生成圖片',
+                        type: 'text',
+                        created_at: moment().format('YYYY-MM-DD HH:mm')
+                    });
 
-                        newMessage({
-                            id: v4(),
-                            sender: sender || 'You',
-                            content: message.content,
-                            type: 'image',
-                            created_at: moment().format('YYYY-MM-DD HH:mm')
-                        })
-                        break;
-                    case 'chart':
-                        newMessage({
-                            id: v4(),
-                            sender: 'You',
-                            content: '幫我生成圖表',
-                            type: 'text',
-                            created_at: moment().format('YYYY-MM-DD HH:mm')
-                        })
+                    newMessage({
+                        id: v4(),
+                        sender: sender || 'You',
+                        content: message.content,
+                        type: 'image',
+                        created_at: moment().format('YYYY-MM-DD HH:mm')
+                    });
+                    break;
+                case 'chart':
+                    newMessage({
+                        id: v4(),
+                        sender: 'You',
+                        content: '幫我生成圖表',
+                        type: 'text',
+                        created_at: moment().format('YYYY-MM-DD HH:mm')
+                    });
 
-                        newMessage({
-                            id: v4(),
-                            sender: sender || 'You',
-                            content: message.content,
-                            type: 'chart',
-                            created_at: moment().format('YYYY-MM-DD HH:mm')
-                        })
-                        break;
-                    case 'markdown':
-                        newMessage({
-                            id: v4(),
-                            sender: 'You',
-                            content: '幫我生成知識圖譜',
-                            type: 'text',
-                            created_at: moment().format('YYYY-MM-DD HH:mm')
-                        })
+                    newMessage({
+                        id: v4(),
+                        sender: sender || 'You',
+                        content: message.content,
+                        type: 'chart',
+                        created_at: moment().format('YYYY-MM-DD HH:mm')
+                    });
+                    break;
+                case 'markdown':
+                    newMessage({
+                        id: v4(),
+                        sender: 'You',
+                        content: '幫我生成知識圖譜',
+                        type: 'text',
+                        created_at: moment().format('YYYY-MM-DD HH:mm')
+                    });
 
-                        newMessage({
-                            id: v4(),
-                            sender: sender || 'You',
-                            content: message.content,
-                            type: 'markdown',
-                            created_at: moment().format('YYYY-MM-DD HH:mm')
-                        })
-                        break;
-                    case 'finish':
-                        // setOpen(false);
-                        break;
-                }
+                    newMessage({
+                        id: v4(),
+                        sender: sender || 'You',
+                        content: message.content,
+                        type: 'markdown',
+                        created_at: moment().format('YYYY-MM-DD HH:mm')
+                    });
+                    break;
+                case 'finish':
+                    // setOpen(false);
+                    break;
             }
-        },
-        []
-    );
+        }
+    }, []);
 
     //监听来自chain feature run完事件
     React.useEffect(() => {
@@ -438,7 +434,7 @@ export default function MessagesPane(props: MessagesPaneProps) {
                     height: { xs: 'calc(95dvh - var(--Header-height))', lg: '95dvh' },
                     display: 'flex',
                     flexDirection: 'column',
-                    backgroundColor: '#eff7fe',
+                    backgroundColor: '#eff7fe'
                     // zIndex: 0
                 }}
             >
@@ -468,8 +464,10 @@ export default function MessagesPane(props: MessagesPaneProps) {
                                     {message.sender !== 'You' && (
                                         <AvatarWithStatus src={message.sender.avatar} />
                                     )}
-                                    <ChatBubble variant={isYou ? 'sent' : 'received'} {...message} />
-
+                                    <ChatBubble
+                                        variant={isYou ? 'sent' : 'received'}
+                                        {...message}
+                                    />
                                 </Stack>
                             );
                         })}
@@ -494,12 +492,11 @@ export default function MessagesPane(props: MessagesPaneProps) {
                             content: textAreaValue,
                             type: 'text',
                             created_at: moment().format('YYYY-MM-DD HH:mm')
-                        })
+                        });
                         handleSendMessage();
                     }}
                 />
             </Sheet>
-
         </>
     );
 }

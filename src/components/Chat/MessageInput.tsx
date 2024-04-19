@@ -51,19 +51,18 @@ export default function MessageInput(props: MessageInputProps) {
     const [chain_feature, set_chain_feature] = React.useState<any>();
     const [label, setLabel] = React.useState<Label>();
     const [openIframe, setOpenIframe] = React.useState(false);
-    const [document, setDocument] = React.useState<any>()
+    const [document, setDocument] = React.useState<any>();
 
     const [{ data: getLabelByIdData }, getLabelById] = useAxios(apiSetting.Tag.getTagById(''), {
         manual: true
     });
 
-
     React.useEffect(() => {
         if (sender && sender?.source?.value == 'documents') {
             // console.log('model_types', sender);
-            setTypes(ModelTypes['documents'])
+            setTypes(ModelTypes['documents']);
             if (sender?.model_types && sender?.model_types?.length > 0) {
-                setTypes(sender?.model_types)
+                setTypes(sender?.model_types);
             }
         }
     }, [sender]);
@@ -80,9 +79,9 @@ export default function MessageInput(props: MessageInputProps) {
 
     React.useEffect(() => {
         if (label) {
-            getChainFeature()
+            getChainFeature();
         }
-    }, [label])
+    }, [label]);
 
     React.useEffect(() => {
         if (chain_features) {
@@ -90,20 +89,20 @@ export default function MessageInput(props: MessageInputProps) {
                 return {
                     name: cf.fields.name,
                     value: cf.id
-                }
-            })
+                };
+            });
             setTypes(ModelTypes['documents'].concat(_types));
             updateChatSender({
                 ...sender,
                 model_types: ModelTypes['documents'].concat(_types)
             });
         }
-    }, [chain_features])
+    }, [chain_features]);
     const sources = [
         {
             name: '無來源',
             value: 'none',
-            onClick: () => { }
+            onClick: () => {}
         },
         {
             name: '數據源',
@@ -116,7 +115,7 @@ export default function MessageInput(props: MessageInputProps) {
             name: '文件',
             value: 'documents',
             onClick: () => {
-                setVisibleDocuments(true)
+                setVisibleDocuments(true);
             }
         }
     ];
@@ -165,11 +164,11 @@ export default function MessageInput(props: MessageInputProps) {
     };
 
     const handleSelectDriveDocument = (document: DriveDocument) => {
-        setDocument(document)
+        setDocument(document);
         setVisibleDocuments(false);
-        const label_id = document.labels && document.labels[0].id
+        const label_id = document.labels && document.labels[0].id;
         if (label_id) {
-            setLabel(document.labels[0])
+            setLabel(document.labels[0]);
         }
 
         updateChatSender({
@@ -192,13 +191,12 @@ export default function MessageInput(props: MessageInputProps) {
     const getChainFeature = () => {
         // if (!_.isEmpty(chain_features)) return;
         if (label?.meta?.chain_features) {
-            getAllChainFeatureByIdsDatas(label?.meta?.chain_features)
-                .then((res) => {
-                    // console.log(res);
-                    set_chain_features(res);
-                })
+            getAllChainFeatureByIdsDatas(label?.meta?.chain_features).then((res) => {
+                // console.log(res);
+                set_chain_features(res);
+            });
         }
-    }
+    };
     return (
         <>
             <Box sx={{ px: 0, pb: 0 }}>
@@ -240,8 +238,7 @@ export default function MessageInput(props: MessageInputProps) {
                                         }}
                                         slotProps={{ button: { sx: { whiteSpace: 'nowrap' } } }}
                                         onChange={(event, value) => {
-                                            if (value)
-                                                handleChangeSource(value);
+                                            if (value) handleChangeSource(value);
                                         }}
                                         value={sender?.source?.value || ''}
                                     >
@@ -278,15 +275,21 @@ export default function MessageInput(props: MessageInputProps) {
                                             請選擇模型
                                         </Option>
                                         {types.map((model: any, index: number) => (
-                                            <Option key={index} value={model.value}
+                                            <Option
+                                                key={index}
+                                                value={model.value}
                                                 onClick={() => {
-                                                    if (sender?.source?.value == 'documents' && model.value != 'qa') {
-                                                        setOpenIframe(true)
-                                                        set_chain_feature(model)
+                                                    if (
+                                                        sender?.source?.value == 'documents' &&
+                                                        model.value != 'qa'
+                                                    ) {
+                                                        setOpenIframe(true);
+                                                        set_chain_feature(model);
                                                     } else {
-                                                        setOpenIframe(false)
+                                                        setOpenIframe(false);
                                                     }
-                                                }}>
+                                                }}
+                                            >
                                                 {model.name}
                                             </Option>
                                         ))}
@@ -334,14 +337,14 @@ export default function MessageInput(props: MessageInputProps) {
                     handleSelect: handleSelectDriveDocument
                 }}
             />
-            {openIframe &&
+            {openIframe && (
                 <ChainFeatureDetail
                     open={openIframe}
                     setOpen={setOpenIframe}
                     chain_feature_id={chain_feature?.value}
                     selectDocument={document || sender?.source?.document}
                 />
-            }
+            )}
         </>
     );
 }

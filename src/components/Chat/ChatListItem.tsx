@@ -58,7 +58,7 @@ export default function ChatListItem(props: ChatListItemProps) {
                                         (messages.length > 0 &&
                                             messages[messages.length - 1] &&
                                             messages[messages.length - 1].created_at) ||
-                                        moment()
+                                            moment()
                                     ).fromNow()}
                                 </Typography>
                             </Box>

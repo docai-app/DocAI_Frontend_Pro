@@ -77,8 +77,9 @@ export default function ChatBubble(props: ChatBubbleProps) {
                         {type == 'image' && <ImageView content={content} />}
                         {type == 'pdf' && <PdfView content={content} />}
                         {type == 'markdown' && <MarkmapView value={content} />}
-                        {type == 'file' && <FileView fileURL={content?.fileURL}
-                            fileName={content?.fileName} />}
+                        {type == 'file' && (
+                            <FileView fileURL={content?.fileURL} fileName={content?.fileName} />
+                        )}
                         {type == 'chart' && (
                             <ChartView
                                 content={getTransitionChartContent(content, 0)}

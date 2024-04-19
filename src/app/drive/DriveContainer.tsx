@@ -1,10 +1,9 @@
 'use client';
 
-import axios from 'axios';
+import { DriveDocument, DriveFolder } from '@/utils/types';
 import useAxios from 'axios-hooks';
-import { useFormik } from 'formik';
-import { useRouter, useSearchParams, usePathname } from 'next/navigation';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useParams, usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useEffect, useRef, useState } from 'react';
 import Api from '../../apis';
 import { Folder } from '../../components/common/Widget/FolderTree';
 import useAlert from '../../hooks/useAlert';
@@ -19,7 +18,6 @@ function DriveContainer() {
     const { setAlert } = useAlert();
     const queryId = useRef(searchParams.get('id'));
     const queryName = useRef(searchParams.get('name'));
-    const [id, setId] = useState<string | null>(null);
     const [name, setName] = useState<string | null>(null);
     const [mode, setMode] = useState<'view' | 'move' | 'share' | 'newFolder'>('view');
     const [target, setTarget] = useState<any[]>([]);
@@ -37,397 +35,64 @@ function DriveContainer() {
     const [newLabelName, setNewLabelName] = useState('');
     const [updateTag, setUpdateTag] = useState(false);
 
+    const { id } = useParams();
+    const [documents, setDocuments] = useState<DriveDocument[]>([]);
+    const [folders, setFolders] = useState<DriveFolder[]>([]);
+
     const [
-        { data: showAllItemsData, loading: showAllItemsLoading, error: showAllItemsError },
-        showAllItems
+        { data: allDrivesData, loading: showAllDriveLoading, error: showAllDriveError },
+        showAllDrives
     ] = useAxios({}, { manual: true });
-    const [{ data: updateDocumentByIdData }, updateDocumentById] = useAxios({}, { manual: true });
-    const [{ data: shareFolderPermissionData }, shareFolderPermission] = useAxios(
-        {},
-        { manual: true }
-    );
-    const [{ data: createFolderData }, createFolder] = useAxios({}, { manual: true });
-
-    const [{ data: countDocumentsByDateData }, countDocumentsByDate] = useAxios(
-        apiSetting.Statistics.countDocumentsByDate(
-            new Date().toLocaleString('fr-CA', { timeZone: 'Asia/Taipei' }).split(' ')[0]
-        ),
-        { manual: true }
-    );
-
-    const [{ data: deleteDocumentByIdData }, deleteDocumentById] = useAxios({}, { manual: true });
-    const [{ data: deleteFolderByIdData }, deleteFolderById] = useAxios({}, { manual: true });
-
-    const [{ data: updateFolderNameData }, updateFolderName] = useAxios({}, { manual: true });
-
-    const [{ data: moveItemsToSpecificFolderData }, moveItemsToSpecificFolder] = useAxios(
-        apiSetting.Drive.moveItemsToSpecificFolder(),
-        { manual: true }
-    );
 
     const [{ data: getAllLabelsData, error: getAllLabelsError }, getAllLabels] = useAxios(
         apiSetting.Tag.getAllTags(),
         { manual: true }
     );
 
-    const [{ data: updateDocumentTagData }, updateDocumentTag] = useAxios(
-        apiSetting.Classification.updateDocumentTag([], ''),
-        { manual: true }
-    );
+    useEffect(() => {
+        // if (router.asPath !== router.route) {
+        //     queryId.current = router.query.id;
+        //     queryName.current = router.query.name;
+        //     if (queryId.current) {
+        //         // setPage(1);
+        //         showAllItems(apiSetting.Drive.showAllFolderItems(queryId.current.toString(), page));
+        //     } else {
+        //         showAllItems(apiSetting.Drive.showAllRootItems(page));
+        //     }
+        // } else if (router.asPath == '/') {
+        //     showAllItems(apiSetting.Drive.showAllRootItems(page));
+        // }
+        console.log('id', id);
 
-    const [{ data: addNewLabelData, error: addNewLabelError }, addNewLabel] = useAxios(
-        apiSetting.Tag.addNewTag(),
-        { manual: true }
-    );
+        setName(searchParams.get('name') || null);
 
-    const addNewLabelHandler = useCallback(async () => {
-        addNewLabel({ data: { name: newLabelName } });
-    }, [addNewLabel, newLabelName]);
-
-    const [{ data: schemasStatusReadyData }, schemasStatusReady] = useAxios(
-        apiSetting.Form.schemasStatusReady(),
-        {
-            manual: true
+        if (id) {
+            showAllDrives(apiSetting.Drive.showAllFolderItems(id.toString(), page));
+        } else {
+            showAllDrives(apiSetting.Drive.showAllRootItems(page));
         }
-    );
-
-    const [{ data: deepUnderstandingDocumentData }, deepUnderstandingDocument] = useAxios(
-        apiSetting.Document.deepUnderstandingDocument(),
-        {
-            manual: true
-        }
-    );
+    }, [router, page]);
 
     useEffect(() => {
         getAllLabels();
     }, [router]);
 
     useEffect(() => {
-        if (addNewLabelData && addNewLabelData.success) {
-            // setAlert({ title: '新增成功', type: 'success' });
-            setNewLabelName('');
-            confirmDocumentFormik.setFieldValue('tag_id', addNewLabelData.tag.id);
-            confirmDocumentFormik.handleSubmit();
-        } else if (addNewLabelData && !addNewLabelData.success) {
-            setAlert({
-                title: '新增失敗！',
-                content: `原因：${addNewLabelData.errors.name[0]}`,
-                type: 'error'
-            });
+        if (allDrivesData && allDrivesData.success) {
+            setDocuments(allDrivesData?.documents);
+            setFolders(allDrivesData?.folders);
         }
-    }, [addNewLabelData]);
+    }, [allDrivesData]);
 
-    useEffect(() => {
-        // countDocumentsByDate();
-    }, [countDocumentsByDate]);
-
-    const handleShare = useCallback(
-        async (id: string, user_email: string) => {
-            const res = await shareFolderPermission(
-                apiSetting.Drive.shareFolderPermission(id, user_email)
-            );
-            if (res.data?.success) {
-                setAlert({ title: '共用成功', type: 'success' });
-                router.refresh();
-            } else {
-                setAlert({ title: '發生錯誤', type: 'error' });
-            }
-        },
-        [router, shareFolderPermission]
-    );
-
-    const handleNewFolder = useCallback(
-        async (name: string) => {
-            const res = await createFolder(
-                apiSetting.Folders.createFolder(name, queryId.current?.toString() || '')
-            );
-            if (res.data?.success) {
-                setAlert({ title: '資料夾新增成功', type: 'success' });
-                router.refresh();
-            } else {
-                setAlert({ title: '發生錯誤', type: 'error' });
-            }
-        },
-        [router, createFolder, queryId]
-    );
-
-    const updateDocument = async (id: string, name: string) => {
-        if (id) {
-            const res = await updateDocumentById(
-                apiSetting.Document.updateDocumentNameById(id, name)
-            );
-            if (res.data?.success) {
-                setAlert({ title: '更新成功', type: 'success' });
-                router.refresh();
-            } else {
-                setAlert({ title: '發生錯誤', type: 'error' });
-            }
-        }
-    };
-
-    const handleMoveItems = async (target_folder_id: string | null) => {
-        if (target_folder_id != null) {
-            const formData = new FormData();
-            for (const i of documents_items) {
-                formData.append('document_items[]', i);
-            }
-            for (const i of folders_items) {
-                formData.append('folder_items[]', i);
-            }
-            if (target_folder_id) {
-                formData.append('target_folder_id', target_folder_id);
-            }
-            if (searchParams.get('id')) {
-                formData.append('current_folder_id', searchParams.get('id') + '');
-            }
-            moveItemsToSpecificFolder({
-                data: formData
-            });
-        }
-    };
-
-    const handleDeleteItems = async () => {
-        const formData = new FormData();
-        for (const i of documents_items) {
-            formData.append('document_items[]', i);
-        }
-        for (const i of folders_items) {
-            formData.append('folder_items[]', i);
-        }
-        // moveItemsToSpecificFolder({
-        //     data: formData
-        // });
-    };
-
-    const handleDownloadItemsAndFolders = useCallback(async () => {
-        const data = {
-            folder_ids: folders_items,
-            document_ids: documents_items
-        };
-        const res = await axios.request(apiSetting.Drive.downloadItemsByIDs(data));
-        try {
-            const dataURL = URL.createObjectURL(res.data);
-            const a = document.createElement('a');
-            a.href = dataURL;
-            a.download = 'documents.zip';
-            a.click();
-        } catch {}
-    }, [folders_items, documents_items]);
-
-    const confirmDocumentFormik = useFormik({
-        initialValues: {
-            document_id: null,
-            tag_id: ''
-        },
-        onSubmit: async (values) => {
-            setUpdateTag(true);
-            const res = await updateDocumentTag({
-                data: {
-                    document_ids: documents_items,
-                    tag_id: values.tag_id
-                }
-            });
-            setUpdateTag(false);
-            if (res.data.success === true) {
-                setAlert({ title: '更新成功', type: 'success' });
-                router.refresh();
-            } else {
-                setAlert({ title: '更新失敗', type: 'error' });
-            }
-        }
-    });
-
-    const updateFolder = async (id: string, name: string) => {
-        if (id) {
-            const res = await updateFolderName(apiSetting.Folders.updateFoldertNameById(id, name));
-            if (res.data?.success) {
-                setAlert({ title: '更新成功', type: 'success' });
-                router.refresh();
-            } else {
-                setAlert({ title: '發生錯誤', type: 'error' });
-            }
-        }
-    };
-
-    const handleDeepUnderstanding = async (form_schema_id: string, needs_approval: boolean) => {
-        if (form_schema_id) {
-            setUpdateTag(true);
-            const res = await deepUnderstandingDocument({
-                data: {
-                    document_items: documents_items,
-                    form_schema_id: form_schema_id,
-                    needs_approval: needs_approval
-                }
-            });
-            setUpdateTag(false);
-            if (res.data?.success) {
-                setAlert({ title: '操作成功', type: 'success' });
-                router.refresh();
-            } else {
-                setAlert({ title: '發生錯誤', type: 'error' });
-            }
-        }
-    };
-
-    const updateFolderOrDocumentHandler = useCallback(async () => {
-        if (current?.type === 'folders') updateFolder(current?.id, current?.name);
-        else updateDocument(current?.id, current?.name);
-    }, [current]);
-
-    const deleteDocument = async (id: string) => {
-        if (id) {
-            const res = await deleteDocumentById(apiSetting.Document.deleteDocumentById(id));
-            if (res.data?.success) {
-                setAlert({ title: '刪除成功', type: 'success' });
-                router.refresh();
-            } else {
-                setAlert({ title: '發生錯誤', type: 'error' });
-            }
-        }
-    };
-
-    const deleteFolder = async (id: string) => {
-        if (id) {
-            const res = await deleteFolderById(apiSetting.Folders.deleteFolderById(id));
-            if (res.data?.success) {
-                setAlert({ title: '刪除成功', type: 'success' });
-                router.refresh();
-            } else {
-                setAlert({ title: '發生錯誤', type: 'error' });
-            }
-        }
-    };
-
-    const deleteFolderOrDocumentHandler = useCallback(async () => {
-        if (current?.type === 'folders') deleteFolder(current?.id);
-        else deleteDocument(current?.id);
-    }, [current]);
-
-    const showAllItemsHandler = useCallback(async () => {
-        setPage((page) => page + 1);
-    }, []);
-
-    const search = async (
-        tag_name: string,
-        tag_id: string,
-        content: string,
-        startDate: string,
-        endDate: string
-    ) => {
-        if (tag_id == '') {
-            setAlert({ title: '請選擇類別', type: 'info' });
-            return;
-        }
-        if (startDate > endDate) {
-            setAlert({ title: '起始日期不能大於結束日期', type: 'info' });
-            return;
-        }
-        window.history.pushState(
-            null,
-            '/search',
-            `?content=${content}&
-            tag_id=${tag_id}&
-            from=${startDate}&
-            to=${endDate}&
-            label=${tag_name}
-            `
-        );
-    };
-
-    useEffect(() => {
-        if (searchParams.get('id')) {
-            setPage(1);
-        }
-    }, [searchParams.get('id')]);
-
-    useEffect(() => {
-        const asPath = pathname + '?' + searchParams.toString();
-        const route = pathname + '/[[...id]]';
-        // if (router.asPath !== router.route) {
-        if (asPath !== route) {
-            queryId.current = searchParams.get('id');
-            queryName.current = searchParams.get('name');
-            if (queryId.current) {
-                // setPage(1);
-                showAllItems(apiSetting.Drive.showAllFolderItems(queryId.current.toString(), page));
-            } else {
-                showAllItems(apiSetting.Drive.showAllRootItems(page));
-            }
-        } else if (asPath == '/') {
-            showAllItems(apiSetting.Drive.showAllRootItems(page));
-        }
-    }, [router, showAllItems, page]);
-
-    useEffect(() => {
-        if (!showAllItemsLoading && showAllItemsData) {
-            setId(queryId.current?.toString() || null);
-            setName(queryName.current?.toString() || null);
-            if (page == 1) {
-                setAllFoldersItemsData(showAllItemsData.folders);
-                setAllItemsData(showAllItemsData.documents);
-            } else {
-                setAllItemsData(allItemsData.concat(showAllItemsData.documents));
-            }
-        }
-    }, [showAllItemsLoading, showAllItemsData]);
-
-    useEffect(() => {
-        if (moveItemsToSpecificFolderData) {
-            if (moveItemsToSpecificFolderData?.success) {
-                setAlert({ title: '移動成功', type: 'success' });
-                router.refresh();
-            } else {
-                setAlert({ title: '沒有權限', type: 'error' });
-            }
-        }
-    }, [moveItemsToSpecificFolderData]);
     return (
         <DriveView
             {...{
                 id,
                 name,
-                showAllItemsData,
-                showAllItemsLoading,
-                mode,
-                setMode,
-                target,
-                setTarget,
-                dest,
-                setDest,
-                shareWith,
-                setShareWith,
-                handleShare,
-                newFolderName,
-                handleNewFolder,
-                countDocumentsByDateData,
-                current,
-                setCurrent,
-                visableRename,
-                setVisableRename,
-                updateFolderOrDocumentHandler,
-                visableDelete,
-                setVisableDelete,
-                deleteFolderOrDocumentHandler,
-                allItemsData,
-                allFoldersItemsData,
-                showAllItemsHandler,
-                documents_items,
-                setDocumentsItems,
-                folders_items,
-                setFoldersItems,
-                handleMoveItems,
-                handleDeleteItems,
-                handleDownloadItemsAndFolders,
-                getAllLabelsData,
-                search,
-                confirmDocumentFormik,
-                newLabelName,
-                setNewLabelName,
-                addNewLabelHandler,
-                updateTag,
-                setUpdateTag,
-                schemasStatusReadyData,
-                handleDeepUnderstanding
+                allDrivesData,
+                documents,
+                folders,
+                getAllLabelsData
             }}
         />
     );

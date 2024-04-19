@@ -16,15 +16,15 @@ export default function MessagesPaneHeader(props: MessagesPaneHeaderProps) {
     const modelTypeLabel = () => {
         switch (sender?.source.value) {
             case 'none':
-                return sender?.model_type?.name || ''
+                return sender?.model_type?.name || '';
             case 'schema':
-                return sender?.source?.schema?.name || ''
+                return sender?.source?.schema?.name || '';
             case 'documents':
-                return sender?.source?.document?.name || '未選擇'
+                return sender?.source?.document?.name || '未選擇';
             default:
-                return '未選擇'
+                return '未選擇';
         }
-    }
+    };
     return (
         <Stack
             direction="row"
@@ -57,21 +57,31 @@ export default function MessagesPaneHeader(props: MessagesPaneHeaderProps) {
                     <Stack direction={'row'} spacing={1}>
                         <Typography level="body-sm">{sender?.source?.name} </Typography>
                         <Typography level="body-sm">
-                            {sender?.source?.document?.storage_url &&
-                                <a href={sender?.source?.document?.storage_url} target="_blank" className=' hover:underline text-blue-500'>
+                            {sender?.source?.document?.storage_url && (
+                                <a
+                                    href={sender?.source?.document?.storage_url}
+                                    target="_blank"
+                                    className=" hover:underline text-blue-500"
+                                >
                                     {modelTypeLabel()}
                                 </a>
-                            }
-                            {sender?.source?.schema && sender?.source?.schema?.has_label &&
-                                <a href={`/document/extraction/${sender?.source?.schema?.label_id}/schema?schema_id=${sender?.source?.schema?.id}`} className=' hover:underline text-blue-500'>
+                            )}
+                            {sender?.source?.schema && sender?.source?.schema?.has_label && (
+                                <a
+                                    href={`/document/extraction/${sender?.source?.schema?.label_id}/schema?schema_id=${sender?.source?.schema?.id}`}
+                                    className=" hover:underline text-blue-500"
+                                >
                                     {modelTypeLabel()}
                                 </a>
-                            }
-                            {sender?.source?.schema && !sender?.source?.schema?.has_label &&
-                                <a href={`/document/extraction/documents/schema?schema_id=${sender?.source?.schema?.id}`} className=' hover:underline text-blue-500'>
+                            )}
+                            {sender?.source?.schema && !sender?.source?.schema?.has_label && (
+                                <a
+                                    href={`/document/extraction/documents/schema?schema_id=${sender?.source?.schema?.id}`}
+                                    className=" hover:underline text-blue-500"
+                                >
                                     {modelTypeLabel()}
                                 </a>
-                            }
+                            )}
                         </Typography>
                     </Stack>
                 </div>

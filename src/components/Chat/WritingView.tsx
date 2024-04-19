@@ -7,20 +7,13 @@ import moment from 'moment';
 import AvatarWithStatus from './AvatarWithStatus';
 
 interface ViewProps {
-    sender?: UserProps
+    sender?: UserProps;
 }
 
 export default function WritingView(props: ViewProps) {
-    const {
-        sender
-    } = props
+    const { sender } = props;
     return (
-        <Stack
-            direction="row"
-            spacing={1}
-            width={'100%'}
-            flexDirection={'row'}
-        >
+        <Stack direction="row" spacing={1} width={'100%'} flexDirection={'row'}>
             <AvatarWithStatus src={''} />
             <Box sx={{ maxWidth: '60%', minWidth: 'auto' }}>
                 <Stack direction="row" justifyContent="space-between" spacing={2} sx={{ mb: 0.25 }}>
@@ -28,9 +21,7 @@ export default function WritingView(props: ViewProps) {
                     <Typography level="body-xs">{moment().format('MM-DD HH:mm')}</Typography>
                 </Stack>
 
-                <Box
-                    sx={{ position: 'relative' }}
-                >
+                <Box sx={{ position: 'relative' }}>
                     <Sheet
                         color={'primary'}
                         variant={'soft'}
@@ -44,10 +35,8 @@ export default function WritingView(props: ViewProps) {
                     >
                         {'...'}
                     </Sheet>
-
                 </Box>
-
             </Box>
         </Stack>
-    )
+    );
 }

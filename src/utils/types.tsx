@@ -82,4 +82,13 @@ export type DriveDocument = {
     retry_count: number;
     labels: Label[];
     user: User;
-}
+};
+
+export type DriveFolder = {
+    id: string;
+    name: string;
+    parent_id: string;
+    user_id: string;
+    created_at: string;
+    updated_at: string;
+};

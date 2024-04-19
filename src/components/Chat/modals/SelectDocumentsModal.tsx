@@ -28,7 +28,7 @@ export default function SelectDocumentsModal(props: ViewProps) {
         >
             <ModalDialog layout={layout}>
                 <ModalClose />
-                <DialogTitle>選擇來源 -  Local Drive</DialogTitle>
+                <DialogTitle>選擇來源 - Local Drive</DialogTitle>
                 <DialogContent>
                     <Box className="Pagination-laptopUp">
                         <Box sx={{ flex: 1 }} />
@@ -48,7 +48,7 @@ export default function SelectDocumentsModal(props: ViewProps) {
                     <DriveTable
                         handleSelectedValue={(value: DriveDocument) => {
                             setSelectedValue(value);
-                        }} />
+                        }} documents={[]} folders={[]} />
                 </DialogContent>
             </ModalDialog>
         </Modal>

@@ -1,7 +1,7 @@
 import { DriveDocument } from '@/utils/types';
 import FolderIcon from '@mui/icons-material/Folder';
 import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
-import { Chip, Radio, Typography } from '@mui/joy';
+import { Chip, Link, Radio, Typography } from '@mui/joy';
 import moment from 'moment';
 
 interface TableRowProps {
@@ -12,16 +12,12 @@ interface TableRowProps {
     handleSelectedValue: any;
 }
 export default function TableRow(props: TableRowProps) {
-    const {
-        doc,
-        type,
-        selectedValue,
-        setSelectedValue,
-        handleSelectedValue
-    } = props;
+    const { doc, type, selectedValue, setSelectedValue, handleSelectedValue } = props;
+
+    const url = doc.storage_url || `/drive/${doc.id}`;
+
     return (
         <>
-
             <tr key={doc.id}>
                 <td style={{ textAlign: 'center', width: 120 }}>
                     <Radio
@@ -35,14 +31,37 @@ export default function TableRow(props: TableRowProps) {
                     />
                 </td>
                 <td>
-                    <Typography level="body-sm" sx={{ fontWeight: 'bold' }}
-                        startDecorator={type === 'documents' ? <InsertDriveFileIcon color='info' /> : <FolderIcon color='primary' />}>
-                        {doc.name}
+                    <Typography
+                        level="body-sm"
+                        sx={{ fontWeight: 'bold' }}
+                        startDecorator={
+                            type === 'documents' ? (
+                                <InsertDriveFileIcon color="info" />
+                            ) : (
+                                <FolderIcon color="primary" />
+                            )
+                        }
+                    >
+                        {type === 'folders' ? (
+                            <Link href={`${url}?name=${doc.name}`} className="hover:underline">
+                                {doc.name}
+                            </Link>
+                        ) : (
+                            <a
+                                href={url}
+                                target="_blank"
+                                rel="noreferrer"
+                                className="hover:underline"
+                            >
+                                {doc.name}
+                            </a>
+                        )}
                     </Typography>
                 </td>
                 <td>
                     {type !== 'folders' &&
-                        (doc?.is_classified === false && doc?.labels?.length == 0) ? (
+                    doc?.is_classified === false &&
+                    doc?.labels?.length == 0 ? (
                         <Chip
                             color="danger"
                             sx={{
@@ -65,8 +84,7 @@ export default function TableRow(props: TableRowProps) {
                                 </Chip>
                             );
                         })
-                    )
-                    }
+                    )}
                 </td>
                 <td>
                     <Typography level="body-xs">
@@ -83,5 +101,5 @@ export default function TableRow(props: TableRowProps) {
                          </td> */}
             </tr>
         </>
-    )
+    );
 }
