@@ -166,8 +166,7 @@ function ProjectView(props: ProjectViewProps) {
                         >
                             <Box>
                                 <Link underline="none" onClick={() => setCurrentTypeTab('tasks')}>
-                                    <Tab
-                                        value="tasks"
+                                    <Tab value="tasks"
                                         indicatorPlacement="bottom"
                                         sx={{ borderRadius: '6px 6px 0 0' }}
                                     >
@@ -178,8 +177,7 @@ function ProjectView(props: ProjectViewProps) {
                                     underline="none"
                                     onClick={() => setCurrentTypeTab('project_workflow')}
                                 >
-                                    <Tab
-                                        value="project_workflow"
+                                    <Tab value="project_workflow"
                                         indicatorPlacement="bottom"
                                         sx={{ borderRadius: '6px 6px 0 0' }}
                                     >

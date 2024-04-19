@@ -3,6 +3,31 @@ import { FormEvent, FormEventHandler, useCallback, useRef } from 'react';
 import Api from '../../apis';
 import useAlert from '../../hooks/useAlert';
 import { ShowCurrentUser } from '../../app/setting/SettingContainer';
+import { Box, Breadcrumbs, Link, Typography, Chip, Card } from '@mui/joy';
+import AspectRatio from '@mui/joy/AspectRatio';
+import Button from '@mui/joy/Button';
+import Divider from '@mui/joy/Divider';
+import FormControl from '@mui/joy/FormControl';
+import FormLabel from '@mui/joy/FormLabel';
+import FormHelperText from '@mui/joy/FormHelperText';
+import Input from '@mui/joy/Input';
+import IconButton from '@mui/joy/IconButton';
+import Textarea from '@mui/joy/Textarea';
+import Stack from '@mui/joy/Stack';
+import Radio from '@mui/joy/Radio';
+import RadioGroup from '@mui/joy/RadioGroup';
+import CardContent from '@mui/joy/CardContent';
+import CardActions from '@mui/joy/CardActions';
+import CardOverflow from '@mui/joy/CardOverflow';
+import Skeleton from '@mui/joy/Skeleton';
+
+import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
+import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
+import EmailRoundedIcon from '@mui/icons-material/EmailRounded';
+import AccessTimeFilledRoundedIcon from '@mui/icons-material/AccessTimeFilledRounded';
+import VideocamRoundedIcon from '@mui/icons-material/VideocamRounded';
+import InsertDriveFileRoundedIcon from '@mui/icons-material/InsertDriveFileRounded';
+import EditRoundedIcon from '@mui/icons-material/EditRounded';
 
 const apiSetting = new Api();
 
@@ -12,8 +37,8 @@ interface ProfileProps {
 }
 function Profile({ currentUserData, currentUserLoading }: ProfileProps) {
     const { setAlert } = useAlert();
-    const formRef = useRef<HTMLFormElement>(null);
-    const [{}, updateMeProfile] = useAxios(apiSetting.User.updateMeProfile(), { manual: true });
+    const formRef = useRef(null);
+    const [{ }, updateMeProfile] = useAxios(apiSetting.User.updateMeProfile(), { manual: true });
     const formSubmit: FormEventHandler = useCallback(
         (e: FormEvent) => {
             e.preventDefault();
@@ -33,87 +58,145 @@ function Profile({ currentUserData, currentUserLoading }: ProfileProps) {
         [formRef, currentUserData]
     );
     return (
-        <div className="flex flex-col rounded-2xl bg-gray-100 px-12 py-6 border">
-            <div className="flex flex-col">
-                <h2 className="text-slate-900 font-bold text-xl mb-6">帳戶</h2>
-                {currentUserLoading ? (
-                    <div className="col-span-2 rounded-lg bg-white p-6 shadow flex flex-col gap-6">
-                        載入中...
+        <Card>
+            <Box sx={{ mb: 1 }}>
+                <Typography level="title-md">Personal info</Typography>
+                <Typography level="body-sm">
+                    Customize how your profile information will apper to the networks.
+                </Typography>
+            </Box>
+            <Divider />
+            {currentUserLoading ? (
+                <CardContent orientation="horizontal">
+                    <Skeleton animation="wave" variant="circular" width={48} height={48} />
+                    <div>
+                        <Skeleton animation="wave" variant="text" sx={{ width: 120 }} />
+                        <Skeleton
+                            animation="wave"
+                            variant="text"
+                            level="body-sm"
+                            sx={{ width: 200 }}
+                        />
                     </div>
-                ) : (
+                </CardContent>
+            ) : (
+                <>
                     <form ref={formRef} onSubmit={formSubmit}>
-                        <div className="col-span-2 rounded-t-lg bg-white p-6 shadow flex flex-col gap-6">
-                            <label className="flex flex-col gap-2">
-                                <div>用戶暱稱</div>
-                                <input
-                                    type="text"
-                                    name="nickname"
-                                    defaultValue={currentUserData?.user?.nickname || ''}
-                                    className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                                />
-                            </label>
-                            <label className="flex flex-col gap-2">
-                                <div>電話號碼</div>
-                                <input
-                                    type="text"
-                                    name="phone"
-                                    defaultValue={currentUserData?.user?.phone || ''}
-                                    className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                                />
-                            </label>
-                            <label className="flex flex-col gap-2">
-                                <div>職位</div>
-                                <input
-                                    type="text"
-                                    name="position"
-                                    defaultValue={currentUserData?.user?.position || ''}
-                                    className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                                />
-                            </label>
-                            <div className="grid grid-cols-2 gap-6">
-                                <label className="flex flex-col gap-2">
-                                    <div>出生日期</div>
-                                    <input
-                                        type="date"
-                                        name="date_of_birth"
-                                        defaultValue={currentUserData?.user?.date_of_birth || ''}
-                                        className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                                    />
-                                </label>
-                                <div className="flex flex-col gap-2">
-                                    <div>性別</div>
-                                    <div className="flex gap-4">
-                                        <label className="flex gap-2 items-center">
-                                            <input
-                                                type="radio"
-                                                name="sex"
-                                                value="1"
-                                                defaultChecked={currentUserData?.user?.sex === 1}
-                                            />
-                                            <span>男</span>
-                                        </label>
-                                        <label className="flex gap-2 items-center">
-                                            <input
-                                                type="radio"
-                                                name="sex"
-                                                value="0"
-                                                defaultChecked={currentUserData?.user?.sex === 0}
-                                            />
-                                            <span>女</span>
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="bg-gray-50 rounded-b-lg px-6 py-3 flex justify-end shadow-md">
-                            <button className="text-white bg-indigo-600 hover:bg-indigo-700 px-4 py-2 rounded-lg">
-                                保存
-                            </button>
-                        </div>
+                        <Stack
+                            direction="row"
+                            spacing={3}
+                            sx={{ display: { xs: 'none', md: 'flex' }, my: 1 }}
+                        >
+
+                            {/* <Stack direction="column" spacing={1}>
+                    <AspectRatio
+                        ratio="1"
+                        maxHeight={200}
+                        sx={{ flex: 1, minWidth: 120, borderRadius: '100%' }}
+                    >
+                        <img
+                            src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=286"
+                            srcSet="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=286&dpr=2 2x"
+                            loading="lazy"
+                            alt=""
+                        />
+                    </AspectRatio>
+                    <IconButton
+                        aria-label="upload new picture"
+                        size="sm"
+                        variant="outlined"
+                        color="neutral"
+                        sx={{
+                            bgcolor: 'background.body',
+                            position: 'absolute',
+                            zIndex: 2,
+                            borderRadius: '50%',
+                            left: 100,
+                            top: 170,
+                            boxShadow: 'sm'
+                        }}
+                    >
+                        <EditRoundedIcon />
+                    </IconButton>
+                </Stack> */}
+                            <Stack spacing={2} sx={{ flexGrow: 1 }}>
+                                <Stack spacing={1}>
+                                    <FormLabel>用戶暱稱</FormLabel>
+                                    <FormControl
+                                        sx={{ display: { sm: 'flex-column', md: 'flex-row' }, gap: 2 }}
+                                    >
+                                        <Input size="sm" name="nickname"
+                                            defaultValue={currentUserData?.user?.nickname || ''}
+                                        />
+                                    </FormControl>
+                                </Stack>
+                                <Stack direction="row" spacing={2}>
+                                    <FormControl sx={{ flexGrow: 1 }}>
+                                        <FormLabel>電話號碼</FormLabel>
+                                        <Input size="sm" name="phone"
+                                            defaultValue={currentUserData?.user?.phone || ''}
+                                        />
+                                    </FormControl>
+                                    <FormControl sx={{ flexGrow: 1 }}>
+                                        <FormLabel>職位</FormLabel>
+                                        <Input size="sm" name="position"
+                                            defaultValue={currentUserData?.user?.position || ''}
+                                        />
+                                    </FormControl>
+                                </Stack>
+                                <Stack direction="row" spacing={2}>
+                                    <FormControl sx={{ flexGrow: 1 }}>
+                                        <FormLabel>出生日期</FormLabel>
+                                        <Input
+                                            type="date"
+                                            name="date_of_birth"
+                                            defaultValue={currentUserData?.user?.date_of_birth || ''}
+                                        // slotProps={{
+                                        //     input: {
+                                        //         min: '2018-06-07',
+                                        //         max: '2018-06-14',
+                                        //     },
+                                        // }}
+                                        />
+                                    </FormControl>
+                                    <FormControl sx={{ flexGrow: 1 }}>
+                                        <FormLabel>性別</FormLabel>
+                                        <RadioGroup
+                                            defaultValue={currentUserData?.user?.sex === 1 ? 'male' : 'female'}
+                                            name="controlled-radio-buttons-group"
+                                            // value={value}
+                                            // onChange={handleChange}
+                                            sx={{
+                                                display: 'flex',
+                                                flexDirection: 'row',
+                                                gap: 2,
+                                                alignItems: 'center',
+                                                mt: -1,
+                                                ml: -2
+                                            }}
+                                        >
+                                            <Box />
+                                            <Radio value="male" label="男 Male" />
+                                            <Radio value="female" label="女 Female" />
+                                        </RadioGroup>
+                                    </FormControl>
+                                </Stack>
+
+                            </Stack>
+                        </Stack>
+
+                        <CardOverflow sx={{ borderTop: '1px solid', borderColor: 'divider' }}>
+                            <CardActions sx={{ alignSelf: 'flex-end', pt: 2 }}>
+                                <Button size="sm" variant="solid">
+                                    保存
+                                </Button>
+                            </CardActions>
+                        </CardOverflow>
                     </form>
-                )}
-            </div>
-        </div>
+                </>
+            )
+            }
+        </Card >
     );
 }
 
