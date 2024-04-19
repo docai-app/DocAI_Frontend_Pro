@@ -13,6 +13,7 @@ import AvatarWithStatus from './AvatarWithStatus';
 import ChatBubble from './ChatBubble';
 import MessageInput from './MessageInput';
 import MessagesPaneHeader from './MessagesPaneHeader';
+import WritingView from './WritingView';
 const apiSetting = new Api();
 
 type MessagesPaneProps = {
@@ -26,8 +27,9 @@ export default function MessagesPane(props: MessagesPaneProps) {
     const { setAlert } = useAlert();
     const [chatMessages, setChatMessages] = React.useState<MessageProps[]>([]);
     const [textAreaValue, setTextAreaValue] = React.useState('');
-    const [model, setModel] = React.useState<'none' | 'chart' | 'statistics'>('none');
+    const [model, setModel] = React.useState('');
     const [sender, setSender] = React.useState<UserProps>();
+    const [writing, setWriting] = React.useState(false)
 
     React.useEffect(() => {
         if (chat) {
@@ -43,6 +45,7 @@ export default function MessagesPane(props: MessagesPaneProps) {
             });
             setChatMessages(_chat?.messages || []);
             setSender(chat.sender);
+            setModel(chat.sender?.model_type?.value)
         }
     }, [chat]);
 
@@ -52,6 +55,10 @@ export default function MessagesPane(props: MessagesPaneProps) {
             manual: true
         }
     );
+
+    const [{ data: assistantMessageData, loading: assistantMessageDataing }, assistantMessag] =
+        useAxios(apiSetting.Document.assistant_message(''), { manual: true });
+
 
     const [{ data: generateChartData, loading: generateChartLoading }, generateChart] = useAxios(
         '',
@@ -64,17 +71,36 @@ export default function MessagesPane(props: MessagesPaneProps) {
     ] = useAxios('', { manual: true });
 
     const handleSendMessage = () => {
-        switch (model) {
-            case 'chart':
-                handlerGenerateChart('101324d3-5d70-4dc7-9028-b1e8fe7ba224', textAreaValue);
+        console.log(sender);
+        setWriting(true)
+        switch (sender?.source?.value) {
+            case 'schema':
+                switch (sender?.model_type?.value) {
+                    case 'chart':
+                        handlerGenerateChart(sender?.source?.schema?.id, textAreaValue);
+
+                        break;
+                    case 'statistics':
+                        handlerGenerateStatistics(sender?.source?.schema?.id, textAreaValue);
+                        break;
+                    default:
+                        console.log('sender', sender);
+
+                        break;
+                }
                 break;
-            case 'statistics':
-                handlerGenerateStatistics('101324d3-5d70-4dc7-9028-b1e8fe7ba224', textAreaValue);
+            case 'documents':
+                switch (sender?.model_type?.value) {
+                    default:
+                        handleDocumentMessage(sender?.source?.document?.id, textAreaValue)
+                        break;
+                }
                 break;
             default:
                 handleGeneralMessage(textAreaValue);
                 break;
         }
+
     };
 
     const addMessageToChat = (content: any, type?: string) => {
@@ -151,12 +177,32 @@ export default function MessagesPane(props: MessagesPaneProps) {
 
     const handleGeneralMessage = async (prompt: string) => {
         if (prompt) {
-            const res = await getDocAiLLM(apiSetting.Prompt.doc_ai_llm(prompt));
+            const res = await getDocAiLLM(apiSetting.Prompt.doc_ai_llm(prompt, sender?.model_type?.value));
             if (res.data.success) {
                 addMessageToChat(res.data.data.raw_response);
             }
+            setWriting(false)
         }
     };
+
+    const handleDocumentMessage = async (document_id: string, content: string) => {
+        console.log('document_id', document_id);
+
+        const res = await assistantMessag({
+            ...apiSetting.Document.assistant_message(document_id),
+            data: {
+                query: content,
+                chat_history: []
+            }
+        });
+        if (res.data?.success) {
+            console.log(res.data);
+            addMessageToChat(res.data.message.content, 'text');
+        } else {
+            console.log(res.data);
+        }
+        setWriting(false)
+    }
 
     const handlerGenerateChart = async (smart_extraction_schema_id: string, query: string) => {
         if (query) {
@@ -169,6 +215,7 @@ export default function MessagesPane(props: MessagesPaneProps) {
                 console.log(res.data);
                 setAlert({ title: res.data.chart, type: 'error' });
             }
+            setWriting(false)
         }
     };
 
@@ -188,6 +235,7 @@ export default function MessagesPane(props: MessagesPaneProps) {
             } else {
                 setAlert({ title: res.data.report, type: 'error' });
             }
+            setWriting(false)
         }
     };
 
@@ -227,12 +275,15 @@ export default function MessagesPane(props: MessagesPaneProps) {
                                     <AvatarWithStatus src={message.sender.avatar} />
                                 )}
                                 <ChatBubble variant={isYou ? 'sent' : 'received'} {...message} />
+
                             </Stack>
                         );
                     })}
+                    {writing && <WritingView sender={sender} />}
                 </Stack>
             </Box>
             <MessageInput
+                writing={writing}
                 textAreaValue={textAreaValue}
                 setTextAreaValue={setTextAreaValue}
                 model={model}
@@ -240,6 +291,7 @@ export default function MessagesPane(props: MessagesPaneProps) {
                 getAllLabelsData={getAllLabelsData}
                 getAllSchemasData={getAllSchemasData}
                 sender={sender}
+                setSender={setSender}
                 updateChatSender={updateChatSender}
                 onSubmit={() => {
                     const message: MessageProps = {

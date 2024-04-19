@@ -125,4 +125,13 @@ export default class Absence {
         };
         return requestHeader;
     }
+
+    assistant_message(document_id: string) {
+        const requestHeader: AxiosRequestConfig = {
+            baseURL: baseURL,
+            url: `/api/v1/documents/${document_id}/qa`,
+            method: 'POST'
+        };
+        return requestHeader;
+    }
 }

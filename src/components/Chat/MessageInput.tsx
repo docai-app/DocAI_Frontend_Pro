@@ -8,9 +8,11 @@ import Option from '@mui/joy/Option';
 import Textarea from '@mui/joy/Textarea';
 import _ from 'lodash';
 import * as React from 'react';
+import SelectDocumentsModal from './modals/SelectDocumentsModal';
 import SelectSourceModal from './modals/SelectSourceModal';
 
 export type MessageInputProps = {
+    writing: boolean;
     textAreaValue: string;
     setTextAreaValue: (value: string) => void;
     onSubmit: () => void;
@@ -19,11 +21,13 @@ export type MessageInputProps = {
     getAllLabelsData: any;
     getAllSchemasData: any;
     sender?: UserProps;
+    setSender: any;
     updateChatSender: any;
 };
 
 export default function MessageInput(props: MessageInputProps) {
     const {
+        writing,
         textAreaValue,
         setTextAreaValue,
         onSubmit,
@@ -32,10 +36,12 @@ export default function MessageInput(props: MessageInputProps) {
         getAllLabelsData,
         getAllSchemasData,
         sender,
+        setSender,
         updateChatSender
     } = props;
     const textAreaRef = React.useRef<HTMLDivElement>(null);
     const [visibleSchema, setVisibleSchema] = React.useState(false);
+    const [visibleDocuments, setVisibleDocuments] = React.useState(false);
     const [types, setTypes] = React.useState<any>([]);
 
     React.useEffect(() => {
@@ -49,7 +55,7 @@ export default function MessageInput(props: MessageInputProps) {
         {
             name: '無來源',
             value: 'none',
-            onClick: () => {}
+            onClick: () => { }
         },
         {
             name: '數據源',
@@ -59,9 +65,11 @@ export default function MessageInput(props: MessageInputProps) {
             }
         },
         {
-            name: '文件夾或文件',
+            name: '文件',
             value: 'documents',
-            onClick: () => {}
+            onClick: () => {
+                setVisibleDocuments(true)
+            }
         }
     ];
 
@@ -75,18 +83,15 @@ export default function MessageInput(props: MessageInputProps) {
             source: {
                 name: _source?.name,
                 value: _source?.value
-            }
+            },
+            model_type: null
         });
     };
 
     const handleChangeModel = (value: any) => {
-        console.log('value', value);
-
         const _model = _.find(types, function (s) {
             return s.value == value;
         });
-        console.log('_model', _model);
-
         updateChatSender({
             ...sender,
             model_type: _model
@@ -107,6 +112,17 @@ export default function MessageInput(props: MessageInputProps) {
             source: {
                 ...sender?.source,
                 schema: schema
+            }
+        });
+    };
+
+    const handleSelectDriveDocument = (document: Document) => {
+        setVisibleDocuments(false);
+        updateChatSender({
+            ...sender,
+            source: {
+                ...sender?.source,
+                document: document
             }
         });
     };
@@ -151,7 +167,8 @@ export default function MessageInput(props: MessageInputProps) {
                                         }}
                                         slotProps={{ button: { sx: { whiteSpace: 'nowrap' } } }}
                                         onChange={(event, value) => {
-                                            handleChangeSource(value);
+                                            if (value)
+                                                handleChangeSource(value);
                                         }}
                                         value={sender?.source?.value || ''}
                                     >
@@ -177,13 +194,15 @@ export default function MessageInput(props: MessageInputProps) {
                                         }}
                                         slotProps={{ button: { sx: { whiteSpace: 'nowrap' } } }}
                                         onChange={(event, value) => {
-                                            setModel(value);
-                                            handleChangeModel(value);
+                                            if (value) {
+                                                setModel(value);
+                                                handleChangeModel(value);
+                                            }
                                         }}
                                         value={model}
                                     >
                                         <Option value={''} disabled>
-                                            請選擇模型
+                                            請選擇模型{model}
                                         </Option>
                                         {types.map((model: any, index: number) => (
                                             <Option key={index} value={model.value}>
@@ -196,6 +215,7 @@ export default function MessageInput(props: MessageInputProps) {
                             <Button
                                 size="sm"
                                 color="primary"
+                                disabled={writing}
                                 sx={{ alignSelf: 'center', borderRadius: 'sm' }}
                                 endDecorator={<SendRoundedIcon />}
                                 onClick={handleClick}
@@ -223,7 +243,14 @@ export default function MessageInput(props: MessageInputProps) {
                     setVisible: setVisibleSchema,
                     getAllLabelsData,
                     getAllSchemasData,
-                    handleSelectSchema
+                    handleSelect: handleSelectSchema
+                }}
+            />
+            <SelectDocumentsModal
+                {...{
+                    visible: visibleDocuments,
+                    setVisible: setVisibleDocuments,
+                    handleSelect: handleSelectDriveDocument
                 }}
             />
         </>

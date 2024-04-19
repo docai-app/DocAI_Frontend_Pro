@@ -52,20 +52,8 @@ export const ModelTypes = {
     ],
     documents: [
         {
-            name: 'gpt-3.5-turbo-16k',
-            value: 'gpt-3.5-turbo-16k'
-        },
-        {
-            name: 'gpt-3.5-turbo',
-            value: 'gpt-3.5-turbo'
-        },
-        {
-            name: 'gpt-4',
-            value: 'gpt-4'
-        },
-        {
-            name: 'gpt-4-32k',
-            value: 'gpt-4-32k'
+            name: 'QA',
+            value: 'qa'
         }
     ]
 };

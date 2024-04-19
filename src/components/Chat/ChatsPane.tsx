@@ -1,6 +1,6 @@
 import { ChatProps } from '@/utils/types';
+import AddBoxIcon from '@mui/icons-material/AddBox';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
-import NotInterestedIcon from '@mui/icons-material/NotInterested';
 import { IconButton } from '@mui/joy';
 import List from '@mui/joy/List';
 import Sheet from '@mui/joy/Sheet';
@@ -61,7 +61,7 @@ export default function ChatsPane(props: ChatsPaneProps) {
                     sx={{ display: { xs: 'none', sm: 'unset' } }}
                     onClick={handleAddChat}
                 >
-                    <NotInterestedIcon />
+                    <AddBoxIcon />
                 </IconButton>
                 <IconButton
                     variant="plain"

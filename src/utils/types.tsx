@@ -57,3 +57,27 @@ export type ChatProps = {
     sender: UserProps;
     messages: MessageProps[];
 };
+
+export type DriveDocument = {
+    id: string;
+    name: string;
+    storage_url: string;
+    status: string;
+    created_at: string;
+    updated_at: string;
+    approval_status: string;
+    approval_user_id: string;
+    approval_at: string;
+    folder_id: string;
+    upload_local_path: string;
+    user_id: string;
+    is_classified: boolean;
+    is_document: boolean;
+    meta: any;
+    is_classifier_trained: string;
+    is_embedded: boolean;
+    error_message: string;
+    retry_count: number;
+    labels: Label[];
+    user: User;
+}

@@ -1,22 +1,15 @@
-import { Box, Breadcrumbs, Link, Typography, Chip } from '@mui/joy';
+import { Box, Breadcrumbs, Link, Typography } from '@mui/joy';
+import Button from '@mui/joy/Button';
 import {
-    Dispatch,
-    Fragment,
-    SetStateAction,
-    useCallback,
-    useEffect,
-    useRef,
-    useState
+    Dispatch, SetStateAction
 } from 'react';
-import Router from 'next/navigation';
 import { Folder } from '../../components/common/Widget/FolderTree';
 import DriveTable from '../../components/drive/DriveTable';
 import SearchLabelDocumentForm from '../../components/drive/SearchLabelDocumentForm';
-import Button from '@mui/joy/Button';
 
+import Add from '@mui/icons-material/Add';
 import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
-import Add from '@mui/icons-material/Add';
 import KeyboardDoubleArrowDownIcon from '@mui/icons-material/KeyboardDoubleArrowDown';
 
 interface DriveViewProps {
@@ -71,15 +64,15 @@ export default function DriveView(props: DriveViewProps) {
         showAllItemsData = null,
         showAllItemsLoading = null,
         mode = 'view',
-        setMode = () => {},
+        setMode = () => { },
         target = [],
-        setTarget = () => {},
+        setTarget = () => { },
         dest = null,
-        setDest = () => {},
+        setDest = () => { },
         shareWith = [],
-        setShareWith = () => {},
-        handleShare = async () => {},
-        handleNewFolder = async () => {},
+        setShareWith = () => { },
+        handleShare = async () => { },
+        handleNewFolder = async () => { },
         countDocumentsByDateData = null,
         current,
         setCurrent,
@@ -181,7 +174,7 @@ export default function DriveView(props: DriveViewProps) {
                         </Box>
                     </Box>
 
-                    <DriveTable />
+                    <DriveTable handleSelectedValue={undefined} />
 
                     <SearchLabelDocumentForm getAllLabelsData={getAllLabelsData} search={search} />
                 </Box>
