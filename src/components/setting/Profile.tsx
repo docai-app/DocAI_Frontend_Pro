@@ -27,7 +27,7 @@ interface ProfileProps {
 function Profile({ currentUserData, currentUserLoading }: ProfileProps) {
     const { setAlert } = useAlert();
     const formRef = useRef<HTMLFormElement>(null);
-    const [{ }, updateMeProfile] = useAxios(apiSetting.User.updateMeProfile(), { manual: true });
+    const [{}, updateMeProfile] = useAxios(apiSetting.User.updateMeProfile(), { manual: true });
     const formSubmit: FormEventHandler = useCallback(
         (e: FormEvent) => {
             e.preventDefault();
@@ -71,12 +71,7 @@ function Profile({ currentUserData, currentUserLoading }: ProfileProps) {
             ) : (
                 <>
                     <form ref={formRef} onSubmit={formSubmit}>
-                        <Stack
-                            direction="row"
-                            spacing={3}
-                            sx={{ display: 'flex', my: 1 }}
-                        >
-
+                        <Stack direction="row" spacing={3} sx={{ display: 'flex', my: 1 }}>
                             {/* <Stack direction="column" spacing={1}>
                     <AspectRatio
                         ratio="1"
@@ -113,20 +108,26 @@ function Profile({ currentUserData, currentUserLoading }: ProfileProps) {
                                     sx={{ display: { sm: 'flex-column', md: 'flex-row' } }}
                                 >
                                     <FormLabel>用戶暱稱</FormLabel>
-                                    <Input size="sm" name="nickname"
+                                    <Input
+                                        size="sm"
+                                        name="nickname"
                                         defaultValue={currentUserData?.user?.nickname || ''}
                                     />
                                 </FormControl>
                                 <Stack direction="row" spacing={2}>
                                     <FormControl sx={{ flexGrow: 1 }}>
                                         <FormLabel>電話號碼</FormLabel>
-                                        <Input size="sm" name="phone"
+                                        <Input
+                                            size="sm"
+                                            name="phone"
                                             defaultValue={currentUserData?.user?.phone || ''}
                                         />
                                     </FormControl>
                                     <FormControl sx={{ flexGrow: 1 }}>
                                         <FormLabel>職位</FormLabel>
-                                        <Input size="sm" name="position"
+                                        <Input
+                                            size="sm"
+                                            name="position"
                                             defaultValue={currentUserData?.user?.position || ''}
                                         />
                                     </FormControl>
@@ -137,19 +138,23 @@ function Profile({ currentUserData, currentUserLoading }: ProfileProps) {
                                         <Input
                                             type="date"
                                             name="date_of_birth"
-                                            defaultValue={currentUserData?.user?.date_of_birth || ''}
-                                        // slotProps={{
-                                        //     input: {
-                                        //         min: '2018-06-07',
-                                        //         max: '2018-06-14',
-                                        //     },
-                                        // }}
+                                            defaultValue={
+                                                currentUserData?.user?.date_of_birth || ''
+                                            }
+                                            // slotProps={{
+                                            //     input: {
+                                            //         min: '2018-06-07',
+                                            //         max: '2018-06-14',
+                                            //     },
+                                            // }}
                                         />
                                     </FormControl>
                                     <FormControl sx={{ flexGrow: 1 }}>
                                         <FormLabel>性別</FormLabel>
                                         <RadioGroup
-                                            defaultValue={currentUserData?.user?.sex === 1 ? 'male' : 'female'}
+                                            defaultValue={
+                                                currentUserData?.user?.sex === 1 ? 'male' : 'female'
+                                            }
                                             name="sex"
                                             // value={value}
                                             // onChange={handleChange}
@@ -180,9 +185,8 @@ function Profile({ currentUserData, currentUserLoading }: ProfileProps) {
                         </CardOverflow>
                     </form>
                 </>
-            )
-            }
-        </Card >
+            )}
+        </Card>
     );
 }
 

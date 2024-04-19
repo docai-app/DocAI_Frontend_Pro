@@ -45,12 +45,11 @@ function SettingContainer() {
         <SettingView
             {...{
                 currentUserData,
-                currentUserLoading,
+                currentUserLoading
                 // session
             }}
         />
         // </SessionProvider>
-
     );
 }
 

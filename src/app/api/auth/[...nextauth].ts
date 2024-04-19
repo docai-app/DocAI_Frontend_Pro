@@ -132,6 +132,4 @@ export default async function auth(req: NextApiRequest, res: NextApiResponse) {
 //     }
 // };
 
-
-
 // export default NextAuth(authOptions);

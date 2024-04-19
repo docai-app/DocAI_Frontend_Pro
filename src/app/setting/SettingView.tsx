@@ -15,7 +15,6 @@ import Gmail from '../../components/setting/Gmail';
 import { signIn, signOut } from 'next-auth/react';
 import { useSession, SessionProvider } from 'next-auth/react';
 
-
 interface SettingViewProps {
     currentUserData: ShowCurrentUser | undefined;
     currentUserLoading: boolean;
@@ -69,19 +68,25 @@ export default function SettingView({
                             }
                         }}
                     >
-                        <Tab value="profile" indicatorInset
+                        <Tab
+                            value="profile"
+                            indicatorInset
                             indicatorPlacement="bottom"
                             sx={{ borderRadius: '6px 6px 0 0' }}
                         >
                             帳戶
                         </Tab>
-                        <Tab value="change_password" indicatorInset
+                        <Tab
+                            value="change_password"
+                            indicatorInset
                             indicatorPlacement="bottom"
                             sx={{ borderRadius: '6px 6px 0 0' }}
                         >
                             更改密碼
                         </Tab>
-                        <Tab value="gmail" indicatorInset
+                        <Tab
+                            value="gmail"
+                            indicatorInset
                             indicatorPlacement="bottom"
                             sx={{ borderRadius: '6px 6px 0 0' }}
                         >
@@ -95,7 +100,7 @@ export default function SettingView({
                         <ChangePassword />
                     </TabPanel>
                     <TabPanel value="gmail">
-                        <Gmail/>
+                        <Gmail />
                     </TabPanel>
                 </Tabs>
             </Box>

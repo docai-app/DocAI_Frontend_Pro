@@ -28,42 +28,59 @@ import AlternateEmailIcon from '@mui/icons-material/AlternateEmail';
 const apiSetting = new Api();
 
 function Gmail() {
-    const { data: session, status } = useSession()
+    const { data: session, status } = useSession();
 
     useEffect(() => {
         console.log(session);
     }, [session]);
 
     return (
-
         <Card>
             <Box sx={{ display: 'flex' }}>
-
-                <Typography level="title-lg"
+                <Typography
+                    level="title-lg"
                     startDecorator={<AlternateEmailIcon />}
                     sx={{ width: '20%' }}
-                >Gmail</Typography>
+                >
+                    Gmail
+                </Typography>
                 <Box sx={{ flexGrow: 1 }}>
-
                     {session ? (
-                        <Box sx={{ display: 'flex', justifyContent: 'left', alignItems: 'center', gap: 2 }}>
-                            <Avatar variant="soft" size="lg"
+                        <Box
+                            sx={{
+                                display: 'flex',
+                                justifyContent: 'left',
+                                alignItems: 'center',
+                                gap: 2
+                            }}
+                        >
+                            <Avatar
+                                variant="soft"
+                                size="lg"
                                 src={(session?.user?.image as string) || ''}
-                                alt={session?.user?.name || ''} />
+                                alt={session?.user?.name || ''}
+                            />
                             <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                                 <Box sx={{ display: 'flex', gap: 2 }}>
-                                    <Typography level="body-md" fontWeight={700} color="primary">{session?.user?.name}</Typography>
-                                    <Link underline="always" color="danger" level="body-xs" fontWeight={600} 
-                                        onClick={() => signOut()}>
+                                    <Typography level="body-md" fontWeight={700} color="primary">
+                                        {session?.user?.name}
+                                    </Typography>
+                                    <Link
+                                        underline="always"
+                                        color="danger"
+                                        level="body-xs"
+                                        fontWeight={600}
+                                        onClick={() => signOut()}
+                                    >
                                         Sign out
                                     </Link>
                                 </Box>
-                                <Typography level="body-xs" >{session?.user?.email}</Typography>
+                                <Typography level="body-xs">{session?.user?.email}</Typography>
                             </Box>
                         </Box>
-
                     ) : (
-                        <Button color="danger"
+                        <Button
+                            color="danger"
                             onClick={() => {
                                 signIn('google', { params: { access_type: 'offline' } });
                             }}
@@ -74,8 +91,6 @@ function Gmail() {
                 </Box>
             </Box>
         </Card>
-
-
     );
 }
 

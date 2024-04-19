@@ -48,7 +48,10 @@ export default function SelectDocumentsModal(props: ViewProps) {
                     <DriveTable
                         handleSelectedValue={(value: DriveDocument) => {
                             setSelectedValue(value);
-                        }} documents={[]} folders={[]} />
+                        }}
+                        documents={[]}
+                        folders={[]}
+                    />
                 </DialogContent>
             </ModalDialog>
         </Modal>

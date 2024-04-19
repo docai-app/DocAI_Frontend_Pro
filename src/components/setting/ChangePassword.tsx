@@ -64,22 +64,20 @@ function ChangePassword() {
     return (
         <Card>
             <form ref={formRef} onSubmit={changePasswordFormik.handleSubmit}>
-                {!putData?.success && putData?.errors && (
-                    <ErrorList errors={putData.errors} />
-                )}
-                <Stack
-                    direction="column"
-                    spacing={2}
-                    sx={{ display: 'flex', my: 1 }}
-                >
+                {!putData?.success && putData?.errors && <ErrorList errors={putData.errors} />}
+                <Stack direction="column" spacing={2} sx={{ display: 'flex', my: 1 }}>
                     <FormControl sx={{ flexGrow: 1 }}>
                         <Typography
                             startDecorator={<FormLabel sx={{ mt: 1, mr: 2 }}>原密碼</FormLabel>}
-                            color="danger" level="body-xs">
+                            color="danger"
+                            level="body-xs"
+                        >
                             {changePasswordFormik.errors.current_password}
                         </Typography>
-                        <Input size="sm"
-                            type="password" name="current_password"
+                        <Input
+                            size="sm"
+                            type="password"
+                            name="current_password"
                             onChange={changePasswordFormik.handleChange}
                             value={changePasswordFormik.values.current_password}
                         />
@@ -88,11 +86,15 @@ function ChangePassword() {
                     <FormControl sx={{ flexGrow: 1 }}>
                         <Typography
                             startDecorator={<FormLabel sx={{ mt: 1, mr: 2 }}>新密碼</FormLabel>}
-                            color="danger" level="body-xs">
+                            color="danger"
+                            level="body-xs"
+                        >
                             {changePasswordFormik.errors.password}
                         </Typography>
-                        <Input size="sm"
-                            type="password" name="password"
+                        <Input
+                            size="sm"
+                            type="password"
+                            name="password"
                             onChange={changePasswordFormik.handleChange}
                             value={changePasswordFormik.values.password}
                         />
@@ -101,11 +103,15 @@ function ChangePassword() {
                     <FormControl sx={{ flexGrow: 1 }}>
                         <Typography
                             startDecorator={<FormLabel sx={{ mt: 1, mr: 2 }}>確認新密碼</FormLabel>}
-                            color="danger" level="body-xs">
+                            color="danger"
+                            level="body-xs"
+                        >
                             {changePasswordFormik.errors.password_confirmation}
                         </Typography>
-                        <Input size="sm"
-                            type="password" name="password_confirmation"
+                        <Input
+                            size="sm"
+                            type="password"
+                            name="password_confirmation"
                             onChange={changePasswordFormik.handleChange}
                             value={changePasswordFormik.values.password_confirmation}
                         />
@@ -119,7 +125,6 @@ function ChangePassword() {
                     </CardOverflow>
                 </Stack>
             </form>
-
         </Card>
     );
 }
