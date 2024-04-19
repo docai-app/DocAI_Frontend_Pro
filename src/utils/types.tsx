@@ -20,6 +20,7 @@ export type Schema = {
 export type Label = {
     id: string;
     name: string;
+    meta?: any;
 };
 
 export type User = {
@@ -35,12 +36,13 @@ export type UserProps = {
     online?: boolean;
     source: any;
     model_type?: any;
+    model_types?: any;
     schema?: SmartExtractionSchema;
 };
 
 export type MessageProps = {
     id: string;
-    content: string;
+    content: any;
     created_at: string;
     unread?: boolean;
     sender: UserProps | 'You';

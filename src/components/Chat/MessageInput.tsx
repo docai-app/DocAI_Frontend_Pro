@@ -1,13 +1,17 @@
+import Api from '@/apis';
+import { getAllChainFeatureByIdsDatas } from '@/apis/AirtableChainFeature';
 import { ModelTypes } from '@/utils/constant';
-import { SmartExtractionSchema, UserProps } from '@/utils/types';
+import { DriveDocument, Label, SmartExtractionSchema, UserProps } from '@/utils/types';
 import SendRoundedIcon from '@mui/icons-material/SendRounded';
 import { Select, Stack } from '@mui/joy';
 import Box from '@mui/joy/Box';
 import Button from '@mui/joy/Button';
 import Option from '@mui/joy/Option';
 import Textarea from '@mui/joy/Textarea';
+import useAxios from 'axios-hooks';
 import _ from 'lodash';
 import * as React from 'react';
+import ChainFeatureDetail from '../ChainFeature/ChainFeatureDetail';
 import SelectDocumentsModal from './modals/SelectDocumentsModal';
 import SelectSourceModal from './modals/SelectSourceModal';
 
@@ -24,7 +28,7 @@ export type MessageInputProps = {
     setSender: any;
     updateChatSender: any;
 };
-
+const apiSetting = new Api();
 export default function MessageInput(props: MessageInputProps) {
     const {
         writing,
@@ -43,14 +47,58 @@ export default function MessageInput(props: MessageInputProps) {
     const [visibleSchema, setVisibleSchema] = React.useState(false);
     const [visibleDocuments, setVisibleDocuments] = React.useState(false);
     const [types, setTypes] = React.useState<any>([]);
+    const [chain_features, set_chain_features] = React.useState<any>([]);
+    const [chain_feature, set_chain_feature] = React.useState<any>();
+    const [label, setLabel] = React.useState<Label>();
+    const [openIframe, setOpenIframe] = React.useState(false);
+    const [document, setDocument] = React.useState<any>()
+
+    const [{ data: getLabelByIdData }, getLabelById] = useAxios(apiSetting.Tag.getTagById(''), {
+        manual: true
+    });
+
+
+    React.useEffect(() => {
+        if (sender && sender?.source?.value == 'documents') {
+            // console.log('model_types', sender);
+            setTypes(ModelTypes['documents'])
+            if (sender?.model_types && sender?.model_types?.length > 0) {
+                setTypes(sender?.model_types)
+            }
+        }
+    }, [sender]);
 
     React.useEffect(() => {
         if (sender?.source) {
             if (sender?.source.value == 'none') setTypes(ModelTypes['none']);
             if (sender?.source.value == 'schema') setTypes(ModelTypes['schema']);
-            if (sender?.source.value == 'documents') setTypes(ModelTypes['documents']);
+            if (sender?.source.value == 'documents') {
+                // setTypes(ModelTypes['documents'])
+            }
         }
     }, [sender?.source]);
+
+    React.useEffect(() => {
+        if (label) {
+            getChainFeature()
+        }
+    }, [label])
+
+    React.useEffect(() => {
+        if (chain_features) {
+            const _types = _.map(chain_features, (cf) => {
+                return {
+                    name: cf.fields.name,
+                    value: cf.id
+                }
+            })
+            setTypes(ModelTypes['documents'].concat(_types));
+            updateChatSender({
+                ...sender,
+                model_types: ModelTypes['documents'].concat(_types)
+            });
+        }
+    }, [chain_features])
     const sources = [
         {
             name: '無來源',
@@ -116,8 +164,14 @@ export default function MessageInput(props: MessageInputProps) {
         });
     };
 
-    const handleSelectDriveDocument = (document: Document) => {
+    const handleSelectDriveDocument = (document: DriveDocument) => {
+        setDocument(document)
         setVisibleDocuments(false);
+        const label_id = document.labels && document.labels[0].id
+        if (label_id) {
+            setLabel(document.labels[0])
+        }
+
         updateChatSender({
             ...sender,
             source: {
@@ -126,6 +180,25 @@ export default function MessageInput(props: MessageInputProps) {
             }
         });
     };
+
+    // const getLabelDataById = (label_id: string) => {
+    //     getLabelById({
+    //         ...apiSetting.Tag.getTagById(label_id)
+    //     }).then((res) => {
+    //         setLabel(res.data.tag)
+    //     })
+    // }
+
+    const getChainFeature = () => {
+        // if (!_.isEmpty(chain_features)) return;
+        if (label?.meta?.chain_features) {
+            getAllChainFeatureByIdsDatas(label?.meta?.chain_features)
+                .then((res) => {
+                    // console.log(res);
+                    set_chain_features(res);
+                })
+        }
+    }
     return (
         <>
             <Box sx={{ px: 0, pb: 0 }}>
@@ -202,10 +275,18 @@ export default function MessageInput(props: MessageInputProps) {
                                         value={model}
                                     >
                                         <Option value={''} disabled>
-                                            請選擇模型{model}
+                                            請選擇模型
                                         </Option>
                                         {types.map((model: any, index: number) => (
-                                            <Option key={index} value={model.value}>
+                                            <Option key={index} value={model.value}
+                                                onClick={() => {
+                                                    if (sender?.source?.value == 'documents' && model.value != 'qa') {
+                                                        setOpenIframe(true)
+                                                        set_chain_feature(model)
+                                                    } else {
+                                                        setOpenIframe(false)
+                                                    }
+                                                }}>
                                                 {model.name}
                                             </Option>
                                         ))}
@@ -253,6 +334,14 @@ export default function MessageInput(props: MessageInputProps) {
                     handleSelect: handleSelectDriveDocument
                 }}
             />
+            {openIframe &&
+                <ChainFeatureDetail
+                    open={openIframe}
+                    setOpen={setOpenIframe}
+                    chain_feature_id={chain_feature?.value}
+                    selectDocument={document || sender?.source?.document}
+                />
+            }
         </>
     );
 }

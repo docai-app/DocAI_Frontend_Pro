@@ -42,7 +42,7 @@ export default function MyMessages(props: ViewProps) {
                         sm: 'none'
                     },
                     transition: 'transform 0.4s, width 0.4s',
-                    zIndex: 100,
+                    zIndex: 0,
                     width: '100%',
                     top: 0,
                     display: ''

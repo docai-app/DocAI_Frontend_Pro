@@ -474,7 +474,13 @@ const drives = {
             "labels": [
                 {
                     "id": "aa1448a8-d2bf-41da-bca8-b3fd3e6b7bad",
-                    "name": "維修單"
+                    "name": "維修單",
+                    "meta": {
+                        "chain_features": [
+                            11,
+                            27
+                        ]
+                    }
                 }
             ]
         },
@@ -506,7 +512,12 @@ const drives = {
             "labels": [
                 {
                     "id": "32b5fb79-9105-45f0-9da0-e9f33c5b742a",
-                    "name": "一願咖啡報損表"
+                    "name": "一願咖啡報損表",
+                    "meta": {
+                        "chain_features": [
+                            64
+                        ]
+                    }
                 }
             ]
         },
@@ -538,7 +549,12 @@ const drives = {
             "labels": [
                 {
                     "id": "32b5fb79-9105-45f0-9da0-e9f33c5b742a",
-                    "name": "一願咖啡報損表"
+                    "name": "一願咖啡報損表",
+                    "meta": {
+                        "chain_features": [
+                            64
+                        ]
+                    }
                 }
             ]
         },
@@ -570,7 +586,12 @@ const drives = {
             "labels": [
                 {
                     "id": "32b5fb79-9105-45f0-9da0-e9f33c5b742a",
-                    "name": "一願咖啡報損表"
+                    "name": "一願咖啡報損表",
+                    "meta": {
+                        "chain_features": [
+                            64
+                        ]
+                    }
                 }
             ]
         },
@@ -608,7 +629,13 @@ const drives = {
             "labels": [
                 {
                     "id": "be233f85-c0ef-418e-b752-761b7452b175",
-                    "name": "會議記錄"
+                    "name": "會議記錄",
+                    "meta": {
+                        "chain_features": [
+                            7,
+                            11
+                        ]
+                    }
                 }
             ]
         },
@@ -646,7 +673,13 @@ const drives = {
             "labels": [
                 {
                     "id": "be233f85-c0ef-418e-b752-761b7452b175",
-                    "name": "會議記錄"
+                    "name": "會議記錄",
+                    "meta": {
+                        "chain_features": [
+                            7,
+                            11
+                        ]
+                    }
                 }
             ]
         },
@@ -684,7 +717,13 @@ const drives = {
             "labels": [
                 {
                     "id": "be233f85-c0ef-418e-b752-761b7452b175",
-                    "name": "會議記錄"
+                    "name": "會議記錄",
+                    "meta": {
+                        "chain_features": [
+                            7,
+                            11
+                        ]
+                    }
                 }
             ]
         },
@@ -722,7 +761,13 @@ const drives = {
             "labels": [
                 {
                     "id": "be233f85-c0ef-418e-b752-761b7452b175",
-                    "name": "會議記錄"
+                    "name": "會議記錄",
+                    "meta": {
+                        "chain_features": [
+                            7,
+                            11
+                        ]
+                    }
                 }
             ]
         },
@@ -760,7 +805,13 @@ const drives = {
             "labels": [
                 {
                     "id": "be233f85-c0ef-418e-b752-761b7452b175",
-                    "name": "會議記錄"
+                    "name": "會議記錄",
+                    "meta": {
+                        "chain_features": [
+                            7,
+                            11
+                        ]
+                    }
                 }
             ]
         },
@@ -792,7 +843,14 @@ const drives = {
             "labels": [
                 {
                     "id": "d26c0813-4e17-4ab3-8e38-055cee127b99",
-                    "name": "CV"
+                    "name": "CV",
+                    "meta": {
+                        "chain_features": [
+                            22,
+                            28,
+                            27
+                        ]
+                    }
                 }
             ]
         },
@@ -824,7 +882,13 @@ const drives = {
             "labels": [
                 {
                     "id": "3c8a3e82-b6d8-4a07-bbdc-ad1c9f0c6751",
-                    "name": "Business Card"
+                    "name": "Business Card",
+                    "meta": {
+                        "chain_features": [
+                            20,
+                            113
+                        ]
+                    }
                 }
             ]
         },
@@ -856,7 +920,13 @@ const drives = {
             "labels": [
                 {
                     "id": "3c8a3e82-b6d8-4a07-bbdc-ad1c9f0c6751",
-                    "name": "Business Card"
+                    "name": "Business Card",
+                    "meta": {
+                        "chain_features": [
+                            20,
+                            113
+                        ]
+                    }
                 }
             ]
         },
@@ -894,7 +964,15 @@ const drives = {
             "labels": [
                 {
                     "id": "056b73e5-26cb-431e-8a42-fd77a8c1c511",
-                    "name": "CHYB請假表"
+                    "name": "CHYB請假表",
+                    "meta": {
+                        "chain_features": [
+                            "2",
+                            "7",
+                            "11",
+                            27
+                        ]
+                    }
                 }
             ]
         },
@@ -932,7 +1010,15 @@ const drives = {
             "labels": [
                 {
                     "id": "056b73e5-26cb-431e-8a42-fd77a8c1c511",
-                    "name": "CHYB請假表"
+                    "name": "CHYB請假表",
+                    "meta": {
+                        "chain_features": [
+                            "2",
+                            "7",
+                            "11",
+                            27
+                        ]
+                    }
                 }
             ]
         },
@@ -970,7 +1056,15 @@ const drives = {
             "labels": [
                 {
                     "id": "056b73e5-26cb-431e-8a42-fd77a8c1c511",
-                    "name": "CHYB請假表"
+                    "name": "CHYB請假表",
+                    "meta": {
+                        "chain_features": [
+                            "2",
+                            "7",
+                            "11",
+                            27
+                        ]
+                    }
                 }
             ]
         },
@@ -1008,7 +1102,15 @@ const drives = {
             "labels": [
                 {
                     "id": "056b73e5-26cb-431e-8a42-fd77a8c1c511",
-                    "name": "CHYB請假表"
+                    "name": "CHYB請假表",
+                    "meta": {
+                        "chain_features": [
+                            "2",
+                            "7",
+                            "11",
+                            27
+                        ]
+                    }
                 }
             ]
         },
@@ -1040,7 +1142,8 @@ const drives = {
             "labels": [
                 {
                     "id": "a8111169-7319-4fe0-b736-6b575704356a",
-                    "name": "TEST生產單"
+                    "name": "TEST生產單",
+                    "meta": {}
                 }
             ]
         },
@@ -1089,7 +1192,13 @@ const drives = {
             "labels": [
                 {
                     "id": "3c8a3e82-b6d8-4a07-bbdc-ad1c9f0c6751",
-                    "name": "Business Card"
+                    "name": "Business Card",
+                    "meta": {
+                        "chain_features": [
+                            20,
+                            113
+                        ]
+                    }
                 }
             ]
         },
@@ -1121,7 +1230,8 @@ const drives = {
             "labels": [
                 {
                     "id": "34be014f-f30d-43a3-a37b-df7d0f957a1f",
-                    "name": "M1"
+                    "name": "M1",
+                    "meta": {}
                 }
             ]
         },
@@ -1153,7 +1263,14 @@ const drives = {
             "labels": [
                 {
                     "id": "d26c0813-4e17-4ab3-8e38-055cee127b99",
-                    "name": "CV"
+                    "name": "CV",
+                    "meta": {
+                        "chain_features": [
+                            22,
+                            28,
+                            27
+                        ]
+                    }
                 }
             ]
         },
@@ -1180,7 +1297,8 @@ const drives = {
             "labels": [
                 {
                     "id": "2c6460be-7e2a-48a4-a5ab-5724b57184be",
-                    "name": "好時光證書"
+                    "name": "好時光證書",
+                    "meta": {}
                 }
             ]
         },
@@ -1207,7 +1325,8 @@ const drives = {
             "labels": [
                 {
                     "id": "2c6460be-7e2a-48a4-a5ab-5724b57184be",
-                    "name": "好時光證書"
+                    "name": "好時光證書",
+                    "meta": {}
                 }
             ]
         },
@@ -1234,7 +1353,15 @@ const drives = {
             "labels": [
                 {
                     "id": "056b73e5-26cb-431e-8a42-fd77a8c1c511",
-                    "name": "CHYB請假表"
+                    "name": "CHYB請假表",
+                    "meta": {
+                        "chain_features": [
+                            "2",
+                            "7",
+                            "11",
+                            27
+                        ]
+                    }
                 }
             ]
         },
@@ -1261,7 +1388,15 @@ const drives = {
             "labels": [
                 {
                     "id": "056b73e5-26cb-431e-8a42-fd77a8c1c511",
-                    "name": "CHYB請假表"
+                    "name": "CHYB請假表",
+                    "meta": {
+                        "chain_features": [
+                            "2",
+                            "7",
+                            "11",
+                            27
+                        ]
+                    }
                 }
             ]
         },
@@ -1288,7 +1423,8 @@ const drives = {
             "labels": [
                 {
                     "id": "2c6460be-7e2a-48a4-a5ab-5724b57184be",
-                    "name": "好時光證書"
+                    "name": "好時光證書",
+                    "meta": {}
                 }
             ]
         },
@@ -1315,7 +1451,8 @@ const drives = {
             "labels": [
                 {
                     "id": "3826aa4f-5b9e-4272-94a5-cbdcd07b8ac3",
-                    "name": "促銷計劃書"
+                    "name": "促銷計劃書",
+                    "meta": {}
                 }
             ]
         },
@@ -1342,7 +1479,8 @@ const drives = {
             "labels": [
                 {
                     "id": "3826aa4f-5b9e-4272-94a5-cbdcd07b8ac3",
-                    "name": "促銷計劃書"
+                    "name": "促銷計劃書",
+                    "meta": {}
                 }
             ]
         },
@@ -1369,7 +1507,13 @@ const drives = {
             "labels": [
                 {
                     "id": "70f297d3-1801-4c55-9f83-a87e0da70979",
-                    "name": "abc"
+                    "name": "abc",
+                    "meta": {
+                        "chain_features": [
+                            84,
+                            55
+                        ]
+                    }
                 }
             ]
         },
@@ -1396,7 +1540,8 @@ const drives = {
             "labels": [
                 {
                     "id": "07ef9a36-24c6-4de7-9de2-0cde5c4aef68",
-                    "name": "test4"
+                    "name": "test4",
+                    "meta": {}
                 }
             ]
         },
@@ -1423,7 +1568,8 @@ const drives = {
             "labels": [
                 {
                     "id": "f5f60326-8d0c-4adc-a6ce-d030bc395b1f",
-                    "name": "专库"
+                    "name": "专库",
+                    "meta": {}
                 }
             ]
         },
@@ -1450,7 +1596,15 @@ const drives = {
             "labels": [
                 {
                     "id": "056b73e5-26cb-431e-8a42-fd77a8c1c511",
-                    "name": "CHYB請假表"
+                    "name": "CHYB請假表",
+                    "meta": {
+                        "chain_features": [
+                            "2",
+                            "7",
+                            "11",
+                            27
+                        ]
+                    }
                 }
             ]
         },
@@ -1477,7 +1631,15 @@ const drives = {
             "labels": [
                 {
                     "id": "056b73e5-26cb-431e-8a42-fd77a8c1c511",
-                    "name": "CHYB請假表"
+                    "name": "CHYB請假表",
+                    "meta": {
+                        "chain_features": [
+                            "2",
+                            "7",
+                            "11",
+                            27
+                        ]
+                    }
                 }
             ]
         },
@@ -1504,7 +1666,15 @@ const drives = {
             "labels": [
                 {
                     "id": "056b73e5-26cb-431e-8a42-fd77a8c1c511",
-                    "name": "CHYB請假表"
+                    "name": "CHYB請假表",
+                    "meta": {
+                        "chain_features": [
+                            "2",
+                            "7",
+                            "11",
+                            27
+                        ]
+                    }
                 }
             ]
         },
@@ -1531,7 +1701,15 @@ const drives = {
             "labels": [
                 {
                     "id": "056b73e5-26cb-431e-8a42-fd77a8c1c511",
-                    "name": "CHYB請假表"
+                    "name": "CHYB請假表",
+                    "meta": {
+                        "chain_features": [
+                            "2",
+                            "7",
+                            "11",
+                            27
+                        ]
+                    }
                 }
             ]
         },
@@ -1558,7 +1736,14 @@ const drives = {
             "labels": [
                 {
                     "id": "d26c0813-4e17-4ab3-8e38-055cee127b99",
-                    "name": "CV"
+                    "name": "CV",
+                    "meta": {
+                        "chain_features": [
+                            22,
+                            28,
+                            27
+                        ]
+                    }
                 }
             ]
         },
@@ -1585,7 +1770,14 @@ const drives = {
             "labels": [
                 {
                     "id": "d26c0813-4e17-4ab3-8e38-055cee127b99",
-                    "name": "CV"
+                    "name": "CV",
+                    "meta": {
+                        "chain_features": [
+                            22,
+                            28,
+                            27
+                        ]
+                    }
                 }
             ]
         },
@@ -1612,7 +1804,14 @@ const drives = {
             "labels": [
                 {
                     "id": "d26c0813-4e17-4ab3-8e38-055cee127b99",
-                    "name": "CV"
+                    "name": "CV",
+                    "meta": {
+                        "chain_features": [
+                            22,
+                            28,
+                            27
+                        ]
+                    }
                 }
             ]
         },
@@ -1639,7 +1838,14 @@ const drives = {
             "labels": [
                 {
                     "id": "d26c0813-4e17-4ab3-8e38-055cee127b99",
-                    "name": "CV"
+                    "name": "CV",
+                    "meta": {
+                        "chain_features": [
+                            22,
+                            28,
+                            27
+                        ]
+                    }
                 }
             ]
         },
@@ -1666,7 +1872,14 @@ const drives = {
             "labels": [
                 {
                     "id": "d26c0813-4e17-4ab3-8e38-055cee127b99",
-                    "name": "CV"
+                    "name": "CV",
+                    "meta": {
+                        "chain_features": [
+                            22,
+                            28,
+                            27
+                        ]
+                    }
                 }
             ]
         }

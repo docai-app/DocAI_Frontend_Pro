@@ -10,7 +10,7 @@ export default function ContentView(props: ViewProps) {
     return (
         <>
             <Box>
-                {content.split('\n').map((item: string, index: number) => (
+                {content?.split('\n').map((item: string, index: number) => (
                     <Typography
                         key={index}
                         sx={{

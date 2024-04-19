@@ -115,6 +115,10 @@ export default function MessagesPane(props: MessagesPaneProps) {
         addMessageToLocalStorage(message);
     };
 
+    const newMessage = (message: MessageProps) => {
+        setChatMessages((arr) => [...arr, message]);
+        addMessageToLocalStorage(message);
+    }
     /**
      * 添加消息到本地
      * @param message
@@ -179,7 +183,13 @@ export default function MessagesPane(props: MessagesPaneProps) {
         if (prompt) {
             const res = await getDocAiLLM(apiSetting.Prompt.doc_ai_llm(prompt, sender?.model_type?.value));
             if (res.data.success) {
-                addMessageToChat(res.data.data.raw_response);
+                newMessage({
+                    id: v4(),
+                    sender: sender || 'You',
+                    content: res.data.data.raw_response,
+                    type: 'text',
+                    created_at: moment().format('YYYY-MM-DD HH:mm')
+                })
             }
             setWriting(false)
         }
@@ -196,7 +206,6 @@ export default function MessagesPane(props: MessagesPaneProps) {
             }
         });
         if (res.data?.success) {
-            console.log(res.data);
             addMessageToChat(res.data.message.content, 'text');
         } else {
             console.log(res.data);
@@ -239,74 +248,258 @@ export default function MessagesPane(props: MessagesPaneProps) {
         }
     };
 
+
+    //回调函数
+    const receiveMessageFromIndex = React.useCallback(
+        (event: any) => {
+            if (event != undefined && event.data?.from == 'chain_feature') {
+                // console.log('收到信息：', event.data);
+                const message = event.data;
+                switch (message.type) {
+                    case 'input':
+                        newMessage({
+                            id: v4(),
+                            sender: sender || 'You',
+                            content: `請輸入"${message.block?.name}"`,
+                            type: 'text',
+                            created_at: moment().format('YYYY-MM-DD HH:mm')
+                        })
+
+                        newMessage({
+                            id: v4(),
+                            sender: 'You',
+                            content: message.content,
+                            type: 'text',
+                            created_at: moment().format('YYYY-MM-DD HH:mm')
+                        })
+                        break;
+                    case 'output':
+                        newMessage({
+                            id: v4(),
+                            sender: sender || 'You',
+                            content: message.content,
+                            type: 'text',
+                            created_at: moment().format('YYYY-MM-DD HH:mm')
+                        })
+                        break;
+                    case 'file':
+                        const file = message.content;
+                        const fileURL = URL.createObjectURL(file);
+
+                        newMessage({
+                            id: v4(),
+                            sender: sender || 'You',
+                            content: `請輸入"${message.block?.name}"`,
+                            type: 'text',
+                            created_at: moment().format('YYYY-MM-DD HH:mm')
+                        })
+
+                        newMessage({
+                            id: v4(),
+                            sender: 'You',
+                            content: {
+                                type: 'file',
+                                fileURL: fileURL,
+                                fileName: file.name,
+                                text: file.name
+                            },
+                            type: 'file',
+                            created_at: moment().format('YYYY-MM-DD HH:mm')
+                        })
+                        break;
+                    case 'document':
+                        const document = message.content;
+
+                        newMessage({
+                            id: v4(),
+                            sender: sender || 'You',
+                            content: `請輸入"${message.block?.name}"`,
+                            type: 'text',
+                            created_at: moment().format('YYYY-MM-DD HH:mm')
+                        })
+
+                        newMessage({
+                            id: v4(),
+                            sender: 'You',
+                            content: {
+                                type: 'file',
+                                fileURL: document.storage_url,
+                                fileName: document.name,
+                                text: document.name
+                            },
+                            type: 'file',
+                            created_at: moment().format('YYYY-MM-DD HH:mm')
+                        })
+                        break;
+                    case 'infographic':
+                        // newMessage('human', { type: 'text', text: '幫我生成信息圖' });
+                        // // setCacheChatHistory((prev) => [...prev, { 'ai': "幫我生成信息圖" }]);
+                        // newMessage(
+                        //     'ai',
+                        //     {
+                        //         type: 'infographic',
+                        //         url: message.content,
+                        //         text: message.content
+                        //     },
+                        //     false,
+                        //     true,
+                        //     false
+                        // );
+                        break;
+                    case 'storybook':
+                        newMessage({
+                            id: v4(),
+                            sender: 'You',
+                            content: '幫我生成故事書',
+                            type: 'text',
+                            created_at: moment().format('YYYY-MM-DD HH:mm')
+                        })
+
+                        newMessage({
+                            id: v4(),
+                            sender: sender || 'You',
+                            content: message.content,
+                            type: 'pdf_link',
+                            created_at: moment().format('YYYY-MM-DD HH:mm')
+                        })
+                        break;
+                    case 'image':
+                        newMessage({
+                            id: v4(),
+                            sender: 'You',
+                            content: '幫我生成圖片',
+                            type: 'text',
+                            created_at: moment().format('YYYY-MM-DD HH:mm')
+                        })
+
+                        newMessage({
+                            id: v4(),
+                            sender: sender || 'You',
+                            content: message.content,
+                            type: 'image',
+                            created_at: moment().format('YYYY-MM-DD HH:mm')
+                        })
+                        break;
+                    case 'chart':
+                        newMessage({
+                            id: v4(),
+                            sender: 'You',
+                            content: '幫我生成圖表',
+                            type: 'text',
+                            created_at: moment().format('YYYY-MM-DD HH:mm')
+                        })
+
+                        newMessage({
+                            id: v4(),
+                            sender: sender || 'You',
+                            content: message.content,
+                            type: 'chart',
+                            created_at: moment().format('YYYY-MM-DD HH:mm')
+                        })
+                        break;
+                    case 'markdown':
+                        newMessage({
+                            id: v4(),
+                            sender: 'You',
+                            content: '幫我生成知識圖譜',
+                            type: 'text',
+                            created_at: moment().format('YYYY-MM-DD HH:mm')
+                        })
+
+                        newMessage({
+                            id: v4(),
+                            sender: sender || 'You',
+                            content: message.content,
+                            type: 'markdown',
+                            created_at: moment().format('YYYY-MM-DD HH:mm')
+                        })
+                        break;
+                    case 'finish':
+                        // setOpen(false);
+                        break;
+                }
+            }
+        },
+        []
+    );
+
+    //监听来自chain feature run完事件
+    React.useEffect(() => {
+        window.addEventListener('message', receiveMessageFromIndex, false);
+        return () => {
+            window.removeEventListener('message', receiveMessageFromIndex, false);
+        };
+    }, []);
+
     return (
-        <Sheet
-            sx={{
-                height: { xs: 'calc(95dvh - var(--Header-height))', lg: '95dvh' },
-                display: 'flex',
-                flexDirection: 'column',
-                backgroundColor: '#eff7fe'
-            }}
-        >
-            <MessagesPaneHeader sender={sender} />
-            <Box
+        <>
+            <Sheet
                 sx={{
+                    height: { xs: 'calc(95dvh - var(--Header-height))', lg: '95dvh' },
                     display: 'flex',
-                    flex: 1,
-                    minHeight: 0,
-                    px: 2,
-                    py: 3,
-                    overflowY: 'scroll',
-                    flexDirection: 'column-reverse'
+                    flexDirection: 'column',
+                    backgroundColor: '#eff7fe',
+                    // zIndex: 0
                 }}
             >
-                <Stack spacing={2} justifyContent="flex-end">
-                    {chatMessages?.map((message: MessageProps, index: number) => {
-                        const isYou = message.sender === 'You';
-                        return (
-                            <Stack
-                                key={index}
-                                direction="row"
-                                spacing={1}
-                                width={'100%'}
-                                flexDirection={isYou ? 'row-reverse' : 'row'}
-                            >
-                                {message.sender !== 'You' && (
-                                    <AvatarWithStatus src={message.sender.avatar} />
-                                )}
-                                <ChatBubble variant={isYou ? 'sent' : 'received'} {...message} />
+                <MessagesPaneHeader sender={sender} />
+                <Box
+                    sx={{
+                        display: 'flex',
+                        flex: 1,
+                        minHeight: 0,
+                        px: 2,
+                        py: 3,
+                        overflowY: 'scroll',
+                        flexDirection: 'column-reverse'
+                    }}
+                >
+                    <Stack spacing={2} justifyContent="flex-end">
+                        {chatMessages?.map((message: MessageProps, index: number) => {
+                            const isYou = message.sender === 'You';
+                            return (
+                                <Stack
+                                    key={index}
+                                    direction="row"
+                                    spacing={1}
+                                    width={'100%'}
+                                    flexDirection={isYou ? 'row-reverse' : 'row'}
+                                >
+                                    {message.sender !== 'You' && (
+                                        <AvatarWithStatus src={message.sender.avatar} />
+                                    )}
+                                    <ChatBubble variant={isYou ? 'sent' : 'received'} {...message} />
 
-                            </Stack>
-                        );
-                    })}
-                    {writing && <WritingView sender={sender} />}
-                </Stack>
-            </Box>
-            <MessageInput
-                writing={writing}
-                textAreaValue={textAreaValue}
-                setTextAreaValue={setTextAreaValue}
-                model={model}
-                setModel={setModel}
-                getAllLabelsData={getAllLabelsData}
-                getAllSchemasData={getAllSchemasData}
-                sender={sender}
-                setSender={setSender}
-                updateChatSender={updateChatSender}
-                onSubmit={() => {
-                    const message: MessageProps = {
-                        id: v4(),
-                        sender: 'You',
-                        content: textAreaValue,
-                        type: 'text',
-                        created_at: moment().format('YYYY-MM-DD HH:mm')
-                    };
-                    setChatMessages((arr: any) => [...arr, message]);
-                    addMessageToLocalStorage(message);
+                                </Stack>
+                            );
+                        })}
+                        {writing && <WritingView sender={sender} />}
+                    </Stack>
+                </Box>
+                <MessageInput
+                    writing={writing}
+                    textAreaValue={textAreaValue}
+                    setTextAreaValue={setTextAreaValue}
+                    model={model}
+                    setModel={setModel}
+                    getAllLabelsData={getAllLabelsData}
+                    getAllSchemasData={getAllSchemasData}
+                    sender={sender}
+                    setSender={setSender}
+                    updateChatSender={updateChatSender}
+                    onSubmit={() => {
+                        newMessage({
+                            id: v4(),
+                            sender: 'You',
+                            content: textAreaValue,
+                            type: 'text',
+                            created_at: moment().format('YYYY-MM-DD HH:mm')
+                        })
+                        handleSendMessage();
+                    }}
+                />
+            </Sheet>
 
-                    handleSendMessage();
-                }}
-            />
-        </Sheet>
+        </>
     );
 }
