@@ -48,7 +48,7 @@ function Profile({ currentUserData, currentUserLoading }: ProfileProps) {
     );
     return (
         <Card>
-            <Box sx={{ mb: 1 }}>
+            <Box>
                 <Typography level="title-md">Personal info</Typography>
                 <Typography level="body-sm">
                     Customize how your profile information will apper to the networks.
@@ -74,7 +74,7 @@ function Profile({ currentUserData, currentUserLoading }: ProfileProps) {
                         <Stack
                             direction="row"
                             spacing={3}
-                            sx={{ display: { xs: 'none', md: 'flex' }, my: 1 }}
+                            sx={{ display: 'flex', my: 1 }}
                         >
 
                             {/* <Stack direction="column" spacing={1}>
@@ -109,16 +109,14 @@ function Profile({ currentUserData, currentUserLoading }: ProfileProps) {
                     </IconButton>
                 </Stack> */}
                             <Stack spacing={2} sx={{ flexGrow: 1 }}>
-                                <Stack spacing={1}>
+                                <FormControl
+                                    sx={{ display: { sm: 'flex-column', md: 'flex-row' } }}
+                                >
                                     <FormLabel>用戶暱稱</FormLabel>
-                                    <FormControl
-                                        sx={{ display: { sm: 'flex-column', md: 'flex-row' }, gap: 2 }}
-                                    >
-                                        <Input size="sm" name="nickname"
-                                            defaultValue={currentUserData?.user?.nickname || ''}
-                                        />
-                                    </FormControl>
-                                </Stack>
+                                    <Input size="sm" name="nickname"
+                                        defaultValue={currentUserData?.user?.nickname || ''}
+                                    />
+                                </FormControl>
                                 <Stack direction="row" spacing={2}>
                                     <FormControl sx={{ flexGrow: 1 }}>
                                         <FormLabel>電話號碼</FormLabel>
