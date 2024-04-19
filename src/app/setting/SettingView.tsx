@@ -13,7 +13,7 @@ import { useSession, SessionProvider } from 'next-auth/react';
 interface SettingViewProps {
     currentUserData: ShowCurrentUser | undefined;
     currentUserLoading: boolean;
-    session: any;
+    session?: any | null;
 }
 export default function SettingView({
     currentUserData,
@@ -24,7 +24,7 @@ export default function SettingView({
         <div className="flex flex-col gap-4 sm:pb-4">
             <Profile {...{ currentUserData, currentUserLoading }} />
             <ChangePassword />
-            <div className="flex flex-col rounded-2xl bg-gray-100 px-12 py-6 border">
+            {/* <div className="flex flex-col rounded-2xl bg-gray-100 px-12 py-6 border">
                 <div className="flex flex-col">
                     <h2 className="text-slate-900 font-bold text-xl mb-6">連結你的外部電子郵件</h2>
                     <label className="flex flex-col gap-2">
@@ -33,11 +33,11 @@ export default function SettingView({
                             <a href="#" className="group block flex-shrink-0">
                                 <div className="flex items-center">
                                     <div>
-                                        {/* <img
+                                        <img
                                                 className="inline-block h-9 w-9 rounded-full"
                                                 src={(session?.user?.image as string) || ''}
                                                 alt={session?.user?.name}
-                                            /> */}
+                                            />
                                     </div>
                                     <div className="ml-3">
                                         <p className="text-sm font-medium text-gray-700 group-hover:text-gray-900">
@@ -67,7 +67,7 @@ export default function SettingView({
                         )}
                     </label>
                 </div>
-            </div>
+            </div> */}
         </div>
     );
 }

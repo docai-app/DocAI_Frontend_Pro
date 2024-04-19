@@ -25,8 +25,7 @@ export interface ShowCurrentUser {
 
 function SettingContainer() {
     const router = useRouter();
-    const { data: session } = useSession();
-    // const session = useState(Session);
+    // const { data: session } = useSession();
 
     const [
         { data: currentUserData, loading: currentUserLoading, error: currentUserError },
@@ -47,7 +46,7 @@ function SettingContainer() {
             {...{
                 currentUserData,
                 currentUserLoading,
-                session
+                // session
             }}
         />
         // </SessionProvider>
