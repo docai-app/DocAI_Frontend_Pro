@@ -4,15 +4,12 @@ import Api from '../../apis';
 import useAlert from '../../hooks/useAlert';
 import { ShowCurrentUser } from '../../app/setting/SettingContainer';
 import { Box, Breadcrumbs, Link, Typography, Chip, Card } from '@mui/joy';
-import AspectRatio from '@mui/joy/AspectRatio';
 import Button from '@mui/joy/Button';
 import Divider from '@mui/joy/Divider';
 import FormControl from '@mui/joy/FormControl';
 import FormLabel from '@mui/joy/FormLabel';
-import FormHelperText from '@mui/joy/FormHelperText';
 import Input from '@mui/joy/Input';
-import IconButton from '@mui/joy/IconButton';
-import Textarea from '@mui/joy/Textarea';
+
 import Stack from '@mui/joy/Stack';
 import Radio from '@mui/joy/Radio';
 import RadioGroup from '@mui/joy/RadioGroup';
@@ -20,14 +17,6 @@ import CardContent from '@mui/joy/CardContent';
 import CardActions from '@mui/joy/CardActions';
 import CardOverflow from '@mui/joy/CardOverflow';
 import Skeleton from '@mui/joy/Skeleton';
-
-import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
-import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
-import EmailRoundedIcon from '@mui/icons-material/EmailRounded';
-import AccessTimeFilledRoundedIcon from '@mui/icons-material/AccessTimeFilledRounded';
-import VideocamRoundedIcon from '@mui/icons-material/VideocamRounded';
-import InsertDriveFileRoundedIcon from '@mui/icons-material/InsertDriveFileRounded';
-import EditRoundedIcon from '@mui/icons-material/EditRounded';
 
 const apiSetting = new Api();
 
@@ -37,7 +26,7 @@ interface ProfileProps {
 }
 function Profile({ currentUserData, currentUserLoading }: ProfileProps) {
     const { setAlert } = useAlert();
-    const formRef = useRef(null);
+    const formRef = useRef<HTMLFormElement>(null);
     const [{ }, updateMeProfile] = useAxios(apiSetting.User.updateMeProfile(), { manual: true });
     const formSubmit: FormEventHandler = useCallback(
         (e: FormEvent) => {
@@ -163,7 +152,7 @@ function Profile({ currentUserData, currentUserLoading }: ProfileProps) {
                                         <FormLabel>性別</FormLabel>
                                         <RadioGroup
                                             defaultValue={currentUserData?.user?.sex === 1 ? 'male' : 'female'}
-                                            name="controlled-radio-buttons-group"
+                                            name="sex"
                                             // value={value}
                                             // onChange={handleChange}
                                             sx={{
@@ -181,13 +170,12 @@ function Profile({ currentUserData, currentUserLoading }: ProfileProps) {
                                         </RadioGroup>
                                     </FormControl>
                                 </Stack>
-
                             </Stack>
                         </Stack>
 
                         <CardOverflow sx={{ borderTop: '1px solid', borderColor: 'divider' }}>
                             <CardActions sx={{ alignSelf: 'flex-end', pt: 2 }}>
-                                <Button size="sm" variant="solid">
+                                <Button type="submit" size="sm" variant="solid">
                                     保存
                                 </Button>
                             </CardActions>
