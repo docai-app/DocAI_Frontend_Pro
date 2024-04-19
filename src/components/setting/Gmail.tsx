@@ -52,13 +52,13 @@ function Gmail() {
                                 alt={session?.user?.name || ''} />
                             <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                                 <Box sx={{ display: 'flex', gap: 2 }}>
-                                    <Typography level="body-md" fontWeight={700} color="primary">Username</Typography>
+                                    <Typography level="body-md" fontWeight={700} color="primary">{session?.user?.name}</Typography>
                                     <Link underline="always" color="danger" level="body-xs" fontWeight={600} 
                                         onClick={() => signOut()}>
                                         Sign out
                                     </Link>
                                 </Box>
-                                <Typography level="body-xs" >email</Typography>
+                                <Typography level="body-xs" >{session?.user?.email}</Typography>
                             </Box>
                         </Box>
 
