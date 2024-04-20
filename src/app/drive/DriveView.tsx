@@ -57,7 +57,9 @@ interface DriveViewProps {
     handleDeleteItems: any;
     handleDownloadItemsAndFolders: any;
     confirmDocumentFormik?: any;
-
+    showAllItemsHandler: any;
+    showAllItemsData: any;
+    showAllItemsLoading: any;
 
 }
 export default function DriveView(props: DriveViewProps) {
@@ -90,6 +92,9 @@ export default function DriveView(props: DriveViewProps) {
         handleDeleteItems,
         handleDownloadItemsAndFolders,
         confirmDocumentFormik,
+        showAllItemsHandler,
+        showAllItemsData,
+        showAllItemsLoading
     } = props;
     const router = useRouter();
     const [open, setOpen] = useState(false);
@@ -242,6 +247,9 @@ export default function DriveView(props: DriveViewProps) {
                         documents_items,
                         setFoldersItems,
                         setDocumentsItems,
+                        showAllItemsHandler,
+                        showAllItemsData,
+                        showAllItemsLoading
                     }}
                 />
                 <SearchLabelDocumentForm getAllLabelsData={getAllLabelsData} search={undefined} />

@@ -53,7 +53,7 @@ export default function TableRow(props: TableRowProps) {
                 data-id={doc.id}
                 data-type={type}
             >
-                <td style={{ textAlign: 'center', width: 120 }}>
+                <td style={{ textAlign: 'center', width: 40 }}>
                     <Checkbox size="sm"
                         checked={checked}
                         value={doc.id}
@@ -62,7 +62,7 @@ export default function TableRow(props: TableRowProps) {
                         sx={{ verticalAlign: 'text-bottom' }}
                     />
                 </td>
-                <td>
+                <td >
                     <Typography
                         level="body-xs"
                         startDecorator={

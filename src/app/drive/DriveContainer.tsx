@@ -16,10 +16,11 @@ const apiSetting = new Api();
 function DriveContainer() {
     const router = useRouter();
     const searchParams = useSearchParams();
-    const { id } = useParams();
+    const { paramId } = useParams();
     const { setAlert } = useAlert();
     const queryId = useRef(searchParams.get('id'));
     const queryName = useRef(searchParams.get('name'));
+    const [id, setId] = useState<string | null>(null);
     const [name, setName] = useState<string | null>(null);
     const [mode, setMode] = useState<'view' | 'move' | 'share' | 'newFolder'>('view');
     const [target, setTarget] = useState<any[]>([]);
@@ -49,6 +50,8 @@ function DriveContainer() {
         { manual: true }
     );
 
+    const [{ data: showAllItemsData, loading: showAllItemsLoading, error: showAllItemsError },
+        showAllItems] = useAxios({}, { manual: true });
     const [{ data: updateFolderNameData }, updateFolderName] = useAxios({}, { manual: true });
     const [{ data: updateDocumentByIdData }, updateDocumentById] = useAxios({}, { manual: true });
     const [{ data: deleteFolderByIdData }, deleteFolderById] = useAxios({}, { manual: true });
@@ -79,7 +82,7 @@ function DriveContainer() {
             if (target_folder_id) {
                 formData.append('target_folder_id', target_folder_id);
             }
-            if (id) {
+            if (paramId) {
                 formData.append('current_folder_id', id + '');
             }
             moveItemsToSpecificFolder({
@@ -135,7 +138,7 @@ function DriveContainer() {
         }
     });
     const updateFolder = async (id: string, name: string) => {
-        if (id) {
+        if (paramId) {
             const res = await updateFolderName(apiSetting.Folders.updateFoldertNameById(id, name));
             if (res.data?.success) {
                 setAlert({ title: '更新成功', type: 'success' });
@@ -190,6 +193,9 @@ function DriveContainer() {
         else deleteDocument(current?.id);
     }, [current]);
 
+    const showAllItemsHandler = useCallback(async () => {
+        setPage((page) => page + 1);
+    }, []);
 
 
 
@@ -209,6 +215,19 @@ function DriveContainer() {
     useEffect(() => {
         getAllLabels();
     }, [router]);
+
+    useEffect(() => {
+        if (!showAllItemsLoading && showAllItemsData) {
+            setId(queryId.current?.toString() || null);
+            setName(queryName.current?.toString() || null);
+            if (page == 1) {
+                setAllFoldersItemsData(showAllItemsData.folders);
+                setAllItemsData(showAllItemsData.documents);
+            } else {
+                setAllItemsData(allItemsData.concat(showAllItemsData.documents));
+            }
+        }
+    }, [showAllItemsLoading, showAllItemsData]);
 
     useEffect(() => {
         if (addNewLabelData && addNewLabelData.success) {
@@ -263,7 +282,9 @@ function DriveContainer() {
                 handleDeleteItems,
                 handleDownloadItemsAndFolders,
                 confirmDocumentFormik,
-
+                showAllItemsHandler,
+                showAllItemsData,
+                showAllItemsLoading,
             }}
         />
     );
