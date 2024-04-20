@@ -1,16 +1,15 @@
 // components/feature/classification/AmendLabel.tsx
+import { PencilSquareIcon } from '@heroicons/react/20/solid';
 import { Box } from '@mui/joy';
-import Modal from '@mui/joy/Modal';
-import ModalDialog from '@mui/joy/ModalDialog';
+import Button from '@mui/joy/Button';
+import Checkbox from '@mui/joy/Checkbox';
 import DialogTitle from '@mui/joy/DialogTitle';
-import Stack from '@mui/joy/Stack';
 import FormControl from '@mui/joy/FormControl';
 import FormLabel from '@mui/joy/FormLabel';
 import Input from '@mui/joy/Input';
-import Button from '@mui/joy/Button';
-import Checkbox, { checkboxClasses } from '@mui/joy/Checkbox';
-import { Dialog, Transition } from '@headlessui/react';
-import { PencilSquareIcon } from '@heroicons/react/20/solid';
+import Modal from '@mui/joy/Modal';
+import ModalDialog from '@mui/joy/ModalDialog';
+import Stack from '@mui/joy/Stack';
 import _ from 'lodash';
 import React, { useRef, useState } from 'react';
 
@@ -121,8 +120,8 @@ export default function EditLabel(props: EditLabelProps) {
                                                             );
                                                         }
                                                     }}
-                                                    // sx={{ [`& > .${checkboxClasses.checkbox}`]: { position: 'relative' } }}
-                                                    // slotProps={{ action: { className: checkboxClasses.focusVisible } }}
+                                                // sx={{ [`& > .${checkboxClasses.checkbox}`]: { position: 'relative' } }}
+                                                // slotProps={{ action: { className: checkboxClasses.focusVisible } }}
                                                 />
                                             );
                                         })}
@@ -143,11 +142,12 @@ export default function EditLabel(props: EditLabelProps) {
                                         setFeature('');
                                         setOpen(false);
                                     }}
+                                    color="neutral"
                                     ref={cancelButtonRef}
                                 >
                                     取消
                                 </Button>
-                                <Button color="neutral" type="submit">
+                                <Button type="submit">
                                     確認
                                 </Button>
                             </Box>

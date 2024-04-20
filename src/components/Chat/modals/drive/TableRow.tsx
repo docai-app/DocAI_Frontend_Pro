@@ -1,9 +1,8 @@
 import { DriveDocument } from '@/utils/types';
 import FolderIcon from '@mui/icons-material/Folder';
 import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
-import { Box, Checkbox, Chip, Link, Typography } from '@mui/joy';
+import { Chip, Link, Radio, Typography } from '@mui/joy';
 import moment from 'moment';
-import Dropdowns from './Dropdowns';
 
 interface TableRowProps {
     doc: DriveDocument;
@@ -11,11 +10,9 @@ interface TableRowProps {
     selectedValue: any;
     setSelectedValue: any;
     handleSelectedValue: any;
-    selected: any;
-    setSelected: any;
 }
 export default function TableRow(props: TableRowProps) {
-    const { doc, type, selectedValue, setSelectedValue, handleSelectedValue, selected, setSelected } = props;
+    const { doc, type, selectedValue, setSelectedValue, handleSelectedValue } = props;
 
     const url = doc.storage_url || `/drive/${doc.id}`;
 
@@ -23,7 +20,7 @@ export default function TableRow(props: TableRowProps) {
         <>
             <tr key={doc.id}>
                 <td style={{ textAlign: 'center', width: 120 }}>
-                    {/* <Radio
+                    <Radio
                         size="sm"
                         checked={selectedValue?.id === doc.id}
                         onChange={(event) => {
@@ -31,20 +28,6 @@ export default function TableRow(props: TableRowProps) {
                             handleSelectedValue(doc);
                         }}
                         name="radio-buttons"
-                    /> */}
-                    <Checkbox
-                        size="sm"
-                        checked={selected.includes(doc.id)}
-                        color={selected.includes(doc.id) ? 'primary' : undefined}
-                        onChange={(event) => {
-                            setSelected((ids: any) =>
-                                event.target.checked
-                                    ? ids.concat(doc.id)
-                                    : ids.filter((itemId: any) => itemId !== doc.id)
-                            );
-                        }}
-                        slotProps={{ checkbox: { sx: { textAlign: 'left' } } }}
-                        sx={{ verticalAlign: 'text-bottom' }}
                     />
                 </td>
                 <td>
@@ -110,11 +93,6 @@ export default function TableRow(props: TableRowProps) {
                 </td>
                 <td>
                     <Typography level="body-xs">{doc.user?.nickname}</Typography>
-                </td>
-                <td>
-                    <Box sx={{ display: 'flex', gap: 2, alignItems: 'center' }}>
-                        <Dropdowns />
-                    </Box>
                 </td>
             </tr>
         </>

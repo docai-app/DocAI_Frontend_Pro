@@ -50,22 +50,7 @@ function DriveContainer() {
     );
 
     useEffect(() => {
-        // if (router.asPath !== router.route) {
-        //     queryId.current = router.query.id;
-        //     queryName.current = router.query.name;
-        //     if (queryId.current) {
-        //         // setPage(1);
-        //         showAllItems(apiSetting.Drive.showAllFolderItems(queryId.current.toString(), page));
-        //     } else {
-        //         showAllItems(apiSetting.Drive.showAllRootItems(page));
-        //     }
-        // } else if (router.asPath == '/') {
-        //     showAllItems(apiSetting.Drive.showAllRootItems(page));
-        // }
-        console.log('id', id);
-
         setName(searchParams.get('name') || null);
-
         if (id) {
             showAllDrives(apiSetting.Drive.showAllFolderItems(id.toString(), page));
         } else {

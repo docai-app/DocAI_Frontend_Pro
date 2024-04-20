@@ -5,14 +5,13 @@ import Input from '@mui/joy/Input';
 import Link from '@mui/joy/Link';
 import Sheet from '@mui/joy/Sheet';
 import Typography from '@mui/joy/Typography';
+import { useRouter } from 'next/navigation';
 import * as React from 'react';
-import { useRouter, usePathname } from 'next/navigation';
-import _ from 'lodash';
 
+import BookmarksSharpIcon from '@mui/icons-material/BookmarksSharp';
 import { useEffect, useState } from 'react';
 import useAlert from '../../hooks/useAlert';
 import LabelDropdowns from './LabelDropdowns';
-import BookmarksSharpIcon from '@mui/icons-material/BookmarksSharp';
 
 export default function SearchLabelDocumentForm(props: any) {
     const router = useRouter();
@@ -38,7 +37,7 @@ export default function SearchLabelDocumentForm(props: any) {
                     className="DriveContainer"
                     variant="outlined"
                     sx={{
-                        display: { xs: 'none', sm: 'initial' },
+                        display: { xs: 'initial', sm: 'initial' },
                         width: '100%',
                         borderRadius: 'sm',
                         flexShrink: 1,

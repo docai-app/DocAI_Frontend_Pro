@@ -24,7 +24,8 @@ export default function ChatsPane(props: ChatsPaneProps) {
                 borderRight: '1px solid',
                 borderColor: 'divider',
                 height: 'calc(95dvh - var(--Header-height))',
-                overflowY: 'auto'
+                overflowY: 'auto',
+                zIndex: 1
             }}
         >
             <Stack

@@ -1,4 +1,5 @@
-import DriveTable from '@/components/drive/DriveTable';
+
+import Api from '@/apis';
 import { DriveDocument } from '@/utils/types';
 import { Box, Button } from '@mui/joy';
 import DialogContent from '@mui/joy/DialogContent';
@@ -6,17 +7,41 @@ import DialogTitle from '@mui/joy/DialogTitle';
 import Modal from '@mui/joy/Modal';
 import ModalClose from '@mui/joy/ModalClose';
 import ModalDialog, { ModalDialogProps } from '@mui/joy/ModalDialog';
+import useAxios from 'axios-hooks';
+import { useRouter } from 'next/navigation';
 import * as React from 'react';
+import { useEffect, useState } from 'react';
+import DriveTable from './drive/DriveTable';
 
 interface ViewProps {
     visible: boolean;
     setVisible: any;
     handleSelect: any;
 }
+const apiSetting = new Api();
 export default function SelectDocumentsModal(props: ViewProps) {
+    const router = useRouter();
     const { visible, setVisible, handleSelect } = props;
     const [layout, setLayout] = React.useState<ModalDialogProps['layout'] | undefined>(undefined);
     const [selectedValue, setSelectedValue] = React.useState<DriveDocument>();
+    const [page, setPage] = useState(1);
+    const [documents, setDocuments] = useState<DriveDocument[]>([]);
+
+    const [
+        { data: allDrivesData, loading: showAllDriveLoading, error: showAllDriveError },
+        showAllDrives
+    ] = useAxios({}, { manual: true });
+
+    useEffect(() => {
+        showAllDrives(apiSetting.Drive.showAllRootItems(page));
+    }, [router]);
+
+    useEffect(() => {
+        if (allDrivesData && allDrivesData.success) {
+            setDocuments(allDrivesData?.documents);
+        }
+    }, [allDrivesData]);
+
     return (
         <Modal
             open={props?.visible}
@@ -49,8 +74,7 @@ export default function SelectDocumentsModal(props: ViewProps) {
                         handleSelectedValue={(value: DriveDocument) => {
                             setSelectedValue(value);
                         }}
-                        documents={[]}
-                        folders={[]}
+                        documents={documents}
                     />
                 </DialogContent>
             </ModalDialog>

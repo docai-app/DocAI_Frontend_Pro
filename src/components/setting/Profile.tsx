@@ -1,22 +1,22 @@
-import useAxios from 'axios-hooks';
-import { FormEvent, FormEventHandler, useCallback, useRef } from 'react';
-import Api from '../../apis';
-import useAlert from '../../hooks/useAlert';
-import { ShowCurrentUser } from '../../app/setting/SettingContainer';
-import { Box, Breadcrumbs, Link, Typography, Chip, Card } from '@mui/joy';
+import { Box, Card, Typography } from '@mui/joy';
 import Button from '@mui/joy/Button';
 import Divider from '@mui/joy/Divider';
 import FormControl from '@mui/joy/FormControl';
 import FormLabel from '@mui/joy/FormLabel';
 import Input from '@mui/joy/Input';
+import useAxios from 'axios-hooks';
+import { FormEvent, FormEventHandler, useCallback, useRef } from 'react';
+import Api from '../../apis';
+import { ShowCurrentUser } from '../../app/setting/SettingContainer';
+import useAlert from '../../hooks/useAlert';
 
-import Stack from '@mui/joy/Stack';
+import CardActions from '@mui/joy/CardActions';
+import CardContent from '@mui/joy/CardContent';
+import CardOverflow from '@mui/joy/CardOverflow';
 import Radio from '@mui/joy/Radio';
 import RadioGroup from '@mui/joy/RadioGroup';
-import CardContent from '@mui/joy/CardContent';
-import CardActions from '@mui/joy/CardActions';
-import CardOverflow from '@mui/joy/CardOverflow';
 import Skeleton from '@mui/joy/Skeleton';
+import Stack from '@mui/joy/Stack';
 
 const apiSetting = new Api();
 
@@ -27,7 +27,7 @@ interface ProfileProps {
 function Profile({ currentUserData, currentUserLoading }: ProfileProps) {
     const { setAlert } = useAlert();
     const formRef = useRef<HTMLFormElement>(null);
-    const [{}, updateMeProfile] = useAxios(apiSetting.User.updateMeProfile(), { manual: true });
+    const [{ }, updateMeProfile] = useAxios(apiSetting.User.updateMeProfile(), { manual: true });
     const formSubmit: FormEventHandler = useCallback(
         (e: FormEvent) => {
             e.preventDefault();
@@ -114,65 +114,61 @@ function Profile({ currentUserData, currentUserLoading }: ProfileProps) {
                                         defaultValue={currentUserData?.user?.nickname || ''}
                                     />
                                 </FormControl>
-                                <Stack direction="row" spacing={2}>
-                                    <FormControl sx={{ flexGrow: 1 }}>
-                                        <FormLabel>電話號碼</FormLabel>
-                                        <Input
-                                            size="sm"
-                                            name="phone"
-                                            defaultValue={currentUserData?.user?.phone || ''}
-                                        />
-                                    </FormControl>
-                                    <FormControl sx={{ flexGrow: 1 }}>
-                                        <FormLabel>職位</FormLabel>
-                                        <Input
-                                            size="sm"
-                                            name="position"
-                                            defaultValue={currentUserData?.user?.position || ''}
-                                        />
-                                    </FormControl>
-                                </Stack>
-                                <Stack direction="row" spacing={2}>
-                                    <FormControl sx={{ flexGrow: 1 }}>
-                                        <FormLabel>出生日期</FormLabel>
-                                        <Input
-                                            type="date"
-                                            name="date_of_birth"
-                                            defaultValue={
-                                                currentUserData?.user?.date_of_birth || ''
-                                            }
-                                            // slotProps={{
-                                            //     input: {
-                                            //         min: '2018-06-07',
-                                            //         max: '2018-06-14',
-                                            //     },
-                                            // }}
-                                        />
-                                    </FormControl>
-                                    <FormControl sx={{ flexGrow: 1 }}>
-                                        <FormLabel>性別</FormLabel>
-                                        <RadioGroup
-                                            defaultValue={
-                                                currentUserData?.user?.sex === 1 ? 'male' : 'female'
-                                            }
-                                            name="sex"
-                                            // value={value}
-                                            // onChange={handleChange}
-                                            sx={{
-                                                display: 'flex',
-                                                flexDirection: 'row',
-                                                gap: 2,
-                                                alignItems: 'center',
-                                                mt: -1,
-                                                ml: -2
-                                            }}
-                                        >
-                                            <Box />
-                                            <Radio value="male" label="男 Male" />
-                                            <Radio value="female" label="女 Female" />
-                                        </RadioGroup>
-                                    </FormControl>
-                                </Stack>
+                                <FormControl sx={{ flexGrow: 1 }}>
+                                    <FormLabel>電話號碼</FormLabel>
+                                    <Input
+                                        size="sm"
+                                        name="phone"
+                                        defaultValue={currentUserData?.user?.phone || ''}
+                                    />
+                                </FormControl>
+                                <FormControl sx={{ flexGrow: 1 }}>
+                                    <FormLabel>職位</FormLabel>
+                                    <Input
+                                        size="sm"
+                                        name="position"
+                                        defaultValue={currentUserData?.user?.position || ''}
+                                    />
+                                </FormControl>
+                                <FormControl sx={{ flexGrow: 1 }}>
+                                    <FormLabel>出生日期</FormLabel>
+                                    <Input
+                                        type="date"
+                                        name="date_of_birth"
+                                        defaultValue={
+                                            currentUserData?.user?.date_of_birth || ''
+                                        }
+                                    // slotProps={{
+                                    //     input: {
+                                    //         min: '2018-06-07',
+                                    //         max: '2018-06-14',
+                                    //     },
+                                    // }}
+                                    />
+                                </FormControl>
+                                <FormControl sx={{ flexGrow: 1 }}>
+                                    <FormLabel>性別</FormLabel>
+                                    <RadioGroup
+                                        defaultValue={
+                                            currentUserData?.user?.sex === 1 ? 'male' : 'female'
+                                        }
+                                        name="sex"
+                                        // value={value}
+                                        // onChange={handleChange}
+                                        sx={{
+                                            display: 'flex',
+                                            flexDirection: 'row',
+                                            gap: 2,
+                                            alignItems: 'center',
+                                            mt: -1,
+                                            ml: -2
+                                        }}
+                                    >
+                                        <Box />
+                                        <Radio value="male" label="男 Male" />
+                                        <Radio value="female" label="女 Female" />
+                                    </RadioGroup>
+                                </FormControl>
                             </Stack>
                         </Stack>
 

@@ -1,17 +1,16 @@
-import Add from '@mui/icons-material/Add';
+import AssignmentTurnedInIcon from '@mui/icons-material/AssignmentTurnedIn';
 import BrightnessAutoRoundedIcon from '@mui/icons-material/BrightnessAutoRounded';
+import ForumIcon from '@mui/icons-material/Forum';
 import GroupRoundedIcon from '@mui/icons-material/GroupRounded';
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import LocalOfferIcon from '@mui/icons-material/LocalOffer';
-import QuestionAnswerRoundedIcon from '@mui/icons-material/QuestionAnswerRounded';
 import ShoppingCartRoundedIcon from '@mui/icons-material/ShoppingCartRounded';
 import SmsIcon from '@mui/icons-material/Sms';
 import SourceIcon from '@mui/icons-material/Source';
-import { Button, ListSubheader } from '@mui/joy';
+import { Button } from '@mui/joy';
 import Avatar from '@mui/joy/Avatar';
 import Box from '@mui/joy/Box';
-import Chip from '@mui/joy/Chip';
 import Divider from '@mui/joy/Divider';
 import GlobalStyles from '@mui/joy/GlobalStyles';
 import IconButton from '@mui/joy/IconButton';
@@ -24,10 +23,8 @@ import Typography from '@mui/joy/Typography';
 import { usePathname } from 'next/navigation';
 import * as React from 'react';
 import { useEffect } from 'react';
-
 import { closeSidebar } from '../../utils/utils';
 import LogoutButton from '../common/Widget/buttons/LogoutButton';
-import ChatbotHistoryView from './ChatbotHistoryView';
 
 function Toggler({
     defaultExpanded = false,
@@ -80,7 +77,7 @@ export default function Sidebar() {
                 },
                 transition: 'transform 0.4s, width 0.4s',
                 // zIndex: 10000,
-                zIndex: 0,
+                zIndex: 10,
                 height: '100dvh',
                 width: 'var(--Sidebar-width)',
                 top: 0,
@@ -150,7 +147,7 @@ export default function Sidebar() {
                         '--ListItem-radius': (theme) => theme.vars.radius.sm
                     }}
                 >
-                    <ListItem>
+                    <ListItem sx={{ display: 'none' }}>
                         <ListItemButton
                             selected={pathname == '/' || pathname == '/home'}
                             component="a"
@@ -167,7 +164,7 @@ export default function Sidebar() {
                         <ListItemButton
                             component="a"
                             href="/search"
-                            selected={pathname.indexOf('/search') != -1}
+                            selected={pathname == '/' || pathname.indexOf('/search') != -1}
                         >
                             <SourceIcon />
                             <ListItemContent>
@@ -201,6 +198,23 @@ export default function Sidebar() {
                         </ListItemButton>
                     </ListItem>
 
+
+                    <ListItem>
+                        <ListItemButton
+                            role="menuitem"
+                            component="a"
+                            href="/project"
+                            selected={pathname.indexOf('/project') != -1}
+                        >
+                            <AssignmentTurnedInIcon />
+                            <ListItemContent>
+                                <Typography level="title-sm">待辦事項</Typography>
+                            </ListItemContent>
+                            {/* <Chip size="sm" color="primary" variant="solid">
+                                4
+                            </Chip> */}
+                        </ListItemButton>
+                    </ListItem>
                     <ListItem>
                         <ListItemButton
                             selected={pathname.indexOf('/shop') != -1}
@@ -214,24 +228,7 @@ export default function Sidebar() {
                         </ListItemButton>
                     </ListItem>
 
-                    <ListItem>
-                        <ListItemButton
-                            role="menuitem"
-                            component="a"
-                            href="/project"
-                            selected={pathname.indexOf('/project') != -1}
-                        >
-                            <QuestionAnswerRoundedIcon />
-                            <ListItemContent>
-                                <Typography level="title-sm">待辦事項</Typography>
-                            </ListItemContent>
-                            <Chip size="sm" color="primary" variant="solid">
-                                4
-                            </Chip>
-                        </ListItemButton>
-                    </ListItem>
-
-                    <ListItem nested>
+                    <ListItem nested sx={{ display: 'none' }}>
                         <Toggler
                             renderToggle={({ open, setOpen }) => (
                                 <ListItemButton onClick={() => setOpen(!open)}>
@@ -277,13 +274,13 @@ export default function Sidebar() {
                             </List>
                         </Toggler>
                     </ListItem>
-                    <ListSubheader sx={{ letterSpacing: '2px', fontWeight: '800' }}>
+                    {/* <ListSubheader sx={{ letterSpacing: '2px', fontWeight: '800' }}>
                         Chatbot
-                    </ListSubheader>
-                    <Button component="a" href="/chat" startDecorator={<Add />} size="sm">
-                        新增聊天
+                    </ListSubheader> */}
+                    <Button component="a" href="/chat" startDecorator={<ForumIcon />} size="sm">
+                        聊天
                     </Button>
-                    <ChatbotHistoryView />
+                    {/* <ChatbotHistoryView /> */}
                 </List>
             </Box>
             <Divider />

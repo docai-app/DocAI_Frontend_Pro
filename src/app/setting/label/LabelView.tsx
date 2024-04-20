@@ -1,16 +1,16 @@
 import useLoad from '@/hooks/useLoad';
-import { Box, Typography } from '@mui/joy';
+import { Box, Breadcrumbs, Link, Typography } from '@mui/joy';
 import Button from '@mui/joy/Button';
-import Divider from '@mui/joy/Divider';
 import _ from 'lodash';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import EditLabel from '../../../components/setting/label/EditLabel';
 import LabelTable from '../../../components/setting/label/LabelTable';
 
-import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
-// import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
 import Add from '@mui/icons-material/Add';
+
+import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
+import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 
 interface ViewProps {
     addNewLabelHandler: any;
@@ -98,82 +98,51 @@ function LabelView(props: ViewProps) {
                 }}
             />
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                <Box
-                    component="main"
-                    className="MainContent"
-                    sx={{
-                        px: { xs: 2, md: 6 },
-                        pt: {
-                            xs: 'calc(12px + var(--Header-height))',
-                            sm: 'calc(12px + var(--Header-height))',
-                            md: 3
-                        },
-                        pb: { xs: 2, sm: 2, md: 3 },
-                        flex: 1,
-                        display: 'flex',
-                        flexDirection: 'column',
-                        minWidth: 0,
-                        gap: 1
+                <Breadcrumbs
+                    size="sm"
+                    aria-label="breadcrumbs"
+                    separator={<ChevronRightRoundedIcon />}
+                    sx={{ pl: 0 }}
+                >
+                    <Link underline="none" color="neutral" href="/" aria-label="Home">
+                        <HomeRoundedIcon />
+                    </Link>
+                    <Typography color="primary" fontWeight={500} fontSize={12}>
+                        標籤管理
+                    </Typography>
+                </Breadcrumbs>
+            </Box>
+            <Box
+                sx={{
+                    display: 'flex',
+                    mb: 1,
+                    gap: 1,
+                    flexDirection: { xs: 'column', sm: 'row' },
+                    alignItems: { xs: 'start', sm: 'center' },
+                    flexWrap: 'wrap',
+                    justifyContent: 'space-between'
+                }}
+            >
+                <Typography level="h2" component="h1">
+                    智能助手
+                </Typography>
+                <Button
+                    color="primary"
+                    startDecorator={<Add />}
+                    size="sm"
+                    onClick={() => {
+                        setOpen(true);
                     }}
                 >
-                    <Box
-                        sx={{
-                            display: 'flex',
-                            mb: 1,
-                            gap: 1,
-                            flexDirection: { xs: 'column', sm: 'row' },
-                            alignItems: { xs: 'start', sm: 'center' },
-                            flexWrap: 'wrap',
-                            justifyContent: 'space-between'
-                        }}
-                    >
-                        <Button
-                            color="primary"
-                            variant="plain"
-                            startDecorator={<KeyboardArrowLeftIcon />}
-                            onClick={() => {
-                                router.back();
-                            }}
-                        >
-                            返回
-                        </Button>
-
-                        <Typography level="h2" component="h1">
-                            標籤管理
-                        </Typography>
-
-                        <Box sx={{ display: 'flex', justifyContent: 'end', width: '20%' }}>
-                            <Button
-                                color="primary"
-                                startDecorator={<Add />}
-                                size="sm"
-                                onClick={() => {
-                                    setOpen(true);
-                                }}
-                            >
-                                新增
-                            </Button>
-                        </Box>
-                    </Box>
-
-                    {sortedLabels && (
-                        <LabelTable
-                            labels={sortedLabels}
-                            updateLabelNameByIdHandler={updateLabelNameByIdHandler}
-                        />
-                    )}
-
-                    <Divider sx={{ mt: 1, '--Divider-childPosition': `45%` }} color="primary">
-                        <Typography level="h4">待查核標籤</Typography>
-                    </Divider>
-                    {sortedUnCheckLabels && (
-                        <LabelTable
-                            labels={sortedUnCheckLabels}
-                            updateLabelNameByIdHandler={updateLabelNameByIdHandler}
-                        />
-                    )}
-                </Box>
+                    新增
+                </Button>
             </Box>
+            {sortedLabels && (
+                <LabelTable
+                    labels={sortedLabels}
+                    updateLabelNameByIdHandler={updateLabelNameByIdHandler}
+                />
+            )}
         </>
     );
 }

@@ -1,5 +1,9 @@
+import useAlert from '@/hooks/useAlert';
 import { KeyboardArrowRight } from '@mui/icons-material';
+import AddToDriveIcon from '@mui/icons-material/AddToDrive';
+import CloudCircleIcon from '@mui/icons-material/CloudCircle';
 import FolderOutlinedIcon from '@mui/icons-material/FolderOutlined';
+import LanguageIcon from '@mui/icons-material/Language';
 import { Box, ListItemButton, ListItemContent, ListItemDecorator, Typography } from '@mui/joy';
 import List from '@mui/joy/List';
 import ListItem from '@mui/joy/ListItem';
@@ -11,6 +15,7 @@ interface ViewProps {
 }
 
 export default function SearchSourceView(props: ViewProps) {
+    const { setAlert } = useAlert()
     const { setTagId } = props;
     const router = useRouter();
 
@@ -22,20 +27,50 @@ export default function SearchSourceView(props: ViewProps) {
             onClick: () => {
                 router.push('/drive');
             }
+        },
+        {
+            title: 'Website',
+            description: '3 files',
+            icon: <LanguageIcon />,
+            onClick: () => {
+                setAlert({
+                    title: '新功能開發中，敬請期待！',
+                    type: 'info'
+                });
+            }
+        },
+        {
+            title: 'Google Drive',
+            description: '3 files',
+            icon: <AddToDriveIcon />,
+            onClick: () => {
+                setAlert({
+                    title: '新功能開發中，敬請期待！',
+                    type: 'info'
+                });
+            }
+        },
+        {
+            title: 'Notion',
+            description: '3 files',
+            icon: <CloudCircleIcon />,
+            onClick: () => {
+                setAlert({
+                    title: '新功能開發中，敬請期待！',
+                    type: 'info'
+                });
+            }
         }
-        // {
-        //     title: 'Website',
-        //     description: '3 files',
-        //     icon: <LanguageOutlinedIcon />,
-        //     onClick: () => {
-        //         console.log('title');
-        //     }
-        // }
     ]);
 
     const item = (item: any) => {
         return (
-            <ListItem>
+            <ListItem
+                variant="outlined"
+                sx={{
+                    borderRadius: 'sm',
+                    mb: 1
+                }}>
                 <ListItemButton onClick={item?.onClick}>
                     <ListItemDecorator
                         sx={{

@@ -26,7 +26,7 @@ export default function MyMessages(props: ViewProps) {
                 flex: 1,
                 width: '100%',
                 mx: 'auto',
-                pt: { xs: 'var(--Header-height)', sm: 0 },
+                // pt: { xs: 'var(--Header-height)', sm: 0 },
                 display: 'grid',
                 gridTemplateColumns: {
                     xs: '1fr',
@@ -42,9 +42,9 @@ export default function MyMessages(props: ViewProps) {
                         sm: 'none'
                     },
                     transition: 'transform 0.4s, width 0.4s',
-                    zIndex: 0,
+                    zIndex: 1,
                     width: '100%',
-                    top: 0,
+                    top: 52,
                     display: ''
                 }}
             >
