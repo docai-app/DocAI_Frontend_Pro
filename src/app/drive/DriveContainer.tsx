@@ -1,7 +1,9 @@
 'use client';
 
 import { DriveDocument, DriveFolder } from '@/utils/types';
+import axios from 'axios';
 import useAxios from 'axios-hooks';
+import { useFormik } from 'formik';
 import { useParams, usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import Api from '../../apis';
@@ -14,7 +16,7 @@ const apiSetting = new Api();
 function DriveContainer() {
     const router = useRouter();
     const searchParams = useSearchParams();
-    const pathname = usePathname();
+    const { id } = useParams();
     const { setAlert } = useAlert();
     const queryId = useRef(searchParams.get('id'));
     const queryName = useRef(searchParams.get('name'));
@@ -34,7 +36,6 @@ function DriveContainer() {
     const [folders_items, setFoldersItems] = useState<any>([]);
     const [newLabelName, setNewLabelName] = useState('');
     const [updateTag, setUpdateTag] = useState(false);
-    const { id } = useParams();
     const [documents, setDocuments] = useState<DriveDocument[]>([]);
     const [folders, setFolders] = useState<DriveFolder[]>([]);
 
@@ -52,10 +53,82 @@ function DriveContainer() {
     const [{ data: updateDocumentByIdData }, updateDocumentById] = useAxios({}, { manual: true });
     const [{ data: deleteFolderByIdData }, deleteFolderById] = useAxios({}, { manual: true });
     const [{ data: deleteDocumentByIdData }, deleteDocumentById] = useAxios({}, { manual: true });
+    const [{ data: updateDocumentTagData }, updateDocumentTag] = useAxios(
+        apiSetting.Classification.updateDocumentTag([], ''),
+        { manual: true }
+    );
+    const [{ data: moveItemsToSpecificFolderData }, moveItemsToSpecificFolder] = useAxios(
+        apiSetting.Drive.moveItemsToSpecificFolder(),
+        { manual: true }
+    );
 
+    const handleMoveItems = async (target_folder_id: string | null) => {
+        if (target_folder_id != null) {
+            const formData = new FormData();
+            for (const i of documents_items) {
+                formData.append('document_items[]', i);
+            }
+            for (const i of folders_items) {
+                formData.append('folder_items[]', i);
+            }
+            if (target_folder_id) {
+                formData.append('target_folder_id', target_folder_id);
+            }
+            if (id) {
+                formData.append('current_folder_id', id + '');
+            }
+            moveItemsToSpecificFolder({
+                data: formData
+            });
+        }
+    };
+    const handleDeleteItems = async () => {
+        const formData = new FormData();
+        for (const i of documents_items) {
+            formData.append('document_items[]', i);
+        }
+        for (const i of folders_items) {
+            formData.append('folder_items[]', i);
+        }
+    };
 
+    const handleDownloadItemsAndFolders = useCallback(async () => {
+        const data = {
+            folder_ids: folders_items,
+            document_ids: documents_items
+        };
+        const res = await axios.request(apiSetting.Drive.downloadItemsByIDs(data));
+        try {
+            const dataURL = URL.createObjectURL(res.data);
+            const a = document.createElement('a');
+            a.href = dataURL;
+            a.download = 'documents.zip';
+            a.click();
+        } catch { }
+    }, [folders_items, documents_items]);
 
-
+    const confirmDocumentFormik = useFormik({
+        initialValues: {
+            document_id: null,
+            tag_id: ''
+        },
+        onSubmit: async (values) => {
+            setUpdateTag(true);
+            const res = await updateDocumentTag({
+                data: {
+                    document_ids: documents_items,
+                    tag_id: values.tag_id
+                }
+            });
+            setUpdateTag(false);
+            if (res.data.success === true) {
+                setAlert({ title: '更新成功', type: 'success' });
+                router.refresh();
+            } else {
+                setAlert({ title: '更新失敗', type: 'error' });
+            }
+        }
+    });
     const updateFolder = async (id: string, name: string) => {
         if (id) {
             const res = await updateFolderName(apiSetting.Folders.updateFoldertNameById(id, name));
@@ -84,12 +157,6 @@ function DriveContainer() {
         if (current?.type === 'folders') updateFolder(current?.id, current?.name);
         else updateDocument(current?.id, current?.name);
     }, [current]);
-
-
-
-
-
-
 
     const deleteFolder = async (id: string) => {
         if (id) {
@@ -158,6 +225,8 @@ function DriveContainer() {
                 setMode,
                 target,
                 setTarget,
+                dest,
+                setDest,
                 current,
                 setCurrent,
                 visableRename,
@@ -166,6 +235,13 @@ function DriveContainer() {
                 setVisableDelete,
                 updateFolderOrDocumentHandler,
                 deleteFolderOrDocumentHandler,
+                documents_items,
+                setDocumentsItems,
+                folders_items,
+                setFoldersItems,
+                handleMoveItems,
+                handleDeleteItems,
+                handleDownloadItemsAndFolders,
             }}
         />
     );

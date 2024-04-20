@@ -7,14 +7,18 @@ import {
     useRef,
     useState
 } from 'react';
+import { useRouter } from 'next/navigation';
 import { Box, Breadcrumbs, Link, Typography } from '@mui/joy';
 import Button from '@mui/joy/Button';
 import BreadCrumb from '@/components/drive/BreadCrumb';
 import { DriveDocument, DriveFolder } from '@/utils/types';
 
+import EditItems from '../../components/drive/EditItems';
 import DriveTable from '../../components/drive/DriveTable';
 import SearchLabelDocumentForm from '../../components/drive/SearchLabelDocumentForm';
 import InputNameModal from '../../components/common/Widget/InputNameModal';
+import { Folder } from '../../components/common/Widget/FolderTree';
+import FolderTreeForMoving from '../../components/common/Widget/FolderTreeForMoving';
 import MyModal from '../../components/common/Widget/MyModal';
 
 import Add from '@mui/icons-material/Add';
@@ -33,6 +37,8 @@ interface DriveViewProps {
     setMode: Dispatch<SetStateAction<'view' | 'move' | 'share' | 'newFolder'>>;
     target: any[];
     setTarget: Dispatch<SetStateAction<any[]>>;
+    dest: Folder | null;
+    setDest: Dispatch<SetStateAction<Folder | null>>;
     visableRename: boolean;
     setVisableRename: any;
     visableDelete: boolean;
@@ -41,6 +47,13 @@ interface DriveViewProps {
     setCurrent: any;
     updateFolderOrDocumentHandler: any;
     deleteFolderOrDocumentHandler: any;
+    documents_items: any;
+    setDocumentsItems: any;
+    folders_items: any;
+    setFoldersItems: any;
+    handleMoveItems: any;
+    handleDeleteItems: any;
+    handleDownloadItemsAndFolders: any;
 
 }
 export default function DriveView(props: DriveViewProps) {
@@ -55,6 +68,8 @@ export default function DriveView(props: DriveViewProps) {
         setMode = () => { },
         target = [],
         setTarget = () => { },
+        dest = null,
+        setDest = () => { },
         visableRename,
         setVisableRename,
         visableDelete,
@@ -63,7 +78,23 @@ export default function DriveView(props: DriveViewProps) {
         setCurrent,
         updateFolderOrDocumentHandler,
         deleteFolderOrDocumentHandler,
+        documents_items,
+        setDocumentsItems,
+        folders_items,
+        setFoldersItems,
+        handleMoveItems,
+        handleDeleteItems,
+        handleDownloadItemsAndFolders,
     } = props;
+    const router = useRouter();
+    const [open, setOpen] = useState(false);
+    const [openDeepUnderstanding, setOpenDeepUnderstanding] = useState(false);
+    const [openSelectShema, setOpenSelectShema] = useState(false);
+
+    const clearCheckedData = useCallback(() => {
+        setFoldersItems([]);
+        setDocumentsItems([]);
+    }, [setFoldersItems, setDocumentsItems]);
 
     return (
         <>
@@ -82,6 +113,44 @@ export default function DriveView(props: DriveViewProps) {
                     </Typography>
                 </Breadcrumbs>
             </Box>
+            <EditItems
+                moveItems={() => {
+                    setCurrent({ type: 'moveItems' });
+                    setMode('move');
+                }}
+                visibleSearchItems={documents_items?.length > 0 && folders_items?.length == 0}
+                searchItems={() => {
+                    if (documents_items && documents_items.length > 0)
+                        router.push(`/generate?document_ids=${documents_items.join(',')}`);
+                }}
+                visibleUpdateTag={documents_items?.length > 0 && folders_items?.length == 0}
+                updateTag={() => {
+                    setOpen(true);
+                }}
+                clearItems={() => {
+                    clearCheckedData();
+                }}
+                deleteItems={() => {
+                    handleDeleteItems();
+                }}
+                downloadItems={() => {
+                    handleDownloadItemsAndFolders();
+                }}
+                visibleDeepUnderstanding={documents_items?.length > 0 && folders_items?.length == 0}
+                deepUnderstanding={() => {
+                    setOpenDeepUnderstanding(true);
+                }}
+                visibleToExecl={documents_items?.length > 0 && folders_items?.length == 0}
+                toExecl={() => {
+                    setOpenSelectShema(true);
+                }}
+                visibleOpen={documents_items?.length == 1 && folders_items?.length == 0}
+                openItems={() => {
+                    router.push(`/document/chat?document_ids=${documents_items[0]}`);
+                }}
+                count={documents_items?.length + folders_items?.length}
+            />
+
             <Box
                 sx={{
                     display: 'flex',
@@ -164,6 +233,9 @@ export default function DriveView(props: DriveViewProps) {
                 />
                 <SearchLabelDocumentForm getAllLabelsData={getAllLabelsData} search={undefined} />
 
+
+
+
                 <InputNameModal
                     visable={visableRename}
                     current={current}
@@ -175,6 +247,17 @@ export default function DriveView(props: DriveViewProps) {
                     confirmClick={() => {
                         setVisableRename(false);
                         updateFolderOrDocumentHandler();
+                    }}
+                />
+                <FolderTreeForMoving
+                    {...{
+                        mode,
+                        setMode,
+                        dest,
+                        setDest,
+                        targetId: target?.[0]?.id,
+                        current,
+                        handleMoveItems
                     }}
                 />
                 <MyModal

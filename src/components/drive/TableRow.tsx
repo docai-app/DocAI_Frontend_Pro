@@ -77,7 +77,6 @@ export default function TableRow(props: TableRowProps) {
                 <td>
                     <Typography
                         level="body-xs"
-                        // sx={{ fontWeight: 'bold' }}
                         startDecorator={
                             type === 'documents' ? (
                                 <InsertDriveFileIcon color="info" />
