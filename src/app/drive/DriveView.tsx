@@ -1,7 +1,3 @@
-import { Box, Breadcrumbs, Link, Typography } from '@mui/joy';
-import Button from '@mui/joy/Button';
-import DriveTable from '../../components/drive/DriveTable';
-import SearchLabelDocumentForm from '../../components/drive/SearchLabelDocumentForm';
 import {
     Dispatch,
     Fragment,
@@ -11,9 +7,16 @@ import {
     useRef,
     useState
 } from 'react';
-
+import { Box, Breadcrumbs, Link, Typography } from '@mui/joy';
+import Button from '@mui/joy/Button';
 import BreadCrumb from '@/components/drive/BreadCrumb';
 import { DriveDocument, DriveFolder } from '@/utils/types';
+
+import DriveTable from '../../components/drive/DriveTable';
+import SearchLabelDocumentForm from '../../components/drive/SearchLabelDocumentForm';
+import InputNameModal from '../../components/common/Widget/InputNameModal';
+import MyModal from '../../components/common/Widget/MyModal';
+
 import Add from '@mui/icons-material/Add';
 import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
@@ -36,6 +39,9 @@ interface DriveViewProps {
     setVisableDelete: any;
     current: any;
     setCurrent: any;
+    updateFolderOrDocumentHandler: any;
+    deleteFolderOrDocumentHandler: any;
+
 }
 export default function DriveView(props: DriveViewProps) {
     const {
@@ -55,6 +61,8 @@ export default function DriveView(props: DriveViewProps) {
         setVisableDelete,
         current,
         setCurrent,
+        updateFolderOrDocumentHandler,
+        deleteFolderOrDocumentHandler,
     } = props;
 
     return (
@@ -154,8 +162,32 @@ export default function DriveView(props: DriveViewProps) {
                         setCurrent,
                     }}
                 />
-
                 <SearchLabelDocumentForm getAllLabelsData={getAllLabelsData} search={undefined} />
+
+                <InputNameModal
+                    visable={visableRename}
+                    current={current}
+                    setCurrent={setCurrent}
+                    description={`輸入新的名稱`}
+                    cancelClick={() => {
+                        setVisableRename(false);
+                    }}
+                    confirmClick={() => {
+                        setVisableRename(false);
+                        updateFolderOrDocumentHandler();
+                    }}
+                />
+                <MyModal
+                    visable={visableDelete}
+                    description={`是否刪除"${current?.name}"?`}
+                    cancelClick={() => {
+                        setVisableDelete(false);
+                    }}
+                    confirmClick={() => {
+                        setVisableDelete(false);
+                        deleteFolderOrDocumentHandler();
+                    }}
+                />
             </Box>
         </>
     );

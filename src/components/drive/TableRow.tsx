@@ -156,7 +156,11 @@ export default function TableRow(props: TableRowProps) {
                         }}
                     />
                     {type === 'folders' && (
-                        <IconButton size='sm' component="a" sx={{ borderRadius: '9999px' }}>
+                        <IconButton size='sm' sx={{ borderRadius: "50%" }}
+                            onClick={() => {
+                                setMode('share');
+                                setTarget([doc]);
+                            }}>
                             <ShareSharpIcon />
                         </IconButton>
                     )}

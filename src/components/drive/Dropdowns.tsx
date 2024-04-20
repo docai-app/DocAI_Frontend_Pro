@@ -32,8 +32,9 @@ export default function Dropdowns(props: DropdownsProps) {
             <MenuButton
                 slots={{ root: IconButton }}
                 slotProps={{ root: { color: 'neutral', size: 'sm' } }}
+                sx={{ borderRadius: "50%" }}
             >
-                <IconButton aria-label="Open options" component="a">
+                <IconButton aria-label="Open options" variant="soft" sx={{ borderRadius: "50%" }}>
                     <MoreHorizRoundedIcon />
                 </IconButton>
             </MenuButton>

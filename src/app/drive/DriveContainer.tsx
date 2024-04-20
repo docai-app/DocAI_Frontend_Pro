@@ -3,7 +3,7 @@
 import { DriveDocument, DriveFolder } from '@/utils/types';
 import useAxios from 'axios-hooks';
 import { useParams, usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import Api from '../../apis';
 import { Folder } from '../../components/common/Widget/FolderTree';
 import useAlert from '../../hooks/useAlert';
@@ -34,7 +34,6 @@ function DriveContainer() {
     const [folders_items, setFoldersItems] = useState<any>([]);
     const [newLabelName, setNewLabelName] = useState('');
     const [updateTag, setUpdateTag] = useState(false);
-
     const { id } = useParams();
     const [documents, setDocuments] = useState<DriveDocument[]>([]);
     const [folders, setFolders] = useState<DriveFolder[]>([]);
@@ -48,6 +47,83 @@ function DriveContainer() {
         apiSetting.Tag.getAllTags(),
         { manual: true }
     );
+
+    const [{ data: updateFolderNameData }, updateFolderName] = useAxios({}, { manual: true });
+    const [{ data: updateDocumentByIdData }, updateDocumentById] = useAxios({}, { manual: true });
+    const [{ data: deleteFolderByIdData }, deleteFolderById] = useAxios({}, { manual: true });
+    const [{ data: deleteDocumentByIdData }, deleteDocumentById] = useAxios({}, { manual: true });
+
+
+
+
+    const updateFolder = async (id: string, name: string) => {
+        if (id) {
+            const res = await updateFolderName(apiSetting.Folders.updateFoldertNameById(id, name));
+            if (res.data?.success) {
+                setAlert({ title: '更新成功', type: 'success' });
+                router.refresh();
+            } else {
+                setAlert({ title: '發生錯誤', type: 'error' });
+            }
+        }
+    };
+    const updateDocument = async (id: string, name: string) => {
+        if (id) {
+            const res = await updateDocumentById(
+                apiSetting.Document.updateDocumentNameById(id, name)
+            );
+            if (res.data?.success) {
+                setAlert({ title: '更新成功', type: 'success' });
+                router.refresh();
+            } else {
+                setAlert({ title: '發生錯誤', type: 'error' });
+            }
+        }
+    };
+    const updateFolderOrDocumentHandler = useCallback(async () => {
+        if (current?.type === 'folders') updateFolder(current?.id, current?.name);
+        else updateDocument(current?.id, current?.name);
+    }, [current]);
+
+
+
+
+
+
+
+    const deleteFolder = async (id: string) => {
+        if (id) {
+            const res = await deleteFolderById(apiSetting.Folders.deleteFolderById(id));
+            if (res.data?.success) {
+                setAlert({ title: '刪除成功', type: 'success' });
+                router.refresh();
+            } else {
+                setAlert({ title: '發生錯誤', type: 'error' });
+            }
+        }
+    };
+    const deleteDocument = async (id: string) => {
+        if (id) {
+            const res = await deleteDocumentById(apiSetting.Document.deleteDocumentById(id));
+            if (res.data?.success) {
+                setAlert({ title: '刪除成功', type: 'success' });
+                router.refresh();
+            } else {
+                setAlert({ title: '發生錯誤', type: 'error' });
+            }
+        }
+    };
+    const deleteFolderOrDocumentHandler = useCallback(async () => {
+        if (current?.type === 'folders') deleteFolder(current?.id);
+        else deleteDocument(current?.id);
+    }, [current]);
+
+
+
+
+
+
+
 
     useEffect(() => {
         setName(searchParams.get('name') || null);
@@ -88,6 +164,8 @@ function DriveContainer() {
                 setVisableRename,
                 visableDelete,
                 setVisableDelete,
+                updateFolderOrDocumentHandler,
+                deleteFolderOrDocumentHandler,
             }}
         />
     );
