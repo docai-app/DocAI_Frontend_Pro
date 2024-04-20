@@ -1,3 +1,4 @@
+import { CircleStackIcon } from '@heroicons/react/20/solid';
 import AssignmentTurnedInIcon from '@mui/icons-material/AssignmentTurnedIn';
 import BrightnessAutoRoundedIcon from '@mui/icons-material/BrightnessAutoRounded';
 import ForumIcon from '@mui/icons-material/Forum';
@@ -181,6 +182,19 @@ export default function Sidebar() {
                             <LocalOfferIcon />
                             <ListItemContent>
                                 <Typography level="title-sm">標簽</Typography>
+                            </ListItemContent>
+                        </ListItemButton>
+                    </ListItem>
+                    <ListItem>
+                        <ListItemButton
+                            role="menuitem"
+                            component="a"
+                            href="/smart_extraction_schema"
+                            selected={pathname.indexOf('/smart_extraction_schema') != -1}
+                        >
+                            <CircleStackIcon className="h-5 " />
+                            <ListItemContent>
+                                <Typography level="title-sm">數據源</Typography>
                             </ListItemContent>
                         </ListItemButton>
                     </ListItem>

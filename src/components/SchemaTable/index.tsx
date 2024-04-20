@@ -1,4 +1,9 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
+import Api from '@/apis';
+import { Label, SmartExtractionSchema } from '@/utils/types';
+import { CircleStackIcon } from '@heroicons/react/20/solid';
+import FilterAltIcon from '@mui/icons-material/FilterAlt';
+import SearchIcon from '@mui/icons-material/Search';
 import Box from '@mui/joy/Box';
 import Button from '@mui/joy/Button';
 import Divider from '@mui/joy/Divider';
@@ -15,23 +20,23 @@ import Sheet from '@mui/joy/Sheet';
 import Table from '@mui/joy/Table';
 import Typography from '@mui/joy/Typography';
 import * as React from 'react';
-
-import { Label, SmartExtractionSchema } from '@/utils/types';
-import FilterAltIcon from '@mui/icons-material/FilterAlt';
-import SearchIcon from '@mui/icons-material/Search';
 import TableRow from './TableRow';
 
 interface ViewProps {
     visibleRadio?: boolean;
     getAllLabelsData: any;
-    getAllSchemasData: any;
+    smart_extraction_schemas: SmartExtractionSchema[];
     handleSelectedValue?: any;
+    handleFilterLabel: any;
 }
+const apiSetting = new Api();
 export default function SchemaTable(props: ViewProps) {
-    const { visibleRadio = false, getAllLabelsData, getAllSchemasData, handleSelectedValue } = props;
+    const { visibleRadio = false, getAllLabelsData, smart_extraction_schemas, handleSelectedValue, handleFilterLabel } = props;
 
     const [open, setOpen] = React.useState(false);
     const [selectedValue, setSelectedValue] = React.useState<SmartExtractionSchema>();
+
+
     const renderFilters = () => (
         <React.Fragment>
             <FormControl size="sm">
@@ -41,9 +46,15 @@ export default function SchemaTable(props: ViewProps) {
                     placeholder="請選擇標籤"
                     slotProps={{ button: { sx: { whiteSpace: 'nowrap' } } }}
                 >
-                    <Option value="">{"數據總表"}</Option>
+                    <Option value="" onClick={() => {
+                        handleFilterLabel(null)
+                    }}>{"數據總表"}</Option>
                     {getAllLabelsData?.tags?.map((tag: Label, index: number) => (
-                        <Option key={index} value={tag?.id}>{tag?.name} {tag?.smart_extraction_schemas_count > 0 && `(${tag?.smart_extraction_schemas_count})`}</Option>
+                        <Option key={index} value={tag?.id}
+                            onClick={() => {
+                                handleFilterLabel(tag)
+                            }}
+                        >{tag?.name} {tag?.smart_extraction_schemas_count > 0 && `(${tag?.smart_extraction_schemas_count})`}</Option>
                     ))}
                 </Select>
             </FormControl>
@@ -117,7 +128,7 @@ export default function SchemaTable(props: ViewProps) {
                     borderRadius: 'sm',
                     flexShrink: 1,
                     overflow: 'auto',
-                    minHeight: 0
+                    minHeight: 300
                 }}
             >
                 <Table
@@ -129,8 +140,7 @@ export default function SchemaTable(props: ViewProps) {
                         '--Table-headerUnderlineThickness': '1px',
                         '--TableRow-hoverBackground': 'var(--joy-palette-background-level1)',
                         '--TableCell-paddingY': '4px',
-                        '--TableCell-paddingX': '8px',
-                        minHeight: 300
+                        '--TableCell-paddingX': '8px'
                     }}
                 >
                     <thead>
@@ -140,7 +150,11 @@ export default function SchemaTable(props: ViewProps) {
                                     style={{ width: 30, textAlign: 'center', padding: '12px 6px' }}
                                 ></th>
                             }
-                            <th style={{ width: 300, padding: '12px 6px' }}>名稱</th>
+                            <th style={{ width: 300, padding: '12px 6px' }}>
+                                <Typography startDecorator={<CircleStackIcon className="h-5 text-gray-400 " />}>
+                                    名稱
+                                </Typography>
+                            </th>
                             <th style={{ width: 200, padding: '12px 6px' }}>標籤</th>
                             <th style={{ width: 120, padding: '12px 6px' }}>更新日期</th>
                             <th style={{ width: 100, padding: '12px 6px' }}>擁有人</th>
@@ -150,7 +164,7 @@ export default function SchemaTable(props: ViewProps) {
                         </tr>
                     </thead>
                     <tbody>
-                        {getAllSchemasData?.smart_extraction_schemas?.map(
+                        {smart_extraction_schemas?.map(
                             (row: SmartExtractionSchema) => (
                                 <TableRow
                                     key={row.id}

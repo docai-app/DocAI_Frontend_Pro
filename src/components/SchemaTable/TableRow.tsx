@@ -3,6 +3,7 @@ import { SmartExtractionSchema } from "@/utils/types";
 import Box from '@mui/joy/Box';
 import Typography from '@mui/joy/Typography';
 
+import { CircleStackIcon } from "@heroicons/react/20/solid";
 import { Chip, Link } from '@mui/joy';
 import Radio from '@mui/joy/Radio';
 import moment from 'moment';
@@ -41,7 +42,8 @@ export default function TableRow(props: ViewProps) {
                 }
                 <td>
                     <Typography level="body-sm" sx={{ fontWeight: 'bold' }}>
-                        <Link href={`document/smart_extraction_schema/${row.id}`}>
+                        <Link href={`document/smart_extraction_schema/${row.id}`}
+                            startDecorator={<CircleStackIcon className="h-5 text-gray-400 " />}>
                             {row.name}
                         </Link>
                     </Typography>

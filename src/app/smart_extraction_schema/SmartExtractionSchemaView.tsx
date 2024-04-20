@@ -1,17 +1,20 @@
 import SchemaTable from '@/components/SchemaTable';
+import { SmartExtractionSchema } from '@/utils/types';
 import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 import { Box, Breadcrumbs, Link, Typography } from '@mui/joy';
 
 interface ViewProps {
-    getAllSchemasData: any;
+    smart_extraction_schemas: SmartExtractionSchema[];
     getAllLabelsData: any;
+    handleFilterLabel: any;
 }
 
 function SmartExtractionSchemaView(props: ViewProps) {
     const {
-        getAllSchemasData,
-        getAllLabelsData
+        smart_extraction_schemas,
+        getAllLabelsData,
+        handleFilterLabel
     } = props;
 
     return (
@@ -49,9 +52,10 @@ function SmartExtractionSchemaView(props: ViewProps) {
 
             <SchemaTable
                 {...{
-                    getAllSchemasData,
+                    smart_extraction_schemas,
                     getAllLabelsData,
-                    handleSelectedValue: () => { }
+                    handleSelectedValue: () => { },
+                    handleFilterLabel,
                 }}
             />
         </>
