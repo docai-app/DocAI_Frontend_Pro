@@ -82,6 +82,12 @@ function DriveContainer() {
                 setMode,
                 target,
                 setTarget,
+                current,
+                setCurrent,
+                visableRename,
+                setVisableRename,
+                visableDelete,
+                setVisableDelete,
             }}
         />
     );

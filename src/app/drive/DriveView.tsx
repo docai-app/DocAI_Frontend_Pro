@@ -30,6 +30,12 @@ interface DriveViewProps {
     setMode: Dispatch<SetStateAction<'view' | 'move' | 'share' | 'newFolder'>>;
     target: any[];
     setTarget: Dispatch<SetStateAction<any[]>>;
+    visableRename: boolean;
+    setVisableRename: any;
+    visableDelete: boolean;
+    setVisableDelete: any;
+    current: any;
+    setCurrent: any;
 }
 export default function DriveView(props: DriveViewProps) {
     const {
@@ -43,6 +49,12 @@ export default function DriveView(props: DriveViewProps) {
         setMode = () => { },
         target = [],
         setTarget = () => { },
+        visableRename,
+        setVisableRename,
+        visableDelete,
+        setVisableDelete,
+        current,
+        setCurrent,
     } = props;
 
     return (
@@ -136,7 +148,10 @@ export default function DriveView(props: DriveViewProps) {
                         folders,
                         handleSelectedValue: () => { },
                         setMode,
-                        setTarget
+                        setTarget,
+                        setVisableRename,
+                        setVisableDelete,
+                        setCurrent,
                     }}
                 />
 

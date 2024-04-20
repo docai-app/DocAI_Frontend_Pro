@@ -1,5 +1,7 @@
+import { useRouter } from 'next/navigation';
 import { DriveDocument } from '@/utils/types';
 import { Box, Checkbox, Chip, Link, Typography } from '@mui/joy';
+import IconButton from '@mui/joy/IconButton';
 import moment from 'moment';
 import Dropdowns from './Dropdowns';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
@@ -13,6 +15,9 @@ interface TableRowProps {
     type: 'documents' | 'folders';
     setMode: Dispatch<SetStateAction<'view' | 'move' | 'share' | 'newFolder'>>;
     setTarget: any;
+    setVisableDelete?: any;
+    setVisableRename: any;
+    setCurrent?: any;
     selectedValue: any;
     setSelectedValue: any;
     handleSelectedValue: any;
@@ -25,12 +30,16 @@ export default function TableRow(props: TableRowProps) {
         type,
         setMode = () => { },
         setTarget = () => { },
+        setVisableDelete,
+        setVisableRename,
+        setCurrent,
         selectedValue,
         setSelectedValue,
         handleSelectedValue,
         setSelected, //setCheckedData
-        selected,   //checked
+        selected,   //checked 
     } = props;
+    const router = useRouter();
 
     const url = doc.storage_url || `/drive/${doc.id}`;
 
@@ -117,48 +126,39 @@ export default function TableRow(props: TableRowProps) {
                         type={type}
                         url={url}
                         name={doc?.name}
-                    // rename={() => {
-                    //     setVisableRename(true);
-                    //     setCurrent({
-                    //         id: doc?.id,
-                    //         name: doc?.name,
-                    //         type: type
-                    //     });
-                    // }}
-                    // download={() => { }}
-                    // move={() => {
-                    //     setMode('move');
-                    //     setTarget([doc]);
-                    //     setCurrent({
-                    //         id: doc?.id,
-                    //         name: doc?.name,
-                    //         type: type
-                    //     });
-                    // }}
-                    // remove={() => {
-                    //     setVisableDelete(true);
-                    //     setCurrent({
-                    //         id: doc?.id,
-                    //         name: doc?.name,
-                    //         type: type
-                    //     });
-                    // }}
-                    // openItems={() => {
-                    //     Router.push({
-                    //         pathname: '/document/chat',
-                    //         query: { document_id: doc.id }
-                    //     });
-                    // }}
+                        rename={() => {
+                            setVisableRename(true);
+                            setCurrent({
+                                id: doc?.id,
+                                name: doc?.name,
+                                type: type
+                            });
+                        }}
+                        move={() => {
+                            setMode('move');
+                            setTarget([doc]);
+                            setCurrent({
+                                id: doc?.id,
+                                name: doc?.name,
+                                type: type
+                            });
+                        }}
+                        remove={() => {
+                            setVisableDelete(true);
+                            setCurrent({
+                                id: doc?.id,
+                                name: doc?.name,
+                                type: type
+                            });
+                        }}
+                        openItems={() => {
+                            router.push(`/document/chat?document_id=${doc.id}`);
+                        }}
                     />
                     {type === 'folders' && (
-                        <Chip variant="soft"
-                            startDecorator={<ShareSharpIcon />}
-                            onClick={() => {
-                                setMode('share');
-                                setTarget([doc]);
-                            }}
-                            slotProps={{ action: { component: 'a' } }}
-                        />
+                        <IconButton size='sm' component="a" sx={{ borderRadius: '9999px' }}>
+                            <ShareSharpIcon />
+                        </IconButton>
                     )}
                 </td>
                 <td>

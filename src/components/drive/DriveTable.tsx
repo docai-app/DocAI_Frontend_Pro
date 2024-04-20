@@ -22,12 +22,18 @@ interface ViewProps {
     handleSelectedValue: any;
     setMode: Dispatch<SetStateAction<'view' | 'move' | 'share' | 'newFolder'>>;
     setTarget: Dispatch<SetStateAction<any[]>>;
+    setVisableRename: any;
+    setVisableDelete: any;
+    setCurrent: any;
 
 }
 export default function DriveTable(props: ViewProps) {
     const { documents, folders, handleSelectedValue,
         setMode = () => { },
         setTarget = () => { },
+        setVisableRename,
+        setVisableDelete,
+        setCurrent,
     } = props;
 
     const router = useRouter();
@@ -73,7 +79,7 @@ export default function DriveTable(props: ViewProps) {
                                 </Typography>
                             </th>
                             <th style={{ width: "12%", padding: '12px 6px' }}>標籤</th>
-                            <th style={{  width: "8%",padding: '12px 6px' }}>動作</th>
+                            <th style={{ width: "8%", padding: '12px 6px' }}>動作</th>
                             <th style={{ padding: '12px 6px' }}>更新日期</th>
                             <th style={{ padding: '12px 6px' }}>擁有人</th>
                         </tr>
@@ -86,6 +92,9 @@ export default function DriveTable(props: ViewProps) {
                                 type={'folders'}
                                 setMode={setMode}
                                 setTarget={setTarget}
+                                setVisableRename={setVisableRename}
+                                setVisableDelete={setVisableDelete}
+                                setCurrent={setCurrent}
                                 selectedValue={selectedValue}
                                 setSelectedValue={setSelectedValue}
                                 handleSelectedValue={handleSelectedValue}
@@ -100,6 +109,9 @@ export default function DriveTable(props: ViewProps) {
                                 type={'documents'}
                                 setMode={setMode}
                                 setTarget={setTarget}
+                                setVisableRename={setVisableRename}
+                                setVisableDelete={setVisableDelete}
+                                setCurrent={setCurrent}
                                 selectedValue={selectedValue}
                                 setSelectedValue={setSelectedValue}
                                 handleSelectedValue={handleSelectedValue}
