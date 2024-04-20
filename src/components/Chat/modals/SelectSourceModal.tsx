@@ -48,6 +48,7 @@ export default function SelectSourceModal(props: ViewProps) {
                         </Button>
                     </Box>
                     <SchemaTable
+                        visibleRadio={true}
                         getAllLabelsData={getAllLabelsData}
                         getAllSchemasData={getAllSchemasData}
                         handleSelectedValue={(schema: SmartExtractionSchema) => {
