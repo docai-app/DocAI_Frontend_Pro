@@ -15,7 +15,7 @@ import { DriveDocument, DriveFolder } from '@/utils/types';
 
 import EditItems from '../../components/drive/EditItems';
 import AmendLabel from '../../components/classification/AmendLabel';
-// import SelectDataSchemaModal from '../../components/search/SelectDataSchemaModal';
+import SelectDataSchemaModal from '../../components/Search/SelectDataSchemaModal';
 import DriveTable from '../../components/drive/DriveTable';
 import SearchLabelDocumentForm from '../../components/drive/SearchLabelDocumentForm';
 import InputNameModal from '../../components/common/Widget/InputNameModal';
@@ -155,11 +155,11 @@ export default function DriveView(props: DriveViewProps) {
                 setTagName={(name: string) => { }}
                 setOpenEditLabel={setOpenEditLabel}
             />
-             {/* <SelectDataSchemaModal
+            <SelectDataSchemaModal
                 open={openSelectShema}
                 setOpen={setOpenSelectShema}
                 document_ids={[documents_items]}
-            /> */}
+            />
             <Box
                 sx={{
                     display: 'flex',
