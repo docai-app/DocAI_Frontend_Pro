@@ -11,13 +11,16 @@ import MenuButton from '@mui/joy/MenuButton';
 import MenuItem from '@mui/joy/MenuItem';
 
 interface DropdownsProps {
+    type?: string;
+    url?: string;
+    name?: string;
     share?: any;
     edit?: any;
     remove?: any;
 }
 
 export default function Dropdowns(props: DropdownsProps) {
-    const { share, edit, remove } = props;
+    const { type, url, name, share, edit, remove } = props;
     return (
         <Dropdown>
             <MenuButton
@@ -27,12 +30,18 @@ export default function Dropdowns(props: DropdownsProps) {
                 <MoreHorizRoundedIcon />
             </MenuButton>
             <Menu size="sm" sx={{ minWidth: 140 }}>
-                <MenuItem onClick={share}>
-                    <ShareIcon /> 分享
+                <MenuItem>
+                    打開
+                </MenuItem>
+                <MenuItem>
+                    下載
+                </MenuItem>
+                <MenuItem >
+                    重新命名
                 </MenuItem>
                 <MenuItem onClick={edit}>
                     <EditIcon />
-                    編輯資料
+                    移動至
                 </MenuItem>
                 <Divider />
                 <MenuItem color="danger" onClick={remove}>

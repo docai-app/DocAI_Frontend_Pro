@@ -6,15 +6,29 @@ import Sheet from '@mui/joy/Sheet';
 import Table from '@mui/joy/Table';
 import { useRouter } from 'next/navigation';
 import * as React from 'react';
+import {
+    Dispatch,
+    Fragment,
+    SetStateAction,
+    useCallback,
+    useEffect,
+    useRef,
+    useState
+} from 'react';
 import TableRow from './TableRow';
-
 interface ViewProps {
     documents: DriveDocument[];
     folders: DriveFolder[];
     handleSelectedValue: any;
+    setMode: Dispatch<SetStateAction<'view' | 'move' | 'share' | 'newFolder'>>;
+    setTarget: Dispatch<SetStateAction<any[]>>;
+
 }
 export default function DriveTable(props: ViewProps) {
-    const { documents, folders, handleSelectedValue } = props;
+    const { documents, folders, handleSelectedValue,
+        setMode = () => { },
+        setTarget = () => { },
+    } = props;
 
     const router = useRouter();
     const [selectedValue, setSelectedValue] = React.useState<any>();
@@ -51,17 +65,17 @@ export default function DriveTable(props: ViewProps) {
                     <thead>
                         <tr>
                             <th
-                                style={{ width: 48, textAlign: 'center', padding: '12px 6px' }}
+                                style={{ width: 40, textAlign: 'center', padding: '12px 6px' }}
                             ></th>
-                            <th style={{ width: 300, padding: '12px 6px' }}>
+                            <th style={{ width: "55%", padding: '12px 6px' }}>
                                 <Typography startDecorator={<FolderIcon color="primary" />}>
                                     名稱
                                 </Typography>
                             </th>
-                            <th style={{ width: 200, padding: '12px 6px' }}>標籤</th>
-                            <th style={{ width: 120, padding: '12px 6px' }}>更新日期</th>
-                            <th style={{ width: 120, padding: '12px 6px' }}>擁有人</th>
-                            <th style={{ width: 120, padding: '12px 6px' }}></th>
+                            <th style={{ width: "12%", padding: '12px 6px' }}>標籤</th>
+                            <th style={{  width: "8%",padding: '12px 6px' }}>動作</th>
+                            <th style={{ padding: '12px 6px' }}>更新日期</th>
+                            <th style={{ padding: '12px 6px' }}>擁有人</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -70,6 +84,8 @@ export default function DriveTable(props: ViewProps) {
                                 key={index}
                                 doc={row}
                                 type={'folders'}
+                                setMode={setMode}
+                                setTarget={setTarget}
                                 selectedValue={selectedValue}
                                 setSelectedValue={setSelectedValue}
                                 handleSelectedValue={handleSelectedValue}
@@ -82,6 +98,8 @@ export default function DriveTable(props: ViewProps) {
                                 key={index}
                                 doc={row}
                                 type={'documents'}
+                                setMode={setMode}
+                                setTarget={setTarget}
                                 selectedValue={selectedValue}
                                 setSelectedValue={setSelectedValue}
                                 handleSelectedValue={handleSelectedValue}

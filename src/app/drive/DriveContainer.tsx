@@ -77,7 +77,11 @@ function DriveContainer() {
                 allDrivesData,
                 documents,
                 folders,
-                getAllLabelsData
+                getAllLabelsData,
+                mode,
+                setMode,
+                target,
+                setTarget,
             }}
         />
     );

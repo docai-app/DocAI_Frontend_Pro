@@ -2,6 +2,15 @@ import { Box, Breadcrumbs, Link, Typography } from '@mui/joy';
 import Button from '@mui/joy/Button';
 import DriveTable from '../../components/drive/DriveTable';
 import SearchLabelDocumentForm from '../../components/drive/SearchLabelDocumentForm';
+import {
+    Dispatch,
+    Fragment,
+    SetStateAction,
+    useCallback,
+    useEffect,
+    useRef,
+    useState
+} from 'react';
 
 import BreadCrumb from '@/components/drive/BreadCrumb';
 import { DriveDocument, DriveFolder } from '@/utils/types';
@@ -17,9 +26,24 @@ interface DriveViewProps {
     documents: DriveDocument[];
     folders: DriveFolder[];
     getAllLabelsData: any;
+    mode: 'view' | 'move' | 'share' | 'newFolder';
+    setMode: Dispatch<SetStateAction<'view' | 'move' | 'share' | 'newFolder'>>;
+    target: any[];
+    setTarget: Dispatch<SetStateAction<any[]>>;
 }
 export default function DriveView(props: DriveViewProps) {
-    const { id, name, allDrivesData, documents, folders, getAllLabelsData } = props;
+    const {
+        id = null,
+        name = 'Root',
+        allDrivesData,
+        documents,
+        folders,
+        getAllLabelsData,
+        mode = 'view',
+        setMode = () => { },
+        target = [],
+        setTarget = () => { },
+    } = props;
 
     return (
         <>
@@ -110,7 +134,9 @@ export default function DriveView(props: DriveViewProps) {
                     {...{
                         documents,
                         folders,
-                        handleSelectedValue: () => {}
+                        handleSelectedValue: () => { },
+                        setMode,
+                        setTarget
                     }}
                 />
 
