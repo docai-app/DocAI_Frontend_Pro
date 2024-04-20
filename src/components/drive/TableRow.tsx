@@ -15,7 +15,15 @@ interface TableRowProps {
     setSelected: any;
 }
 export default function TableRow(props: TableRowProps) {
-    const { doc, type, selectedValue, setSelectedValue, handleSelectedValue, selected, setSelected } = props;
+    const {
+        doc,
+        type,
+        selectedValue,
+        setSelectedValue,
+        handleSelectedValue,
+        selected,
+        setSelected
+    } = props;
 
     const url = doc.storage_url || `/drive/${doc.id}`;
 
@@ -77,8 +85,8 @@ export default function TableRow(props: TableRowProps) {
                 </td>
                 <td>
                     {type !== 'folders' &&
-                        doc?.is_classified === false &&
-                        doc?.labels?.length == 0 ? (
+                    doc?.is_classified === false &&
+                    doc?.labels?.length == 0 ? (
                         <Chip
                             color="danger"
                             sx={{

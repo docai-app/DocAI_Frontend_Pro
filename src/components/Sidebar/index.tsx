@@ -198,7 +198,6 @@ export default function Sidebar() {
                         </ListItemButton>
                     </ListItem>
 
-
                     <ListItem>
                         <ListItemButton
                             role="menuitem"

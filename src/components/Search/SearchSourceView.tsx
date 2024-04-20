@@ -15,7 +15,7 @@ interface ViewProps {
 }
 
 export default function SearchSourceView(props: ViewProps) {
-    const { setAlert } = useAlert()
+    const { setAlert } = useAlert();
     const { setTagId } = props;
     const router = useRouter();
 
@@ -70,7 +70,8 @@ export default function SearchSourceView(props: ViewProps) {
                 sx={{
                     borderRadius: 'sm',
                     mb: 1
-                }}>
+                }}
+            >
                 <ListItemButton onClick={item?.onClick}>
                     <ListItemDecorator
                         sx={{

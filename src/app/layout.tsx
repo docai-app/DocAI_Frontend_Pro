@@ -46,7 +46,7 @@ export default function RootLayout(props: { children: React.ReactNode }) {
         <html lang="en">
             <body>
                 <LoadProvider>
-                    <SessionProvider   >
+                    <SessionProvider>
                         <AlertProvider>
                             <script
                                 src="https://accounts.google.com/gsi/client"

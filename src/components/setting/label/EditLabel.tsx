@@ -120,8 +120,8 @@ export default function EditLabel(props: EditLabelProps) {
                                                             );
                                                         }
                                                     }}
-                                                // sx={{ [`& > .${checkboxClasses.checkbox}`]: { position: 'relative' } }}
-                                                // slotProps={{ action: { className: checkboxClasses.focusVisible } }}
+                                                    // sx={{ [`& > .${checkboxClasses.checkbox}`]: { position: 'relative' } }}
+                                                    // slotProps={{ action: { className: checkboxClasses.focusVisible } }}
                                                 />
                                             );
                                         })}
@@ -147,9 +147,7 @@ export default function EditLabel(props: EditLabelProps) {
                                 >
                                     取消
                                 </Button>
-                                <Button type="submit">
-                                    確認
-                                </Button>
+                                <Button type="submit">確認</Button>
                             </Box>
                         </Stack>
                     </form>

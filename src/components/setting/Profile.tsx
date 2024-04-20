@@ -27,7 +27,7 @@ interface ProfileProps {
 function Profile({ currentUserData, currentUserLoading }: ProfileProps) {
     const { setAlert } = useAlert();
     const formRef = useRef<HTMLFormElement>(null);
-    const [{ }, updateMeProfile] = useAxios(apiSetting.User.updateMeProfile(), { manual: true });
+    const [{}, updateMeProfile] = useAxios(apiSetting.User.updateMeProfile(), { manual: true });
     const formSubmit: FormEventHandler = useCallback(
         (e: FormEvent) => {
             e.preventDefault();
@@ -135,15 +135,13 @@ function Profile({ currentUserData, currentUserLoading }: ProfileProps) {
                                     <Input
                                         type="date"
                                         name="date_of_birth"
-                                        defaultValue={
-                                            currentUserData?.user?.date_of_birth || ''
-                                        }
-                                    // slotProps={{
-                                    //     input: {
-                                    //         min: '2018-06-07',
-                                    //         max: '2018-06-14',
-                                    //     },
-                                    // }}
+                                        defaultValue={currentUserData?.user?.date_of_birth || ''}
+                                        // slotProps={{
+                                        //     input: {
+                                        //         min: '2018-06-07',
+                                        //         max: '2018-06-14',
+                                        //     },
+                                        // }}
                                     />
                                 </FormControl>
                                 <FormControl sx={{ flexGrow: 1 }}>

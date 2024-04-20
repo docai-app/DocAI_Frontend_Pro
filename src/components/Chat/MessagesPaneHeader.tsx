@@ -42,19 +42,19 @@ export default function MessagesPaneHeader(props: MessagesPaneHeaderProps) {
                     <MoreVertRoundedIcon />
                 </MenuButton>
                 <Menu size="sm" sx={{ minWidth: 140 }}>
-                    <MenuItem  >
+                    <MenuItem>
                         <EditIcon />
                         編輯資料
                     </MenuItem>
                     <Divider />
-                    <MenuItem color="danger" >
+                    <MenuItem color="danger">
                         <DeleteIcon />
                         刪除
                     </MenuItem>
                 </Menu>
             </Dropdown>
         );
-    }
+    };
     return (
         <Stack
             direction="row"

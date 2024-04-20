@@ -74,7 +74,6 @@ export default function DriveView(props: DriveViewProps) {
                         justifyContent: 'space-between'
                     }}
                 >
-
                     <Box sx={{ display: 'flex', alignItems: 'center' }}>
                         {allDrivesData && (
                             <BreadCrumb
@@ -111,14 +110,11 @@ export default function DriveView(props: DriveViewProps) {
                     {...{
                         documents,
                         folders,
-                        handleSelectedValue: () => { }
+                        handleSelectedValue: () => {}
                     }}
                 />
 
-                <SearchLabelDocumentForm
-                    getAllLabelsData={getAllLabelsData}
-                    search={undefined}
-                />
+                <SearchLabelDocumentForm getAllLabelsData={getAllLabelsData} search={undefined} />
             </Box>
         </>
     );
