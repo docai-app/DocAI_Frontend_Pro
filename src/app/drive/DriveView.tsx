@@ -229,6 +229,10 @@ export default function DriveView(props: DriveViewProps) {
                         setVisableRename,
                         setVisableDelete,
                         setCurrent,
+                        folders_items,
+                        documents_items,
+                        setFoldersItems,
+                        setDocumentsItems,
                     }}
                 />
                 <SearchLabelDocumentForm getAllLabelsData={getAllLabelsData} search={undefined} />

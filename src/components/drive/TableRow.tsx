@@ -21,8 +21,8 @@ interface TableRowProps {
     selectedValue: any;
     setSelectedValue: any;
     handleSelectedValue: any;
-    setSelected: any;
-    selected: any;
+    setCheckedData?: any;
+    checked?: boolean;
 }
 export default function TableRow(props: TableRowProps) {
     const {
@@ -36,12 +36,16 @@ export default function TableRow(props: TableRowProps) {
         selectedValue,
         setSelectedValue,
         handleSelectedValue,
-        setSelected, //setCheckedData
-        selected,   //checked 
+        setCheckedData,
+        checked
     } = props;
     const router = useRouter();
 
     const url = doc.storage_url || `/drive/${doc.id}`;
+
+    const check = (e: any) => {
+        setCheckedData(type, e.target.checked, e.target.value);
+    };
 
     return (
         <>
@@ -50,26 +54,10 @@ export default function TableRow(props: TableRowProps) {
                 data-type={type}
             >
                 <td style={{ textAlign: 'center', width: 120 }}>
-                    {/* <Radio
-                        size="sm"
-                        checked={selectedValue?.id === doc.id}
-                        onChange={(event) => {
-                            setSelectedValue(doc);
-                            handleSelectedValue(doc);
-                        }}
-                        name="radio-buttons"
-                    /> */}
-                    <Checkbox
-                        size="sm"
-                        checked={selected.includes(doc.id)}
-                        color={selected.includes(doc.id) ? 'primary' : undefined}
-                        onChange={(event) => {
-                            setSelected((ids: any) =>
-                                event.target.checked
-                                    ? ids.concat(doc.id)
-                                    : ids.filter((itemId: any) => itemId !== doc.id)
-                            );
-                        }}
+                    <Checkbox size="sm"
+                        checked={checked}
+                        value={doc.id}
+                        onChange={(e) => { check(e); }}
                         slotProps={{ checkbox: { sx: { textAlign: 'left' } } }}
                         sx={{ verticalAlign: 'text-bottom' }}
                     />
@@ -120,50 +108,6 @@ export default function TableRow(props: TableRowProps) {
                         })
                     )}
                 </td>
-                <td style={{ display: 'flex' }}>
-                    <Dropdowns
-                        type={type}
-                        url={url}
-                        name={doc?.name}
-                        rename={() => {
-                            setVisableRename(true);
-                            setCurrent({
-                                id: doc?.id,
-                                name: doc?.name,
-                                type: type
-                            });
-                        }}
-                        move={() => {
-                            setMode('move');
-                            setTarget([doc]);
-                            setCurrent({
-                                id: doc?.id,
-                                name: doc?.name,
-                                type: type
-                            });
-                        }}
-                        remove={() => {
-                            setVisableDelete(true);
-                            setCurrent({
-                                id: doc?.id,
-                                name: doc?.name,
-                                type: type
-                            });
-                        }}
-                        openItems={() => {
-                            router.push(`/document/chat?document_id=${doc.id}`);
-                        }}
-                    />
-                    {type === 'folders' && (
-                        <IconButton size='sm' sx={{ borderRadius: "50%" }}
-                            onClick={() => {
-                                setMode('share');
-                                setTarget([doc]);
-                            }}>
-                            <ShareSharpIcon />
-                        </IconButton>
-                    )}
-                </td>
                 <td>
                     <Typography level="body-xs">
                         {moment(doc.updated_at).format('YYYY/MM/DD')}
@@ -171,6 +115,52 @@ export default function TableRow(props: TableRowProps) {
                 </td>
                 <td>
                     <Typography level="body-xs">{doc.user?.nickname}</Typography>
+                </td>
+                <td>
+                    <Box sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' } }}>
+                        <Dropdowns
+                            type={type}
+                            url={url}
+                            name={doc?.name}
+                            rename={() => {
+                                setVisableRename(true);
+                                setCurrent({
+                                    id: doc?.id,
+                                    name: doc?.name,
+                                    type: type
+                                });
+                            }}
+                            move={() => {
+                                setMode('move');
+                                setTarget([doc]);
+                                setCurrent({
+                                    id: doc?.id,
+                                    name: doc?.name,
+                                    type: type
+                                });
+                            }}
+                            remove={() => {
+                                setVisableDelete(true);
+                                setCurrent({
+                                    id: doc?.id,
+                                    name: doc?.name,
+                                    type: type
+                                });
+                            }}
+                            openItems={() => {
+                                router.push(`/document/chat?document_id=${doc.id}`);
+                            }}
+                        />
+                        {type === 'folders' && (
+                            <IconButton size='sm' sx={{ borderRadius: "50%" }}
+                                onClick={() => {
+                                    setMode('share');
+                                    setTarget([doc]);
+                                }}>
+                                <ShareSharpIcon />
+                            </IconButton>
+                        )}
+                    </Box>
                 </td>
             </tr>
         </>
