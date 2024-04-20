@@ -14,6 +14,8 @@ import BreadCrumb from '@/components/drive/BreadCrumb';
 import { DriveDocument, DriveFolder } from '@/utils/types';
 
 import EditItems from '../../components/drive/EditItems';
+import AmendLabel from '../../components/classification/AmendLabel';
+// import SelectDataSchemaModal from '../../components/search/SelectDataSchemaModal';
 import DriveTable from '../../components/drive/DriveTable';
 import SearchLabelDocumentForm from '../../components/drive/SearchLabelDocumentForm';
 import InputNameModal from '../../components/common/Widget/InputNameModal';
@@ -54,6 +56,8 @@ interface DriveViewProps {
     handleMoveItems: any;
     handleDeleteItems: any;
     handleDownloadItemsAndFolders: any;
+    confirmDocumentFormik?: any;
+
 
 }
 export default function DriveView(props: DriveViewProps) {
@@ -85,11 +89,12 @@ export default function DriveView(props: DriveViewProps) {
         handleMoveItems,
         handleDeleteItems,
         handleDownloadItemsAndFolders,
+        confirmDocumentFormik,
     } = props;
     const router = useRouter();
     const [open, setOpen] = useState(false);
-    const [openDeepUnderstanding, setOpenDeepUnderstanding] = useState(false);
     const [openSelectShema, setOpenSelectShema] = useState(false);
+    const [openEditLabel, setOpenEditLabel] = useState(false);
 
     const clearCheckedData = useCallback(() => {
         setFoldersItems([]);
@@ -118,11 +123,6 @@ export default function DriveView(props: DriveViewProps) {
                     setCurrent({ type: 'moveItems' });
                     setMode('move');
                 }}
-                visibleSearchItems={documents_items?.length > 0 && folders_items?.length == 0}
-                searchItems={() => {
-                    if (documents_items && documents_items.length > 0)
-                        router.push(`/generate?document_ids=${documents_items.join(',')}`);
-                }}
                 visibleUpdateTag={documents_items?.length > 0 && folders_items?.length == 0}
                 updateTag={() => {
                     setOpen(true);
@@ -136,10 +136,6 @@ export default function DriveView(props: DriveViewProps) {
                 downloadItems={() => {
                     handleDownloadItemsAndFolders();
                 }}
-                visibleDeepUnderstanding={documents_items?.length > 0 && folders_items?.length == 0}
-                deepUnderstanding={() => {
-                    setOpenDeepUnderstanding(true);
-                }}
                 visibleToExecl={documents_items?.length > 0 && folders_items?.length == 0}
                 toExecl={() => {
                     setOpenSelectShema(true);
@@ -150,7 +146,20 @@ export default function DriveView(props: DriveViewProps) {
                 }}
                 count={documents_items?.length + folders_items?.length}
             />
-
+            <AmendLabel
+                open={open}
+                setOpen={setOpen}
+                allLabelsData={getAllLabelsData}
+                confirmDocumentFormik={confirmDocumentFormik}
+                isSubmit={true}
+                setTagName={(name: string) => { }}
+                setOpenEditLabel={setOpenEditLabel}
+            />
+             {/* <SelectDataSchemaModal
+                open={openSelectShema}
+                setOpen={setOpenSelectShema}
+                document_ids={[documents_items]}
+            /> */}
             <Box
                 sx={{
                     display: 'flex',

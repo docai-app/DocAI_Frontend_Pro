@@ -1,9 +1,7 @@
 import { TrashIcon, XMarkIcon } from '@heroicons/react/20/solid';
 import {
-    ArchiveBoxArrowDownIcon,
     ArrowRightCircleIcon,
     ChartBarIcon,
-    MagnifyingGlassIcon,
     PaperAirplaneIcon,
     Square2StackIcon,
     TagIcon
@@ -13,15 +11,11 @@ interface EditItemsProps {
     moveItems?: any;
     deleteItems?: any;
     clearItems?: any;
-    searchItems?: any;
     downloadItems?: any;
-    visibleSearchItems?: boolean;
     updateTag?: any;
     visibleUpdateTag?: boolean;
     visibleMoveItem?: boolean;
     count: number;
-    visibleDeepUnderstanding?: boolean;
-    deepUnderstanding?: any;
     visibleGenerateChart?: boolean;
     generateChart?: any;
     visibleToExecl?: boolean;
@@ -35,15 +29,11 @@ export default function EditItems(props: EditItemsProps) {
         moveItems,
         deleteItems,
         clearItems,
-        searchItems,
         downloadItems,
-        visibleSearchItems,
         updateTag,
         visibleUpdateTag,
         visibleMoveItem = true,
         count,
-        visibleDeepUnderstanding,
-        deepUnderstanding,
         visibleGenerateChart,
         generateChart,
         visibleToExecl,
@@ -106,24 +96,6 @@ export default function EditItems(props: EditItemsProps) {
                             >
                                 <Square2StackIcon className="w-4 m-1 " />
                                 <label className="text-sm">搬資料到Execl</label>
-                            </div>
-                        )}
-                        {visibleSearchItems && (
-                            <div
-                                className="flex flex-row items-center p-1 hover:bg-gray-300 rounded-md"
-                                onClick={searchItems}
-                            >
-                                <MagnifyingGlassIcon className="w-4 m-1 " />
-                                <label className="text-sm">智能查詢</label>
-                            </div>
-                        )}
-                        {visibleDeepUnderstanding && (
-                            <div
-                                className="flex flex-row items-center p-1 hover:bg-gray-300 rounded-md"
-                                onClick={deepUnderstanding}
-                            >
-                                <ArchiveBoxArrowDownIcon className="w-4 m-1 " />
-                                <label className="text-sm">深度理解</label>
                             </div>
                         )}
                         {visibleGenerateChart && (

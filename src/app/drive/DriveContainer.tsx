@@ -61,6 +61,11 @@ function DriveContainer() {
         apiSetting.Drive.moveItemsToSpecificFolder(),
         { manual: true }
     );
+    const [{ data: addNewLabelData, error: addNewLabelError }, addNewLabel] = useAxios(
+        apiSetting.Tag.addNewTag(),
+        { manual: true }
+    );
+
 
     const handleMoveItems = async (target_folder_id: string | null) => {
         if (target_folder_id != null) {
@@ -206,6 +211,21 @@ function DriveContainer() {
     }, [router]);
 
     useEffect(() => {
+        if (addNewLabelData && addNewLabelData.success) {
+            // setAlert({ title: '新增成功', type: 'success' });
+            setNewLabelName('');
+            confirmDocumentFormik.setFieldValue('tag_id', addNewLabelData.tag.id);
+            confirmDocumentFormik.handleSubmit();
+        } else if (addNewLabelData && !addNewLabelData.success) {
+            setAlert({
+                title: '新增失敗！',
+                content: `原因：${addNewLabelData.errors.name[0]}`,
+                type: 'error'
+            });
+        }
+    }, [addNewLabelData]);
+
+    useEffect(() => {
         if (allDrivesData && allDrivesData.success) {
             setDocuments(allDrivesData?.documents);
             setFolders(allDrivesData?.folders);
@@ -242,6 +262,8 @@ function DriveContainer() {
                 handleMoveItems,
                 handleDeleteItems,
                 handleDownloadItemsAndFolders,
+                confirmDocumentFormik,
+
             }}
         />
     );
