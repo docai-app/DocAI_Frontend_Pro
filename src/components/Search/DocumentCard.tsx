@@ -93,7 +93,7 @@ export default function DocumentCard(props: ViewProps) {
                     }}
                 >
                     <a
-                        href={document.storage_url}
+                        href={document?.storage_url}
                         target={'_blank'}
                         className=" hover:underline cursor-pointer "
                     >
@@ -127,7 +127,7 @@ export default function DocumentCard(props: ViewProps) {
             <Card variant="outlined" size="sm" sx={{ margin: 2 }}>
                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
                     <Box sx={{ flex: 1 }}>
-                        <Tooltip title={document.name} variant="solid">
+                        <Tooltip title={document?.name} variant="solid">
                             <Typography
                                 level="title-md"
                                 sx={{
@@ -139,11 +139,11 @@ export default function DocumentCard(props: ViewProps) {
                                 }}
                             >
                                 <a
-                                    href={document.storage_url}
+                                    href={document?.storage_url}
                                     target={'_blank'}
                                     className=" hover:underline cursor-pointer "
                                 >
-                                    {document.name}
+                                    {document?.name}
                                 </a>
                             </Typography>
                         </Tooltip>
@@ -166,11 +166,11 @@ export default function DocumentCard(props: ViewProps) {
                         minHeight={250}
                         maxHeight={250}
                     >
-                        {document.storage_url && document.storage_url.trim().endsWith('.pdf') ? (
+                        {document?.storage_url && document?.storage_url.trim().endsWith('.pdf') ? (
                             <object
                                 className="w-full h-full object-center object-contain"
                                 type="application/pdf"
-                                data={document.storage_url + '#toolbar=0'}
+                                data={document?.storage_url + '#toolbar=0'}
                             >
                                 <img
                                     src={
@@ -182,8 +182,8 @@ export default function DocumentCard(props: ViewProps) {
                             </object>
                         ) : (
                             <img
-                                src={document.storage_url}
-                                alt={document.name}
+                                src={document?.storage_url}
+                                alt={document?.name}
                                 className="w-full h-full object-contain object-center"
                             />
                         )}
@@ -207,7 +207,7 @@ export default function DocumentCard(props: ViewProps) {
                     allLabelsData={getAllLabelsData}
                     confirmDocumentFormik={confirmDocumentFormik}
                     isSubmit={true}
-                    setTagName={(name: string) => {}}
+                    setTagName={(name: string) => { }}
                     setOpenEditLabel={setOpenEditLabel}
                 />
             )}

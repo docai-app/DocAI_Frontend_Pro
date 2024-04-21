@@ -111,7 +111,7 @@ function SearchView(props: ViewProps) {
                     />
                 </Box>
                 <Box height={'80%'} overflow={'auto'}>
-                    <SearchTree tree={searchTreeData} getAllLabelsData={getAllLabelsData} />
+                    <SearchTree tree={searchTreeData} getAllLabelsData={getAllLabelsData} documents={documents} />
                 </Box>
                 <SearchSourceView />
             </React.Fragment>
