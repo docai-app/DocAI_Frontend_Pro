@@ -246,8 +246,18 @@ function DriveContainer() {
 
     useEffect(() => {
         if (allDrivesData && allDrivesData.success) {
-            setDocuments(allDrivesData?.documents);
-            setFolders(allDrivesData?.folders);
+            setId(queryId.current?.toString() || null);
+            setName(queryName.current?.toString() || null);
+            if (page == 1) {
+                console.log(allDrivesData)
+                console.log(id)
+                console.log(name)
+                setDocuments(allDrivesData?.documents);
+                setFolders(allDrivesData?.folders);
+            } else {
+                setDocuments(allItemsData.concat(allDrivesData.documents));
+
+            }
         }
     }, [allDrivesData]);
 
