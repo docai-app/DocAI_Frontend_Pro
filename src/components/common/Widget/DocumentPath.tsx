@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { Box, Breadcrumbs, Link, Typography, Chip, Button, Input, Card } from '@mui/joy';
 import { FolderIcon } from '@heroicons/react/20/solid';
 import { ChevronRightIcon } from '@heroicons/react/24/outline';
@@ -44,11 +45,22 @@ export default function DocumentPath(props: DocumentPathProps) {
         }
     }, [dest, showFolderByID]);
 
+
     useEffect(() => {
         if (target_folder_id) {
-            showFolderByID(apiSetting.Folders.showFolderByID(target_folder_id));
+            const fetchData = async () => {
+                try {
+                    const res = await apiSetting.Folders.showFolderByID(target_folder_id)
+                    if (res.data?.success) {
+                        console.log(res.data)
+                        showFolderByID(res);
+                    }
+                } catch { }
+            };
+            fetchData();
         }
     }, [target_folder_id]);
+
 
     return (
         <>
