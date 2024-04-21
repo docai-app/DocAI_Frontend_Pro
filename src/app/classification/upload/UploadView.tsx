@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import DocumentPath from '../../../components/common/Widget/DocumentPath';
 import UploadFile from '../../../components/common/Widget/UploadFile';
-import Uploading from '../../../components/feature/classification/Uploading';
-import UploadOperate from '../../../components/feature/classification/UploadOperate';
-import UploadSet from '../../../components/feature/classification/UploadSet';
+import Uploading from '../../../components/classification/Uploading';
+import UploadOperate from '../../../components/classification/UploadOperate';
+import UploadSet from '../../../components/classification/UploadSet';
 
 interface UploadViewProps {
     formik: any;

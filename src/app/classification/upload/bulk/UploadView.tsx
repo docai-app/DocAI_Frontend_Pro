@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import UploadFile from '../../../../components/common/Widget/UploadFile';
-import Uploading from '../../../../components/feature/classification/Uploading';
+import Uploading from '../../../../components/classification/Uploading';
 import _get from 'lodash/get';
 import _map from 'lodash/map';
 

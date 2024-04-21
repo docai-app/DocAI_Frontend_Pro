@@ -1,6 +1,8 @@
+'use client';
+
 import useAxios from 'axios-hooks';
 import { useFormik } from 'formik';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import Api from '../../../apis/index';
 import MyModal from '../../../components/common/Widget/MyModal';
@@ -153,7 +155,7 @@ function UploadContainer(props: UploadContainerProps) {
     const [visable, setVisable] = useState(false);
     const nextUpload = () => {
         setVisable(false);
-        router.reload();
+        router.refresh();
     };
     const confirm = () => {
         setVisable(false);

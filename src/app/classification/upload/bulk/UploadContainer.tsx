@@ -1,9 +1,11 @@
+'use client';
+
 import { useState, useEffect } from 'react';
 import UploadView from './UploadView';
 import { useFormik } from 'formik';
 import useAxios from 'axios-hooks';
 import Api from '../../../../apis/index';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import axios from 'axios';
 import useAlert from '../../../../hooks/useAlert';
 
