@@ -15,6 +15,7 @@ import DriveTable from '../../components/drive/DriveTable';
 import EditItems from '../../components/drive/EditItems';
 import NewFolderDropdown from '../../components/drive/NewFolderDropdown';
 import SearchLabelDocumentForm from '../../components/drive/SearchLabelDocumentForm';
+import SelectDataSchemaModal from '../../components/Search/SelectDataSchemaModal';
 
 import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
@@ -158,11 +159,11 @@ export default function DriveView(props: DriveViewProps) {
                 setTagName={(name: string) => { }}
                 setOpenEditLabel={setOpenEditLabel}
             />
-            {/* <SelectDataSchemaModal
+            <SelectDataSchemaModal
                 open={openSelectShema}
                 setOpen={setOpenSelectShema}
                 document_ids={[documents_items]}
-            /> */}
+            />
             <Box
                 sx={{
                     display: 'flex',
