@@ -1,7 +1,7 @@
 // components/common/Widget/UploadFile.tsx
 // Upload File Component
-
-import { ChangeEvent, useRef } from 'react';
+import { Box, Breadcrumbs, Link, Typography, Chip, Button, Input } from '@mui/joy';
+import { ChangeEvent, useRef, useState } from 'react';
 import Api from '../../../apis';
 import useAlert from '../../../hooks/useAlert';
 
@@ -29,6 +29,8 @@ export default function UploadFile(props: UploadFileProps) {
     } = props;
     const fileInput = useRef<HTMLInputElement>(null);
     const { setAlert } = useAlert();
+    const [disable, setDisable] = useState(true);
+
 
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
         // Set the selected maximum file limit to 50 files:
@@ -36,6 +38,7 @@ export default function UploadFile(props: UploadFileProps) {
             setAlert({ title: '最多只能上傳50個文檔', type: 'warning' });
             return;
         } else if (event.target.files && event.target.files.length > 0) {
+            setDisable(false);
             setDocuments(event.target.files);
             setMyFiles(event.target.files);
         }
@@ -43,19 +46,34 @@ export default function UploadFile(props: UploadFileProps) {
 
     return (
         <main>
-            <div className="flex justify-between mb-4">
-                {/* <p className="text-lg">{title}</p> */}
-                <h1 className="text-3xl font-bold text-gray-900">上傳文檔</h1>
-                <button
-                    type="button"
-                    className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                    onClick={() => {
-                        formik.handleSubmit();
-                    }}
-                >
-                    {btnName}
-                </button>
-            </div>
+            <Box
+                sx={{
+                    display: 'flex',
+                    mb: 1,
+                    gap: 1,
+                    flexDirection: { xs: 'column', sm: 'row' },
+                    alignItems: { xs: 'start', sm: 'center' },
+                    flexWrap: 'wrap',
+                    justifyContent: 'space-between'
+                }}
+            >
+                <Typography level="h2" component="h1">
+                    上傳文檔
+                </Typography>
+
+                <Box sx={{ display: 'flex', justifyContent: 'end', width: '20%' }}>
+                    <Button
+                        color="primary"
+                        size="sm"
+                        onClick={() => {
+                            formik.handleSubmit();
+                        }}
+                        disabled={disable}
+                    >
+                        {btnName}
+                    </Button>
+                </Box>
+            </Box>
 
             <div className="p-8 flex flex-col justify-center items-center text-gray-500 bg-white border-4 border-dashed border-gray-200 rounded-lg relative">
                 <svg

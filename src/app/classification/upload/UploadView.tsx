@@ -51,6 +51,7 @@ function UploadView(props: UploadViewProps) {
         form_miniapp
     } = props;
     const [myfiles, setMyFiles] = useState<any>([]);
+
     return (
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <Box
@@ -71,33 +72,6 @@ function UploadView(props: UploadViewProps) {
                     gap: 1
                 }}
             >
-                {/* <Box
-                    sx={{
-                        display: 'flex',
-                        mb: 1,
-                        gap: 1,
-                        flexDirection: { xs: 'column', sm: 'row' },
-                        alignItems: { xs: 'start', sm: 'center' },
-                        flexWrap: 'wrap',
-                        justifyContent: 'space-between'
-                    }}
-                >
-                    <Typography level="h2" component="h1">
-                    上傳文檔
-                    </Typography>
-
-                    <Box sx={{ display: 'flex', justifyContent: 'end', width: '20%' }}>
-                        <Button
-                            color="primary"
-                            size="sm"
-                            onClick={() => {
-                              
-                            }}
-                        >
-                            上傳文檔
-                        </Button>
-                    </Box>
-                </Box> */}
 
                 <Uploading {...{ open, setOpen }} />
                 <div className="min-h-full bg-slate-50">
