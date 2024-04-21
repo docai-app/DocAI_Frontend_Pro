@@ -4,7 +4,7 @@ import { DriveDocument, DriveFolder } from '@/utils/types';
 import axios from 'axios';
 import useAxios from 'axios-hooks';
 import { useFormik } from 'formik';
-import { useParams, usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import Api from '../../apis';
 import { Folder } from '../../components/common/Widget/FolderTree';
@@ -16,11 +16,10 @@ const apiSetting = new Api();
 function DriveContainer() {
     const router = useRouter();
     const searchParams = useSearchParams();
-    const { paramId } = useParams();
+    const { id } = useParams();
     const { setAlert } = useAlert();
     const queryId = useRef(searchParams.get('id'));
     const queryName = useRef(searchParams.get('name'));
-    const [id, setId] = useState<string | null>(null);
     const [name, setName] = useState<string | null>(null);
     const [mode, setMode] = useState<'view' | 'move' | 'share' | 'newFolder'>('view');
     const [target, setTarget] = useState<any[]>([]);
@@ -30,8 +29,6 @@ function DriveContainer() {
     const [visableDelete, setVisableDelete] = useState(false);
     const [visableRename, setVisableRename] = useState(false);
     const [current, setCurrent] = useState<any>();
-    const [allItemsData, setAllItemsData] = useState<any>([]);
-    const [allFoldersItemsData, setAllFoldersItemsData] = useState<any>([]);
     const [page, setPage] = useState(1);
     const [documents_items, setDocumentsItems] = useState<any>([]);
     const [folders_items, setFoldersItems] = useState<any>([]);
@@ -50,8 +47,6 @@ function DriveContainer() {
         { manual: true }
     );
 
-    const [{ data: showAllItemsData, loading: showAllItemsLoading, error: showAllItemsError },
-        showAllItems] = useAxios({}, { manual: true });
     const [{ data: updateFolderNameData }, updateFolderName] = useAxios({}, { manual: true });
     const [{ data: updateDocumentByIdData }, updateDocumentById] = useAxios({}, { manual: true });
     const [{ data: deleteFolderByIdData }, deleteFolderById] = useAxios({}, { manual: true });
@@ -70,6 +65,31 @@ function DriveContainer() {
     );
 
 
+    useEffect(() => {
+        setName(searchParams.get('name') || null);
+        if (id) {
+            showAllDrives(apiSetting.Drive.showAllFolderItems(id.toString(), page));
+        } else {
+            showAllDrives(apiSetting.Drive.showAllRootItems(page));
+        }
+    }, [router, page]);
+
+    useEffect(() => {
+        getAllLabels();
+    }, [router]);
+
+
+    useEffect(() => {
+        if (allDrivesData && allDrivesData.success) {
+            if (page == 1) {
+                setDocuments(allDrivesData?.documents);
+                setFolders(allDrivesData?.folders);
+            } else {
+                setDocuments(documents.concat(allDrivesData?.documents));
+            }
+        }
+    }, [allDrivesData]);
+
     const handleMoveItems = async (target_folder_id: string | null) => {
         if (target_folder_id != null) {
             const formData = new FormData();
@@ -82,7 +102,7 @@ function DriveContainer() {
             if (target_folder_id) {
                 formData.append('target_folder_id', target_folder_id);
             }
-            if (paramId) {
+            if (id) {
                 formData.append('current_folder_id', id + '');
             }
             moveItemsToSpecificFolder({
@@ -138,7 +158,7 @@ function DriveContainer() {
         }
     });
     const updateFolder = async (id: string, name: string) => {
-        if (paramId) {
+        if (id) {
             const res = await updateFolderName(apiSetting.Folders.updateFoldertNameById(id, name));
             if (res.data?.success) {
                 setAlert({ title: '更新成功', type: 'success' });
@@ -197,38 +217,6 @@ function DriveContainer() {
         setPage((page) => page + 1);
     }, []);
 
-
-
-
-
-
-
-    useEffect(() => {
-        setName(searchParams.get('name') || null);
-        if (id) {
-            showAllDrives(apiSetting.Drive.showAllFolderItems(id.toString(), page));
-        } else {
-            showAllDrives(apiSetting.Drive.showAllRootItems(page));
-        }
-    }, [router, page]);
-
-    useEffect(() => {
-        getAllLabels();
-    }, [router]);
-
-    useEffect(() => {
-        if (!showAllItemsLoading && showAllItemsData) {
-            setId(queryId.current?.toString() || null);
-            setName(queryName.current?.toString() || null);
-            if (page == 1) {
-                setAllFoldersItemsData(showAllItemsData.folders);
-                setAllItemsData(showAllItemsData.documents);
-            } else {
-                setAllItemsData(allItemsData.concat(showAllItemsData.documents));
-            }
-        }
-    }, [showAllItemsLoading, showAllItemsData]);
-
     useEffect(() => {
         if (addNewLabelData && addNewLabelData.success) {
             // setAlert({ title: '新增成功', type: 'success' });
@@ -243,13 +231,6 @@ function DriveContainer() {
             });
         }
     }, [addNewLabelData]);
-
-    useEffect(() => {
-        if (allDrivesData && allDrivesData.success) {
-            setDocuments(allDrivesData?.documents);
-            setFolders(allDrivesData?.folders);
-        }
-    }, [allDrivesData]);
 
     return (
         <DriveView
@@ -283,8 +264,7 @@ function DriveContainer() {
                 handleDownloadItemsAndFolders,
                 confirmDocumentFormik,
                 showAllItemsHandler,
-                showAllItemsData,
-                showAllItemsLoading,
+                showAllDriveLoading
             }}
         />
     );

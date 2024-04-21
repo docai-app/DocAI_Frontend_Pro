@@ -1,14 +1,13 @@
-import { useRouter } from 'next/navigation';
 import { DriveDocument } from '@/utils/types';
 import { Box, Checkbox, Chip, Link, Typography } from '@mui/joy';
-import IconButton from '@mui/joy/IconButton';
 import moment from 'moment';
+import { useRouter } from 'next/navigation';
+import { Dispatch, SetStateAction } from 'react';
 import Dropdowns from './Dropdowns';
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
 import FolderIcon from '@mui/icons-material/Folder';
 import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
-import ShareSharpIcon from '@mui/icons-material/ShareSharp';
+
 
 interface TableRowProps {
     doc: DriveDocument;
@@ -122,6 +121,10 @@ export default function TableRow(props: TableRowProps) {
                             type={type}
                             url={url}
                             name={doc?.name}
+                            share={() => {
+                                setMode('share');
+                                setTarget([doc]);
+                            }}
                             rename={() => {
                                 setVisableRename(true);
                                 setCurrent({
@@ -151,15 +154,6 @@ export default function TableRow(props: TableRowProps) {
                                 router.push(`/document/chat?document_id=${doc.id}`);
                             }}
                         />
-                        {type === 'folders' && (
-                            <IconButton size='sm' sx={{ borderRadius: "50%" }}
-                                onClick={() => {
-                                    setMode('share');
-                                    setTarget([doc]);
-                                }}>
-                                <ShareSharpIcon />
-                            </IconButton>
-                        )}
                     </Box>
                 </td>
             </tr>
