@@ -47,7 +47,7 @@ function LoginContainer() {
                     document.cookie = `authorization=${escape(token)}`;
                 }
                 if (pathname === '/login') router.push('/');
-                else router.refresh();
+                else location.reload();
             } else {
                 localStorage.removeItem('authorization');
                 localStorage.removeItem('email');

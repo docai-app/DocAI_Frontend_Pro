@@ -150,7 +150,7 @@ function DriveContainer() {
             setUpdateTag(false);
             if (res.data.success === true) {
                 setAlert({ title: '更新成功', type: 'success' });
-                router.refresh();
+                location.reload();
             } else {
                 setAlert({ title: '更新失敗', type: 'error' });
             }
@@ -161,7 +161,7 @@ function DriveContainer() {
             const res = await updateFolderName(apiSetting.Folders.updateFoldertNameById(id, name));
             if (res.data?.success) {
                 setAlert({ title: '更新成功', type: 'success' });
-                router.refresh();
+                location.reload();
             } else {
                 setAlert({ title: '發生錯誤', type: 'error' });
             }
@@ -174,7 +174,7 @@ function DriveContainer() {
             );
             if (res.data?.success) {
                 setAlert({ title: '更新成功', type: 'success' });
-                router.refresh();
+                location.reload();
             } else {
                 setAlert({ title: '發生錯誤', type: 'error' });
             }
@@ -190,7 +190,7 @@ function DriveContainer() {
             const res = await deleteFolderById(apiSetting.Folders.deleteFolderById(id));
             if (res.data?.success) {
                 setAlert({ title: '刪除成功', type: 'success' });
-                router.refresh();
+                location.reload();
             } else {
                 setAlert({ title: '發生錯誤', type: 'error' });
             }
@@ -201,7 +201,7 @@ function DriveContainer() {
             const res = await deleteDocumentById(apiSetting.Document.deleteDocumentById(id));
             if (res.data?.success) {
                 setAlert({ title: '刪除成功', type: 'success' });
-                router.refresh();
+                location.reload();
             } else {
                 setAlert({ title: '發生錯誤', type: 'error' });
             }
@@ -238,7 +238,7 @@ function DriveContainer() {
             );
             if (res.data?.success) {
                 setAlert({ title: '共用成功', type: 'success' });
-                router.refresh();
+                location.reload();
             } else {
                 setAlert({ title: '發生錯誤', type: 'error' });
             }
@@ -253,7 +253,7 @@ function DriveContainer() {
             );
             if (res.data?.success) {
                 setAlert({ title: '資料夾新增成功', type: 'success' });
-                router.refresh();
+                location.reload();
             } else {
                 setAlert({ title: '發生錯誤', type: 'error' });
             }

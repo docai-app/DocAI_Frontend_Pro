@@ -155,7 +155,7 @@ function UploadContainer(props: UploadContainerProps) {
     const [visable, setVisable] = useState(false);
     const nextUpload = () => {
         setVisable(false);
-        router.refresh();
+        location.reload();
     };
     const confirm = () => {
         setVisable(false);

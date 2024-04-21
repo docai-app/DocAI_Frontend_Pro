@@ -226,7 +226,6 @@ export default function DriveView(props: DriveViewProps) {
                         {/* <Link fontWeight={500} fontSize={12} color="primary" underline="always">
                                 智能文檔處理
                             </Link> */}
-
                         <NewFolderDropdown
                             newfolder={() => { setMode('newFolder'); }}
                         />
