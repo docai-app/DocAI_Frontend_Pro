@@ -22,8 +22,6 @@ export type MessageInputProps = {
     onSubmit: () => void;
     model: string;
     setModel: any;
-    getAllLabelsData: any;
-    getAllSchemasData: any;
     sender?: UserProps;
     setSender: any;
     updateChatSender: any;
@@ -37,8 +35,6 @@ export default function MessageInput(props: MessageInputProps) {
         onSubmit,
         model,
         setModel,
-        getAllLabelsData,
-        getAllSchemasData,
         sender,
         setSender,
         updateChatSender
@@ -100,9 +96,9 @@ export default function MessageInput(props: MessageInputProps) {
     }, [chain_features]);
     const sources = [
         {
-            name: '無來源',
+            name: 'ChatGPT',
             value: 'none',
-            onClick: () => {}
+            onClick: () => { }
         },
         {
             name: '數據源',
@@ -325,8 +321,6 @@ export default function MessageInput(props: MessageInputProps) {
                 {...{
                     visible: visibleSchema,
                     setVisible: setVisibleSchema,
-                    getAllLabelsData,
-                    getAllSchemasData,
                     handleSelect: handleSelectSchema
                 }}
             />

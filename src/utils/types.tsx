@@ -21,6 +21,11 @@ export type Label = {
     id: string;
     name: string;
     meta?: any;
+    smart_extraction_schemas_count: number;
+    taggings_count: number;
+    updated_at: string;
+    folder_id: string;
+    // functions: [];
 };
 
 export type User = {

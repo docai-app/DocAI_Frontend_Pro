@@ -1,30 +1,21 @@
+'use client';
+
 import Api from '@/apis';
-import SchemaTable from '@/components/SchemaTable';
+import useAlert from '@/hooks/useAlert';
+import useLoad from '@/hooks/useLoad';
 import { Label, SmartExtractionSchema } from '@/utils/types';
-import { Box, Button } from '@mui/joy';
-import DialogContent from '@mui/joy/DialogContent';
-import DialogTitle from '@mui/joy/DialogTitle';
-import Modal from '@mui/joy/Modal';
-import ModalClose from '@mui/joy/ModalClose';
-import ModalDialog, { ModalDialogProps } from '@mui/joy/ModalDialog';
 import useAxios from 'axios-hooks';
 import { useRouter } from 'next/navigation';
-import * as React from 'react';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import SmartExtractionSchemaView from './SmartExtractionSchemaView';
 
-interface ViewProps {
-    visible: boolean;
-    setVisible: any;
-    handleSelect: any;
-}
 const apiSetting = new Api();
-export default function SelectSourceModal(props: ViewProps) {
-    const { visible, setVisible, handleSelect } = props;
+
+function SmartExtractionSchemaContainer(props: any) {
+    const [data, setData] = React.useState();
+    const { setAlert } = useAlert();
+    const { setLoad } = useLoad();
     const router = useRouter();
-    const [layout, setLayout] = React.useState<ModalDialogProps['layout'] | undefined>(undefined);
-    const [selectedValue, setSelectedValue] = React.useState<SmartExtractionSchema>();
-
-
     const [meta, setMeta] = useState();
     const [page, setPage] = useState(1);
     const [has_label, set_has_label] = useState<any>();
@@ -111,44 +102,14 @@ export default function SelectSourceModal(props: ViewProps) {
     }
 
     return (
-        <Modal
-            open={props?.visible}
-            onClose={() => {
-                props?.setVisible(false);
-                setLayout(undefined);
+        <SmartExtractionSchemaView
+            {...{
+                smart_extraction_schemas,
+                getAllLabelsData,
+                handleFilterLabel
             }}
-            sx={{ mt: { xs: 'var(--Header-height)', sm: 0 }, height: { xs: '90dvh', sm: '100vh' } }}
-        >
-            <ModalDialog layout={layout}>
-                <ModalClose />
-                <DialogTitle>選擇來源 - Local Schema</DialogTitle>
-                <DialogContent>
-                    <Box className="Pagination-laptopUp">
-                        <Box sx={{ flex: 1 }} />
-
-                        <Button
-                            size="sm"
-                            variant="solid"
-                            color="primary"
-                            disabled={!selectedValue}
-                            onClick={() => {
-                                handleSelect(selectedValue);
-                            }}
-                        >
-                            <label>確認</label>
-                        </Button>
-                    </Box>
-                    <SchemaTable
-                        visibleRadio={true}
-                        getAllLabelsData={getAllLabelsData}
-                        smart_extraction_schemas={smart_extraction_schemas}
-                        handleSelectedValue={(schema: SmartExtractionSchema) => {
-                            setSelectedValue(schema);
-                        }}
-                        handleFilterLabel={handleFilterLabel}
-                    />
-                </DialogContent>
-            </ModalDialog>
-        </Modal>
+        />
     );
 }
+
+export default SmartExtractionSchemaContainer;

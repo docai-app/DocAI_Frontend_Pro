@@ -1,27 +1,22 @@
-import {
-    Dispatch,
-    Fragment,
-    SetStateAction,
-    useCallback,
-    useEffect,
-    useRef,
-    useState
-} from 'react';
-import { useRouter } from 'next/navigation';
-import { Box, Breadcrumbs, Link, Typography } from '@mui/joy';
-import Button from '@mui/joy/Button';
 import BreadCrumb from '@/components/drive/BreadCrumb';
 import { DriveDocument, DriveFolder } from '@/utils/types';
+import { Box, Breadcrumbs, Link, Typography } from '@mui/joy';
+import Button from '@mui/joy/Button';
+import { useRouter } from 'next/navigation';
+import {
+    Dispatch, SetStateAction,
+    useCallback, useState
+} from 'react';
 
-import EditItems from '../../components/drive/EditItems';
 import AmendLabel from '../../components/classification/AmendLabel';
-import SelectDataSchemaModal from '../../components/Search/SelectDataSchemaModal';
-import DriveTable from '../../components/drive/DriveTable';
-import SearchLabelDocumentForm from '../../components/drive/SearchLabelDocumentForm';
-import InputNameModal from '../../components/common/Widget/InputNameModal';
 import { Folder } from '../../components/common/Widget/FolderTree';
 import FolderTreeForMoving from '../../components/common/Widget/FolderTreeForMoving';
+import InputNameModal from '../../components/common/Widget/InputNameModal';
 import MyModal from '../../components/common/Widget/MyModal';
+import DriveTable from '../../components/drive/DriveTable';
+import EditItems from '../../components/drive/EditItems';
+import SearchLabelDocumentForm from '../../components/drive/SearchLabelDocumentForm';
+import SelectDataSchemaModal from '../../components/Search/SelectDataSchemaModal';
 
 import Add from '@mui/icons-material/Add';
 import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
@@ -58,8 +53,7 @@ interface DriveViewProps {
     handleDownloadItemsAndFolders: any;
     confirmDocumentFormik?: any;
     showAllItemsHandler: any;
-    showAllItemsData: any;
-    showAllItemsLoading: any;
+    showAllDriveLoading: boolean;
 
 }
 export default function DriveView(props: DriveViewProps) {
@@ -93,8 +87,7 @@ export default function DriveView(props: DriveViewProps) {
         handleDownloadItemsAndFolders,
         confirmDocumentFormik,
         showAllItemsHandler,
-        showAllItemsData,
-        showAllItemsLoading
+        showAllDriveLoading
     } = props;
     const router = useRouter();
     const [open, setOpen] = useState(false);
@@ -248,15 +241,11 @@ export default function DriveView(props: DriveViewProps) {
                         setFoldersItems,
                         setDocumentsItems,
                         showAllItemsHandler,
-                        showAllItemsData,
-                        showAllItemsLoading
+                        allDrivesData,
+                        showAllDriveLoading
                     }}
                 />
                 <SearchLabelDocumentForm getAllLabelsData={getAllLabelsData} search={undefined} />
-
-
-
-
                 <InputNameModal
                     visable={visableRename}
                     current={current}

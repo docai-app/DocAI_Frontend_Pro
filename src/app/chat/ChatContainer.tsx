@@ -4,7 +4,6 @@ import Api from '@/apis';
 import useAlert from '@/hooks/useAlert';
 import useLoad from '@/hooks/useLoad';
 import { ChatProps } from '@/utils/types';
-import useAxios from 'axios-hooks';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import { v4 } from 'uuid';
@@ -29,15 +28,6 @@ function ChatContainer() {
     const router = useRouter();
     const [chats, setChats] = useState<ChatProps[]>();
 
-    const [{ data: getAllLabelsData, error: getAllLabelsError }, getAllLabels] = useAxios(
-        apiSetting.Tag.getAllTags(),
-        { manual: true }
-    );
-
-    const [{ data: getAllSchemasData, error: getAllSchemasError }, getAllSchemas] = useAxios(
-        apiSetting.SmartExtractionSchemas.getSmartExtractionSchemas(),
-        { manual: true }
-    );
 
     useEffect(() => {
         let tmp: any = window.localStorage?.getItem(
@@ -58,8 +48,6 @@ function ChatContainer() {
             );
             setChats(tmp);
         }
-        getAllSchemas();
-        getAllLabels();
     }, []);
 
     const handleAddChat = () => {
@@ -84,8 +72,6 @@ function ChatContainer() {
         <ChatView
             {...{
                 chats,
-                getAllLabelsData,
-                getAllSchemasData,
                 handleAddChat
             }}
         />

@@ -11,7 +11,6 @@ export default function SearchFilterView(props: ViewProps) {
     const { setTagId, getAllLabelsData } = props;
 
     const handleChange = (event: any, newValue: any) => {
-        console.log(newValue);
         setTagId(newValue);
     };
 

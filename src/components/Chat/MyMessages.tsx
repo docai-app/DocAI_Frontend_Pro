@@ -7,12 +7,10 @@ import MessagesPane from './MessagesPane';
 
 interface ViewProps {
     chats: ChatProps[];
-    getAllLabelsData: any;
-    getAllSchemasData: any;
     handleAddChat: any;
 }
 export default function MyMessages(props: ViewProps) {
-    const { chats, getAllLabelsData, getAllSchemasData, handleAddChat } = props;
+    const { chats, handleAddChat } = props;
 
     const [selectedChat, setSelectedChat] = React.useState<ChatProps>();
     React.useEffect(() => {
@@ -57,8 +55,6 @@ export default function MyMessages(props: ViewProps) {
             </Sheet>
             <MessagesPane
                 chat={selectedChat}
-                getAllLabelsData={getAllLabelsData}
-                getAllSchemasData={getAllSchemasData}
             />
         </Sheet>
     );

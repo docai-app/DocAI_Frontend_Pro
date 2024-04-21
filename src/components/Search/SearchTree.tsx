@@ -1,10 +1,14 @@
+import { DocumentModel } from '@/models/Document';
 import { Box } from '@mui/joy';
+import _ from 'lodash';
+import { useEffect, useState } from 'react';
 import DocumentCard from './DocumentCard';
 import MyTreeView from './MyTreeView';
 
 interface SearchRowProps {
     tree?: any;
     getAllLabelsData: any;
+    documents: DocumentModel[];
 }
 
 const trees = [
@@ -68,7 +72,14 @@ const trees = [
 ];
 
 export default function SearchRow(props: SearchRowProps) {
-    const { tree = [], getAllLabelsData } = props;
+    const { tree = [], getAllLabelsData, documents } = props;
+    const [objectDocuments, setObjectDocuments] = useState<any>()
+
+    useEffect(() => {
+        if (documents && documents.length > 0) {
+            setObjectDocuments(_.keyBy(documents, 'id'))
+        }
+    }, [documents])
 
     const ifChildren = (document: any, deep: number) => {
         // 判断是否为最后一层
@@ -87,21 +98,24 @@ export default function SearchRow(props: SearchRowProps) {
                     <div
                         className={
                             document?.children &&
-                            document.children.length > 0 &&
-                            document.children[0]?.subtree_title
+                                document.children.length > 0 &&
+                                document.children[0]?.subtree_title
                                 ? 'flex flex-col'
                                 : 'flex flex-row flex-wrap'
                         }
                     >
-                        {document?.children?.map((child: any) => ifChildren(child, deep + 1))}
+                        {document?.children?.map((child: any, index: number) => {
+                            return <div key={index} className=""> {ifChildren(child, deep + 1)}</div>
+                        })}
                     </div>
                 </>
             );
         } else {
+            const _document = objectDocuments && document?.id && objectDocuments[document?.id]
             return (
                 <DocumentCard
                     key={document.id}
-                    document={document}
+                    document={_document}
                     getAllLabelsData={getAllLabelsData}
                 />
             );
@@ -110,10 +124,10 @@ export default function SearchRow(props: SearchRowProps) {
 
     return (
         <>
-            {tree && tree.length > 0 && (
+            {tree && tree.length > 0 && documents && documents.length > 0 && (
                 <div className="flex scroll-smooth">
                     <div className="text-sm bg-white shadow-md border  border-neutral-300 rounded-[2px] pr-2 py-2 w-1/5  min-h-[500px]  pl-5 pt-2">
-                        <MyTreeView tree={tree} />
+                        <MyTreeView tree={tree} documents={documents} objectDocuments={objectDocuments} />
                     </div>
                     <div className="w-4/5">
                         <Box

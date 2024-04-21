@@ -18,12 +18,10 @@ const apiSetting = new Api();
 
 type MessagesPaneProps = {
     chat: ChatProps | undefined;
-    getAllLabelsData: any;
-    getAllSchemasData: any;
 };
 
 export default function MessagesPane(props: MessagesPaneProps) {
-    const { chat, getAllLabelsData, getAllSchemasData } = props;
+    const { chat } = props;
     const { setAlert } = useAlert();
     const [chatMessages, setChatMessages] = React.useState<MessageProps[]>([]);
     const [textAreaValue, setTextAreaValue] = React.useState('');
@@ -480,8 +478,6 @@ export default function MessagesPane(props: MessagesPaneProps) {
                     setTextAreaValue={setTextAreaValue}
                     model={model}
                     setModel={setModel}
-                    getAllLabelsData={getAllLabelsData}
-                    getAllSchemasData={getAllSchemasData}
                     sender={sender}
                     setSender={setSender}
                     updateChatSender={updateChatSender}

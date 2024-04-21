@@ -18,6 +18,7 @@ type MessagesPaneHeaderProps = {
     sender: UserProps | undefined;
 };
 
+
 export default function MessagesPaneHeader(props: MessagesPaneHeaderProps) {
     const { sender } = props;
     const modelTypeLabel = () => {
@@ -32,6 +33,8 @@ export default function MessagesPaneHeader(props: MessagesPaneHeaderProps) {
                 return '未選擇';
         }
     };
+
+
     const RowMenu = () => {
         return (
             <Dropdown>
@@ -55,6 +58,7 @@ export default function MessagesPaneHeader(props: MessagesPaneHeaderProps) {
             </Dropdown>
         );
     };
+
     return (
         <Stack
             direction="row"
@@ -117,9 +121,7 @@ export default function MessagesPaneHeader(props: MessagesPaneHeaderProps) {
                 </div>
             </Stack>
             <Stack spacing={1} direction="row" alignItems="center">
-                <IconButton size="sm" variant="plain" color="neutral">
-                    {RowMenu()}
-                </IconButton>
+                <RowMenu />
             </Stack>
         </Stack>
     );

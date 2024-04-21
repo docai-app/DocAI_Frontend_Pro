@@ -101,7 +101,10 @@ function SearchContainer() {
                                     continue;
                                 }
                                 if (jsonData && jsonData.tree) {
-                                    setSearchTreeData(jsonData.tree);
+                                    setSearchTreeData(jsonData.tree.tree);
+                                }
+                                if (jsonData && jsonData.storage_url) {
+                                    setDocuments(jsonData?.storage_url?.documents)
                                 }
                             }
                         } catch (error) {
@@ -120,16 +123,14 @@ function SearchContainer() {
             setAlert({ title: '請選擇標籤', type: 'info' });
             return;
         }
-        console.log('searchParams', searchParams);
+        // console.log('searchParams', searchParams);
         setLoading(true);
         searchDocumentFormik.setValues(searchParams);
         searchDocumentFormik.handleSubmit();
     };
 
     const gatTags = () => {
-        getAllLabels().then((res) => {
-            console.log(res.data);
-        });
+        getAllLabels()
     };
     return (
         <SearchView
