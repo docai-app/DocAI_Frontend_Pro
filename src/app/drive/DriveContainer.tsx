@@ -17,6 +17,7 @@ function DriveContainer() {
     const router = useRouter();
     const searchParams = useSearchParams();
     const { id } = useParams();
+    const queryId = useRef(searchParams.get('id'));
     const { setAlert } = useAlert();
     const [name, setName] = useState<string | null>(null);
     const [mode, setMode] = useState<'view' | 'move' | 'share' | 'newFolder'>('view');
@@ -60,6 +61,7 @@ function DriveContainer() {
     const [{ data: shareFolderPermissionData }, shareFolderPermission] = useAxios(
         {}, { manual: true }
     );
+    const [{ data: createFolderData }, createFolder] = useAxios({}, { manual: true });
 
 
     useEffect(() => {
@@ -244,20 +246,20 @@ function DriveContainer() {
         [router, shareFolderPermission]
     );
 
-    // const handleNewFolder = useCallback(
-    //     async (name: string) => {
-    //         const res = await createFolder(
-    //             apiSetting.Folders.createFolder(name, queryId.current?.toString() || '')
-    //         );
-    //         if (res.data?.success) {
-    //             setAlert({ title: '資料夾新增成功', type: 'success' });
-    //             router.reload();
-    //         } else {
-    //             setAlert({ title: '發生錯誤', type: 'error' });
-    //         }
-    //     },
-    //     [router, createFolder, queryId]
-    // );
+    const handleNewFolder = useCallback(
+        async (name: string) => {
+            const res = await createFolder(
+                apiSetting.Folders.createFolder(name, queryId.current?.toString() || '')
+            );
+            if (res.data?.success) {
+                setAlert({ title: '資料夾新增成功', type: 'success' });
+                router.refresh();
+            } else {
+                setAlert({ title: '發生錯誤', type: 'error' });
+            }
+        },
+        [router, createFolder, queryId]
+    );
     return (
         <DriveView
             {...{
@@ -294,7 +296,7 @@ function DriveContainer() {
                 shareWith,
                 setShareWith,
                 handleShare,
-                // handleNewFolder,
+                handleNewFolder,
             }}
         />
     );

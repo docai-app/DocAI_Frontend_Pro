@@ -10,12 +10,10 @@ export default function ShareModal(props: any) {
     const cancelButtonRef = useRef(null);
     const {
         mode,
-        shareWithInput,
-        target,
-        shareWith,
+        newFolderNameInput,
     } = props;
     return (
-        <Transition.Root show={mode === 'share'} as={Fragment}>
+        <Transition.Root show={mode === 'newFolder'} as={Fragment}>
             <Dialog
                 className="fixed z-10 inset-0 overflow-y-auto"
                 onClose={props.cancelClick}
@@ -45,16 +43,11 @@ export default function ShareModal(props: any) {
                     >
                         <div className="absolute m-auto w-[28rem] h-44 bg-white rounded-lg shadow-lg top-0 left-0 right-0 bottom-0">
                             <Dialog.Panel className="flex flex-col gap-3 p-5 h-full">
-                                <h3 className="text-xl font-bold">共用 {target?.[0]?.name}</h3>
-                                <div className="flex flex-row-reverse">
-                                    <div className="rounded-r-md border bg-gray-200 text-gray-400 border-l-0 border-gray-200 p-2 gap-1 flex items-center">
-                                        <PencilIcon className="h-4" />
-                                        <ChevronDownIcon className="h-4" />
-                                    </div>
+                                <h3 className="text-xl font-bold">新增資料夾</h3>
+                                <div className="flex flex-row">
                                     <input
-                                        ref={shareWithInput}
-                                        placeholder="新增使用者"
-                                        defaultValue={shareWith}
+                                        ref={newFolderNameInput}
+                                        placeholder="輸入資料夾名稱"
                                         type="text"
                                         onFocus={(e) => e.currentTarget.select()}
                                         className="border px-3 py-2 rounded-l-md shadow-sm border-gray-200 focus:border-gray-400 focus:ring-2 focus:ring-slate-300 w-full text-sm"
@@ -64,7 +57,7 @@ export default function ShareModal(props: any) {
                                     className="bg-blue-600 hover:bg-blue-700 text-white rounded px-6 py-2 self-end mt-auto"
                                     onClick={props.confirmClick}
                                 >
-                                    共用
+                                    新增
                                 </button>
                             </Dialog.Panel>
                         </div>

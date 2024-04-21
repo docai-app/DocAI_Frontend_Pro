@@ -9,9 +9,11 @@ import {
 } from 'react';
 
 import AmendLabel from '../../components/classification/AmendLabel';
+import NewFolderDropdown from '../../components/drive/NewFolderDropdown';
 import { Folder } from '../../components/common/Widget/FolderTree';
 import FolderTreeForMoving from '../../components/common/Widget/FolderTreeForMoving';
 import ShareModal from '../../components/common/Widget/ShareModal';
+import NewFolderModal from '../../components/common/Widget/NewFolderModal';
 import InputNameModal from '../../components/common/Widget/InputNameModal';
 import MyModal from '../../components/common/Widget/MyModal';
 import DriveTable from '../../components/drive/DriveTable';
@@ -19,10 +21,8 @@ import EditItems from '../../components/drive/EditItems';
 import SearchLabelDocumentForm from '../../components/drive/SearchLabelDocumentForm';
 import SelectDataSchemaModal from '../../components/Search/SelectDataSchemaModal';
 
-import Add from '@mui/icons-material/Add';
 import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
-import KeyboardDoubleArrowDownIcon from '@mui/icons-material/KeyboardDoubleArrowDown';
 
 interface DriveViewProps {
     id: any;
@@ -58,7 +58,7 @@ interface DriveViewProps {
     shareWith: any[];
     setShareWith: Dispatch<SetStateAction<any[]>>;
     handleShare: (id: string, user_email: string) => void;
-    // handleNewFolder: (name: string) => Promise<void>;
+    handleNewFolder: (name: string) => Promise<void>;
 
 }
 export default function DriveView(props: DriveViewProps) {
@@ -96,13 +96,14 @@ export default function DriveView(props: DriveViewProps) {
         shareWith,
         setShareWith = () => { },
         handleShare = async () => { },
-        // handleNewFolder = async () => { },
+        handleNewFolder = async () => { },
     } = props;
     const router = useRouter();
     const [open, setOpen] = useState(false);
     const [openSelectShema, setOpenSelectShema] = useState(false);
     const [openEditLabel, setOpenEditLabel] = useState(false);
     const shareWithInput = useRef<HTMLInputElement>(null);
+    const newFolderNameInput = useRef<HTMLInputElement>(null);
 
     const clearCheckedData = useCallback(() => {
         setFoldersItems([]);
@@ -225,16 +226,26 @@ export default function DriveView(props: DriveViewProps) {
                         {/* <Link fontWeight={500} fontSize={12} color="primary" underline="always">
                                 智能文檔處理
                             </Link> */}
-                        <Button
-                            size="sm"
-                            color="primary"
-                            startDecorator={<Add />}
-                            endDecorator={<KeyboardDoubleArrowDownIcon />}
-                        >
-                            新增
-                        </Button>
+
+                        <NewFolderDropdown
+                            newfolder={() => { setMode('newFolder'); }}
+                        />
                     </Box>
                 </Box>
+
+                <NewFolderModal
+                    mode={mode}
+                    newFolderNameInput={newFolderNameInput}
+                    cancelClick={() => {
+                        if (shareWithInput.current) setShareWith([shareWithInput.current?.value]);
+                        setMode('view');
+                    }}
+                    confirmClick={() => {
+                        if (newFolderNameInput.current?.value) {
+                            handleNewFolder(newFolderNameInput.current?.value);
+                        }
+                    }}
+                />
 
                 <DriveTable
                     {...{
@@ -256,7 +267,6 @@ export default function DriveView(props: DriveViewProps) {
                     }}
                 />
                 <SearchLabelDocumentForm getAllLabelsData={getAllLabelsData} search={undefined} />
-
 
                 <ShareModal
                     mode={mode}
