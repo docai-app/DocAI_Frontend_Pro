@@ -54,7 +54,7 @@ function ChatbotContainer() {
         useAxios({}, { manual: true });
 
     useEffect(() => {
-        setLoad({ show: true });
+        setLoad({ show: false });
         getAllChatbots(apiSetting.Chatbot.showAllChatbots(page));
     }, [page]);
 

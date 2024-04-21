@@ -1,14 +1,14 @@
-import { CircleStackIcon } from '@heroicons/react/20/solid';
-import AssignmentTurnedInIcon from '@mui/icons-material/AssignmentTurnedIn';
+import { CircleStackIcon } from '@heroicons/react/24/outline';
+import AssignmentOutlinedIcon from '@mui/icons-material/AssignmentOutlined';
 import BrightnessAutoRoundedIcon from '@mui/icons-material/BrightnessAutoRounded';
-import ForumIcon from '@mui/icons-material/Forum';
+import ForumOutlinedIcon from '@mui/icons-material/ForumOutlined';
 import GroupRoundedIcon from '@mui/icons-material/GroupRounded';
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import LocalOfferIcon from '@mui/icons-material/LocalOffer';
-import ShoppingCartRoundedIcon from '@mui/icons-material/ShoppingCartRounded';
-import SmsIcon from '@mui/icons-material/Sms';
-import SourceIcon from '@mui/icons-material/Source';
+import LocalOfferOutlinedIcon from '@mui/icons-material/LocalOfferOutlined';
+import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
+import SmsOutlinedIcon from '@mui/icons-material/SmsOutlined';
+import SourceOutlinedIcon from '@mui/icons-material/SourceOutlined';
 import { Button } from '@mui/joy';
 import Avatar from '@mui/joy/Avatar';
 import Box from '@mui/joy/Box';
@@ -167,7 +167,7 @@ export default function Sidebar() {
                             href="/search"
                             selected={pathname == '/' || pathname.indexOf('/search') != -1}
                         >
-                            <SourceIcon />
+                            <SourceOutlinedIcon />
                             <ListItemContent>
                                 <Typography level="title-sm">文件</Typography>
                             </ListItemContent>
@@ -179,7 +179,7 @@ export default function Sidebar() {
                             href="/setting/label"
                             selected={pathname.indexOf('/setting/label') != -1}
                         >
-                            <LocalOfferIcon />
+                            <LocalOfferOutlinedIcon />
                             <ListItemContent>
                                 <Typography level="title-sm">標簽</Typography>
                             </ListItemContent>
@@ -205,7 +205,7 @@ export default function Sidebar() {
                             href="/chatbot"
                             selected={pathname.indexOf('/chatbot') != -1}
                         >
-                            <SmsIcon />
+                            <SmsOutlinedIcon />
                             <ListItemContent>
                                 <Typography level="title-sm">助手</Typography>
                             </ListItemContent>
@@ -219,7 +219,7 @@ export default function Sidebar() {
                             href="/project"
                             selected={pathname.indexOf('/project') != -1}
                         >
-                            <AssignmentTurnedInIcon />
+                            <AssignmentOutlinedIcon />
                             <ListItemContent>
                                 <Typography level="title-sm">待辦事項</Typography>
                             </ListItemContent>
@@ -234,7 +234,7 @@ export default function Sidebar() {
                             component="a"
                             href="/shop"
                         >
-                            <ShoppingCartRoundedIcon />
+                            <ShoppingCartOutlinedIcon />
                             <ListItemContent>
                                 <Typography level="title-sm">商城</Typography>
                             </ListItemContent>
@@ -290,7 +290,7 @@ export default function Sidebar() {
                     {/* <ListSubheader sx={{ letterSpacing: '2px', fontWeight: '800' }}>
                         Chatbot
                     </ListSubheader> */}
-                    <Button component="a" href="/chat" startDecorator={<ForumIcon />} size="sm">
+                    <Button component="a" href="/chat" startDecorator={<ForumOutlinedIcon />} size="sm">
                         聊天
                     </Button>
                     {/* <ChatbotHistoryView /> */}
