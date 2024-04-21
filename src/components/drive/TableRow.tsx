@@ -1,64 +1,70 @@
+import { useRouter } from 'next/navigation';
 import { DriveDocument } from '@/utils/types';
-import FolderIcon from '@mui/icons-material/Folder';
-import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
 import { Box, Checkbox, Chip, Link, Typography } from '@mui/joy';
+import IconButton from '@mui/joy/IconButton';
 import moment from 'moment';
 import Dropdowns from './Dropdowns';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+
+import FolderIcon from '@mui/icons-material/Folder';
+import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
+import ShareSharpIcon from '@mui/icons-material/ShareSharp';
 
 interface TableRowProps {
     doc: DriveDocument;
     type: 'documents' | 'folders';
+    setMode: Dispatch<SetStateAction<'view' | 'move' | 'share' | 'newFolder'>>;
+    setTarget: any;
+    setVisableDelete?: any;
+    setVisableRename: any;
+    setCurrent?: any;
     selectedValue: any;
     setSelectedValue: any;
     handleSelectedValue: any;
-    selected: any;
-    setSelected: any;
+    setCheckedData?: any;
+    checked?: boolean;
 }
 export default function TableRow(props: TableRowProps) {
     const {
         doc,
         type,
+        setMode = () => { },
+        setTarget = () => { },
+        setVisableDelete,
+        setVisableRename,
+        setCurrent,
         selectedValue,
         setSelectedValue,
         handleSelectedValue,
-        selected,
-        setSelected
+        setCheckedData,
+        checked
     } = props;
+    const router = useRouter();
 
     const url = doc.storage_url || `/drive/${doc.id}`;
 
+    const check = (e: any) => {
+        setCheckedData(type, e.target.checked, e.target.value);
+    };
+
     return (
         <>
-            <tr key={doc.id}>
-                <td style={{ textAlign: 'center', width: 120 }}>
-                    {/* <Radio
-                        size="sm"
-                        checked={selectedValue?.id === doc.id}
-                        onChange={(event) => {
-                            setSelectedValue(doc);
-                            handleSelectedValue(doc);
-                        }}
-                        name="radio-buttons"
-                    /> */}
-                    <Checkbox
-                        size="sm"
-                        checked={selected.includes(doc.id)}
-                        color={selected.includes(doc.id) ? 'primary' : undefined}
-                        onChange={(event) => {
-                            setSelected((ids: any) =>
-                                event.target.checked
-                                    ? ids.concat(doc.id)
-                                    : ids.filter((itemId: any) => itemId !== doc.id)
-                            );
-                        }}
+            <tr key={doc.id}
+                data-id={doc.id}
+                data-type={type}
+            >
+                <td style={{ textAlign: 'center', width: 40 }}>
+                    <Checkbox size="sm"
+                        checked={checked}
+                        value={doc.id}
+                        onChange={(e) => { check(e); }}
                         slotProps={{ checkbox: { sx: { textAlign: 'left' } } }}
                         sx={{ verticalAlign: 'text-bottom' }}
                     />
                 </td>
-                <td>
+                <td >
                     <Typography
-                        level="body-sm"
-                        sx={{ fontWeight: 'bold' }}
+                        level="body-xs"
                         startDecorator={
                             type === 'documents' ? (
                                 <InsertDriveFileIcon color="info" />
@@ -68,31 +74,25 @@ export default function TableRow(props: TableRowProps) {
                         }
                     >
                         {type === 'folders' ? (
-                            <Link href={`${url}?name=${doc.name}`} className="hover:underline">
+                            <Link color="neutral" href={`${url}?name=${doc.name}`}>
                                 {doc.name}
                             </Link>
                         ) : (
-                            <a
-                                href={url}
+                            <Link color="neutral" href={url}
                                 target="_blank"
-                                rel="noreferrer"
-                                className="hover:underline"
-                            >
+                                rel="noreferrer">
                                 {doc.name}
-                            </a>
+                            </Link>
                         )}
                     </Typography>
                 </td>
                 <td>
                     {type !== 'folders' &&
-                    doc?.is_classified === false &&
-                    doc?.labels?.length == 0 ? (
+                        doc?.is_classified === false &&
+                        doc?.labels?.length == 0 ? (
                         <Chip
                             color="danger"
-                            sx={{
-                                fontSize: 12
-                            }}
-                        >
+                            sx={{ fontSize: 12 }}>
                             {'未分類'}
                         </Chip>
                     ) : (
@@ -101,10 +101,7 @@ export default function TableRow(props: TableRowProps) {
                                 <Chip
                                     key={index}
                                     color="success"
-                                    sx={{
-                                        fontSize: 12
-                                    }}
-                                >
+                                    sx={{ fontSize: 12 }}>
                                     {label?.name}
                                 </Chip>
                             );
@@ -113,15 +110,56 @@ export default function TableRow(props: TableRowProps) {
                 </td>
                 <td>
                     <Typography level="body-xs">
-                        {moment(doc.updated_at).format('YYYY-MM-DD')}
+                        {moment(doc.updated_at).format('YYYY/MM/DD')}
                     </Typography>
                 </td>
                 <td>
                     <Typography level="body-xs">{doc.user?.nickname}</Typography>
                 </td>
                 <td>
-                    <Box sx={{ display: 'flex', gap: 2, alignItems: 'center' }}>
-                        <Dropdowns />
+                    <Box sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' } }}>
+                        <Dropdowns
+                            type={type}
+                            url={url}
+                            name={doc?.name}
+                            rename={() => {
+                                setVisableRename(true);
+                                setCurrent({
+                                    id: doc?.id,
+                                    name: doc?.name,
+                                    type: type
+                                });
+                            }}
+                            move={() => {
+                                setMode('move');
+                                setTarget([doc]);
+                                setCurrent({
+                                    id: doc?.id,
+                                    name: doc?.name,
+                                    type: type
+                                });
+                            }}
+                            remove={() => {
+                                setVisableDelete(true);
+                                setCurrent({
+                                    id: doc?.id,
+                                    name: doc?.name,
+                                    type: type
+                                });
+                            }}
+                            openItems={() => {
+                                router.push(`/document/chat?document_id=${doc.id}`);
+                            }}
+                        />
+                        {type === 'folders' && (
+                            <IconButton size='sm' sx={{ borderRadius: "50%" }}
+                                onClick={() => {
+                                    setMode('share');
+                                    setTarget([doc]);
+                                }}>
+                                <ShareSharpIcon />
+                            </IconButton>
+                        )}
                     </Box>
                 </td>
             </tr>
