@@ -31,11 +31,16 @@ interface ViewProps {
 }
 const apiSetting = new Api();
 export default function SchemaTable(props: ViewProps) {
-    const { visibleRadio = false, getAllLabelsData, smart_extraction_schemas, handleSelectedValue, handleFilterLabel } = props;
+    const {
+        visibleRadio = false,
+        getAllLabelsData,
+        smart_extraction_schemas,
+        handleSelectedValue,
+        handleFilterLabel
+    } = props;
 
     const [open, setOpen] = React.useState(false);
     const [selectedValue, setSelectedValue] = React.useState<SmartExtractionSchema>();
-
 
     const renderFilters = () => (
         <React.Fragment>
@@ -46,15 +51,26 @@ export default function SchemaTable(props: ViewProps) {
                     placeholder="請選擇標籤"
                     slotProps={{ button: { sx: { whiteSpace: 'nowrap' } } }}
                 >
-                    <Option value="" onClick={() => {
-                        handleFilterLabel(null)
-                    }}>{"數據總表"}</Option>
+                    <Option
+                        value=""
+                        onClick={() => {
+                            handleFilterLabel(null);
+                        }}
+                    >
+                        {'數據總表'}
+                    </Option>
                     {getAllLabelsData?.tags?.map((tag: Label, index: number) => (
-                        <Option key={index} value={tag?.id}
+                        <Option
+                            key={index}
+                            value={tag?.id}
                             onClick={() => {
-                                handleFilterLabel(tag)
+                                handleFilterLabel(tag);
                             }}
-                        >{tag?.name} {tag?.smart_extraction_schemas_count > 0 && `(${tag?.smart_extraction_schemas_count})`}</Option>
+                        >
+                            {tag?.name}{' '}
+                            {tag?.smart_extraction_schemas_count > 0 &&
+                                `(${tag?.smart_extraction_schemas_count})`}
+                        </Option>
                     ))}
                 </Select>
             </FormControl>
@@ -145,37 +161,37 @@ export default function SchemaTable(props: ViewProps) {
                 >
                     <thead>
                         <tr>
-                            {visibleRadio &&
+                            {visibleRadio && (
                                 <th
                                     style={{ width: 30, textAlign: 'center', padding: '12px 6px' }}
                                 ></th>
-                            }
+                            )}
                             <th style={{ width: 300, padding: '12px 6px' }}>
-                                <Typography startDecorator={<CircleStackIcon className="h-5 text-gray-400 " />}>
+                                <Typography
+                                    startDecorator={
+                                        <CircleStackIcon className="h-5 text-gray-400 " />
+                                    }
+                                >
                                     名稱
                                 </Typography>
                             </th>
                             <th style={{ width: 200, padding: '12px 6px' }}>標籤</th>
                             <th style={{ width: 120, padding: '12px 6px' }}>更新日期</th>
                             <th style={{ width: 100, padding: '12px 6px' }}>擁有人</th>
-                            {!visibleRadio &&
-                                <th style={{ width: 30, padding: '12px 6px' }}> </th>
-                            }
+                            {!visibleRadio && <th style={{ width: 30, padding: '12px 6px' }}> </th>}
                         </tr>
                     </thead>
                     <tbody>
-                        {smart_extraction_schemas?.map(
-                            (row: SmartExtractionSchema) => (
-                                <TableRow
-                                    key={row.id}
-                                    row={row}
-                                    selectedValue={selectedValue}
-                                    setSelectedValue={setSelectedValue}
-                                    visibleRadio={visibleRadio}
-                                    handleSelectedValue={handleSelectedValue}
-                                />
-                            )
-                        )}
+                        {smart_extraction_schemas?.map((row: SmartExtractionSchema) => (
+                            <TableRow
+                                key={row.id}
+                                row={row}
+                                selectedValue={selectedValue}
+                                setSelectedValue={setSelectedValue}
+                                visibleRadio={visibleRadio}
+                                handleSelectedValue={handleSelectedValue}
+                            />
+                        ))}
                     </tbody>
                 </Table>
             </Sheet>

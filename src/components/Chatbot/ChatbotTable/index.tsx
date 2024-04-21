@@ -131,11 +131,12 @@ export default function ChatbotTable(props: ViewProps) {
                                             }}
                                         >
                                             <Chip
-                                                variant='soft'
+                                                variant="soft"
                                                 startDecorator={<PollOutlinedIcon />}
                                                 onClick={() => {
-                                                    router.push('/chatbot/data')
-                                                }}>
+                                                    router.push('/chatbot/data');
+                                                }}
+                                            >
                                                 {'View Data'}
                                             </Chip>
                                             <Dropdowns

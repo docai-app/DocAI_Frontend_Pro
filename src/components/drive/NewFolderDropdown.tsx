@@ -33,6 +33,5 @@ export default function NewFolderDropdown(props: DropdownsProps) {
                 </MenuItem>
             </Menu>
         </Dropdown>
-
     );
 }

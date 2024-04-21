@@ -1,25 +1,20 @@
 import BreadCrumb from '@/components/drive/BreadCrumb';
 import { DriveDocument, DriveFolder } from '@/utils/types';
 import { Box, Breadcrumbs, Link, Typography } from '@mui/joy';
-import Button from '@mui/joy/Button';
 import { useRouter } from 'next/navigation';
-import {
-    Dispatch, SetStateAction, useRef,
-    useCallback, useState
-} from 'react';
+import { Dispatch, SetStateAction, useCallback, useRef, useState } from 'react';
 
 import AmendLabel from '../../components/classification/AmendLabel';
-import NewFolderDropdown from '../../components/drive/NewFolderDropdown';
 import { Folder } from '../../components/common/Widget/FolderTree';
 import FolderTreeForMoving from '../../components/common/Widget/FolderTreeForMoving';
-import ShareModal from '../../components/common/Widget/ShareModal';
-import NewFolderModal from '../../components/common/Widget/NewFolderModal';
 import InputNameModal from '../../components/common/Widget/InputNameModal';
 import MyModal from '../../components/common/Widget/MyModal';
+import NewFolderModal from '../../components/common/Widget/NewFolderModal';
+import ShareModal from '../../components/common/Widget/ShareModal';
 import DriveTable from '../../components/drive/DriveTable';
 import EditItems from '../../components/drive/EditItems';
+import NewFolderDropdown from '../../components/drive/NewFolderDropdown';
 import SearchLabelDocumentForm from '../../components/drive/SearchLabelDocumentForm';
-import SelectDataSchemaModal from '../../components/Search/SelectDataSchemaModal';
 
 import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
@@ -59,7 +54,6 @@ interface DriveViewProps {
     setShareWith: Dispatch<SetStateAction<any[]>>;
     handleShare: (id: string, user_email: string) => void;
     handleNewFolder: (name: string) => Promise<void>;
-
 }
 export default function DriveView(props: DriveViewProps) {
     const {
@@ -96,7 +90,7 @@ export default function DriveView(props: DriveViewProps) {
         shareWith,
         setShareWith = () => { },
         handleShare = async () => { },
-        handleNewFolder = async () => { },
+        handleNewFolder = async () => { }
     } = props;
     const router = useRouter();
     const [open, setOpen] = useState(false);
@@ -164,11 +158,11 @@ export default function DriveView(props: DriveViewProps) {
                 setTagName={(name: string) => { }}
                 setOpenEditLabel={setOpenEditLabel}
             />
-            <SelectDataSchemaModal
+            {/* <SelectDataSchemaModal
                 open={openSelectShema}
                 setOpen={setOpenSelectShema}
                 document_ids={[documents_items]}
-            />
+            /> */}
             <Box
                 sx={{
                     display: 'flex',
@@ -227,7 +221,9 @@ export default function DriveView(props: DriveViewProps) {
                                 智能文檔處理
                             </Link> */}
                         <NewFolderDropdown
-                            newfolder={() => { setMode('newFolder'); }}
+                            newfolder={() => {
+                                setMode('newFolder');
+                            }}
                         />
                     </Box>
                 </Box>
@@ -279,10 +275,7 @@ export default function DriveView(props: DriveViewProps) {
                     confirmClick={() => {
                         if (shareWithInput.current?.value) {
                             setShareWith([shareWithInput.current?.value]);
-                            handleShare(
-                                target[0].id,
-                                shareWithInput.current?.value
-                            );
+                            handleShare(target[0].id, shareWithInput.current?.value);
                         }
                     }}
                 />

@@ -19,8 +19,8 @@ interface DropdownsProps {
 
 export default function Dropdowns(props: DropdownsProps) {
     const { row } = props;
-    const router = useRouter()
-    const [visible, setVisible] = useState(false)
+    const router = useRouter();
+    const [visible, setVisible] = useState(false);
     return (
         <>
             <Dropdown>
@@ -33,30 +33,36 @@ export default function Dropdowns(props: DropdownsProps) {
                 <Menu size="sm" sx={{ minWidth: 140 }}>
                     <MenuItem
                         onClick={() => {
-                            router.push(`/document/extraction/documents/schema?schema_id=${row.id}`)
-                        }}>
-
+                            router.push(
+                                `/document/extraction/documents/schema?schema_id=${row.id}`
+                            );
+                        }}
+                    >
                         <EditIcon />
                         編輯
                     </MenuItem>
                     <Divider />
-                    <MenuItem color="danger" onClick={() => {
-                        setVisible(true)
-                    }} >
+                    <MenuItem
+                        color="danger"
+                        onClick={() => {
+                            setVisible(true);
+                        }}
+                    >
                         <DeleteIcon />
                         刪除
                     </MenuItem>
                 </Menu>
             </Dropdown>
-            {visible &&
+            {visible && (
                 <AlertDialogModal
                     visible={visible}
                     setVisible={setVisible}
                     content={`確認刪除 ${row.name} ?`}
                     confirm={() => {
-                        setVisible(visible)
+                        setVisible(visible);
                     }}
-                />}
+                />
+            )}
         </>
     );
 }

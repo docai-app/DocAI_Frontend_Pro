@@ -26,9 +26,7 @@ export default function ChatbotDataView(props: any) {
                     </Typography>
                 </Breadcrumbs>
             </Box>
-            <Box>
-                未做
-            </Box>
+            <Box>未做</Box>
         </>
     );
 }

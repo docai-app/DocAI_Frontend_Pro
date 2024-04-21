@@ -26,7 +26,7 @@ function ChatbotDataContainer() {
         setLoad({ show: false });
         // setAlert({ title: 'success', type: 'error' })
         // gatTags()
-        return () => { };
+        return () => {};
     }, [router]);
 
     const gatTags = () => {

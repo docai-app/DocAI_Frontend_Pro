@@ -50,19 +50,22 @@ function DriveContainer() {
     const [{ data: deleteFolderByIdData }, deleteFolderById] = useAxios({}, { manual: true });
     const [{ data: deleteDocumentByIdData }, deleteDocumentById] = useAxios({}, { manual: true });
     const [{ data: updateDocumentTagData }, updateDocumentTag] = useAxios(
-        apiSetting.Classification.updateDocumentTag([], ''), { manual: true }
+        apiSetting.Classification.updateDocumentTag([], ''),
+        { manual: true }
     );
     const [{ data: moveItemsToSpecificFolderData }, moveItemsToSpecificFolder] = useAxios(
-        apiSetting.Drive.moveItemsToSpecificFolder(), { manual: true }
+        apiSetting.Drive.moveItemsToSpecificFolder(),
+        { manual: true }
     );
     const [{ data: addNewLabelData, error: addNewLabelError }, addNewLabel] = useAxios(
-        apiSetting.Tag.addNewTag(), { manual: true }
+        apiSetting.Tag.addNewTag(),
+        { manual: true }
     );
     const [{ data: shareFolderPermissionData }, shareFolderPermission] = useAxios(
-        {}, { manual: true }
+        {},
+        { manual: true }
     );
     const [{ data: createFolderData }, createFolder] = useAxios({}, { manual: true });
-
 
     useEffect(() => {
         setName(searchParams.get('name') || null);
@@ -76,7 +79,6 @@ function DriveContainer() {
     useEffect(() => {
         getAllLabels();
     }, [router]);
-
 
     useEffect(() => {
         if (allDrivesData && allDrivesData.success) {
@@ -131,7 +133,7 @@ function DriveContainer() {
             a.href = dataURL;
             a.download = 'documents.zip';
             a.click();
-        } catch { }
+        } catch {}
     }, [folders_items, documents_items]);
 
     const confirmDocumentFormik = useFormik({
@@ -296,7 +298,7 @@ function DriveContainer() {
                 shareWith,
                 setShareWith,
                 handleShare,
-                handleNewFolder,
+                handleNewFolder
             }}
         />
     );

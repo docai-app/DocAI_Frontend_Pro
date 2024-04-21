@@ -290,7 +290,12 @@ export default function Sidebar() {
                     {/* <ListSubheader sx={{ letterSpacing: '2px', fontWeight: '800' }}>
                         Chatbot
                     </ListSubheader> */}
-                    <Button component="a" href="/chat" startDecorator={<ForumOutlinedIcon />} size="sm">
+                    <Button
+                        component="a"
+                        href="/chat"
+                        startDecorator={<ForumOutlinedIcon />}
+                        size="sm"
+                    >
                         聊天
                     </Button>
                     {/* <ChatbotHistoryView /> */}

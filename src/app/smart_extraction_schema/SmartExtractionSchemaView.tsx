@@ -11,11 +11,7 @@ interface ViewProps {
 }
 
 function SmartExtractionSchemaView(props: ViewProps) {
-    const {
-        smart_extraction_schemas,
-        getAllLabelsData,
-        handleFilterLabel
-    } = props;
+    const { smart_extraction_schemas, getAllLabelsData, handleFilterLabel } = props;
 
     return (
         <>
@@ -49,13 +45,12 @@ function SmartExtractionSchemaView(props: ViewProps) {
                 </Typography>
             </Box>
 
-
             <SchemaTable
                 {...{
                     smart_extraction_schemas,
                     getAllLabelsData,
-                    handleSelectedValue: () => { },
-                    handleFilterLabel,
+                    handleSelectedValue: () => {},
+                    handleFilterLabel
                 }}
             />
         </>

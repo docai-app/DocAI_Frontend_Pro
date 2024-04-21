@@ -98,7 +98,7 @@ export default function MessageInput(props: MessageInputProps) {
         {
             name: 'ChatGPT',
             value: 'none',
-            onClick: () => { }
+            onClick: () => {}
         },
         {
             name: '數據源',

@@ -77,7 +77,7 @@ function ChatbotView(props: ViewProps) {
                     新增助手
                 </Button>
             </Box>
-            <SearchInputView handleSearch={() => { }} />
+            <SearchInputView handleSearch={() => {}} />
             <ChatbotTable
                 chatbots={chatbots}
                 meta={meta}

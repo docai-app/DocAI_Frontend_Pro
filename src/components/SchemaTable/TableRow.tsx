@@ -1,13 +1,13 @@
-import { SmartExtractionSchema } from "@/utils/types";
+import { SmartExtractionSchema } from '@/utils/types';
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import Box from '@mui/joy/Box';
 import Typography from '@mui/joy/Typography';
 
-import { CircleStackIcon } from "@heroicons/react/20/solid";
+import { CircleStackIcon } from '@heroicons/react/20/solid';
 import { Chip, Link } from '@mui/joy';
 import Radio from '@mui/joy/Radio';
 import moment from 'moment';
-import Dropdowns from "./Dropdowns";
+import Dropdowns from './Dropdowns';
 
 interface ViewProps {
     row: SmartExtractionSchema;
@@ -23,11 +23,11 @@ export default function TableRow(props: ViewProps) {
         setSelectedValue,
         handleSelectedValue,
         visibleRadio = false
-    } = props
+    } = props;
     return (
         <>
             <tr key={row.id}>
-                {visibleRadio &&
+                {visibleRadio && (
                     <td style={{ textAlign: 'center', width: 30 }}>
                         <Radio
                             size="sm"
@@ -39,11 +39,13 @@ export default function TableRow(props: ViewProps) {
                             name="radio-buttons"
                         />
                     </td>
-                }
+                )}
                 <td>
                     <Typography level="body-sm" sx={{ fontWeight: 'bold' }}>
-                        <Link href={`document/smart_extraction_schema/${row.id}`}
-                            startDecorator={<CircleStackIcon className="h-5 text-gray-400 " />}>
+                        <Link
+                            href={`document/smart_extraction_schema/${row.id}`}
+                            startDecorator={<CircleStackIcon className="h-5 text-gray-400 " />}
+                        >
                             {row.name}
                         </Link>
                     </Typography>
@@ -68,14 +70,14 @@ export default function TableRow(props: ViewProps) {
                 <td>
                     <Typography level="body-xs">{row.user.nickname}</Typography>
                 </td>
-                {!visibleRadio &&
+                {!visibleRadio && (
                     <td>
                         <Box sx={{ display: 'flex', gap: 2, alignItems: 'center' }}>
                             <Dropdowns row={row} />
                         </Box>
                     </td>
-                }
+                )}
             </tr>
         </>
-    )
+    );
 }

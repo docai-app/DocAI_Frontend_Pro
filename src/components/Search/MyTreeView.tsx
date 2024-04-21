@@ -1,9 +1,7 @@
 import { Tooltip } from '@mui/joy';
 import _ from 'lodash';
 
-
 export default function MyTreeView({ tree, documents, objectDocuments }: any) {
-
     const MenuItem = ({ item, level, last, last_last }: any) => {
         const paddingLeft = level <= 2 ? 0 : (level - 1) * 0; // 根据层级计算缩进值
         if (item.children) {
@@ -47,7 +45,7 @@ export default function MyTreeView({ tree, documents, objectDocuments }: any) {
             );
         }
 
-        const document = objectDocuments && item?.id && objectDocuments[item?.id]
+        const document = objectDocuments && item?.id && objectDocuments[item?.id];
         return (
             <li
                 className={'menu whitespace-nowrap text-ellipsis overflow-hidden'}
@@ -106,7 +104,4 @@ export default function MyTreeView({ tree, documents, objectDocuments }: any) {
             ))}
         </ul>
     );
-};
-
-
-
+}

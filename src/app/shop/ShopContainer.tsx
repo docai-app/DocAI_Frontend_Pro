@@ -21,7 +21,6 @@ export default function ShopContainer() {
         getAllChatbots(apiSetting.Chatbot.showAllChatbots(1));
     }, []);
 
-
     return (
         <ShopView
             {...{

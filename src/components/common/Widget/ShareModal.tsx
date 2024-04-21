@@ -1,19 +1,11 @@
 /* This example requires Tailwind CSS v2.0+ */
 import { Dialog, Transition } from '@headlessui/react';
 import { Fragment, useRef } from 'react';
-import {
-    ChevronDownIcon,
-    PencilIcon,
-} from '@heroicons/react/24/outline';
+import { ChevronDownIcon, PencilIcon } from '@heroicons/react/24/outline';
 
 export default function ShareModal(props: any) {
     const cancelButtonRef = useRef(null);
-    const {
-        mode,
-        shareWithInput,
-        target,
-        shareWith,
-    } = props;
+    const { mode, shareWithInput, target, shareWith } = props;
     return (
         <Transition.Root show={mode === 'share'} as={Fragment}>
             <Dialog

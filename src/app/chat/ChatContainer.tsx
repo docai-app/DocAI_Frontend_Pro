@@ -28,7 +28,6 @@ function ChatContainer() {
     const router = useRouter();
     const [chats, setChats] = useState<ChatProps[]>();
 
-
     useEffect(() => {
         let tmp: any = window.localStorage?.getItem(
             'chat_by_' + window.localStorage?.getItem('email')

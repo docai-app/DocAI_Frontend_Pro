@@ -20,7 +20,9 @@ function SmartExtractionSchemaContainer(props: any) {
     const [page, setPage] = useState(1);
     const [has_label, set_has_label] = useState<any>();
     const [currectLabel, setCurrectLabel] = useState<any>();
-    const [smart_extraction_schemas, set_smart_extraction_schemas] = useState<SmartExtractionSchema[]>([])
+    const [smart_extraction_schemas, set_smart_extraction_schemas] = useState<
+        SmartExtractionSchema[]
+    >([]);
 
     const [{ data: getAllLabelsData, error: getAllLabelsError }, getAllLabels] = useAxios(
         apiSetting.Tag.getAllTags(),
@@ -41,7 +43,6 @@ function SmartExtractionSchemaContainer(props: any) {
     ] = useAxios(apiSetting.SmartExtractionSchemas.getSmartExtractionSchemasByLabel('', page), {
         manual: true
     });
-
 
     useEffect(() => {
         getAllLabels();
@@ -65,16 +66,18 @@ function SmartExtractionSchemaContainer(props: any) {
         if (getSmartExtractionSchemasByLabelData && getSmartExtractionSchemasByLabelData.success) {
             setMeta(getSmartExtractionSchemasByLabelData.meta);
             if (page == 1) {
-                set_smart_extraction_schemas(getSmartExtractionSchemasByLabelData.smart_extraction_schema);
+                set_smart_extraction_schemas(
+                    getSmartExtractionSchemasByLabelData.smart_extraction_schema
+                );
             } else {
                 set_smart_extraction_schemas(
-                    smart_extraction_schemas.concat(getSmartExtractionSchemasByLabelData.smart_extraction_schema)
+                    smart_extraction_schemas.concat(
+                        getSmartExtractionSchemasByLabelData.smart_extraction_schema
+                    )
                 );
             }
         }
     }, [getSmartExtractionSchemasByLabelData]);
-
-
 
     useEffect(() => {
         if (currectLabel) {
@@ -87,19 +90,19 @@ function SmartExtractionSchemaContainer(props: any) {
         } else {
             getAllSchemas(
                 apiSetting.SmartExtractionSchemas.getSmartExtractionSchemas(has_label, page)
-            )
+            );
         }
     }, [router, page, has_label, currectLabel]);
 
     const handleFilterLabel = (label: Label) => {
-        setPage(1)
+        setPage(1);
         if (label) {
-            setCurrectLabel(label)
+            setCurrectLabel(label);
         } else {
-            set_has_label(false)
-            setCurrectLabel(null)
+            set_has_label(false);
+            setCurrectLabel(null);
         }
-    }
+    };
 
     return (
         <SmartExtractionSchemaView

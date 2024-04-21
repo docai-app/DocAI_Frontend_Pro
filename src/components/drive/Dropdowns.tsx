@@ -33,7 +33,7 @@ export default function Dropdowns(props: DropdownsProps) {
             <MenuButton
                 slots={{ root: IconButton }}
                 slotProps={{ root: { color: 'neutral', size: 'sm' } }}
-                sx={{ borderRadius: "50%" }}
+                sx={{ borderRadius: '50%' }}
             >
                 <MoreHorizRoundedIcon />
             </MenuButton>
@@ -53,7 +53,9 @@ export default function Dropdowns(props: DropdownsProps) {
                 {type !== 'folders' && (
                     <MenuItem>
                         <SaveAltOutlinedIcon />
-                        <Link color="neutral" href={url} download={name}>下載</Link>
+                        <Link color="neutral" href={url} download={name}>
+                            下載
+                        </Link>
                     </MenuItem>
                 )}
                 <MenuItem onClick={rename}>
