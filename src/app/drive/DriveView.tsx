@@ -4,13 +4,14 @@ import { Box, Breadcrumbs, Link, Typography } from '@mui/joy';
 import Button from '@mui/joy/Button';
 import { useRouter } from 'next/navigation';
 import {
-    Dispatch, SetStateAction,
+    Dispatch, SetStateAction, useRef,
     useCallback, useState
 } from 'react';
 
 import AmendLabel from '../../components/classification/AmendLabel';
 import { Folder } from '../../components/common/Widget/FolderTree';
 import FolderTreeForMoving from '../../components/common/Widget/FolderTreeForMoving';
+import ShareModal from '../../components/common/Widget/ShareModal';
 import InputNameModal from '../../components/common/Widget/InputNameModal';
 import MyModal from '../../components/common/Widget/MyModal';
 import DriveTable from '../../components/drive/DriveTable';
@@ -54,6 +55,10 @@ interface DriveViewProps {
     confirmDocumentFormik?: any;
     showAllItemsHandler: any;
     showAllDriveLoading: boolean;
+    shareWith: any[];
+    setShareWith: Dispatch<SetStateAction<any[]>>;
+    handleShare: (id: string, user_email: string) => void;
+    // handleNewFolder: (name: string) => Promise<void>;
 
 }
 export default function DriveView(props: DriveViewProps) {
@@ -87,12 +92,17 @@ export default function DriveView(props: DriveViewProps) {
         handleDownloadItemsAndFolders,
         confirmDocumentFormik,
         showAllItemsHandler,
-        showAllDriveLoading
+        showAllDriveLoading,
+        shareWith,
+        setShareWith = () => { },
+        handleShare = async () => { },
+        // handleNewFolder = async () => { },
     } = props;
     const router = useRouter();
     const [open, setOpen] = useState(false);
     const [openSelectShema, setOpenSelectShema] = useState(false);
     const [openEditLabel, setOpenEditLabel] = useState(false);
+    const shareWithInput = useRef<HTMLInputElement>(null);
 
     const clearCheckedData = useCallback(() => {
         setFoldersItems([]);
@@ -246,6 +256,28 @@ export default function DriveView(props: DriveViewProps) {
                     }}
                 />
                 <SearchLabelDocumentForm getAllLabelsData={getAllLabelsData} search={undefined} />
+
+
+                <ShareModal
+                    mode={mode}
+                    target={target?.[0]?.id}
+                    shareWith={shareWith[0]}
+                    shareWithInput={shareWithInput}
+                    cancelClick={() => {
+                        if (shareWithInput.current) setShareWith([shareWithInput.current?.value]);
+                        setMode('view');
+                    }}
+                    confirmClick={() => {
+                        if (shareWithInput.current?.value) {
+                            setShareWith([shareWithInput.current?.value]);
+                            handleShare(
+                                target[0].id,
+                                shareWithInput.current?.value
+                            );
+                        }
+                    }}
+                />
+
                 <InputNameModal
                     visable={visableRename}
                     current={current}

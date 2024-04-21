@@ -13,7 +13,6 @@ interface BreadCrumbProps {
 
 export default function BreadCrumb(props: BreadCrumbProps) {
     const { ancestors, id, name } = props;
-    console.log('BreadCrumb-ancestors, id, name ',ancestors, id, name )
     return (
         <div className="flex">
             <div className={`py-2 ${!id ? 'rounded-lg font-bold' : 'text-gray-600'}`}>

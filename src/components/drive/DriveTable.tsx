@@ -82,7 +82,7 @@ export default function DriveTable(props: ViewProps) {
                     width: '100%',
                     borderRadius: 'sm',
                     flexShrink: 1,
-                    overflow: 'auto'
+                    overflow: 'hidden'
                 }}
             >
                 {(documents || folders) &&
@@ -123,15 +123,15 @@ export default function DriveTable(props: ViewProps) {
                                     <th
                                         style={{ width: '5%', textAlign: 'center', padding: '12px 6px' }}
                                     ></th>
-                                    <th style={{ width: '35%', padding: '12px 6px' }}>
+                                    <th style={{ width: '45%', padding: '12px 6px' }}>
                                         <Typography startDecorator={<FolderIcon color="primary" />}>
                                             名稱
                                         </Typography>
                                     </th>
-                                    <th style={{ width: '20%', padding: '12px 6px' }}>標籤</th>
-                                    <th style={{ width: '15%', padding: '12px 6px' }}>更新日期</th>
-                                    <th style={{ width: '15%', padding: '12px 6px' }}>擁有人</th>
-                                    <th style={{ width: '10%', padding: '12px 6px' }}>動作</th>
+                                    <th style={{ width: '15%', padding: '12px 6px' }}>標籤</th>
+                                    <th style={{ width: '12%', padding: '12px 6px' }}>更新日期</th>
+                                    <th style={{ width: '10%', padding: '12px 6px' }}>擁有人</th>
+                                    <th style={{ width: '6%', padding: '12px 6px' }}>動作</th>
                                 </tr>
                             </thead>
                             <tbody>
