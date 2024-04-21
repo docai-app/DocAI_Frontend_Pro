@@ -173,7 +173,7 @@ export default function Sidebar() {
                             </ListItemContent>
                         </ListItemButton>
                     </ListItem>
-                    <ListItem>
+                    <ListItem sx={{ display: 'none' }}>
                         <ListItemButton
                             component="a"
                             href="/setting/label"
@@ -185,7 +185,7 @@ export default function Sidebar() {
                             </ListItemContent>
                         </ListItemButton>
                     </ListItem>
-                    <ListItem>
+                    <ListItem sx={{ display: 'none' }}>
                         <ListItemButton
                             role="menuitem"
                             component="a"
