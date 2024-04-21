@@ -1,22 +1,21 @@
 'use client';
 
-import * as React from 'react';
-import { CssVarsProvider } from '@mui/joy/styles';
-import CssBaseline from '@mui/joy/CssBaseline';
 import Box from '@mui/joy/Box';
-import Button from '@mui/joy/Button';
 import Breadcrumbs from '@mui/joy/Breadcrumbs';
+import Button from '@mui/joy/Button';
+import CssBaseline from '@mui/joy/CssBaseline';
 import Link from '@mui/joy/Link';
+import { CssVarsProvider } from '@mui/joy/styles';
 import Typography from '@mui/joy/Typography';
 
-import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
 import DownloadRoundedIcon from '@mui/icons-material/DownloadRounded';
+import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 
-import Sidebar from '../../components/Sidebar';
-import OrderTable from '../../components/OrderTable';
-import OrderList from '../../components/OrderList';
+import OrderList from '@/components/OrderList';
 import Header from '../../components/Header';
+import OrderTable from '../../components/OrderTable';
+import Sidebar from '../../components/Sidebar';
 
 export default function JoyOrderDashboardTemplate() {
     return (
