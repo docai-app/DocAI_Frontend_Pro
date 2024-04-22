@@ -46,8 +46,9 @@ function LoginContainer() {
                 } else {
                     document.cookie = `authorization=${escape(token)}`;
                 }
+                axios.defaults.headers.common['authorization'] = token;
                 if (pathname === '/login') router.push('/');
-                else router.refresh();
+                else location.reload();
             } else {
                 localStorage.removeItem('authorization');
                 localStorage.removeItem('email');

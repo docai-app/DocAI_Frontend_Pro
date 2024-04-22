@@ -59,7 +59,7 @@ export default function DocumentCard(props: ViewProps) {
             setLoad({ show: false });
             if (res.data.success === true) {
                 setAlert({ title: '更新成功', type: 'success' });
-                // router.refresh();
+                // location.reload();
             } else {
                 setAlert({ title: '更新失敗', type: 'error' });
             }

@@ -54,7 +54,7 @@ function ChatbotContainer() {
         useAxios({}, { manual: true });
 
     useEffect(() => {
-        setLoad({ show: true });
+        setLoad({ show: false });
         getAllChatbots(apiSetting.Chatbot.showAllChatbots(page));
     }, [page]);
 
@@ -79,7 +79,7 @@ function ChatbotContainer() {
         if (deleteChatbotByIdData && deleteChatbotByIdData.success) {
             setAlert({ title: '删除成功!', type: 'success' });
             setLoad({ show: false });
-            router.refresh();
+            location.reload();
         } else if (deleteChatbotByIdData && !deleteChatbotByIdData.success) {
             setLoad({ show: false });
             setAlert({ title: deleteChatbotByIdData.error, type: 'error' });
