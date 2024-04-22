@@ -39,9 +39,21 @@ export default function DocumentPath(props: DocumentPathProps) {
     }, [showFolderByIDData]);
 
     useEffect(() => {
+        // if (dest?.id) {
+        //     showFolderByID(apiSetting.Folders.showFolderByID(dest?.id));
+        //     set_target_folder_id(dest?.id);
+        // }
         if (dest?.id) {
-            showFolderByID(apiSetting.Folders.showFolderByID(dest?.id));
-            set_target_folder_id(dest?.id);
+            const fetchData = async () => {
+                try {
+                    const res = await apiSetting.Folders.showFolderByID(dest?.id)
+                    if (res.data?.success) {
+                        showFolderByID(res);
+                        set_target_folder_id(dest?.id);
+                    }
+                } catch { }
+            };
+            fetchData();
         }
     }, [dest, showFolderByID]);
 
@@ -52,7 +64,6 @@ export default function DocumentPath(props: DocumentPathProps) {
                 try {
                     const res = await apiSetting.Folders.showFolderByID(target_folder_id)
                     if (res.data?.success) {
-                        console.log(res.data)
                         showFolderByID(res);
                     }
                 } catch { }

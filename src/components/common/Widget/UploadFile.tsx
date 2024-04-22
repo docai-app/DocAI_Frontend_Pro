@@ -29,8 +29,6 @@ export default function UploadFile(props: UploadFileProps) {
     } = props;
     const fileInput = useRef<HTMLInputElement>(null);
     const { setAlert } = useAlert();
-    const [disable, setDisable] = useState(true);
-
 
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
         // Set the selected maximum file limit to 50 files:
@@ -38,7 +36,6 @@ export default function UploadFile(props: UploadFileProps) {
             setAlert({ title: '最多只能上傳50個文檔', type: 'warning' });
             return;
         } else if (event.target.files && event.target.files.length > 0) {
-            setDisable(false);
             setDocuments(event.target.files);
             setMyFiles(event.target.files);
         }
@@ -46,35 +43,6 @@ export default function UploadFile(props: UploadFileProps) {
 
     return (
         <main>
-            <Box
-                sx={{
-                    display: 'flex',
-                    mb: 1,
-                    gap: 1,
-                    flexDirection: { xs: 'column', sm: 'row' },
-                    alignItems: { xs: 'start', sm: 'center' },
-                    flexWrap: 'wrap',
-                    justifyContent: 'space-between'
-                }}
-            >
-                <Typography level="h2" component="h1">
-                    上傳文檔
-                </Typography>
-
-                <Box sx={{ display: 'flex', justifyContent: 'end', width: '20%' }}>
-                    <Button
-                        color="primary"
-                        size="sm"
-                        onClick={() => {
-                            formik.handleSubmit();
-                        }}
-                        disabled={disable}
-                    >
-                        {btnName}
-                    </Button>
-                </Box>
-            </Box>
-
             <div className="p-8 flex flex-col justify-center items-center text-gray-500 bg-white border-4 border-dashed border-gray-200 rounded-lg relative">
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
