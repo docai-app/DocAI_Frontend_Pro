@@ -115,7 +115,7 @@ export default function UploadOperate(props: UploadOperateProps) {
                         );
                     })}
 
-                <div className="w-1/2 sm:w-1/3 md:w-1/3 lg:w-1/5 h-60 p-2 flex flex-col justify-center items-center text-gray-500 bg-white border-4 border-dashed border-gray-200 rounded-lg relative">
+                <div className="w-1/2 sm:w-1/3 md:w-1/3 lg:w-1/5 h-56 m-2 relative flex flex-col justify-center items-center text-gray-500 bg-white border-4 border-dashed border-gray-200 rounded-lg">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         className="h-20 w-20 stroke-gray-400"
@@ -150,8 +150,9 @@ export default function UploadOperate(props: UploadOperateProps) {
                             />
                         </label>
                     </div>
-                    <span className="mt-2 block text-sm font-medium">支持20MB大小的文件</span>
+                    <span className="mt-2 block text-sm font-medium text-center">支持20MB大小的文件</span>
                 </div>
+
             </div>
         </>
     );

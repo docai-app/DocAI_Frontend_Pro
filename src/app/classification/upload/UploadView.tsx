@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Box, Card, Link, Typography, Chip, Button, Input } from '@mui/joy';
 import DocumentPath from '../../../components/common/Widget/DocumentPath';
-import UploadFile from '../../../components/common/Widget/UploadFile';
 import Uploading from '../../../components/classification/Uploading';
 import UploadOperate from '../../../components/classification/UploadOperate';
 import UploadSet from '../../../components/classification/UploadSet';
