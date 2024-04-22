@@ -1,27 +1,23 @@
 'use client';
 
-import Box from '@mui/joy/Box';
-import FormControl from '@mui/joy/FormControl';
-import FormLabel from '@mui/joy/FormLabel';
-import { iconButtonClasses } from '@mui/joy/IconButton';
-import Option from '@mui/joy/Option';
-import Select from '@mui/joy/Select';
-import Sheet from '@mui/joy/Sheet';
-import Typography from '@mui/joy/Typography';
-import * as React from 'react';
-
 import { Chatbots } from '@/app/chatbot/ChatbotContainer';
 import PaginationView from '@/components/common/Widget/PaginationView';
 import { Chatbot_Features } from '@/utils/constant';
+import PollOutlinedIcon from '@mui/icons-material/PollOutlined';
 import { Chip, Stack } from '@mui/joy';
 import Avatar from '@mui/joy/Avatar';
+import Box from '@mui/joy/Box';
+import { iconButtonClasses } from '@mui/joy/IconButton';
 import Link from '@mui/joy/Link';
 import List from '@mui/joy/List';
 import ListDivider from '@mui/joy/ListDivider';
 import ListItem from '@mui/joy/ListItem';
 import ListItemContent from '@mui/joy/ListItemContent';
 import ListItemDecorator from '@mui/joy/ListItemDecorator';
+import Sheet from '@mui/joy/Sheet';
+import Typography from '@mui/joy/Typography';
 import { useRouter } from 'next/navigation';
+import * as React from 'react';
 import Dropdowns from '../feature/Dropdowns';
 
 interface ViewProps {
@@ -34,24 +30,6 @@ interface ViewProps {
 export default function ChatbotTable(props: ViewProps) {
     const { chatbots, meta, handleDeleteChatbot, handleShare } = props;
     const router = useRouter();
-    const [open, setOpen] = React.useState(false);
-    const renderFilters = () => (
-        <React.Fragment>
-            <FormControl size="sm">
-                <FormLabel>Status</FormLabel>
-                <Select
-                    size="sm"
-                    placeholder="Filter by status"
-                    slotProps={{ button: { sx: { whiteSpace: 'nowrap' } } }}
-                >
-                    <Option value="paid">Paid</Option>
-                    <Option value="pending">Pending</Option>
-                    <Option value="refunded">Refunded</Option>
-                    <Option value="cancelled">Cancelled</Option>
-                </Select>
-            </FormControl>
-        </React.Fragment>
-    );
 
     const getFeatureNames = (selected_features: any) => {
         if (!selected_features) return [];
@@ -152,6 +130,15 @@ export default function ChatbotTable(props: ViewProps) {
                                                 mb: 1
                                             }}
                                         >
+                                            <Chip
+                                                variant="soft"
+                                                startDecorator={<PollOutlinedIcon />}
+                                                onClick={() => {
+                                                    router.push('/chatbot/data');
+                                                }}
+                                            >
+                                                {'View Data'}
+                                            </Chip>
                                             <Dropdowns
                                                 share={() => {
                                                     handleShare(row.chatbot);
@@ -178,61 +165,6 @@ export default function ChatbotTable(props: ViewProps) {
                         </Box>
                     ))}
                 </Box>
-                {/* <Table
-                    aria-labelledby="tableTitle"
-                    stickyHeader
-                    hoverRow
-                    sx={{
-                        '--TableCell-headBackground': 'var(--joy-palette-background-level1)',
-                        '--Table-headerUnderlineThickness': '1px',
-                        '--TableRow-hoverBackground': 'var(--joy-palette-background-level1)',
-                        '--TableCell-paddingY': '4px',
-                        '--TableCell-paddingX': '8px'
-                    }}
-                >
-                    <thead>
-                        <tr>
-                            <th style={{ width: 240, padding: '12px 6px' }}>
-                                名稱
-                            </th>
-                            <th style={{ width: 260, padding: '12px 6px' }}>描述</th>
-                            <th style={{ width: 140, padding: '12px 6px' }}>功能</th>
-                            <th style={{ width: 100, padding: '12px 6px' }}>更新日期</th>
-                            <th style={{ width: 50, padding: '12px 6px' }}> </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {chatbots.map((row, index) => (
-                            <tr key={index}>
-                                <td>
-                                    <Typography level="body-sm" >
-                                        <Link
-                                            color="primary"
-                                            level="title-sm"
-                                            href={`/chatbot/${row.chatbot.id}`}
-                                        >
-                                            {row.chatbot.name}
-                                        </Link>
-                                    </Typography>
-                                </td>
-                                <td>
-                                    <Typography level="body-xs">{row.chatbot.description}</Typography>
-                                </td>
-                                <td>
-                                    <Typography level="body-xs"  >{getFeatureNames(row.chatbot.meta?.selected_features)}</Typography>
-                                </td>
-                                <td>
-                                    <Typography level="body-xs"  >{moment(row.chatbot?.updated_at).format('YYYY-MM-DD HH:mm')}</Typography>
-                                </td>
-                                <td>
-                                    <Box sx={{ display: 'flex', gap: 2, alignItems: 'center' }}>
-                                        <RowMenu />
-                                    </Box>
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </Table> */}
             </Sheet>
             <Box
                 className="Pagination-laptopUp"
