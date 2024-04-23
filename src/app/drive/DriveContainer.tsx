@@ -106,6 +106,7 @@ function DriveContainer() {
             if (id) {
                 formData.append('current_folder_id', id + '');
             }
+            console.log('formData',formData)
             moveItemsToSpecificFolder({
                 data: formData
             });

@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { Box, Breadcrumbs, Link, Typography, Chip, Button, Input, Card } from '@mui/joy';
 import { FolderIcon } from '@heroicons/react/20/solid';
 import { ChevronRightIcon } from '@heroicons/react/24/outline';
@@ -38,17 +39,39 @@ export default function DocumentPath(props: DocumentPathProps) {
     }, [showFolderByIDData]);
 
     useEffect(() => {
+        // if (dest?.id) {
+        //     showFolderByID(apiSetting.Folders.showFolderByID(dest?.id));
+        //     set_target_folder_id(dest?.id);
+        // }
         if (dest?.id) {
-            showFolderByID(apiSetting.Folders.showFolderByID(dest?.id));
-            set_target_folder_id(dest?.id);
+            const fetchData = async () => {
+                try {
+                    const res = await apiSetting.Folders.showFolderByID(dest?.id)
+                    if (res.data?.success) {
+                        showFolderByID(res);
+                        set_target_folder_id(dest?.id);
+                    }
+                } catch { }
+            };
+            fetchData();
         }
     }, [dest, showFolderByID]);
 
+
     useEffect(() => {
         if (target_folder_id) {
-            showFolderByID(apiSetting.Folders.showFolderByID(target_folder_id));
+            const fetchData = async () => {
+                try {
+                    const res = await apiSetting.Folders.showFolderByID(target_folder_id)
+                    if (res.data?.success) {
+                        showFolderByID(res);
+                    }
+                } catch { }
+            };
+            fetchData();
         }
     }, [target_folder_id]);
+
 
     return (
         <>

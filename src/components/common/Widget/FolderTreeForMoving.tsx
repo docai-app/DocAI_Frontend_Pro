@@ -29,7 +29,7 @@ export default function FolderTreeForMoving(props: FolderTreeForMovingProps) {
                 );
                 if (res.data?.success) {
                     setAlert({ title: '移動成功', type: 'success' });
-                    router.refresh();
+                    location.reload();
                 } else {
                     setAlert({ title: '發生錯誤', type: 'error' });
                 }
@@ -45,7 +45,7 @@ export default function FolderTreeForMoving(props: FolderTreeForMovingProps) {
                 );
                 if (res.data?.success) {
                     setAlert({ title: '移動成功', type: 'success' });
-                    router.refresh();
+                    location.reload();
                 } else {
                     setAlert({ title: '發生錯誤', type: 'error' });
                 }
