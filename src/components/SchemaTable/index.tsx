@@ -20,6 +20,7 @@ import Sheet from '@mui/joy/Sheet';
 import Table from '@mui/joy/Table';
 import Typography from '@mui/joy/Typography';
 import * as React from 'react';
+import InfiniteScroll from 'react-infinite-scroll-component';
 import TableRow from './TableRow';
 
 interface ViewProps {
@@ -28,6 +29,8 @@ interface ViewProps {
     smart_extraction_schemas: SmartExtractionSchema[];
     handleSelectedValue?: any;
     handleFilterLabel: any;
+    showAllItemsHandler: any;
+    meta: any;
 }
 const apiSetting = new Api();
 export default function SchemaTable(props: ViewProps) {
@@ -36,7 +39,9 @@ export default function SchemaTable(props: ViewProps) {
         getAllLabelsData,
         smart_extraction_schemas,
         handleSelectedValue,
-        handleFilterLabel
+        handleFilterLabel,
+        showAllItemsHandler,
+        meta
     } = props;
 
     const [open, setOpen] = React.useState(false);
@@ -52,9 +57,14 @@ export default function SchemaTable(props: ViewProps) {
                     slotProps={{ button: { sx: { whiteSpace: 'nowrap' } } }}
                 >
                     <Option
-                        value=""
+                        value={''}
                         onClick={() => {
-                            handleFilterLabel(null);
+                            handleFilterLabel(null, '');
+                        }}>全部</Option>
+                    <Option
+                        value="has_label"
+                        onClick={() => {
+                            handleFilterLabel(null, false);
                         }}
                     >
                         {'數據總表'}
@@ -147,53 +157,73 @@ export default function SchemaTable(props: ViewProps) {
                     minHeight: 300
                 }}
             >
-                <Table
-                    aria-labelledby="tableTitle"
-                    stickyHeader
-                    hoverRow
-                    sx={{
-                        '--TableCell-headBackground': 'var(--joy-palette-background-level1)',
-                        '--Table-headerUnderlineThickness': '1px',
-                        '--TableRow-hoverBackground': 'var(--joy-palette-background-level1)',
-                        '--TableCell-paddingY': '4px',
-                        '--TableCell-paddingX': '8px'
-                    }}
+                <InfiniteScroll
+                    dataLength={smart_extraction_schemas?.length} //This is important field to render the next data
+                    next={showAllItemsHandler}
+                    hasMore={meta?.next_page != null}
+                    height={'auto'}
+                    // className="max-h-[45vh] sm:max-h-[50vh]"
+                    style={{ maxHeight: 500, minHeight: 300 }}
+                    loader={
+                        <p className="p-4 text-center">
+                            <b>載入中...</b>
+                        </p>
+                    }
+                    endMessage={<p className="p-4 text-gray-300 text-center">沒有更多資料</p>}
                 >
-                    <thead>
-                        <tr>
-                            {visibleRadio && (
-                                <th
-                                    style={{ width: 30, textAlign: 'center', padding: '12px 6px' }}
-                                ></th>
-                            )}
-                            <th style={{ width: 300, padding: '12px 6px' }}>
-                                <Typography
-                                    startDecorator={
-                                        <CircleStackIcon className="h-5 text-gray-400 " />
-                                    }
-                                >
-                                    名稱
-                                </Typography>
-                            </th>
-                            <th style={{ width: 200, padding: '12px 6px' }}>標籤</th>
-                            <th style={{ width: 120, padding: '12px 6px' }}>更新日期</th>
-                            <th style={{ width: 100, padding: '12px 6px' }}>擁有人</th>
-                            {!visibleRadio && <th style={{ width: 30, padding: '12px 6px' }}> </th>}
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {smart_extraction_schemas?.map((row: SmartExtractionSchema) => (
-                            <TableRow
-                                key={row.id}
-                                row={row}
-                                selectedValue={selectedValue}
-                                setSelectedValue={setSelectedValue}
-                                visibleRadio={visibleRadio}
-                                handleSelectedValue={handleSelectedValue}
-                            />
-                        ))}
-                    </tbody>
-                </Table>
+                    <Table
+                        aria-labelledby="tableTitle"
+                        stickyHeader
+                        hoverRow
+                        sx={{
+                            '--TableCell-headBackground': 'var(--joy-palette-background-level1)',
+                            '--Table-headerUnderlineThickness': '1px',
+                            '--TableRow-hoverBackground': 'var(--joy-palette-background-level1)',
+                            '--TableCell-paddingY': '4px',
+                            '--TableCell-paddingX': '8px'
+                        }}
+                    >
+                        <thead>
+                            <tr>
+                                {visibleRadio && (
+                                    <th
+                                        style={{ width: '5%', textAlign: 'center', padding: '12px 6px' }}
+                                    ></th>
+                                )}
+                                <th style={{ width: '35%', padding: '12px 6px' }}>
+                                    <Typography
+                                        startDecorator={
+                                            <CircleStackIcon className="h-5 text-gray-400 " />
+                                        }
+                                    >
+                                        名稱
+                                    </Typography>
+                                </th>
+                                <th style={{ width: '25%', padding: '12px 6px' }}>標籤</th>
+                                <th style={{ width: '15%', padding: '12px 6px' }}>更新日期</th>
+                                <th style={{ width: '15%', padding: '12px 6px' }}>擁有人</th>
+                                {!visibleRadio && <th style={{ width: '10%', padding: '12px 6px' }}> </th>}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {smart_extraction_schemas?.map((row: SmartExtractionSchema) => (
+                                <TableRow
+                                    key={row.id}
+                                    row={row}
+                                    selectedValue={selectedValue}
+                                    setSelectedValue={setSelectedValue}
+                                    visibleRadio={visibleRadio}
+                                    handleSelectedValue={handleSelectedValue}
+                                />
+                            ))}
+                        </tbody>
+                    </Table>
+                    {smart_extraction_schemas == null || smart_extraction_schemas.length == 0 ? (
+                        <div className="animate-pulse flex flex-row justify-center items-center gap-2">
+                            <div className="h-4 w-full bg-gray-400 rounded"></div>
+                        </div>
+                    ) : null}
+                </InfiniteScroll>
             </Sheet>
         </React.Fragment>
     );

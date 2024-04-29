@@ -14,7 +14,6 @@ import ShareModal from '../../components/common/Widget/ShareModal';
 import DriveTable from '../../components/drive/DriveTable';
 import EditItems from '../../components/drive/EditItems';
 import NewFolderDropdown from '../../components/drive/NewFolderDropdown';
-import SearchLabelDocumentForm from '../../components/drive/SearchLabelDocumentForm';
 import SelectDataSchemaModal from '../../components/Search/SelectDataSchemaModal';
 
 import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
@@ -116,6 +115,9 @@ export default function DriveView(props: DriveViewProps) {
                 >
                     <Link underline="none" color="neutral" href="/" aria-label="Home">
                         <HomeRoundedIcon />
+                    </Link>
+                    <Link color="neutral" href="/search" fontWeight={500} fontSize={12} >
+                        文件
                     </Link>
                     <Typography color="primary" fontWeight={500} fontSize={12}>
                         文件倉庫
@@ -262,7 +264,7 @@ export default function DriveView(props: DriveViewProps) {
                         showAllDriveLoading
                     }}
                 />
-                <SearchLabelDocumentForm getAllLabelsData={getAllLabelsData} search={undefined} />
+                {/* <SearchLabelDocumentForm getAllLabelsData={getAllLabelsData} search={undefined} /> */}
 
                 <ShareModal
                     mode={mode}

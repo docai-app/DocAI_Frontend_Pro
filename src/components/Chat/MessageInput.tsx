@@ -98,7 +98,7 @@ export default function MessageInput(props: MessageInputProps) {
         {
             name: 'ChatGPT',
             value: 'none',
-            onClick: () => {}
+            onClick: () => { }
         },
         {
             name: '數據源',
@@ -162,7 +162,7 @@ export default function MessageInput(props: MessageInputProps) {
     const handleSelectDriveDocument = (document: DriveDocument) => {
         setDocument(document);
         setVisibleDocuments(false);
-        const label_id = document.labels && document.labels[0].id;
+        const label_id = document.labels && document.labels[0] && document.labels[0].id;
         if (label_id) {
             setLabel(document.labels[0]);
         }
