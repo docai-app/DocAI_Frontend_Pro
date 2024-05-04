@@ -18,6 +18,7 @@ import Sheet from '@mui/joy/Sheet';
 import Typography from '@mui/joy/Typography';
 import { useRouter } from 'next/navigation';
 import * as React from 'react';
+import LoaderView from '../LoaderView';
 import Dropdowns from '../feature/Dropdowns';
 
 interface ViewProps {
@@ -53,6 +54,9 @@ export default function ChatbotTable(props: ViewProps) {
                 }}
             >
                 <Box>
+                    {chatbots.length == 0 ? (
+                        <LoaderView />
+                    ) : null}
                     {chatbots.map((row, index) => (
                         <Box key={index}>
                             <List

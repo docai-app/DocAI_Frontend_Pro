@@ -32,8 +32,8 @@ export default function DriveTable(props: ViewProps) {
         documents,
         folders,
         handleSelectedValue,
-        setMode = () => {},
-        setTarget = () => {},
+        setMode = () => { },
+        setTarget = () => { },
         setVisableRename,
         setVisableDelete,
         setCurrent,
@@ -85,7 +85,7 @@ export default function DriveTable(props: ViewProps) {
                 }}
             >
                 {(documents || folders) &&
-                [...(documents || []), ...(folders || [])].length != 0 ? (
+                    [...(documents || []), ...(folders || [])].length != 0 ? (
                     <InfiniteScroll
                         dataLength={folders?.length + documents?.length} //This is important field to render the next data
                         next={showAllItemsHandler}
@@ -179,8 +179,8 @@ export default function DriveTable(props: ViewProps) {
                                 {allDrivesData?.success
                                     ? '沒有檔案'
                                     : showAllDriveLoading
-                                      ? '載入中...'
-                                      : allDrivesData?.error || ''}
+                                        ? '載入中...'
+                                        : allDrivesData?.error || ''}
                             </b>
                         </p>
                     </Box>

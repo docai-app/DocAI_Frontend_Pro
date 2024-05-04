@@ -1,7 +1,7 @@
 'use client';
 
+import { DarkModeSharp } from '@mui/icons-material';
 import BadgeRoundedIcon from '@mui/icons-material/BadgeRounded';
-import DarkModeRoundedIcon from '@mui/icons-material/DarkModeRounded';
 import LightModeRoundedIcon from '@mui/icons-material/LightModeRounded';
 import Box from '@mui/joy/Box';
 import Button from '@mui/joy/Button';
@@ -13,8 +13,8 @@ import GlobalStyles from '@mui/joy/GlobalStyles';
 import IconButton, { IconButtonProps } from '@mui/joy/IconButton';
 import Input from '@mui/joy/Input';
 import Stack from '@mui/joy/Stack';
-import { CssVarsProvider, useColorScheme } from '@mui/joy/styles';
 import Typography from '@mui/joy/Typography';
+import { CssVarsProvider, useColorScheme } from '@mui/joy/styles';
 import * as React from 'react';
 import { FormEventHandler } from 'react';
 
@@ -50,7 +50,7 @@ function ColorSchemeToggle(props: IconButtonProps) {
             }}
             {...other}
         >
-            {mode === 'light' ? <DarkModeRoundedIcon /> : <LightModeRoundedIcon />}
+            {mode === 'light' ? <DarkModeSharp /> : <LightModeRoundedIcon />}
         </IconButton>
     );
 }
@@ -107,7 +107,7 @@ export default function LoginView(props: ViewProps) {
                             </IconButton>
                             <Typography level="title-lg">DocAI</Typography>
                         </Box>
-                        <ColorSchemeToggle />
+                        {/* <ColorSchemeToggle /> */}
                     </Box>
                     <Box
                         component="main"

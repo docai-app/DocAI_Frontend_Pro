@@ -26,8 +26,8 @@ export default function TableRow(props: TableRowProps) {
     const {
         doc,
         type,
-        setMode = () => {},
-        setTarget = () => {},
+        setMode = () => { },
+        setTarget = () => { },
         setVisableDelete,
         setVisableRename,
         setCurrent,
@@ -84,8 +84,8 @@ export default function TableRow(props: TableRowProps) {
                 </td>
                 <td>
                     {type !== 'folders' &&
-                    doc?.is_classified === false &&
-                    doc?.labels?.length == 0 ? (
+                        doc?.is_classified === false &&
+                        doc?.labels?.length == 0 ? (
                         <Chip color="danger" sx={{ fontSize: 12 }}>
                             {'未分類'}
                         </Chip>

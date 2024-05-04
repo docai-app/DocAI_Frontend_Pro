@@ -6,7 +6,7 @@ import useLoad from '@/hooks/useLoad';
 import { Label, SmartExtractionSchema } from '@/utils/types';
 import useAxios from 'axios-hooks';
 import { useRouter } from 'next/navigation';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import SmartExtractionSchemaView from './SmartExtractionSchemaView';
 
 const apiSetting = new Api();
@@ -94,22 +94,28 @@ function SmartExtractionSchemaContainer(props: any) {
         }
     }, [router, page, has_label, currectLabel]);
 
-    const handleFilterLabel = (label: Label) => {
+    const handleFilterLabel = (label: Label, has_label?: true) => {
         setPage(1);
         if (label) {
             setCurrectLabel(label);
         } else {
-            set_has_label(false);
+            set_has_label(has_label);
             setCurrectLabel(null);
         }
     };
+
+    const showAllItemsHandler = useCallback(async () => {
+        setPage((page) => page + 1);
+    }, []);
 
     return (
         <SmartExtractionSchemaView
             {...{
                 smart_extraction_schemas,
                 getAllLabelsData,
-                handleFilterLabel
+                handleFilterLabel,
+                showAllItemsHandler,
+                meta
             }}
         />
     );
