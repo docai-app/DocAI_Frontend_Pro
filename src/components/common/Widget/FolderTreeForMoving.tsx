@@ -95,8 +95,8 @@ export default function FolderTreeForMoving(props: FolderTreeForMovingProps) {
                                         current?.type == 'moveItems'
                                             ? handleMoveItems(dest.id)
                                             : current?.type == 'folders'
-                                            ? handleMoveFolder(targetId, dest.id)
-                                            : handleMove(targetId, dest.id);
+                                              ? handleMoveFolder(targetId, dest.id)
+                                              : handleMove(targetId, dest.id);
                                     }}
                                 >
                                     移動

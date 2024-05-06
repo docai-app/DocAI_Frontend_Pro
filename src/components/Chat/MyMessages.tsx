@@ -53,9 +53,7 @@ export default function MyMessages(props: ViewProps) {
                     handleAddChat={handleAddChat}
                 />
             </Sheet>
-            <MessagesPane
-                chat={selectedChat}
-            />
+            <MessagesPane chat={selectedChat} />
         </Sheet>
     );
 }

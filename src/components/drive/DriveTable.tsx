@@ -7,11 +7,7 @@ import Table from '@mui/joy/Table';
 import _ from 'lodash';
 import { useRouter } from 'next/navigation';
 import * as React from 'react';
-import {
-    Dispatch, SetStateAction,
-    useCallback,
-    useEffect, useState
-} from 'react';
+import { Dispatch, SetStateAction, useCallback, useEffect, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import TableRow from './TableRow';
 interface ViewProps {
@@ -32,7 +28,10 @@ interface ViewProps {
     showAllDriveLoading: boolean;
 }
 export default function DriveTable(props: ViewProps) {
-    const { documents, folders, handleSelectedValue,
+    const {
+        documents,
+        folders,
+        handleSelectedValue,
         setMode = () => { },
         setTarget = () => { },
         setVisableRename,
@@ -44,16 +43,16 @@ export default function DriveTable(props: ViewProps) {
         setDocumentsItems,
         showAllItemsHandler,
         allDrivesData,
-        showAllDriveLoading,
+        showAllDriveLoading
     } = props;
     const router = useRouter();
     const [selectedValue, setSelectedValue] = React.useState<any>();
 
-    const [isClient, setIsClient] = useState(false)
+    const [isClient, setIsClient] = useState(false);
 
     useEffect(() => {
-        setIsClient(true)
-    }, [])
+        setIsClient(true);
+    }, []);
 
     const setCheckedData = useCallback(
         (type: string, checked: boolean, value: string) => {
@@ -99,11 +98,7 @@ export default function DriveTable(props: ViewProps) {
                                 <b>載入中...</b>
                             </p>
                         }
-                        endMessage={
-                            <p className="p-4 text-gray-300 text-center">
-                                沒有更多資料
-                            </p>
-                        }
+                        endMessage={<p className="p-4 text-gray-300 text-center">沒有更多資料</p>}
                     >
                         <Table
                             aria-labelledby="tableTitle"
@@ -113,7 +108,8 @@ export default function DriveTable(props: ViewProps) {
                                 // bgcolor: '#fff',
                                 // '--TableCell-headBackground': 'var(--joy-palette-background-level1)',
                                 '--Table-headerUnderlineThickness': '1px',
-                                '--TableRow-hoverBackground': 'var(--joy-palette-background-level1)',
+                                '--TableRow-hoverBackground':
+                                    'var(--joy-palette-background-level1)',
                                 '--TableCell-paddingY': '4px',
                                 '--TableCell-paddingX': '8px'
                             }}
@@ -121,7 +117,11 @@ export default function DriveTable(props: ViewProps) {
                             <thead>
                                 <tr>
                                     <th
-                                        style={{ width: '5%', textAlign: 'center', padding: '12px 6px' }}
+                                        style={{
+                                            width: '5%',
+                                            textAlign: 'center',
+                                            padding: '12px 6px'
+                                        }}
                                     ></th>
                                     <th style={{ width: '45%', padding: '12px 6px' }}>
                                         <Typography startDecorator={<FolderIcon color="primary" />}>
@@ -172,13 +172,8 @@ export default function DriveTable(props: ViewProps) {
                             </tbody>
                         </Table>
                     </InfiniteScroll>
-
                 ) : (
-                    <Box
-                        display={'flex'}
-                        justifyContent={'center'}
-                        padding={2}
-                    >
+                    <Box display={'flex'} justifyContent={'center'} padding={2}>
                         <p className="p-4 text-center">
                             <b>
                                 {allDrivesData?.success
@@ -188,10 +183,9 @@ export default function DriveTable(props: ViewProps) {
                                         : allDrivesData?.error || ''}
                             </b>
                         </p>
-
                     </Box>
                 )}
             </Sheet>
-        </React.Fragment >
+        </React.Fragment>
     );
 }

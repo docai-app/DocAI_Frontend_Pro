@@ -207,7 +207,7 @@ export default function DocumentCard(props: ViewProps) {
                     allLabelsData={getAllLabelsData}
                     confirmDocumentFormik={confirmDocumentFormik}
                     isSubmit={true}
-                    setTagName={(name: string) => { }}
+                    setTagName={(name: string) => {}}
                     setOpenEditLabel={setOpenEditLabel}
                 />
             )}

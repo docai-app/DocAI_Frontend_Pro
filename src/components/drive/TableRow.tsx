@@ -8,7 +8,6 @@ import Dropdowns from './Dropdowns';
 import FolderIcon from '@mui/icons-material/Folder';
 import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
 
-
 interface TableRowProps {
     doc: DriveDocument;
     type: 'documents' | 'folders';
@@ -48,20 +47,20 @@ export default function TableRow(props: TableRowProps) {
 
     return (
         <>
-            <tr key={doc.id}
-                data-id={doc.id}
-                data-type={type}
-            >
+            <tr key={doc.id} data-id={doc.id} data-type={type}>
                 <td style={{ textAlign: 'center', width: 40 }}>
-                    <Checkbox size="sm"
+                    <Checkbox
+                        size="sm"
                         checked={checked}
                         value={doc.id}
-                        onChange={(e) => { check(e); }}
+                        onChange={(e) => {
+                            check(e);
+                        }}
                         slotProps={{ checkbox: { sx: { textAlign: 'left' } } }}
                         sx={{ verticalAlign: 'text-bottom' }}
                     />
                 </td>
-                <td >
+                <td>
                     <Typography
                         level="body-xs"
                         startDecorator={
@@ -77,9 +76,7 @@ export default function TableRow(props: TableRowProps) {
                                 {doc.name}
                             </Link>
                         ) : (
-                            <Link color="neutral" href={url}
-                                target="_blank"
-                                rel="noreferrer">
+                            <Link color="neutral" href={url} target="_blank" rel="noreferrer">
                                 {doc.name}
                             </Link>
                         )}
@@ -89,18 +86,13 @@ export default function TableRow(props: TableRowProps) {
                     {type !== 'folders' &&
                         doc?.is_classified === false &&
                         doc?.labels?.length == 0 ? (
-                        <Chip
-                            color="danger"
-                            sx={{ fontSize: 12 }}>
+                        <Chip color="danger" sx={{ fontSize: 12 }}>
                             {'未分類'}
                         </Chip>
                     ) : (
                         doc?.labels?.map((label: any, index: number) => {
                             return (
-                                <Chip
-                                    key={index}
-                                    color="success"
-                                    sx={{ fontSize: 12 }}>
+                                <Chip key={index} color="success" sx={{ fontSize: 12 }}>
                                     {label?.name}
                                 </Chip>
                             );

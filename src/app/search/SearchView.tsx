@@ -50,11 +50,6 @@ function SearchView(props: ViewProps) {
                         <HomeRoundedIcon />
                     </Link>
                     <Typography color="primary" fontWeight={500} fontSize={12}>
-                        <Link underline="none" color="neutral" href="/" aria-label="Home">
-                            Home
-                        </Link>
-                    </Typography>
-                    <Typography color="primary" fontWeight={500} fontSize={12}>
                         文件
                     </Typography>
                 </Breadcrumbs>
@@ -111,7 +106,11 @@ function SearchView(props: ViewProps) {
                     />
                 </Box>
                 <Box height={'80%'} overflow={'auto'}>
-                    <SearchTree tree={searchTreeData} getAllLabelsData={getAllLabelsData} documents={documents} />
+                    <SearchTree
+                        tree={searchTreeData}
+                        getAllLabelsData={getAllLabelsData}
+                        documents={documents}
+                    />
                 </Box>
                 <SearchSourceView />
             </React.Fragment>

@@ -11,10 +11,7 @@ function ChatView(props: ViewProps) {
     return (
         <>
             <Box component="main" className="MainContent">
-                <MyMessages
-                    chats={chats}
-                    handleAddChat={handleAddChat}
-                />
+                <MyMessages chats={chats} handleAddChat={handleAddChat} />
             </Box>
         </>
     );

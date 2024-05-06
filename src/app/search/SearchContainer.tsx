@@ -104,7 +104,7 @@ function SearchContainer() {
                                     setSearchTreeData(jsonData.tree.tree);
                                 }
                                 if (jsonData && jsonData.storage_url) {
-                                    setDocuments(jsonData?.storage_url?.documents)
+                                    setDocuments(jsonData?.storage_url?.documents);
                                 }
                             }
                         } catch (error) {
@@ -130,7 +130,7 @@ function SearchContainer() {
     };
 
     const gatTags = () => {
-        getAllLabels()
+        getAllLabels();
     };
     return (
         <SearchView

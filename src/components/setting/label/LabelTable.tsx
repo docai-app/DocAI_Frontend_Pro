@@ -59,7 +59,7 @@ export default function LabelTable(props: any) {
                 className="LabelTableContainer"
                 variant="outlined"
                 sx={{
-                    display: { xs: 'none', sm: 'initial' },
+                    display: { xs: 'initial', sm: 'initial' },
                     width: '100%',
                     borderRadius: 'sm',
                     flexShrink: 1,

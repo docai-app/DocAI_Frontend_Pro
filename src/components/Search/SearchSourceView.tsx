@@ -1,7 +1,7 @@
 import useAlert from '@/hooks/useAlert';
+import { CircleStackIcon } from '@heroicons/react/24/outline';
 import { KeyboardArrowRight } from '@mui/icons-material';
 import AddToDriveIcon from '@mui/icons-material/AddToDrive';
-import CloudCircleIcon from '@mui/icons-material/CloudCircle';
 import FolderOutlinedIcon from '@mui/icons-material/FolderOutlined';
 import LanguageIcon from '@mui/icons-material/Language';
 import { Box, ListItemButton, ListItemContent, ListItemDecorator, Typography } from '@mui/joy';
@@ -29,6 +29,14 @@ export default function SearchSourceView(props: ViewProps) {
             }
         },
         {
+            title: 'Schema',
+            description: '3 files',
+            icon: <CircleStackIcon />,
+            onClick: () => {
+                router.push('/smart_extraction_schema');
+            }
+        },
+        {
             title: 'Website',
             description: '3 files',
             icon: <LanguageIcon />,
@@ -43,17 +51,6 @@ export default function SearchSourceView(props: ViewProps) {
             title: 'Google Drive',
             description: '3 files',
             icon: <AddToDriveIcon />,
-            onClick: () => {
-                setAlert({
-                    title: '新功能開發中，敬請期待！',
-                    type: 'info'
-                });
-            }
-        },
-        {
-            title: 'Notion',
-            description: '3 files',
-            icon: <CloudCircleIcon />,
             onClick: () => {
                 setAlert({
                     title: '新功能開發中，敬請期待！',

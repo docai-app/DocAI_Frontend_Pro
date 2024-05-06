@@ -124,7 +124,7 @@ function LabelView(props: ViewProps) {
                 }}
             >
                 <Typography level="h2" component="h1">
-                    智能助手
+                    標籤管理
                 </Typography>
                 <Button
                     color="primary"

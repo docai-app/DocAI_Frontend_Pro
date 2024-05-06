@@ -18,7 +18,6 @@ type MessagesPaneHeaderProps = {
     sender: UserProps | undefined;
 };
 
-
 export default function MessagesPaneHeader(props: MessagesPaneHeaderProps) {
     const { sender } = props;
     const modelTypeLabel = () => {
@@ -33,7 +32,6 @@ export default function MessagesPaneHeader(props: MessagesPaneHeaderProps) {
                 return '未選擇';
         }
     };
-
 
     const RowMenu = () => {
         return (
