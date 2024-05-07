@@ -50,11 +50,6 @@ function SearchView(props: ViewProps) {
                         <HomeRoundedIcon />
                     </Link>
                     <Typography color="primary" fontWeight={500} fontSize={12}>
-                        <Link underline="none" color="neutral" href="/" aria-label="Home">
-                            Home
-                        </Link>
-                    </Typography>
-                    <Typography color="primary" fontWeight={500} fontSize={12}>
                         文件
                     </Typography>
                 </Breadcrumbs>

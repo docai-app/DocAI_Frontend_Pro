@@ -18,24 +18,27 @@ interface FolderTreeForSelectProps {
 const apiSetting = new Api();
 export default function FolderTreeForSelect(props: FolderTreeForSelectProps) {
     const { mode, setMode, dest, setDest, targetId } = props;
-
     const [_dest, _setDest] = useState<Folder | null>(null);
 
     const router = useRouter();
+
+    useEffect(() => {
+        _setDest(null);
+    }, []);
+
     const handleMove = (document_id: string | null, folder: Folder) => {
         setDest(folder);
         setMode('view');
     };
-    useEffect(() => {
-        _setDest(null);
-    }, []);
+
     // const handleMove = useCallback(
     //     async (document_id: string | null, folder: Folder) => {
-    //         setFolderPath(folder)
+    //         setDest(folder);
     //         setMode('view');
     //     },
     //     [router]
     // );
+
     return (
         <Transition show={mode === 'move'}>
             <Transition.Child

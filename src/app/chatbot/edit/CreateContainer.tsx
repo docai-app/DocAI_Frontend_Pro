@@ -93,7 +93,8 @@ function CreateContainer() {
                     length: chatbot?.meta?.length,
                     experts: expert_ids,
                     selected_features: chatbot?.meta?.selected_features,
-                    selected_features_titles: chatbot?.meta?.selected_features_titles
+                    selected_features_titles: chatbot?.meta?.selected_features_titles,
+                    dify_token: chatbot?.meta?.dify_token
                 }
             });
             if (res.data?.success) router.push('/chatbot');
@@ -126,7 +127,8 @@ function CreateContainer() {
                     length: chatbot?.meta?.length,
                     experts: expert_ids,
                     selected_features: chatbot?.meta?.selected_features,
-                    selected_features_titles: chatbot?.meta?.selected_features_titles
+                    selected_features_titles: chatbot?.meta?.selected_features_titles,
+                    dify_token: chatbot?.meta?.dify_token
                 }
             });
             // if (res.data?.success) router.push('/chatbot');

@@ -41,7 +41,7 @@ export default function TableRow(props: ViewProps) {
                     </td>
                 )}
                 <td>
-                    <Typography level="body-sm" sx={{ fontWeight: 'bold' }}>
+                    <Typography level="body-sm" sx={{}}>
                         <Link
                             href={`document/smart_extraction_schema/${row.id}`}
                             startDecorator={<CircleStackIcon className="h-5 text-gray-400 " />}

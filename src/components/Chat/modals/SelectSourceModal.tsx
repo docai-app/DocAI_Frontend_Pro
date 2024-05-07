@@ -148,7 +148,8 @@ export default function SelectSourceModal(props: ViewProps) {
                             setSelectedValue(schema);
                         }}
                         handleFilterLabel={handleFilterLabel}
-                    />
+                        meta={null}
+                        showAllItemsHandler={undefined} />
                 </DialogContent>
             </ModalDialog>
         </Modal>
